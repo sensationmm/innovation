@@ -46,7 +46,7 @@ const ProgressBar = props => {
           return (
             <div 
               key={`label-${count}`} 
-              className={classnames("progress-bar-label", {past: isPast(dates[count])})}
+              className={classnames('progress-bar-label', {past: isPast(dates[count])})}
               style={{ left: `${ticks[count]}%` }}
             >{label}</div>
           )
@@ -66,7 +66,7 @@ const ProgressBar = props => {
           return (
             <div 
               key={`date-${count}`} 
-              className={classnames("progress-bar-date", {past: isPast(date)})}
+              className={classnames('progress-bar-date', {past: isPast(date)})}
               style={{ left: `${ticks[count]}%` }}
             >{moment(date).format('DD-MM-YY')}</div>
           )

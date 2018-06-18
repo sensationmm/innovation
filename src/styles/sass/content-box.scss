@@ -1,0 +1,15 @@
+@import './modules/colors.scss';
+
+.content-box {
+  margin-bottom: 20px;
+
+  &.background {
+    padding: 15px 20px;
+    background: $background-grey-light;
+    border-radius: 5px;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}

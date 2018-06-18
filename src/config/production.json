@@ -1,0 +1,6 @@
+{
+  "apiUrl": "https://inventure-api.herokuapp.com/api/v2",
+  "apiDomain": "https://inventure-api.herokuapp.com",
+  "apiNamespace": "/api/v2",
+  "gaTrackingId": "UA-117177094-2"
+}

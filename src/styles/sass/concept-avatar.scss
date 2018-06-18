@@ -1,0 +1,25 @@
+.concept-avatar {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+
+  &.small {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  &.large {
+    width: 50px;
+    height: 50px;
+    font-size: 16px;
+  }
+
+  &.logo {
+    border-radius: 0;
+    background: center center no-repeat;
+    background-size: contain;
+  }
+}

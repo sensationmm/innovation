@@ -1,0 +1,112 @@
+{
+  "id": 1,
+  "name": "BCG DV",
+  "color": "#ff0000",
+  "location": "London",
+  "dates": {
+    "KO": "2018-05-01",
+    "IS1": "2018-06-18",
+    "IS2": "2018-06-30",
+    "IS3": "2018-07-15"
+  },
+  "objectives": {
+    "KO": [
+      "Objective 1",
+      "Objective 2"
+    ],
+    "IS1": [
+      "Objective 3"
+    ],
+    "IS2": [],
+    "IS3": []
+  },
+  "opportunityAreas": [
+    "user inputted list"
+  ],
+  "concepts": [
+    {
+      "id": 1,
+      "name": "Concept 1",
+      "ident": "C1",
+      "strapline": "Short synopsis",
+      "description": "Something about the concept",
+      "logo": "/favicon.ico",
+      "image": "",
+      "color": "#ff0000",
+      "confidence": "High | Medium | Low",
+      "archetype": [
+        "list",
+        "list"
+      ],
+      "opportunityArea": [
+        "list to above"
+      ],
+      "matrix": "Digital Attacker | New businesses | Re-engineer | Re-imagine",
+      "technologies": [
+        "...list"
+      ],
+      "risks": [
+        {
+          "id": 1,
+          "name": "First Risk"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Concept 2",
+      "ident": "C2",
+      "strapline": "Short synopsis",
+      "description": "Something about the concept",
+      "logo": "",
+      "image": "",
+      "color": "#00ff00",
+      "confidence": "High | Medium | Low",
+      "archetype": [
+        "list",
+        "list"
+      ],
+      "opportunityArea": [
+        "list to above"
+      ],
+      "matrix": "Digital Attacker | New businesses | Re-engineer | Re-imagine",
+      "technologies": [
+        "...list"
+      ],
+      "risks": [
+        {
+          "id": 1,
+          "name": "First Risk"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Concept 3",
+      "ident": "C3",
+      "strapline": "Short synopsis",
+      "description": "Something about the concept",
+      "logo": "",
+      "image": "",
+      "color": "#0000ff",
+      "confidence": "High | Medium | Low",
+      "archetype": [
+        "list",
+        "list"
+      ],
+      "opportunityArea": [
+        "list to above"
+      ],
+      "matrix": "Digital Attacker | New businesses | Re-engineer | Re-imagine",
+      "technologies": [
+        "...list"
+      ],
+      "risks": [
+        {
+          "id": 1,
+          "name": "First Risk"
+        }
+      ]
+    }
+  ]
+}

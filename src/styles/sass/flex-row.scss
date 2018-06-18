@@ -1,0 +1,13 @@
+.flex-row {
+  display: flex;
+
+  > div {
+    flex-grow: 1;
+    width: 0; //forces equal width columns
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

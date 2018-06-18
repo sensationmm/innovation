@@ -1,0 +1,15 @@
+// reset
+@import './modules/reset.scss';
+@import './modules/colors.scss';
+
+body {
+  background: $background-grey-dark;
+  color: $text;
+  font-family: Montserrat;
+}
+
+main {
+  padding-top: 120px;
+  max-width: 65%;
+  margin: 0 auto;
+}

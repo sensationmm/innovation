@@ -1,0 +1,53 @@
+{
+  "name": "create-react-app-redux",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.11.0",
+    "react-scripts": "^1.0.17",
+    "sass-lint": "^1.12.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "moment": "^2.22.2",
+    "node-sass-chokidar": "^1.3.0",
+    "npm-run-all": "^4.1.3",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "next",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar src/styles/sass/ -o src/styles/css/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/styles/sass/ -o src/styles/css/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js lint",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build-css build-js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "precommit": "npm run precommit-msg && npm run lint",
+    "lint": "npm run eslint && npm run sasslint",
+    "preeslint": "echo 'Running eslint'",
+    "eslint": "eslint src",
+    "presasslint": "echo 'Running sasslint'",
+    "sasslint": "sass-lint -c .sass-lint.yml '**/*.scss' -v --no-exit",
+    "precommit-msg": "echo 'Pre-commit checks... linting Sass and JS, please fix any errors'"
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

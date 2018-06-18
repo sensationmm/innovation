@@ -1,0 +1,8 @@
+@import './modules/colors.scss';
+
+.header {
+  position: fixed;
+  width: 100%;
+  height: 65px;
+  background: $background-grey-light url('../../images/logo-inventure.svg') no-repeat 50%;
+}

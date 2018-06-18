@@ -6,6 +6,7 @@
     "eslint": "^4.19.1",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.11.0",
     "react-scripts": "^1.0.17",
     "sass-lint": "^1.12.1"
@@ -34,9 +35,7 @@
     "start": "npm-run-all -p watch-css start-js lint",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
-    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "precommit": "npm run precommit-msg && npm run lint",
     "lint": "npm run eslint && npm run sasslint",
     "preeslint": "echo 'Running eslint'",
     "eslint": "eslint src",
@@ -44,6 +43,7 @@
     "sasslint": "sass-lint -c .sass-lint.yml '**/*.scss' -v --no-exit",
     "precommit-msg": "echo 'Pre-commit checks... linting Sass and JS, please fix any errors'"
   },
+  "pre-commit": [ "precommit-msg", "lint" ],
   "lint-staged": {
     "*.{js,json,css,md}": [
       "prettier --write",

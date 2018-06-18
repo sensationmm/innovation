@@ -44,6 +44,7 @@ const Home = (props) => {
 
 Home.propTypes = {
   activePortfolio: PropTypes.object,
+  conceptsById: PropTypes.object
 };
 
 const mapStateToProps = state => ({

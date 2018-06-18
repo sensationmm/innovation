@@ -43,8 +43,7 @@ const Home = (props) => {
 }
 
 Home.propTypes = {
-  activePortfolio: PropTypes.object,
-  conceptsById: PropTypes.object
+  activePortfolio: PropTypes.object
 };
 
 const mapStateToProps = state => ({

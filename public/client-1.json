@@ -21,7 +21,11 @@
     "IS3": []
   },
   "opportunityAreas": [
-    "user inputted list"
+    { "id": 1, "name": "Aviation" },
+    { "id": 2, "name": "Engineering" },
+    { "id": 3, "name": "Transport" },
+    { "id": 4, "name": "Education" },
+    { "id": 5, "name": "Entertainment" }
   ],
   "concepts": [
     {
@@ -38,9 +42,7 @@
         "list",
         "list"
       ],
-      "opportunityArea": [
-        "list to above"
-      ],
+      "opportunityArea": 3,
       "matrix": "digitalattacker",
       "technologies": [
         "...list"
@@ -66,9 +68,7 @@
         "list",
         "list"
       ],
-      "opportunityArea": [
-        "list to above"
-      ],
+      "opportunityArea": 1,
       "matrix": "newbusinesses",
       "technologies": [
         "...list"
@@ -94,9 +94,7 @@
         "list",
         "list"
       ],
-      "opportunityArea": [
-        "list to above"
-      ],
+      "opportunityArea": 1,
       "matrix": "reengineer",
       "technologies": [
         "...list"
@@ -122,9 +120,7 @@
         "list",
         "list"
       ],
-      "opportunityArea": [
-        "list to above"
-      ],
+      "opportunityArea": 5,
       "matrix": "newbusinesses",
       "technologies": [
         "...list"
@@ -150,9 +146,7 @@
         "list",
         "list"
       ],
-      "opportunityArea": [
-        "list to above"
-      ],
+      "opportunityArea": 4,
       "matrix": "newbusinesses",
       "technologies": [
         "...list"

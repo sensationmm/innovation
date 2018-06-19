@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Home from './home';
 import Grouping from './grouping';
@@ -12,9 +12,11 @@ const App = () => (
   <div>
     <Header />
     <main>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/grouping" component={Grouping} />
-      <Route component={NotFound} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/grouping" component={Grouping} />
+        <Route component={NotFound} />
+      </Switch>
     </main>
   </div>
 );

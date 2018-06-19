@@ -3,7 +3,9 @@
     min-height: 200px;
     display: flex;
     justify-content: center;
+    align-content: center;
     align-items: center;
+    flex-wrap: wrap;
 
     .concept-avatar {
       margin: 5px;

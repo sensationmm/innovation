@@ -1,0 +1,10 @@
+.group-items {
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .group-items .concept-avatar {
+    margin: 5px; }
+
+.group-label {
+  text-align: center; }

@@ -21,7 +21,7 @@ const Home = (props) => {
   return (
     <div>
       <ContentBox>
-        <h1>Welcome to VentureView</h1>
+        <h1>Welcome to VentureView!</h1>
         <p>You will soon be able to track all of your Portfolio Concepts here!</p>
       </ContentBox>
 

@@ -1,0 +1,48 @@
+@import './modules/colors.scss';
+
+.concept-meta {
+  display: flex;
+  justify-content: space-between;
+
+  &-label {
+    flex-basis: 20%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+  }
+
+  &-stats {
+    flex-basis: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-stat {
+    width: calc(50% - 40px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-right: 80px;
+    font-size: 14px;
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+
+    &-label {
+      padding-right: 10px;
+      color: $text-offset;
+    }
+
+    &-content {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      min-width: 40%;
+    }
+  }
+}

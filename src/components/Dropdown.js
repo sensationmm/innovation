@@ -37,11 +37,11 @@ const Dropdown = (props) => {
 
 Dropdown.propTypes = {
   colors: PropTypes.string, 
-  id: PropTypes.oneOfType([
+  value: PropTypes.oneOfType([
     PropTypes.string, 
     PropTypes.number
   ]), 
-  value: PropTypes.string, 
+  id: PropTypes.string, 
   options: PropTypes.array, 
   onChange: PropTypes.func, 
   classes: PropTypes.string

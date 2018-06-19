@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { makeArrayFromIndexedObject, getByKey } from '../utils/functions';
-import { matrix } from '../config/conceptOptions';
+import { matrixes } from '../config/conceptOptions';
 
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
@@ -38,7 +38,7 @@ class Grouping extends Component {
 
     switch(group) {
       case 'matrix':
-        matrix.forEach(item => {
+        matrixes.forEach(item => {
           groupings.push(getByKey(concepts, item.value, 'matrix'));
           groupingLabels.push(item.label);
         });

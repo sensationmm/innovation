@@ -10,6 +10,11 @@ body {
 
 main {
   padding-top: 55px;
+  min-width: 860px;
   max-width: 65%;
   margin: 65px auto 0 auto;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
 }

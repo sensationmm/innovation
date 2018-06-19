@@ -38,15 +38,10 @@
       "image": "",
       "color": "#ff0000",
       "confidence": "High | Medium | Low",
-      "archetype": [
-        "list",
-        "list"
-      ],
+      "archetype": "archetype1",
       "opportunityArea": 3,
-      "matrix": "digitalattacker",
-      "technologies": [
-        "...list"
-      ],
+      "matrix": "newbusinesses",
+      "technology": "blockchain",
       "risks": [
         {
           "id": 1,

@@ -1,0 +1,51 @@
+@import './modules/colors.scss';
+
+.progress-dot {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  border: 1px solid $text;
+
+  &-inner {
+    width: 100%;
+    height: 100%;
+    background: $text;
+    border-radius: 50%;
+  }
+
+  &.pink {
+    border-color: $pink;
+
+    .progress-dot-inner {
+      background: $pink
+    }
+  }
+
+  &.green {
+    border-color: $green;
+
+    .progress-dot-inner {
+      background: $green
+    }
+  }
+
+  &.yellow {
+    border-color: $yellow;
+
+    .progress-dot-inner {
+      background: $yellow
+    }
+  }
+
+  &.blue {
+    border-color: $blue;
+
+    .progress-dot-inner {
+      background: $blue
+    }
+  }
+}

@@ -11,14 +11,23 @@ import '../../styles/css/content-box.css';
 *
 * @param {element|array} children - any HTML/React components to display as the content
 * @param {boolean} background - choose whether background shows or not
+* @param {string} style - style overrides passed down from parent
 */
 
 const ContentBox = props => {
-  const { children, background } = props;
+  const { children, background, style } = props;
+
+  const elStyle = {};
+  if(style && style.length) {
+    elStyle[style[0]] = style[1];
+  }
 
   return (
-    <div className={classnames('content-box', {'background': background})}>
-    {children}
+    <div 
+      className={classnames('content-box', {'background': background})} 
+      style={elStyle}
+    >
+      {children}
     </div>
   );
 };
@@ -27,8 +36,10 @@ ContentBox.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.array,
+    PropTypes.string
   ]).isRequired,
-  background: PropTypes.bool
+  background: PropTypes.bool,
+  style: PropTypes.array
 };
 
 ContentBox.defaultProps = {

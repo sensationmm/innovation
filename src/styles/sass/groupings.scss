@@ -1,6 +1,7 @@
 .groupings {
   &-select {
     width: calc(153.846% - 40px);
+    max-width: calc(100vw - 40px);
     left: 50%;
     transform: translateX(-50%);
     text-align: right;

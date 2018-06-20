@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ConceptAvatar from './ConceptAvatar';
+import ConceptAvatar from './concept/ConceptAvatar';
 
-import '../../styles/css/group.css';
+import '../styles/css/group.css';
 
 /**
  * Group
@@ -31,6 +31,7 @@ const Group = props => {
               logo={item.logo}
               ident={item.ident}
               color={item.color}
+              filteredOut={item.filteredOut}
             />
           )
         })

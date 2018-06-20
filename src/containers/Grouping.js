@@ -7,7 +7,7 @@ import { matrixes } from '../config/conceptOptions';
 
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
-import Group from '../components/concept/Group';
+import Group from '../components/Group';
 import Dropdown from '../components/Dropdown';
 
 import '../styles/css/groupings.css';

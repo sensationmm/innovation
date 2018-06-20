@@ -8,6 +8,15 @@
     padding: 0 20px;
     top: -30px;
   }
+
+  &-filters {
+    position: fixed;
+    right: 20px;
+
+    > div {
+      margin-bottom: 20px;
+    }
+  }
   
   .spacer {
     margin: 15px 40px;

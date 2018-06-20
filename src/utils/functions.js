@@ -9,3 +9,16 @@ export const getByKey = (arr, id, key = 'id') => {
   });
   return filteredArray.length ? filteredArray : null;
 };
+
+// returns location in array of objects matching specified key/value pair
+export const getIndexByKey = (arr, id, key = 'id') => {
+  let index = -1;
+  
+  arr.forEach((obj, count) => {
+    if(obj[key] === id) {
+      index = count;
+    }
+  });
+
+  return index;
+};

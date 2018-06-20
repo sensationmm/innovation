@@ -22,13 +22,18 @@ const ConceptAvatar = props => {
     logo,
     ident,
     color,
-    size
+    size,
+    filteredOut
   } = props;
 
   return (
     <Link to={`concept/${conceptId}`} className="concept-avatar-link">
       <div 
-        className={classnames(`concept-avatar ${size}`, {logo: logo !== ''})} 
+        className={classnames(
+          `concept-avatar ${size}`, 
+          { logo: logo !== '' },
+          { filtered: filteredOut }
+        )} 
         style={{ 
           backgroundColor: !logo ? color : 'transparent',
           backgroundImage: logo !== '' ? `url(${logo})` : 'none'
@@ -45,12 +50,15 @@ ConceptAvatar.propTypes = {
   logo: PropTypes.string,
   ident: PropTypes.string,
   color: PropTypes.string,
-  size: PropTypes.oneOf(['small','large'])
+  size: PropTypes.oneOf(['small','large']),
+  filteredOut: PropTypes.bool
 };
 
 ConceptAvatar.defaultProps = {
   logo: '',
-  size: 'small'
+  size: 'small',
+  filteredOut: false
+
 };
 
 export default ConceptAvatar;

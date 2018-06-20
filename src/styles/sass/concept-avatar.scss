@@ -24,6 +24,11 @@
     background-size: contain;
   }
 
+  &.filtered {
+    opacity: 0.1;
+    filter: grayscale(100%);
+  }
+
   &-link {
     text-decoration: none;
   }

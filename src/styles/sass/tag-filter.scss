@@ -1,0 +1,69 @@
+$item-height: 30px;
+
+.tag-filter {
+  display: flex;
+  justify-content: flex-end;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &-items {
+    z-index: 2;
+  }
+
+  &-item {
+    text-align: right;
+    color: #b2b5b7;
+    padding: 5px 40px 5px 0;
+    transition: all 0.5s;
+    cursor: pointer;
+    font-size: 12px;
+    height: $item-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &.selected{
+      color: #fff;
+    }
+  }
+
+  &-track {
+    width: 20px;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    z-index: 1;
+
+    &:before {
+      position: absolute;
+      width: 20px;
+      height: calc(100% - 10px); //ATTN: variable in calc doesnt work - calc(100% - ($itemHeight - 20px));
+      margin: (($item-height - 20px) / 2) 0;
+      background: #232d33;
+      border-radius: 10px;
+      content: '';
+      display: block;
+    }
+
+    &-pip {
+      width: 20px;
+      height: $item-height;
+      transform-origin: 50% 50%;
+      transform: translateY(-50%);
+      transition: all 0.2s;
+
+      &:before {
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 10px;
+        top: (($item-height - 20px) / 2); //3px;
+        position: absolute;
+        content: '';
+        right: 0;
+      }
+    }
+  }
+}

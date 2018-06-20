@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import { makeArrayFromIndexedObject, getByKey } from '../utils/functions';
-import { matrixes } from '../config/conceptOptions';
+import { ideation, matrixes, archetypes, keyTechs } from '../config/conceptOptions';
 
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
 import Group from '../components/Group';
 import Dropdown from '../components/Dropdown';
+import TagFilter from '../components/TagFilter';
 
 import '../styles/css/groupings.css';
 
@@ -18,7 +20,10 @@ class Grouping extends Component {
     super(props);
 
     this.state = {
-      group: 'matrix'
+      group: 'matrix',
+      filterIdeation: null,
+      filterTechnology: null,
+      filterArchetype: null,
     };
   }
 
@@ -27,6 +32,29 @@ class Grouping extends Component {
       ...this.state,
       group: newGrouping
     });
+  }
+
+  filterConcepts = (concepts) => {
+    const { filterIdeation, filterTechnology, filterArchetype } = this.state;
+
+    if(concepts) {
+      concepts.forEach((concept, count) => {
+        if(
+          (filterTechnology !== null && filterTechnology !== concept.technology) ||
+          (filterArchetype !== null && filterArchetype !== concept.archetype) ||
+          (
+            filterIdeation !== null && 
+            concept.killedAt !== null && 
+            moment(concept.killedAt).format('YYYY-MM-DD') <= moment(filterIdeation).format('YYYY-MM-DD')
+          )
+        ) {
+          concept.filteredOut = true;
+        } else {
+          concept.filteredOut = false;
+        }
+      });
+      return concepts;
+    }
   }
 
   getGrouping = (concepts) => {
@@ -39,14 +67,20 @@ class Grouping extends Component {
     switch(group) {
       case 'matrix':
         matrixes.forEach(item => {
-          groupings.push(getByKey(concepts, item.value, 'matrix'));
+          const initialConcepts = getByKey(concepts, item.value, 'matrix');
+          const filteredConcepts = this.filterConcepts(initialConcepts);
+          
+          groupings.push(filteredConcepts);
           groupingLabels.push(item.label);
         });
         break;
 
       case 'opportunity':
         opportunityAreas.forEach(item => {
-          groupings.push(getByKey(concepts, item.id, 'opportunityArea'));
+          const initialConcepts = getByKey(concepts, item.id, 'opportunityArea');
+          const filteredConcepts = this.filterConcepts(initialConcepts);
+
+          groupings.push(filteredConcepts);
           groupingLabels.push(item.name);
         });
         break;
@@ -54,7 +88,7 @@ class Grouping extends Component {
       default:
         break;
     }
-
+ 
     if(groupings.length%2 !== 0) {
       groupings.push(null); // maintain 2x2 layout
     }
@@ -62,9 +96,15 @@ class Grouping extends Component {
     return { groupings, groupingLabels };
   }
 
+  setFilter = (filter, stateItem) => {
+    this.setState({
+      [stateItem]: filter
+    })
+  }
+
   render() {
-    const { group } = this.state;
-    const { conceptsById } = this.props;
+    const { group, filterIdeation, filterTechnology, filterArchetype } = this.state;
+    const { conceptsById, portfolioDates } = this.props;
     const concepts = makeArrayFromIndexedObject(conceptsById);
 
     const { groupings, groupingLabels } = this.getGrouping(concepts);
@@ -75,6 +115,12 @@ class Grouping extends Component {
       //break into slices for rendering into 2x2 grid markup
       groupingsRows[i] = groupings.slice(i*2, (i*2)+2);
     }
+
+    const ideationDates = ideation.slice(0).map((ideation, count) => {
+      const hold = ideation;
+      hold.value = portfolioDates[ideation.label];
+      return hold;
+    });
 
     return (
       <div className="groupings">
@@ -89,6 +135,32 @@ class Grouping extends Component {
                 { value: 'opportunity', label: 'Opportunity Area'}
               ]
             }
+          />
+        </div>
+
+        <div className="groupings-filters">
+          <TagFilter
+            label="Ideation"
+            stateItem="filterIdeation"
+            tags={ideationDates}
+            active={filterIdeation}
+            onSetFilter={this.setFilter}
+          />
+
+          <TagFilter
+            label="Key Technologies"
+            stateItem="filterTechnology"
+            tags={keyTechs}
+            active={filterTechnology}
+            onSetFilter={this.setFilter}
+          />
+
+          <TagFilter
+            label="Archetypes"
+            stateItem="filterArchetype"
+            tags={archetypes}
+            active={filterArchetype}
+            onSetFilter={this.setFilter}
           />
         </div>
 
@@ -123,12 +195,14 @@ class Grouping extends Component {
 
 Grouping.propTypes = {
   conceptsById: PropTypes.object,
+  portfolioDates: PropTypes.object,
   opportunityAreas: PropTypes.array
 };
 
 const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById,
-  opportunityAreas: state.portfolios.activePortfolio.opportunityAreas
+  opportunityAreas: state.portfolios.activePortfolio.opportunityAreas,
+  portfolioDates: state.portfolios.activePortfolio.dates
 });
 
 export default connect(mapStateToProps, null)(Grouping);

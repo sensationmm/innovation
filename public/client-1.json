@@ -7,7 +7,8 @@
     "KO": "2018-05-01",
     "IS1": "2018-06-18",
     "IS2": "2018-06-30",
-    "IS3": "2018-07-15"
+    "IS3": "2018-07-15",
+    "IS4": "2018-07-31"
   },
   "objectives": {
     "KO": [
@@ -47,7 +48,8 @@
           "id": 1,
           "name": "First Risk"
         }
-      ]
+      ],
+      "killedAt": null
     },
     {
       "id": 2,
@@ -62,13 +64,14 @@
       "archetype": "archetype2",
       "opportunityArea": 1,
       "matrix": "newbusinesses",
-      "technologies": "blockchain",
+      "technology": "blockchain",
       "risks": [
         {
           "id": 1,
           "name": "First Risk"
         }
-      ]
+      ],
+      "killedAt": "2018-07-05"
     },
     {
       "id": 3,
@@ -83,13 +86,14 @@
       "archetype": "archetype1",
       "opportunityArea": 1,
       "matrix": "reengineer",
-      "technologies": "marketplace",
+      "technology": "marketplace",
       "risks": [
         {
           "id": 1,
           "name": "First Risk"
         }
-      ]
+      ],
+      "killedAt": null
     },
     {
       "id": 4,
@@ -104,13 +108,14 @@
       "archetype": "archetype5",
       "opportunityArea": 5,
       "matrix": "newbusinesses",
-      "technologies": "iot",
+      "technology": "iot",
       "risks": [
         {
           "id": 1,
           "name": "First Risk"
         }
-      ]
+      ],
+      "killedAt": "2018-06-14"
     },
     {
       "id": 5,
@@ -125,7 +130,7 @@
       "archetype": "archetype2",
       "opportunityArea": 4,
       "matrix": "newbusinesses",
-      "technologies": "blockchain",
+      "technology": "blockchain",
       "risks": [
         {
           "id": 1,

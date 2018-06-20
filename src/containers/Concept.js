@@ -32,10 +32,11 @@ class Concept extends Component {
     return (
       <div className="concept">
         <FlexRow layout={['20%', '80%']}>
-          {conceptDetails.logo &&
-            <ContentBox>
-              <ConceptLogo logo={conceptDetails.logo} name={conceptDetails.name} />
-            </ContentBox>
+          {conceptDetails.logo
+            ? <ContentBox>
+                <ConceptLogo logo={conceptDetails.logo} name={conceptDetails.name} />
+              </ContentBox>
+            : <span />
           }
 
           <ContentBox>

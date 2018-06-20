@@ -33,7 +33,7 @@ const ConceptList = props => {
 
           return (
             <div className="concept-list-item" key={`concept-${id}`}>
-              <ConceptAvatar ident={ident} color={color} logo={logo} />
+              <ConceptAvatar conceptId={id} ident={ident} color={color} logo={logo} />
               <div className="concept-list-item-details">
                 <h3>{name}</h3>
                 <p>{strapline}</p>

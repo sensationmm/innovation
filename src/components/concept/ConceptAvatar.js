@@ -46,7 +46,7 @@ const ConceptAvatar = props => {
 };
 
 ConceptAvatar.propTypes = {
-  conceptId: PropTypes.number,
+  conceptId: PropTypes.number.isRequired,
   logo: PropTypes.string,
   ident: PropTypes.string,
   color: PropTypes.string,

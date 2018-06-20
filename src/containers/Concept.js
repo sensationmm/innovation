@@ -7,12 +7,18 @@ import { makeArrayFromIndexedObject, getByKey } from '../utils/functions';
 
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
+import PageActions from '../components/layout/PageActions';
 import ConceptLogo from '../components/concept/ConceptLogo';
 import ConceptSummary from '../components/concept/ConceptSummary';
 import ConceptTags from '../components/concept/ConceptTags';
 import ConceptProgress from '../components/concept/ConceptProgress';
+import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
 class Concept extends Component {
+
+  updateConcept = () => {
+    console.log('Concept Updated');
+  }
 
   render() {
     const { 
@@ -61,6 +67,10 @@ class Concept extends Component {
         <ContentBox>
           <ConceptProgress />
         </ContentBox>
+
+        <PageActions>
+          <ButtonSubmit label="Edit/Update" onClick={this.updateConcept} />
+        </PageActions>
       </div>
     );
   }

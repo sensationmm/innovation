@@ -60,3 +60,10 @@ textarea, input {
   font-size: inherit;
   -webkit-appearance: none;
 }
+
+button {
+  outline: 0;
+  border: 0;
+  -webkit-appearance: none;
+  cursor: pointer;
+}

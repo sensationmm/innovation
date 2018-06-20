@@ -12,17 +12,19 @@ import '../../styles/css/flex-row.css';
 * @param {array} layout - array of relative width % values to pass to flex-basis. Length should match the number of children
 */
 
-const FlexRow = props => (
-  <div className="flex-row">
-    {!props.layout && props.children}
+const FlexRow = props => {
+  return (
+    <div className="flex-row">
+      {!props.layout && props.children}
 
-    {props.layout &&
-      props.children.map((child, count) => {
-        return cloneElement(child, { key: `child-${count}`, style: ['flexBasis', props.layout[count]]})
-      })
-    }
-  </div>
-);
+      {props.layout &&
+        props.children.map((child, count) => {
+          return cloneElement(child, { key: `child-${count}`, style: ['flexBasis', props.layout[count]]})
+        })
+      }
+    </div>
+  )
+};
 
 FlexRow.propTypes = {
   children: PropTypes.oneOfType([

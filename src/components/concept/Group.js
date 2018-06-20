@@ -27,6 +27,7 @@ const Group = props => {
           return (
             <ConceptAvatar 
               key={`avatar-${count}`}
+              conceptId={item.id}
               logo={item.logo}
               ident={item.ident}
               color={item.color}

@@ -59,15 +59,10 @@
       "image": "",
       "color": "#00ff00",
       "confidence": "High | Medium | Low",
-      "archetype": [
-        "list",
-        "list"
-      ],
+      "archetype": "archetype2",
       "opportunityArea": 1,
       "matrix": "newbusinesses",
-      "technologies": [
-        "...list"
-      ],
+      "technologies": "blockchain",
       "risks": [
         {
           "id": 1,
@@ -85,15 +80,10 @@
       "image": "",
       "color": "#0000ff",
       "confidence": "High | Medium | Low",
-      "archetype": [
-        "list",
-        "list"
-      ],
+      "archetype": "archetype1",
       "opportunityArea": 1,
       "matrix": "reengineer",
-      "technologies": [
-        "...list"
-      ],
+      "technologies": "marketplace",
       "risks": [
         {
           "id": 1,
@@ -111,15 +101,10 @@
       "image": "",
       "color": "#00ff00",
       "confidence": "High | Medium | Low",
-      "archetype": [
-        "list",
-        "list"
-      ],
+      "archetype": "archetype5",
       "opportunityArea": 5,
       "matrix": "newbusinesses",
-      "technologies": [
-        "...list"
-      ],
+      "technologies": "iot",
       "risks": [
         {
           "id": 1,
@@ -137,15 +122,10 @@
       "image": "",
       "color": "#0000ff",
       "confidence": "High | Medium | Low",
-      "archetype": [
-        "list",
-        "list"
-      ],
+      "archetype": "archetype2",
       "opportunityArea": 4,
       "matrix": "newbusinesses",
-      "technologies": [
-        "...list"
-      ],
+      "technologies": "blockchain",
       "risks": [
         {
           "id": 1,

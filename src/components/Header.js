@@ -1,5 +1,6 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+
+import NavMain from './NavMain';
 
 import '../styles/css/header.css';
 
@@ -11,11 +12,8 @@ import '../styles/css/header.css';
 
 const Header = props => (
   <header className="header">
-    
+    <NavMain />
   </header>
 );
-
-Header.propTypes = {
-};
 
 export default Header;

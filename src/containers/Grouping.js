@@ -148,7 +148,7 @@ class Grouping extends Component {
           />
 
           <TagFilter
-            label="Key Technologies"
+            label="Key Tech"
             stateItem="filterTechnology"
             tags={keyTechs}
             active={filterTechnology}

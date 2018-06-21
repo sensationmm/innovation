@@ -1,0 +1,44 @@
+nav.nav-main {
+  position: fixed;
+  top: 65px;
+  left: 20px;
+  height: calc(100vh - 65px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    margin: 20px 0;
+    display: block;
+    text-decoration: none;
+    color: #eee;
+    filter: grayscale(100%);
+    opacity: 0.4;
+    transition: all 0.4s;
+
+    a:hover {
+      font-weight: bold;
+    }
+
+    &.active {
+      font-weight: bold;
+      filter: none;
+      opacity: 1;
+    }
+
+    div {
+      display: flex;
+    }
+
+    span {
+      margin-left: 6px;
+    }
+  }
+}

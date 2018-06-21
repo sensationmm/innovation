@@ -10,8 +10,8 @@ body {
 
 main {
   padding-top: 55px;
-  min-width: 860px;
-  max-width: 65%;
+  width: calc(100% - 280px - 40px);
+  max-width: 860px;
   margin: 65px auto 0 auto;
 }
 

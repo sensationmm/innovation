@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="11px" viewBox="0 0 16 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-email</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.92">
+        <g id="12.1---register---empty-form" transform="translate(-498.000000, -362.000000)" fill="#5A6369" fill-rule="nonzero">
+            <g id="icon-email" transform="translate(498.000000, 362.000000)">
+                <g id="Group">
+                    <path d="M8,4.66 L15.17,0.21 C14.9372056,0.0712812843 14.6709877,-0.00132359525 14.4,-6.77626358e-21 L1.6,-6.77626358e-21 C1.32946601,0.00204744565 1.06411491,0.0744159267 0.83,0.21 L8,4.66 Z" id="Shape"></path>
+                    <path d="M8.42,6.28 C8.1631998,6.44119483 7.8368002,6.44119483 7.58,6.28 L0,1.58 L0,8.8 C1.082166e-16,9.6836556 0.7163444,10.4 1.6,10.4 L14.4,10.4 C15.2836556,10.4 16,9.6836556 16,8.8 L16,1.58 L8.42,6.28 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

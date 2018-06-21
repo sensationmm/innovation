@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="11" viewBox="0 0 16 11">
+    <defs>
+        <path id="a" d="M0 49h335v1H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(0 -20)">
+            <use fill="#FFF" xlink:href="#a"/>
+            <path stroke="#BABDBD" d="M.5 49.5h334v1H.5z"/>
+        </g>
+        <text fill="#BABDBD" font-family="Roboto-Medium, Roboto" font-size="18" font-weight="400" transform="translate(0 -20)">
+            <tspan x="25" y="32">Email Address</tspan>
+        </text>
+        <g fill="#BABDBD">
+            <path d="M8 4.659L15.172.207A1.576 1.576 0 0 0 14.4 0H1.6c-.282 0-.542.08-.772.207L8 4.66z"/>
+            <path d="M8.422 6.28a.803.803 0 0 1-.844 0L.003 1.579c0 .007-.003.014-.003.02v7.2c0 .883.718 1.6 1.6 1.6h12.8c.882 0 1.6-.717 1.6-1.6V1.6l-.002-.02-7.576 4.7z"/>
+        </g>
+    </g>
+</svg>

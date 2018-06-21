@@ -24,6 +24,5 @@ export const keyTechs = [
   { value: 'iot', label: 'IoT' },
   { value: 'ai', label: 'AI' },
   { value: 'ml', label: 'ML' },
-  { value: 'blockchain', label: 'Blockchain' },
-  { value: 'marketplace', label: 'Marketplace' }
+  { value: 'blockchain', label: 'Blockchain' }
 ];

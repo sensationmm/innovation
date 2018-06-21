@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="17" viewBox="0 0 16 17">
+    <defs>
+        <path id="a" d="M0 49h335v1H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(0 -17)">
+            <use fill="#FFF" xlink:href="#a"/>
+            <path stroke="#BABDBD" d="M.5 49.5h334v1H.5z"/>
+        </g>
+        <text fill="#BABDBD" font-family="Roboto-Medium, Roboto" font-size="18" font-weight="400" transform="translate(0 -17)">
+            <tspan x="25" y="32">Your Name</tspan>
+        </text>
+        <g fill="#BABDBD">
+            <path d="M7.636 8.13c2.206 0 4-1.823 4-4.065 0-2.242-1.794-4.065-4-4.065s-4 1.823-4 4.065c0 2.242 1.794 4.065 4 4.065M8 9.609c-4.71 0-8 2.507-8 6.098v1.016h16v-1.016c0-3.591-3.29-6.098-8-6.098"/>
+        </g>
+    </g>
+</svg>

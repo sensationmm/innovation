@@ -13,11 +13,9 @@ export const matrixes = [
 ];
 
 export const archetypes = [
-  { value: 'archetype1', label: 'Archetype 1' },
-  { value: 'archetype2', label: 'Archetype 2' },
-  { value: 'archetype3', label: 'Archetype 3' },
-  { value: 'archetype4', label: 'Archetype 4' },
-  { value: 'archetype5', label: 'Archetype 5' }
+  { value: 'marketplace', label: 'Marketplace' },
+  { value: 'social', label: 'Social' },
+  { value: 'cloud', label: 'Cloud' }
 ];
 
 export const keyTechs = [

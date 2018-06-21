@@ -13,6 +13,7 @@ import ConceptSummary from '../components/concept/ConceptSummary';
 import ConceptTags from '../components/concept/ConceptTags';
 import ConceptProgress from '../components/concept/ConceptProgress';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
+import ProgressBar from '../components/ProgressBar';
 
 class Concept extends Component {
 
@@ -24,7 +25,8 @@ class Concept extends Component {
     const { 
       conceptsById, 
       opportunityAreas,
-      match: { params: { conceptId } } 
+      match: { params: { conceptId } },
+      portfolioDates
     } = this.props;
 
     const concept = getByKey(makeArrayFromIndexedObject(conceptsById), parseInt(conceptId, 10));
@@ -34,6 +36,11 @@ class Concept extends Component {
     }
 
     const conceptDetails = concept[0];
+
+    const milestonesLabels = Object.keys(portfolioDates);
+    const milestonesDates = milestonesLabels.map(label => {
+      return portfolioDates[label];
+    });
 
     return (
       <div className="concept">
@@ -53,6 +60,10 @@ class Concept extends Component {
             />
           </ContentBox>
         </FlexRow>
+
+        <ContentBox background={false}>
+          <ProgressBar dates={milestonesDates} labels={milestonesLabels} killMark={conceptDetails.killedAt} />
+        </ContentBox>
 
         <ContentBox>
           <ConceptTags 
@@ -79,12 +90,14 @@ class Concept extends Component {
 Concept.propTypes = {
   conceptsById: PropTypes.object,
   match: PropTypes.object,
-  opportunityAreas: PropTypes.array
+  opportunityAreas: PropTypes.array,
+  portfolioDates: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById,
-  opportunityAreas: state.portfolios.activePortfolio.opportunityAreas
+  opportunityAreas: state.portfolios.activePortfolio.opportunityAreas,
+  portfolioDates: state.portfolios.activePortfolio.dates,
 });
 
 const mapDispatchToProps = dispatch =>

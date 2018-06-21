@@ -1,14 +1,14 @@
 {
   "id": 1,
   "name": "BCG DV",
+  "logo": "",
   "color": "#ff0000",
   "location": "London",
   "dates": {
     "KO": "2018-05-01",
     "IS1": "2018-06-18",
     "IS2": "2018-06-30",
-    "IS3": "2018-07-15",
-    "IS4": "2018-07-31"
+    "IS3": "2018-07-15"
   },
   "objectives": {
     "KO": [
@@ -71,7 +71,7 @@
           "name": "First Risk"
         }
       ],
-      "killedAt": "2018-07-05"
+      "killedAt": "2018-05-05"
     },
     {
       "id": 3,
@@ -83,10 +83,10 @@
       "image": "",
       "color": "#0000ff",
       "confidence": "High | Medium | Low",
-      "archetype": "archetype1",
+      "archetype": "archetype4",
       "opportunityArea": 1,
       "matrix": "reengineer",
-      "technology": "marketplace",
+      "technology": "ai",
       "risks": [
         {
           "id": 1,
@@ -107,7 +107,7 @@
       "confidence": "High | Medium | Low",
       "archetype": "archetype5",
       "opportunityArea": 5,
-      "matrix": "newbusinesses",
+      "matrix": "reimagine",
       "technology": "iot",
       "risks": [
         {
@@ -136,7 +136,8 @@
           "id": 1,
           "name": "First Risk"
         }
-      ]
+      ],
+      "killedAt": null
     }
   ]
 }

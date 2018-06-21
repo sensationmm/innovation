@@ -23,13 +23,61 @@
     z-index: 2;
   }
 
+  &-bar {
+    height: 20px;
+    z-index: 2;
+  }
+
   &-pip {
+    position: absolute;
     width: 20px;
     height: 20px;
     transform: translateX(-50%);
     border-radius: 15px;
+    z-index: 3;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font-size: 12px;
+
+    &.killmark {
+      background: $red;
+      z-index: 4;
+    }
+
+    &-popup {
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      transform: scale(0);
+      opacity: 0;
+      background-color: white;
+      transition: all .1s;
+      border-radius: 2px;
+      color: #232d33;
+      font-size: 12px;
+      position: absolute;
+      text-align: center;
+      padding: 5px 10px;
+      bottom: 25px;
+      max-width: 400px;
+      transform-origin: center bottom;
+      white-space: nowrap;
+    }
+
+    &:hover &-popup {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &-pip {
     background: $green;
     z-index: 3;
+
+    &.killed {
+      background: $green-offset;
+    }
   }
 
   &-labels, &-dates {

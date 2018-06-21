@@ -13,7 +13,8 @@ const PortfolioSummary = props => {
   const {
     id,
     name,
-    location
+    location,
+    opportunityAreas
   } = props.activePortfolio;
 
   return (
@@ -21,6 +22,12 @@ const PortfolioSummary = props => {
       <h2>{name}</h2>
       <p>Portfolio ID: {id}</p>
       <p>Location: {location}</p>
+      <p>Opportunity Areas:<ul>
+      {opportunityAreas.map((area, count) => {
+        return <li key={`area-${count}`}>{area.name}</li>
+      })}
+      </ul>
+      </p>
     </div> 
   );
 };

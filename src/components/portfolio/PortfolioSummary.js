@@ -24,7 +24,7 @@ const PortfolioSummary = props => {
       <p>Location: {location}</p>
       <p>Opportunity Areas:<ul>
       {opportunityAreas.map((area, count) => {
-        return <li>{area.name}</li>
+        return <li key={`area-${count}`}>{area.name}</li>
       })}
       </ul>
       </p>

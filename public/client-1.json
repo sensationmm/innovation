@@ -1,14 +1,14 @@
 {
   "id": 1,
-  "name": "BCG DV",
+  "name": "InVenture",
   "logo": "",
   "color": "#ff0000",
   "location": "London",
   "dates": {
-    "KO": "2018-05-01",
+    "KO": "2018-05-14",
     "IS1": "2018-06-18",
-    "IS2": "2018-06-30",
-    "IS3": "2018-07-15"
+    "IS2": "2018-08-12",
+    "IS3": "2018-09-01"
   },
   "objectives": {
     "KO": [
@@ -22,122 +22,71 @@
     "IS3": []
   },
   "opportunityAreas": [
-    { "id": 1, "name": "Aviation" },
-    { "id": 2, "name": "Engineering" },
-    { "id": 3, "name": "Transport" },
-    { "id": 4, "name": "Education" },
-    { "id": 5, "name": "Entertainment" }
+    { "id": 1, "name": "Field Research" },
+    { "id": 2, "name": "Concept Tracking & Prioritising" },
+    { "id": 3, "name": "Concept Voting" },
+    { "id": 4, "name": "Venture Development" }
   ],
   "concepts": [
     {
       "id": 1,
-      "name": "Concept 1",
-      "ident": "C1",
-      "strapline": "Short synopsis",
-      "description": "Something about the concept",
-      "logo": "/favicon.ico",
+      "name": "Venture View",
+      "ident": "VV",
+      "strapline": "Your venture's progress at a glance",
+      "description": "A web app to support the creation and lifecycle of concepts for a possible venture. Ideation can easily create 100 concepts. This application takes those concepts and gives clarity into the voting process, the progression of ideas, and ultimately the conversion of a concept into a venture or its demise.",
+      "logo": "",
       "image": "",
-      "color": "#ff0000",
-      "confidence": "High | Medium | Low",
-      "archetype": "archetype1",
-      "opportunityArea": 3,
-      "matrix": "newbusinesses",
-      "technology": "blockchain",
-      "risks": [
-        {
-          "id": 1,
-          "name": "First Risk"
-        }
-      ],
+      "color": "#33FF66",
+      "archetype": "marketplace",
+      "opportunityArea": 1,
+      "matrix": "digitalattacker",
+      "technology": "ml",
       "killedAt": null
     },
     {
       "id": 2,
-      "name": "Concept 2",
-      "ident": "C2",
-      "strapline": "Short synopsis",
-      "description": "Something about the concept",
+      "name": "Venture View Vote",
+      "ident": "VO",
+      "strapline": "Voting on a concept",
+      "description": "A tool to help promote or eliminate venture concepts. Concepts up for voting are displayed in a useful window that details key elements of the idea. People involved in the voting process submit their vote which is registered in the tool. These results then decide the outcome of that particular concept.",
       "logo": "",
       "image": "",
-      "color": "#00ff00",
-      "confidence": "High | Medium | Low",
-      "archetype": "archetype2",
-      "opportunityArea": 1,
+      "color": "#5588dd",
+      "archetype": "social",
+      "opportunityArea": 2,
       "matrix": "newbusinesses",
-      "technology": "blockchain",
-      "risks": [
-        {
-          "id": 1,
-          "name": "First Risk"
-        }
-      ],
-      "killedAt": "2018-05-30"
+      "technology": "iot",
+      "killedAt": null
     },
     {
       "id": 3,
-      "name": "Concept 3",
-      "ident": "C3",
-      "strapline": "Short synopsis",
-      "description": "Something about the concept",
+      "name": "HAUQs & DUVs",
+      "ident": "HD",
+      "strapline": "Validating and reducing risk",
+      "description": "A tool to help incubate and progress ventures while minimising risk. Risk bubbles are created by adding HAUQs which are then subsequently reduced through the work defined by DUVs. As risk is reduced the bubble gets smaller until no risk remains.",
       "logo": "",
       "image": "",
-      "color": "#0000ff",
-      "confidence": "High | Medium | Low",
-      "archetype": "archetype4",
-      "opportunityArea": 1,
+      "color": "#123987",
+      "archetype": "cloud",
+      "opportunityArea": 3,
       "matrix": "reengineer",
       "technology": "ai",
-      "risks": [
-        {
-          "id": 1,
-          "name": "First Risk"
-        }
-      ],
-      "killedAt": null
+      "killedAt": "2018-06-18"
     },
     {
       "id": 4,
-      "name": "Concept 4",
-      "ident": "C4",
-      "strapline": "Short synopsis",
-      "description": "Something about the concept",
+      "name": "InField",
+      "ident": "IF",
+      "strapline": "Data collection tool",
+      "description": "This allows the team to research and define the validity of concepts.",
       "logo": "",
       "image": "",
-      "color": "#00ff00",
-      "confidence": "High | Medium | Low",
-      "archetype": "archetype5",
-      "opportunityArea": 5,
+      "color": "#0693cf",
+      "archetype": "marketplace",
+      "opportunityArea": 2,
       "matrix": "reimagine",
-      "technology": "iot",
-      "risks": [
-        {
-          "id": 1,
-          "name": "First Risk"
-        }
-      ],
-      "killedAt": "2018-06-14"
-    },
-    {
-      "id": 5,
-      "name": "Concept 5",
-      "ident": "C5",
-      "strapline": "Short synopsis",
-      "description": "Something about the concept",
-      "logo": "",
-      "image": "",
-      "color": "#0000ff",
-      "confidence": "High | Medium | Low",
-      "archetype": "archetype2",
-      "opportunityArea": 4,
-      "matrix": "newbusinesses",
       "technology": "blockchain",
-      "risks": [
-        {
-          "id": 1,
-          "name": "First Risk"
-        }
-      ],
-      "killedAt": null
+      "killedAt": "2018-05-18"
     }
   ]
 }

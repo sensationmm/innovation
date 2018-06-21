@@ -17,7 +17,8 @@ import '../styles/css/progress-bar.css';
 const ProgressBar = props => {
   const {
     dates,
-    labels
+    labels,
+    killMark
   } = props;
 
   const start = moment(dates[0]);
@@ -37,6 +38,7 @@ const ProgressBar = props => {
   });
 
   const todayScale = calculateScale(moment().format('YYYY-MM-DD'));
+  const killedAtScale = (killMark) ? calculateScale(moment(killMark).format('YYYY-MM-DD')) : null;
 
   return (
     <div className="progress-bar">
@@ -55,8 +57,16 @@ const ProgressBar = props => {
       </div>
 
       <div className="progress-bar-bar">
-        <div className="progress-bar-pip" style={{ left: `${todayScale}%` }} />
-        <div className="progress-bar-progress" style={{ width: `${todayScale}%` }} />
+        {killMark &&
+          <div className="progress-bar-pip killmark" style={{ left: `${killedAtScale}%` }}>
+            <i className="fas fa-times" />
+          <div className="progress-bar-pip-popup">Concept killed<br />{ moment(killMark).format('DD-MM-YY') }</div>
+          </div>
+        }
+        <div className={classnames('progress-bar-pip', {killed: killMark})} style={{ left: `${todayScale}%` }}>
+          <div className="progress-bar-pip-popup">Today<br />{ moment().format('DD-MM-YY') }</div>
+        </div>
+        <div className="progress-bar-progress" style={{ width: `${(killMark) ? killedAtScale : todayScale}%` }} />
         <div className="progress-bar-track" />
       </div>
 
@@ -80,6 +90,7 @@ const ProgressBar = props => {
 ProgressBar.propTypes = {
   dates: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
+  killMark: PropTypes.string
 };
 
 export default ProgressBar;

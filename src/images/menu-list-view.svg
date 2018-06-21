@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="21px" viewBox="0 0 25 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 6</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="5.1---HAUQs---List-View" transform="translate(-33.000000, -413.000000)">
+            <g id="Group-2" transform="translate(34.000000, 370.000000)">
+                <g id="Group-6" transform="translate(0.000000, 44.000000)">
+                    <g id="Icon_List-View_Active" transform="translate(-1.000000, -1.000000)">
+                        <g id="Group-7">
+                            <path d="M3.5,6.5 C1.84314575,6.5 0.5,5.15685425 0.5,3.5 C0.5,1.84314575 1.84314575,0.5 3.5,0.5 C5.15685425,0.5 6.5,1.84314575 6.5,3.5 C6.5,5.15685425 5.15685425,6.5 3.5,6.5 Z M3.5,5.5 C4.6045695,5.5 5.5,4.6045695 5.5,3.5 C5.5,2.3954305 4.6045695,1.5 3.5,1.5 C2.3954305,1.5 1.5,2.3954305 1.5,3.5 C1.5,4.6045695 2.3954305,5.5 3.5,5.5 Z" id="Oval-3" fill="#50E3C2" fill-rule="nonzero"></path>
+                            <path d="M3.5,13.5 C1.84314575,13.5 0.5,12.1568542 0.5,10.5 C0.5,8.84314575 1.84314575,7.5 3.5,7.5 C5.15685425,7.5 6.5,8.84314575 6.5,10.5 C6.5,12.1568542 5.15685425,13.5 3.5,13.5 Z M3.5,12.5 C4.6045695,12.5 5.5,11.6045695 5.5,10.5 C5.5,9.3954305 4.6045695,8.5 3.5,8.5 C2.3954305,8.5 1.5,9.3954305 1.5,10.5 C1.5,11.6045695 2.3954305,12.5 3.5,12.5 Z" id="Oval-3-Copy" fill="#50E3C2" fill-rule="nonzero"></path>
+                            <polygon id="Line" fill="#FFFFFF" fill-rule="nonzero" points="8.5 4.5 8.5 2.5 24.5356688 2.5 24.5356688 4.5"></polygon>
+                            <polygon id="Line-Copy" fill="#FFFFFF" fill-rule="nonzero" points="8.5 11.5 8.5 9.5 24.5356688 9.5 24.5356688 11.5"></polygon>
+                            <path d="M3.5,20.5 C1.84314575,20.5 0.5,19.1568542 0.5,17.5 C0.5,15.8431458 1.84314575,14.5 3.5,14.5 C5.15685425,14.5 6.5,15.8431458 6.5,17.5 C6.5,19.1568542 5.15685425,20.5 3.5,20.5 Z M3.5,19.5 C4.6045695,19.5 5.5,18.6045695 5.5,17.5 C5.5,16.3954305 4.6045695,15.5 3.5,15.5 C2.3954305,15.5 1.5,16.3954305 1.5,17.5 C1.5,18.6045695 2.3954305,19.5 3.5,19.5 Z" id="Oval-3-Copy-2" fill="#50E3C2" fill-rule="nonzero"></path>
+                            <polygon id="Line-Copy-2" fill="#FFFFFF" fill-rule="nonzero" points="8.5 18.5 8.5 16.5 24.5356688 16.5 24.5356688 18.5"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

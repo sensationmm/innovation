@@ -15,7 +15,8 @@ export const matrixes = [
 export const archetypes = [
   { value: 'marketplace', label: 'Marketplace' },
   { value: 'social', label: 'Social' },
-  { value: 'cloud', label: 'Cloud' }
+  { value: 'cloud', label: 'Cloud' },
+  { value: 'saas', label: 'Saas'}
 ];
 
 export const keyTechs = [

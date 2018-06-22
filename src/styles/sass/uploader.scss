@@ -1,0 +1,30 @@
+.logo-uploader-container {
+  position: relative;
+  color: #656e74;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: center center no-repeat;
+  background-size: 100px;
+  height: 300px;
+
+  &:hover:before {
+    content: "";
+    border: 2px dashed #fff;
+    position: absolute;
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    top: 10px;
+    left: 10px;
+  }
+}
+
+.venture-upload-dropzone {
+  height: 800px;
+}
+
+.venture-upload-error {
+
+}

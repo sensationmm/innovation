@@ -15,7 +15,7 @@ class InnovationCreate extends Component {
   state = {
     step: 1,
     innovationName: '',
-    innovationLogo: '',
+    innovationLogo: {},
     teamMembers: [],
     keyDates: [],
     opportunityAreas: []
@@ -23,6 +23,10 @@ class InnovationCreate extends Component {
 
   updateDetails = (key, value) => {
     this.setState({ [key]: value })
+  }
+
+  updateInnovationLogo = (logo) => {
+    this.setState({ logo });
   }
 
   submitNewInnovation = () => {
@@ -46,7 +50,7 @@ class InnovationCreate extends Component {
                 innovationName={innovationName}
                 updateInnovationName={this.updateDetails}
                 innovationLogo={innovationLogo}
-                updateInnovationLogo={this.updateDetails}
+                updateInnovationLogo={this.updateInnovationLogo}
               />
           }
           {

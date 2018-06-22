@@ -3,29 +3,25 @@ import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import classnames from 'classnames';
 
-import { IconUpload } from '../images/upload-icon.svg';
+import '../styles/css/uploader.css';
+
+import IconUpload from '../images/upload-icon.svg';
 
 class Uploader extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hover: false,
-      error: null
-    };
-  }
+  state = {
+    hover: false,
+    error: null
+  };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
     if (rejectedFiles.length) {
       this.setState({
-        ...this.state,
         hover: false,
         error: 'File type must be an image'
       });
       this.props.storeLogo(null);
     } else {
       this.setState({
-        ...this.state,
         hover: false,
         error: null
       });
@@ -36,24 +32,23 @@ class Uploader extends Component {
 
   onDragEnter = () => {
     this.setState({
-      ...this.state,
       hover: true
     });
   }
 
   onDragLeave = () => {
     this.setState({
-      ...this.state,
       hover: false
     });
   }
 
   render() {
     const { logo } = this.props;
+    console.log('uploader props', this.props);
     const { hover, error } = this.state;
-
+    console.log('IconUpload', IconUpload);
     return (
-      <div className={classnames('venture-upload', {'hover': hover})} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
+      <div className={classnames('logo-uploader-container', {'hover': hover})} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
         <Dropzone
           onDrop={this.onDrop}
           onDragEnter={this.onDragEnter}

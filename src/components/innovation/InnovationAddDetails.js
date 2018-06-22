@@ -9,9 +9,10 @@ import '../../styles/css/innovation-add-details.css';
 
 const InnovationAddDetails = (props) => {
   const { innovationName, innovationLogo, updateInnovationName, updateInnovationLogo } = props;
+  console.log('InnovationAddDetails props', props);
   return (
     <div>
-      <div className="innovation-add-details-row ">
+      <div className="innovation-add-details-name">
         <input
           type="text"
           id="title"
@@ -20,8 +21,8 @@ const InnovationAddDetails = (props) => {
           value={innovationName}
         />
       </div>
-      <div className="innovation-add-logo-form">
-        <Uploader logo={innovationLogo} />
+      <div className="innovation-add-details-logo">
+        <Uploader logo={innovationLogo} storeLogo={updateInnovationLogo}/>
       </div>
     </div>
   )

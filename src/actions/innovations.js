@@ -1,8 +1,8 @@
 import {
-  // CREATE_INNOVATION_BEGIN,
+  CREATE_INNOVATION_BEGIN,
   // CREATE_INNOVATION_SUCCESS,
   // CREATE_INNOVATION_ERROR,
-  GET_INNOVATION_BEGIN,
+  // GET_INNOVATION_BEGIN,
   // GET_INNOVATION_SUCCESS,
   // GET_INNOVATION_ERROR,
   // GET_INNOVATIONS_BEGIN,
@@ -17,6 +17,6 @@ import {
 } from '../config/constants';
 
 export const createInnovation = (newInnovation) => (dispatch) => {
-  dispatch({ type:CREATE_INNOVATION_BEGIN })
+  dispatch({ type: CREATE_INNOVATION_BEGIN })
   console.log('Creating an innovation with: ', newInnovation);
 }

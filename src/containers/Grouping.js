@@ -9,6 +9,7 @@ import { ideation, matrixes, archetypes, keyTechs } from '../config/conceptOptio
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
 import Group from '../components/Group';
+import GroupAxes from '../components/GroupAxes';
 import Dropdown from '../components/Dropdown';
 import TagFilter from '../components/TagFilter';
 
@@ -122,6 +123,29 @@ class Grouping extends Component {
       return hold;
     });
 
+    const boxes = groupingsRows.map((row, count) => {
+      return (
+        <FlexRow key={`row-${count}`}>
+        {
+          row.map((group, count2) => {
+            if(!groupingLabels[(count*2) + count2]) {
+              return <div key={`group-${count2}`} className="spacer" />;
+            }
+
+            return (
+              <ContentBox key={`group-${count2}`}>
+                <Group 
+                  items={group}
+                  label={groupingLabels[(count*2) + count2]}
+                />
+              </ContentBox>
+            )
+          })
+        }
+        </FlexRow>
+      )
+    })
+
     return (
       <div className="groupings">
         <div className="groupings-select">
@@ -164,29 +188,14 @@ class Grouping extends Component {
           />
         </div>
 
-        { 
-          groupingsRows.map((row, count) => {
-            return (
-              <FlexRow key={`row-${count}`}>
-              {
-                row.map((group, count2) => {
-                  if(!groupingLabels[(count*2) + count2]) {
-                    return <div key={`group-${count2}`} className="spacer" />;
-                  }
-
-                  return (
-                    <ContentBox key={`group-${count2}`}>
-                      <Group 
-                        items={group}
-                        label={groupingLabels[(count*2) + count2]}
-                      />
-                    </ContentBox>
-                  )
-                })
-              }
-              </FlexRow>
-            )
-          })
+        { group === 'matrix'
+          ? <GroupAxes labels={[
+              ['Current Revenue','New Revenue'],
+              ['At Scale Horizontal','Vertical Growth']
+            ]}>
+              {boxes}
+            </GroupAxes>
+          : boxes
         }
       </div>
     );

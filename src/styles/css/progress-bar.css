@@ -1,0 +1,69 @@
+.progress-bar {
+  width: 90%;
+  margin: 0 auto; }
+  .progress-bar-track, .progress-bar-progress {
+    position: absolute;
+    height: 14px;
+    top: 3px;
+    left: 0;
+    border-radius: 10px; }
+  .progress-bar-track {
+    width: 100%;
+    background: #232D33;
+    z-index: 1; }
+  .progress-bar-progress {
+    background: rgba(80, 227, 194, 0.6);
+    z-index: 2; }
+  .progress-bar-bar {
+    height: 20px;
+    z-index: 2; }
+  .progress-bar-pip {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transform: translateX(-50%);
+    border-radius: 15px;
+    z-index: 3;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font-size: 12px; }
+    .progress-bar-pip.killmark {
+      background: #87061C;
+      z-index: 4; }
+    .progress-bar-pip-popup {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      transform: scale(0);
+      opacity: 0;
+      background-color: white;
+      transition: all .1s;
+      border-radius: 2px;
+      color: #232d33;
+      font-size: 12px;
+      position: absolute;
+      text-align: center;
+      padding: 5px 10px;
+      bottom: 25px;
+      max-width: 400px;
+      transform-origin: center bottom;
+      white-space: nowrap; }
+    .progress-bar-pip:hover .progress-bar-pip-popup {
+      opacity: 1;
+      transform: scale(1); }
+  .progress-bar-pip {
+    background: #50E3C2;
+    z-index: 3; }
+    .progress-bar-pip.killed {
+      background: rgba(80, 227, 194, 0.6); }
+  .progress-bar-labels, .progress-bar-dates {
+    height: 20px; }
+  .progress-bar-dates {
+    font-size: 12px; }
+  .progress-bar-label, .progress-bar-date {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap; }
+    .progress-bar-label.past, .progress-bar-date.past {
+      color: #50E3C2; }

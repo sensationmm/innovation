@@ -1,0 +1,17 @@
+.groupings-select {
+  width: calc(153.846% - 40px);
+  max-width: calc(100vw - 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: right;
+  padding: 0 20px;
+  top: -30px; }
+
+.groupings-filters {
+  position: fixed;
+  right: 20px; }
+  .groupings-filters > div {
+    margin-bottom: 20px; }
+
+.groupings .spacer {
+  margin: 15px 40px; }

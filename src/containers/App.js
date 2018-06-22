@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Home from './Home';
 import ConceptV2 from './ConceptV2';
+import InnovationCreate from './InnovationCreate';
 import Grouping from './Grouping';
 import Tracking from './Tracking';
 import Header from '../components/Header';
@@ -20,6 +21,8 @@ const App = () => (
         <Route exact path="/concept/:conceptId?" component={ConceptV2} />
 
         <Route exact path="/tracking" component={Tracking} />
+
+        <Route exact path="/innovation/create" component={InnovationCreate} />
 
         <Route component={NotFound} />
       </Switch>

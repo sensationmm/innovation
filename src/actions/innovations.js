@@ -1,0 +1,22 @@
+import {
+  // CREATE_INNOVATION_BEGIN,
+  // CREATE_INNOVATION_SUCCESS,
+  // CREATE_INNOVATION_ERROR,
+  GET_INNOVATION_BEGIN,
+  // GET_INNOVATION_SUCCESS,
+  // GET_INNOVATION_ERROR,
+  // GET_INNOVATIONS_BEGIN,
+  // GET_INNOVATIONS_SUCCESS,
+  // GET_INNOVATIONS_ERROR,
+  // UPDATE_INNOVATION_BEGIN,
+  // UPDATE_INNOVATION_SUCCESS,
+  // UPDATE_INNOVATION_ERROR,
+  // DELETE_INNOVATION_BEGIN,
+  // DELETE_INNOVATION_SUCCESS,
+  // DELETE_INNOVATION_ERROR
+} from '../config/constants';
+
+export const createInnovation = (newInnovation) => (dispatch) => {
+  dispatch({ type:CREATE_INNOVATION_BEGIN })
+  console.log('Creating an innovation with: ', newInnovation);
+}

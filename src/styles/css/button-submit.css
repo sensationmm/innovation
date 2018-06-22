@@ -1,0 +1,11 @@
+.button-submit {
+  min-width: 150px;
+  padding: 5px 0;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-top: 10px;
+  background: #50E3C2;
+  transition: all 0.3s; }
+  .button-submit:hover {
+    background: #B2B5B7; }

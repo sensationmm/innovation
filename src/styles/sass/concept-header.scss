@@ -1,0 +1,30 @@
+@import './modules/colors.scss';
+
+.concept-header {
+  width: calc(100vw - 100px);
+  left: 50%;
+  top: -55px;
+  background: $background-grey-light;
+  padding: 50px;
+  text-align: center;
+
+  transform: translateX(-50%);
+
+  &-name {
+    margin: 20px 0;
+  }
+
+  &-strapline {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  &-location {
+    font-size: 14px;
+    color: $text-offset;
+  }
+
+  .progress-bar {
+    margin-top: 50px;
+  }
+}

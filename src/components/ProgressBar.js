@@ -29,9 +29,9 @@ const ProgressBar = props => {
     return (moment(date).diff(start) / lifespan) * 100; //percentage positioning of each point
   };
 
-  const isPast = (date) => {
-    return moment(date).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD');
-  };
+  // const isPast = (date) => {
+  //   return moment(date).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD');
+  // };
 
   const ticks = dates.map(date => {
     return calculateScale(date)
@@ -42,19 +42,6 @@ const ProgressBar = props => {
 
   return (
     <div className="progress-bar">
-      <div className="progress-bar-labels">
-      {
-        labels.map((label, count) => {
-          return (
-            <div 
-              key={`label-${count}`} 
-              className={classnames('progress-bar-label', {past: isPast(dates[count])})}
-              style={{ left: `${ticks[count]}%` }}
-            >{label}</div>
-          )
-        })
-      }
-      </div>
 
       <div className="progress-bar-bar">
         {killMark &&
@@ -70,13 +57,27 @@ const ProgressBar = props => {
         <div className="progress-bar-track" />
       </div>
 
+      <div className="progress-bar-labels">
+      {
+        labels.map((label, count) => {
+          return (
+            <div 
+              key={`label-${count}`} 
+              className="progress-bar-label"
+              style={{ left: `${ticks[count]}%` }}
+            >{label !== 'KO' ? label : 'Ideation'}</div>
+          )
+        })
+      }
+      </div>
+
       <div className="progress-bar-dates">
       {
         dates.map((date, count) => {
           return (
             <div 
               key={`date-${count}`} 
-              className={classnames('progress-bar-date', {past: isPast(date)})}
+              className="progress-bar-date"
               style={{ left: `${ticks[count]}%` }}
             >{moment(date).format('DD-MM-YY')}</div>
           )

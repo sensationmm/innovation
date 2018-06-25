@@ -12,4 +12,12 @@
   :last-child {
     margin-bottom: 0;
   }
+
+  &.bordered {
+    border-top: 5px solid $background-grey-lightest;
+  }
+
+  &.padded {
+    padding: 40px 50px;
+  }
 }

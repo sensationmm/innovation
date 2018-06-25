@@ -1,0 +1,15 @@
+@import './modules/colors.scss';
+
+.risk-level {
+  &.low {
+    color: $warning-low;
+  }
+
+  &.medium {
+    color: $warning-medium;
+  }
+
+  &.high {
+    color: $warning-high;
+  }
+}

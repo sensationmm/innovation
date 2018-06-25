@@ -9,14 +9,16 @@ import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import InnovationAddDates from '../components/innovation/InnovationAddDates';
 import InnovationAddAreas from '../components/innovation/InnovationAddAreas';
 
+import ButtonSubmit from '../components/buttons/ButtonSubmit';
+
 import { createInnovation } from '../actions/innovations';
 
 class InnovationCreate extends Component {
   state = {
-    step: 1,
+    step: 2,
     innovationName: '',
-    innovationLogo: {},
-    teamMembers: [],
+    logo: {},
+    teamMembers: ['test1@test1.com', 'test2@test2.com'],
     keyDates: [],
     opportunityAreas: []
   }
@@ -29,12 +31,40 @@ class InnovationCreate extends Component {
     this.setState({ logo });
   }
 
+  addNewTeamMember = (email) => {
+    const { teamMembers } = this.state;
+    this.setState({ teamMembers: teamMembers.push(email) })
+  }
+
   submitNewInnovation = () => {
     console.log('Call create a new innovation action');
   }
 
+  fieldsCompleted = () => {
+    const { step } = this.state;
+    if (step === 1) {
+      const { innovationName, logo } = this.state;
+      return innovationName && logo;
+    }
+    if (step === 2) {
+      const { teamMembers } = this.state;
+      return teamMembers.length >= 1;
+    }
+    if (step === 3) {
+      const { keyDates } = this.state;
+      // TODO: Check for presence of all of the required keyDates (IS1 -> 3)
+      return keyDates.length >= 3;
+    }
+    if (step === 4) {
+      const { opportunityAreas } = this.state;
+      return opportunityAreas.length >= 1;
+    }
+  }
+
   render() {
-    const { step, innovationName, innovationLogo, teamMembers, keyDates, opportunityAreas } = this.state;
+    const { step, innovationName, logo, teamMembers, keyDates, opportunityAreas } = this.state;
+    const fieldsCompleted = this.fieldsCompleted();
+    console.log('innovation create state', this.state);
     return (
       <div>
         <h1>Create Innovation</h1>
@@ -49,13 +79,16 @@ class InnovationCreate extends Component {
               <InnovationAddDetails
                 innovationName={innovationName}
                 updateInnovationName={this.updateDetails}
-                innovationLogo={innovationLogo}
+                innovationLogo={logo}
                 updateInnovationLogo={this.updateInnovationLogo}
               />
           }
           {
             step === 2 &&
-              <InnovationAddTeam></InnovationAddTeam>
+              <InnovationAddTeam
+                addNewTeamMember={this.addNewTeamMember}
+                teamMembers={teamMembers}
+              />
           }
           {
             step === 3 &&
@@ -67,8 +100,8 @@ class InnovationCreate extends Component {
           }
           {
             step === 4
-              ? <button onClick={this.submitNewInnovation}>Complete</button>
-              : <button onClick={() => this.setState({ step: step + 1})}>Next Step</button>
+              ? <ButtonSubmit disabled={!fieldsCompleted} label="Complete" onClick={this.submitNewInnovation} />
+              : <ButtonSubmit disabled={!fieldsCompleted} label="Next Step" onClick={() => this.setState({ step: step + 1})} />
           }
         </div>
       </div>

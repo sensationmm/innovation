@@ -9,7 +9,6 @@ import '../../styles/css/innovation-add-details.css';
 
 const InnovationAddDetails = (props) => {
   const { innovationName, innovationLogo, updateInnovationName, updateInnovationLogo } = props;
-  console.log('InnovationAddDetails props', props);
   return (
     <div>
       <div className="innovation-add-details-name">

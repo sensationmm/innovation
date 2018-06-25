@@ -1,6 +1,6 @@
-.logo-uploader-container {
+.logo-upload-container {
   position: relative;
-  color: #656e74;
+  color: $text-offset;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,21 +10,26 @@
   background-size: 100px;
   height: 300px;
 
-  &:hover:before {
-    content: "";
-    border: 2px dashed #fff;
-    position: absolute;
-    width: calc(100% - 24px);
-    height: calc(100% - 24px);
-    top: 10px;
-    left: 10px;
+  div {
+    width: 100%;
+    height: 100%;
   }
 }
-
-.venture-upload-dropzone {
-  height: 800px;
-}
-
-.venture-upload-error {
-
-}
+//
+// .hover:before {
+//   content: "";
+//   border: 2px dashed #fff;
+//   position: absolute;
+//   width: calc(100% - 24px);
+//   height: calc(100% - 24px);
+//   top: 10px;
+//   left: 10px;
+// }
+//
+// .logo-upload-dropzone {
+//   height: 100%;
+// }
+//
+// .venture-upload-error {
+//
+// }

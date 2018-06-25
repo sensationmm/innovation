@@ -13,7 +13,7 @@ export const getByKey = (arr, id, key = 'id') => {
 // returns location in array of objects matching specified key/value pair
 export const getIndexByKey = (arr, id, key = 'id') => {
   let index = -1;
-  
+
   arr.forEach((obj, count) => {
     if(obj[key] === id) {
       index = count;
@@ -21,4 +21,9 @@ export const getIndexByKey = (arr, id, key = 'id') => {
   });
 
   return index;
+};
+
+export const validateEmail = (email) => {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
 };

@@ -44,21 +44,19 @@ class Uploader extends Component {
 
   render() {
     const { logo } = this.props;
-    console.log('uploader props', this.props);
     const { hover, error } = this.state;
-    console.log('IconUpload', IconUpload);
     return (
-      <div className={classnames('logo-uploader-container', {'hover': hover})} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
+      <div className={classnames('logo-upload-container', { 'hover': hover })} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
         <Dropzone
           onDrop={this.onDrop}
           onDragEnter={this.onDragEnter}
           onDragLeave={this.onDragLeave}
           // maxSize={this.props.maxSize}
           multiple={false}
-          className="venture-upload-dropzone"
+          className="logo-upload-dropzone"
           accept="image/*"
         />
-        { error && <div className="venture-upload-error">{error}</div> }
+        { error && <div className="logo-upload-error">{error}</div> }
       </div>
     );
   }

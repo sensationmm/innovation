@@ -8,6 +8,7 @@ import '../../styles/css/button-submit.css';
  *
  * Renders a submit action button
  *
+ * @param {bool} disabled - control button disable / enable
  * @param {string} label - button text
  * @param {function} onClick - action to fire when button is clicked
  */
@@ -15,11 +16,12 @@ import '../../styles/css/button-submit.css';
 const ButtonSubmit = props => {
   const {
     label,
-    onClick
+    onClick,
+    disabled
   } = props;
 
   return (
-    <button className="button-submit" onClick={onClick}>
+    <button disabled={disabled} className="button-submit" onClick={onClick}>
       {label}
     </button>
   );

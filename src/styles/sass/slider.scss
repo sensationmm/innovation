@@ -1,0 +1,37 @@
+.slider {
+  width: 100%;
+
+  &-item {
+
+  }
+
+  &-viewport {
+    overflow: hidden;
+  }
+
+  &-inner {
+    transition: all 0.5s;
+  }
+
+  &-control {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    &.next {
+      right: -120px;
+    }
+
+    &.prev {
+      left: -120px;
+    }
+
+    &.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+}

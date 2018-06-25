@@ -14,7 +14,7 @@
 
   &-track {
     width: 100%;
-    background: $background-grey-light;
+    background: $background-grey-lightest;
     z-index: 1;
   }
 
@@ -26,6 +26,7 @@
   &-bar {
     height: 20px;
     z-index: 2;
+    margin-bottom: 10px;
   }
 
   &-pip {
@@ -96,5 +97,9 @@
     &.past {
       color: $green;
     }
+  }
+
+  &-date {
+    color: $text-offset;
   }
 }

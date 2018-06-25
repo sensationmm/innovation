@@ -57,6 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
+# css files created by build script
+src/styles/css/*.*
+*.css
+
 CRA-README.md
 
 build

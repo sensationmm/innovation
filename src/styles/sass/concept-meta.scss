@@ -29,6 +29,10 @@
     margin-right: 80px;
     font-size: 14px;
 
+    .dropdown.small select {
+      font-size: 12px;
+    }
+
     &:nth-child(2n) {
       margin-right: 0;
     }
@@ -43,6 +47,72 @@
       justify-content: center;
       text-align: center;
       min-width: 40%;
+      white-space: normal;
+    }
+  }
+
+  &-summary {
+    color: $text-offset;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  &.stacked {
+    display: block;
+
+    .concept-meta {
+      &-label {
+        margin-bottom: 40px;
+      }
+
+      &-stat {
+        width: 100%;
+        margin-right: 0;
+        padding: 10px 0;
+
+        &-content {
+          display: block;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  &.stats {
+    display: block;
+    height: 100%;
+
+    .concept-meta {
+      &-stats {
+        align-items: center;
+        flex-wrap: nowrap;
+        height: 100%;
+      }
+
+      &-spacer {
+        height: 20px;
+        width: 2px;
+        background: $background-grey-lightest;
+        margin: 0 10px;
+      }
+
+      &-stat {
+        width: auto;
+        flex-direction: column-reverse;
+        // border-right: 2px solid $background-grey-lightest;
+        margin: 0;
+        text-align: center;
+        max-width: 200px;
+
+        &-content {
+          font-size: 20px;
+        }
+
+        &-label {
+          padding: 0;
+        }
+      }
     }
   }
 }

@@ -2,35 +2,48 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import { validateEmail } from '../../utils/functions';
 
 import '../../styles/css/innovation-add-team.css';
 
+// TODO: get these users from the API.
+const allUsers = [ 'a@a.com', 'b@b.com', 'c@c.com', 'd@d.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
+const curInnovationUsers = [ 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
+
 class InnovationAddTeam extends Component {
   state = {
-    newMemberEmail: ''
+    newMemberEmail: '',
+    selectedUsers: [] // Users that are currently selected from the list of all venture-view users.
   }
 
-  handleAddingEmail = (value) => {
-    this.setState({ newMemberEmail: value })
+  handleAddingEmail = (e) => {
+    this.setState({ newMemberEmail: e.target.value })
   }
 
   addMemberEmail = () => {
-    const { newMemberEmail } = this.state;
+    const { newMemberEmail, selectedUsers } = this.state;
     const { addNewTeamMember } = this.props;
+    console.log('newMemberEmail', newMemberEmail);
     addNewTeamMember(newMemberEmail);
+    this.setState({
+      newMemberEmail: '',
+      selectedUsers: [ ...selectedUsers, newMemberEmail ]
+    })
   }
 
   render() {
-    const { teamMembers, newMemberEmail } = this.props;
+    const { teamMembers } = this.props;
+    const { newMemberEmail, selectedUsers } = this.state;
+    const isValidEmail  = validateEmail(newMemberEmail);
+    console.log('teamMembers', teamMembers);
     return (
       <div>
-        <h1>Innovation Add Team</h1>
         <div>
           {
             teamMembers.map(member => (
-              <h3>{member}</h3>
+              <h3 key={member}>{member}</h3>
             ))
           }
         </div>
@@ -45,11 +58,29 @@ class InnovationAddTeam extends Component {
             onChange={this.handleAddingEmail}
             placeholder="Type to search / invite new user..."
           />
-          {/* {validateEmail(newMemberEmail) && !getById(ventureUsers, newUser, 'email') &&
-            <i className="fas fa-2x fa-envelope register-icon" onClick={this.registerUser} />
-            // TODO
-          } */}
-          <i onClick={this.addMemberEmail} className="fa fa-user-plus add-user-icon"></i>
+          {  isValidEmail &&
+              <i onClick={this.addMemberEmail} className="fa fa-user-plus add-user-icon"></i>
+          }
+        </div>
+        <div className='all-venture-view-users'>
+          {
+            console.log(allUsers)
+          }
+          {
+            allUsers.filter(userEmail => !allUsers.includes(userEmail))
+                    .map(newUserEmail => {
+                      console.log('filtered user email', newUserEmail);
+                      const userSelected = selectedUsers.includes(newUserEmail);
+                      return (
+                        <div className='venture-all-users-list'>
+                          <div className={classnames('check-mark', {'selected': userSelected})}>
+                            {userSelected && <i className="fas fa-check"></i>}
+                          </div>
+                          {newUserEmail}
+                        </div>
+                      )
+                    })
+          }
         </div>
       </div>
     )

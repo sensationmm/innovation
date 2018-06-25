@@ -32,8 +32,9 @@ class InnovationCreate extends Component {
   }
 
   addNewTeamMember = (email) => {
+    console.log('addNewTeamMember email', email);
     const { teamMembers } = this.state;
-    this.setState({ teamMembers: teamMembers.push(email) })
+    this.setState({ teamMembers: [ ...teamMembers, email ] })
   }
 
   submitNewInnovation = () => {

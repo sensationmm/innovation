@@ -1,9 +1,22 @@
 @import './modules/colors.scss';
 
-.innovation-selected-users {
-  background: #232d33;
-  padding: 30px 30px 20px 30px;
+.innovation-add-team-subtitle {
+  color: $text-off-white;
+  font-weight: 300;
+}
+
+.innovation-selected-users-container {
+  background: $background-grey-lighter;
+  padding: 20px;
   margin-bottom: 2px;
+}
+
+.innovation-selected-users-description {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.innovation-selected-users {
   display: flex;
   flex-wrap: wrap;
   max-height: 100px;
@@ -38,8 +51,10 @@
 .innovation-add-user-container {
   background: $background-grey-light;
   margin-bottom: 2px;
-  position: relative;
   padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   input {
     width: 100%;
@@ -49,14 +64,6 @@
     font-size: 16px;
     color: $text;
     outline: 0;
-  }
-
-  .add-user-icon {
-    color: $green;
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    cursor: pointer;
   }
 }
 
@@ -74,33 +81,13 @@
   background: $background-grey-light;
   margin-bottom: 2px;
   display: flex;
+  align-items: center;
 }
 
-.selected-user-checkbox {
-  color:  $green;
-  position: absolute;
-  left: 20px;
+.add-user-icon {
   cursor: pointer;
+  color: $green;
 }
-
-// .selected-user-checkmark {
-//   position: absolute;
-//   left: 20px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 20px;
-//   height: 20px;
-//   border-radius: 2px;
-//   background: $text-offset;
-//   color: $background-grey-light;
-//   margin-right: 10px;
-//   transition: all 0.3s;
-//
-//   &.selected {
-//     background: $green;
-//   }
-// }
 
 .all-users-list-empty {
   padding: 50px 30px;
@@ -121,25 +108,4 @@
   left: 0;
   width: 100%;
   font-size: 12px;
-}
-
-.process-step-count-container {
-  display: flex;
-  justify-content: center;
-}
-
-.process-step-count {
-  border-radius: 50%;
-  border: 1px solid $text-offset;
-  color: $text-offset;
-  width: 25px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 8px;
-
-  &.active {
-    border: 1px solid $green;
-  }
 }

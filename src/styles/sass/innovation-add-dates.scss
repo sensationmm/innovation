@@ -1,0 +1,66 @@
+@import './modules/colors.scss';
+
+.innovation-add-dates-header {
+  background: $background-grey-lighter;
+  padding: 20px;
+  margin-bottom: 2px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.innovation-add-dates-header-title {
+  font-weight: 500;
+  color: $background-grey-white;
+}
+
+.innovation-add-dates-header-subtitle {
+  color: $form-element;
+}
+
+.innovation-keydates-container {
+  background: $background-grey-light;
+}
+
+.innovation-keydate {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.innovation-keydate-name {
+  text-align: right;
+  padding: 8px 25px 8px 22%;
+  width: 100px;
+}
+
+.innovation-keydate-date {
+  width: 200px;
+  margin-right: 20px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  color: #232d33;
+  background-color: #b2b5b7;
+  font-size: 12px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #808080 50%),
+    linear-gradient(135deg, #808080 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(0.8em + 1px), calc(100% - 15px) calc(0.8em + 1px);
+  background-size: 4px 5px, 5px 4px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.innovation-date-picker-mask {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.innovation-date-picker-mask-toggle {
+  width: 100%;
+  height: 100%;
+}

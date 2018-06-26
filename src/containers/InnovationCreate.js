@@ -11,20 +11,29 @@ import InnovationAddAreas from '../components/innovation/InnovationAddAreas';
 
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
+import '../styles/css/innovation-create.css';
+
 import { createInnovation } from '../actions/innovations';
 
-// TODO: get these users from the API.
+// TODO: get data from the API or from config
 const allUsers = [ 'a@notinn.com', 'b@notinn.com', 'c@notinn.com', 'd@notinn.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
 const curInnovationUsers = [ 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
+const requiredKeyDates = [
+  {id: 1, name: 'Ideation', date: ''},
+  {id: 2, name: 'IS1', date: ''},
+  {id: 3, name: 'IS2', date: ''},
+  {id: 4, name: 'IS3', date: ''}
+]
 
 class InnovationCreate extends Component {
   state = {
-    step: 2,
+    step: 3,
     innovationName: '',
     logo: {},
     curTeamMembers: curInnovationUsers,
     newTeamMembers: [],
-    keyDates: [],
+    requiredKeyDates: requiredKeyDates,
+    customKeyDates: [],
     opportunityAreas: []
   }
 
@@ -52,6 +61,10 @@ class InnovationCreate extends Component {
     this.setState({ step: step + 1})
   }
 
+  editKeyDate = (id, key, value) => {
+    console.log(id, key, value);
+  }
+
   submitNewInnovation = () => {
     console.log('Call create a new innovation action');
   }
@@ -63,9 +76,9 @@ class InnovationCreate extends Component {
       return innovationName && logo;
     }
     if (step === 3) {
-      const { keyDates } = this.state;
+      const { requiredKeyDates } = this.state;
       // TODO: Check for presence of all of the required keyDates (IS1 -> 3)
-      return keyDates.length >= 3;
+      return requiredKeyDates.length >= 4;
     }
     if (step === 4) {
       const { opportunityAreas } = this.state;
@@ -74,11 +87,17 @@ class InnovationCreate extends Component {
   }
 
   render() {
-    const { step, innovationName, logo, curTeamMembers, newTeamMembers, keyDates, opportunityAreas } = this.state;
+    const { step, innovationName, logo, curTeamMembers, newTeamMembers, innovationKeyDates, opportunityAreas } = this.state;
     const fieldsCompleted = this.fieldsCompleted();
+    const backButton = (
+      <div className="step-back-link">
+        <i className="fas fa-chevron-left"></i>
+        <span className="step-back-link-text" onClick={() => this.setState({ step: step - 1})}>Back</span>
+      </div>
+    );
     return (
       <div>
-        <h1>Create Innovation</h1>
+        <div className="create-innovation-page-title">Create Innovation</div>
         <div className="process-step-count-container">
           <div className={step === 1 ? 'process-step-count active' : 'process-step-count'}>1</div>
           <div className={step === 2 ? 'process-step-count active' : 'process-step-count'}>2</div>
@@ -88,43 +107,66 @@ class InnovationCreate extends Component {
         <div>
           {
             step === 1 &&
+            <div>
               <InnovationAddDetails
                 innovationName={innovationName}
                 updateInnovationName={this.updateDetails}
                 innovationLogo={logo}
                 updateInnovationLogo={this.updateInnovationLogo}
               />
+              <div className="create-innovation-user-actions">
+                <ButtonSubmit label="Next" onClick={() => this.setState({ step: step + 1})} />
+              </div>
+            </div>
           }
           {
             step === 2 &&
             <div>
               <InnovationAddTeam
+                innovationName={innovationName}
                 addNewTeamMember={this.addNewTeamMember}
                 removeNewTeamMember={this.removeNewTeamMember}
                 curTeamMembers={curTeamMembers}
                 newTeamMembers={newTeamMembers}
                 allVentureViewUsers={allUsers}
               />
-              {
-                newTeamMembers.length > 0
-                  // TODO: Save the users within the innovation with a status of invited, once they join this can be updated.
-                  ?  <ButtonSubmit label="Send Invites" onClick={this.sendNewMemberInvites} />
-                  :  <ButtonSubmit label="Skip Step" onClick={() => this.setState({ step: step + 1})} />
-              }
+              <div className="create-innovation-user-actions">
+                {backButton}
+                {
+                  newTeamMembers.length > 0
+                    // TODO: Save the users within the innovation with a status of invited, once they join this can be updated.
+                    ?  <ButtonSubmit label="Send Invites" onClick={this.sendNewMemberInvites} />
+                    :  <ButtonSubmit label="Skip Step" onClick={() => this.setState({ step: step + 1})} />
+                }
+              </div>
             </div>
           }
           {
             step === 3 &&
-              <InnovationAddDates></InnovationAddDates>
+            <div>
+              <InnovationAddDates
+                requiredKeyDates={requiredKeyDates}
+                innovationKeyDates={innovationKeyDates}
+                editKeyDate={this.editKeyDate}
+              />
+              <div className="create-innovation-user-actions">
+                {backButton}
+                <ButtonSubmit label="Next" onClick={() => this.setState({ step: step + 1})} />
+              </div>
+            </div>
           }
           {
             step === 4 &&
             <div>
               <InnovationAddAreas></InnovationAddAreas>
-              <ButtonSubmit disabled={!fieldsCompleted} label="Complete" onClick={this.submitNewInnovation} />
+              <div className="create-innovation-user-actions">
+                {backButton}
+                <ButtonSubmit disabled={!fieldsCompleted} label="Complete" onClick={this.submitNewInnovation} />
+              </div>
             </div>
           }
         </div>
+
       </div>
     )
   }

@@ -8,45 +8,51 @@ import { validateEmail } from '../../utils/functions';
 
 import '../../styles/css/innovation-add-team.css';
 
-// TODO: get these users from the API.
-const allUsers = [ 'a@a.com', 'b@b.com', 'c@c.com', 'd@d.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
-const curInnovationUsers = [ 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
-
 class InnovationAddTeam extends Component {
   state = {
-    newMemberEmail: '',
-    selectedUsers: [] // Users that are currently selected from the list of all venture-view users.
+    newMemberEmail: ''
   }
 
   handleAddingEmail = (e) => {
     this.setState({ newMemberEmail: e.target.value })
   }
 
-  addMemberEmail = () => {
-    const { newMemberEmail, selectedUsers } = this.state;
+  addMemberViaEmailInput = (email) => {
     const { addNewTeamMember } = this.props;
-    console.log('newMemberEmail', newMemberEmail);
-    addNewTeamMember(newMemberEmail);
-    this.setState({
-      newMemberEmail: '',
-      selectedUsers: [ ...selectedUsers, newMemberEmail ]
-    })
+    addNewTeamMember(email);
+    this.setState({ newMemberEmail: '' })
   }
 
   render() {
-    const { teamMembers } = this.props;
-    const { newMemberEmail, selectedUsers } = this.state;
+    const { curTeamMembers, newTeamMembers, addNewTeamMember, removeNewTeamMember, allVentureViewUsers } = this.props;
+    const { newMemberEmail } = this.state;
     const isValidEmail  = validateEmail(newMemberEmail);
-    console.log('teamMembers', teamMembers);
     return (
       <div>
         <div>
+          <div>Current Team members</div>
+          <div style={{ display: 'flex' }} >
           {
-            teamMembers.map(member => (
-              <h3 key={member}>{member}</h3>
+            curTeamMembers.map(member => (
+              <span key={member} style={{ padding: '5px' }}>{member}</span>
             ))
           }
+          </div>
         </div>
+        { newTeamMembers.length > 0 &&
+          <div className="innovation-selected-users">
+            {
+              newTeamMembers.map(newTeamMemberEmail => (
+                <div key={`selected-user-${newTeamMemberEmail}`} className="innovation-selected-user">
+                  <div className="selected-user-email">{newTeamMemberEmail}</div>
+                  <div className="remove-selected-user-icon-container" onClick={() => removeNewTeamMember(newTeamMemberEmail)}>
+                    <i className="fas fa-times remove-selected-user-icon" />
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        }
         <div className="innovation-add-user-container">
           {/* {validateEmail(newMemberEmail) && getById(ventureUsers, newUser, 'email') &&
             <div className="add-new-user-error">User already a member</div>
@@ -59,27 +65,31 @@ class InnovationAddTeam extends Component {
             placeholder="Type to search / invite new user..."
           />
           {  isValidEmail &&
-              <i onClick={this.addMemberEmail} className="fa fa-user-plus add-user-icon"></i>
+              <i onClick={() => this.addMemberViaEmailInput(newMemberEmail)} className="fa fa-user-plus add-user-icon"></i>
           }
         </div>
-        <div className='all-venture-view-users'>
+        <div className='innovation-all-users-list'>
           {
-            console.log(allUsers)
-          }
-          {
-            allUsers.filter(userEmail => !allUsers.includes(userEmail))
-                    .map(newUserEmail => {
-                      console.log('filtered user email', newUserEmail);
-                      const userSelected = selectedUsers.includes(newUserEmail);
+            allVentureViewUsers.length > 0 &&
+                    allVentureViewUsers.filter(userEmail =>
+                              !newTeamMembers.includes(userEmail) &&
+                              !curTeamMembers.includes(userEmail)
+                            )
+                    .map(availableUserEmail => {
                       return (
-                        <div className='venture-all-users-list'>
-                          <div className={classnames('check-mark', {'selected': userSelected})}>
-                            {userSelected && <i className="fas fa-check"></i>}
-                          </div>
-                          {newUserEmail}
+                        <div key={`list-${availableUserEmail}`} onClick={() => addNewTeamMember(availableUserEmail)} className='innovation-all-users-list-item'>
+                          <i className="fas fa-plus"></i>
+                          <span className="user-list-email-name">{availableUserEmail}</span>
                         </div>
                       )
                     })
+          }
+          {
+            !allVentureViewUsers.length > 0 &&
+              <div className="all-users-list-empty">
+                <p>No existing users to show</p>
+                <p>Enter a full email address to invite a new user</p>
+              </div>
           }
         </div>
       </div>

@@ -1,0 +1,49 @@
+@import './modules/colors.scss';
+
+.create-innovation-page-title {
+  text-align: center;
+}
+
+.process-step-count-container {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 15px 0;
+}
+
+.process-step-count {
+  border-radius: 50%;
+  border: 1px solid $text-offset;
+  color: $text-offset;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px;
+
+  &.active {
+    border: 1px solid $green;
+  }
+}
+
+.create-innovation-user-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 0;
+
+  &.step-1 {
+    justify-content: flex-end;    
+  }
+}
+
+.step-back-link {
+  color: $text-off-white;
+  cursor: pointer;
+}
+
+.step-back-link-text {
+  padding-left: 8px;
+  font-size: 14px;
+}

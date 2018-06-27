@@ -147,7 +147,13 @@ class GroupPositions extends Component {
               )
             })
           }
+            <div className="group-position-benchmark benchmark-0" />
+            <div className="group-position-benchmark benchmark-25" />
+            <div className="group-position-benchmark benchmark-50" />
+            <div className="group-position-benchmark benchmark-75" />
+            <div className="group-position-benchmark benchmark-100" />
           </ContentBox>
+
         </div>
       </div> 
     );

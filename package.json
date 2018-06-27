@@ -40,7 +40,7 @@
     "preeslint": "echo 'Running eslint'",
     "eslint": "eslint src",
     "presasslint": "echo 'Running sasslint'",
-    "sasslint": "sass-lint -c .sass-lint.yml '**/*.scss' -v --no-exit",
+    "sasslint": "sass-lint -c .sass-lint.yml 'src/styles/sass/*.scss' -v --no-exit",
     "precommit-msg": "echo 'Pre-commit checks... linting Sass and JS, please fix any errors'"
   },
   "pre-commit": [ "precommit-msg", "lint" ],

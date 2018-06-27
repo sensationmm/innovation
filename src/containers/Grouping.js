@@ -25,6 +25,7 @@ class Grouping extends Component {
       filterIdeation: null,
       filterTechnology: null,
       filterArchetype: null,
+      focusGroup: null
     };
   }
 
@@ -103,8 +104,15 @@ class Grouping extends Component {
     })
   }
 
+  setFocus = (group) => {
+    this.setState({
+      ...this.state,
+      focusGroup: group
+    })
+  }
+
   render() {
-    const { group, filterIdeation, filterTechnology, filterArchetype } = this.state;
+    const { group, filterIdeation, filterTechnology, filterArchetype, focusGroup } = this.state;
     const { conceptsById, portfolioDates } = this.props;
     const concepts = makeArrayFromIndexedObject(conceptsById);
 
@@ -128,15 +136,20 @@ class Grouping extends Component {
         <FlexRow key={`row-${count}`}>
         {
           row.map((group, count2) => {
+            if(focusGroup && focusGroup !== groupingLabels[(count*2) + count2]) {
+              return null;
+            }
+
             if(!groupingLabels[(count*2) + count2]) {
               return <div key={`group-${count2}`} className="spacer" />;
             }
 
             return (
-              <ContentBox key={`group-${count2}`}>
+              <ContentBox key={`group-${count2}`} background={focusGroup === null}>
                 <Group 
                   items={group}
                   label={groupingLabels[(count*2) + count2]}
+                  onSetFocus={this.setFocus}
                 />
               </ContentBox>
             )
@@ -148,51 +161,55 @@ class Grouping extends Component {
 
     return (
       <div className="groupings">
-        <div className="groupings-select">
-          <Dropdown
-            id="riskType"
-            value={group}
-            onChange={(e) => this.changeGrouping(e.target.value)}
-            options={
-              [
-                { value: 'matrix', label: '2x2 Matrix'},
-                { value: 'opportunity', label: 'Opportunity Area'}
-              ]
-            }
-          />
-        </div>
+        {focusGroup === null &&
+          <div className="groupings-select">
+            <Dropdown
+              id="riskType"
+              value={group}
+              onChange={(e) => this.changeGrouping(e.target.value)}
+              options={
+                [
+                  { value: 'matrix', label: '2x2 Matrix'},
+                  { value: 'opportunity', label: 'Opportunity Area'}
+                ]
+              }
+            />
+          </div>
+        }
 
-        <div className="groupings-filters">
-          <TagFilter
-            label="Ideation"
-            stateItem="filterIdeation"
-            tags={ideationDates}
-            active={filterIdeation}
-            onSetFilter={this.setFilter}
-          />
+        {focusGroup === null &&
+          <div className="groupings-filters">
+            <TagFilter
+              label="Ideation"
+              stateItem="filterIdeation"
+              tags={ideationDates}
+              active={filterIdeation}
+              onSetFilter={this.setFilter}
+            />
 
-          <TagFilter
-            label="Key Tech"
-            stateItem="filterTechnology"
-            tags={keyTechs}
-            active={filterTechnology}
-            onSetFilter={this.setFilter}
-          />
+            <TagFilter
+              label="Key Tech"
+              stateItem="filterTechnology"
+              tags={keyTechs}
+              active={filterTechnology}
+              onSetFilter={this.setFilter}
+            />
 
-          <TagFilter
-            label="Archetypes"
-            stateItem="filterArchetype"
-            tags={archetypes}
-            active={filterArchetype}
-            onSetFilter={this.setFilter}
-          />
-        </div>
+            <TagFilter
+              label="Archetypes"
+              stateItem="filterArchetype"
+              tags={archetypes}
+              active={filterArchetype}
+              onSetFilter={this.setFilter}
+            />
+          </div>
+        }
 
         { group === 'matrix'
-          ? <GroupAxes labels={[
+          ? <GroupAxes labels={focusGroup === null ? [
               ['Current Revenue','New Revenue'],
               ['At Scale Horizontal','Vertical Growth']
-            ]}>
+            ] : null}>
               {boxes}
             </GroupAxes>
           : boxes

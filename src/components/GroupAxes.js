@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import '../styles/css/group-axes.css';
 
@@ -33,24 +34,28 @@ class GroupAxes extends Component {
     const { children, labels } = this.props;
 
     return (
-      <div className="group-axes" ref={(ref) => this.container = ref}>
+      <div className={classnames('group-axes', { empty: labels === null })} ref={(ref) => this.container = ref}>
         <div className="group-axes-content">{children}</div>
 
-        <div className="group-axes-labels x-axis">
-        {
-          labels[0].map((label, count) => {
-            return <div key={`label-${count}`}>{label}</div>
-          })
+        {labels &&
+          <div className="group-axes-labels x-axis">
+          {
+            labels[0].map((label, count) => {
+              return <div key={`label-${count}`}>{label}</div>
+            })
+          }
+          </div>
         }
-        </div>
 
-        <div className="group-axes-labels y-axis" style={{ width: this.state.gridHeight }}>
-        {
-          labels[1].map((label, count) => {
-            return <div key={`label-${count}`}>{label}</div>
-          })
+        {labels &&
+          <div className="group-axes-labels y-axis" style={{ width: this.state.gridHeight }}>
+          {
+            labels[1].map((label, count) => {
+              return <div key={`label-${count}`}>{label}</div>
+            })
+          }
+          </div>
         }
-        </div>
       </div>
     )
   }
@@ -61,7 +66,7 @@ GroupAxes.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]).isRequired,
-  labels: PropTypes.array.isRequired
+  labels: PropTypes.array
 };
 
 export default GroupAxes;

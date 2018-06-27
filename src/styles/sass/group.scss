@@ -1,18 +1,20 @@
 .group {
-  &-items {
-    min-height: 200px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+  height: 200px;
 
-    .concept-avatar {
+  &-items {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    height: calc(100% - 20px);
+
+    > div {
       margin: 5px;
+      transform: translateY(-50%);
     }
   }
 
   &-label {
     text-align: center;
+    height: 20px;
   }
 }

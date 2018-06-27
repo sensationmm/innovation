@@ -19,6 +19,8 @@
 
 .innovation-keydates-container {
   background: $background-grey-light;
+  margin-bottom: 2px;
+  font-size: 14px;
 }
 
 .innovation-keydate {
@@ -53,6 +55,11 @@
   background-size: 4px 5px, 5px 4px;
   background-repeat: no-repeat;
   cursor: pointer;
+
+  &.highlight-missing-info {
+    border: 2px solid $red;
+    color: $red;
+  }
 }
 
 .innovation-date-picker-mask {
@@ -69,7 +76,6 @@
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    z-index: 10;
   }
 }
 
@@ -92,14 +98,51 @@
 }
 
 .innovation-add-keydate-text {
+  z-index: auto;
   color: $form-element;
   font-size: 14px;
   padding-left: 15px;
 }
 
 .add-new-keydate-icon {
+  z-index: auto;
   color: $green;
   font-size: 14px;
+}
+
+.add-new-keydate-form-input {
+  background: $background-grey-light;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid $form-element;
+  color: $form-element;
+  font-size: 14px;
+  text-align: center;
+  margin-right: 20px;
+  z-index: auto;
+
+  &.highlight-missing-info {
+    border-bottom: 2px solid $red;
+    color: $red;
+  }
+}
+
+.add-new-keydate-actions {
+  padding-left: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  z-index: auto;
+
+  &.confirm {
+    color: $green;
+  }
+  &.cancel {
+    color: $text-off-white;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .innovation-is-required {

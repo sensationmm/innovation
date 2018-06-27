@@ -31,4 +31,5 @@
   cursor: pointer; }
 
 .step-back-link-text {
-  padding-left: 8px; }
+  padding-left: 8px;
+  font-size: 14px; }

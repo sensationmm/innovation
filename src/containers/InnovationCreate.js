@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
@@ -22,7 +23,7 @@ const keyDates = [
   {id: 2, name: 'IS1', date: '', type: 'required'},
   {id: 3, name: 'IS2', date: '', type: 'required'},
   {id: 4, name: 'IS3', date: '', type: 'required'},
-  {id: 5, name: 'Custom1', date: '01/01/2000', type: 'custom'}
+  {id: 5, name: 'Custom1', date: moment('01/01/2000'), type: 'custom'}
 ]
 
 class InnovationCreate extends Component {
@@ -53,13 +54,18 @@ class InnovationCreate extends Component {
     this.setState({ newTeamMembers: newTeamMembers.filter(teamMember => teamMember !== email) })
   }
 
+  createNewKeyDate = (id, name, date) => {
+    const { innovationKeyDates } = this.state;
+    this.setState({ innovationKeyDates:  [ ...innovationKeyDates, { id, name, date, type: 'custom' } ] })
+  }
+
   editKeyDate = (keyDateId, key, value) => {
     const { innovationKeyDates } = this.state;
-    const keyDateToUpdate = innovationKeyDates.filter(({ id }) => id === keyDateId)[0];
-    if (keyDateToUpdate) {
-      const otherKeyDates = innovationKeyDates.filter(({ id }) => id !== keyDateId);
-      keyDateToUpdate[key] = value;
-      this.setState({ innovationKeyDates: [ ...otherKeyDates, keyDateToUpdate ] })
+    const keyDatesCopy = [ ...innovationKeyDates ];
+    const indexToUpdate = keyDatesCopy.findIndex(keyDate => keyDate.id === keyDateId);
+    if (indexToUpdate > -1) {
+      keyDatesCopy[indexToUpdate][key] = value;
+      this.setState({ innovationKeyDates: keyDatesCopy })
     }
   }
 
@@ -146,6 +152,7 @@ class InnovationCreate extends Component {
             <div>
               <InnovationAddDates
                 innovationKeyDates={innovationKeyDates}
+                createNewKeyDate={this.createNewKeyDate}
                 editKeyDate={this.editKeyDate}
                 deleteKeyDate={this.deleteKeyDate}
               />

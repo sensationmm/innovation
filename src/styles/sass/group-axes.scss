@@ -6,6 +6,10 @@
   border-left: 2px solid $form-element;
   border-bottom: 2px solid $form-element;
 
+  &.empty {
+    border: 0;
+  }
+
   &-labels {
     position: absolute;
     display: flex;

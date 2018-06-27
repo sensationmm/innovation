@@ -7,9 +7,8 @@ import PropTypes from 'prop-types';
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import InnovationAddDates from '../components/innovation/InnovationAddDates';
-import InnovationAddAreas from '../components/innovation/InnovationAddAreas';
 
-import ButtonSubmit from '../components/buttons/ButtonSubmit';
+import ButtonInnovationNext from '../components/buttons/ButtonInnovationNext';
 
 import '../styles/css/innovation-create.css';
 
@@ -18,11 +17,12 @@ import { createInnovation } from '../actions/innovations';
 // TODO: get data from the API or from config
 const allUsers = [ 'a@notinn.com', 'b@notinn.com', 'c@notinn.com', 'd@notinn.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
 const curInnovationUsers = [ 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
-const requiredKeyDates = [
-  {id: 1, name: 'Ideation', date: ''},
-  {id: 2, name: 'IS1', date: ''},
-  {id: 3, name: 'IS2', date: ''},
-  {id: 4, name: 'IS3', date: ''}
+const keyDates = [
+  {id: 1, name: 'Ideation', date: '', type: 'required'},
+  {id: 2, name: 'IS1', date: '', type: 'required'},
+  {id: 3, name: 'IS2', date: '', type: 'required'},
+  {id: 4, name: 'IS3', date: '', type: 'required'},
+  {id: 5, name: 'Custom1', date: '01/01/2000', type: 'custom'}
 ]
 
 class InnovationCreate extends Component {
@@ -32,9 +32,7 @@ class InnovationCreate extends Component {
     logo: {},
     curTeamMembers: curInnovationUsers,
     newTeamMembers: [],
-    requiredKeyDates: requiredKeyDates,
-    customKeyDates: [],
-    opportunityAreas: []
+    innovationKeyDates: keyDates
   }
 
   updateDetails = (key, value) => {
@@ -55,17 +53,24 @@ class InnovationCreate extends Component {
     this.setState({ newTeamMembers: newTeamMembers.filter(teamMember => teamMember !== email) })
   }
 
-  sendNewMemberInvites = () => {
-    const { newTeamMembers, step } = this.state;
-    // TODO: Loop through all new members and make api call to send invites to all of them.
-    this.setState({ step: step + 1})
+  editKeyDate = (keyDateId, key, value) => {
+    const { innovationKeyDates } = this.state;
+    const keyDateToUpdate = innovationKeyDates.filter(({ id }) => id === keyDateId)[0];
+    if (keyDateToUpdate) {
+      const otherKeyDates = innovationKeyDates.filter(({ id }) => id !== keyDateId);
+      keyDateToUpdate[key] = value;
+      this.setState({ innovationKeyDates: [ ...otherKeyDates, keyDateToUpdate ] })
+    }
   }
 
-  editKeyDate = (id, key, value) => {
-    console.log(id, key, value);
+  deleteKeyDate = (keyDateId) => {
+    const { innovationKeyDates } = this.state;
+    const newKeyDates = innovationKeyDates.filter(keyDate => keyDate.id !== keyDateId);
+    this.setState({ innovationKeyDates: newKeyDates })
   }
 
   submitNewInnovation = () => {
+    // Need to also send all user invites at this stage.
     console.log('Call create a new innovation action');
   }
 
@@ -76,13 +81,10 @@ class InnovationCreate extends Component {
       return innovationName && logo;
     }
     if (step === 3) {
-      const { requiredKeyDates } = this.state;
+      const { innovationKeyDates } = this.state;
+      const requiredKeyDates = innovationKeyDates.filter(keyDate => keyDate.type === 'required')
       // TODO: Check for presence of all of the required keyDates (IS1 -> 3)
-      return requiredKeyDates.length >= 4;
-    }
-    if (step === 4) {
-      const { opportunityAreas } = this.state;
-      return opportunityAreas.length >= 1;
+      return requiredKeyDates.length >= 4 && requiredKeyDates.every(keyDate => keyDate.date);
     }
   }
 
@@ -102,7 +104,6 @@ class InnovationCreate extends Component {
           <div className={step === 1 ? 'process-step-count active' : 'process-step-count'}>1</div>
           <div className={step === 2 ? 'process-step-count active' : 'process-step-count'}>2</div>
           <div className={step === 3 ? 'process-step-count active' : 'process-step-count'}>3</div>
-          <div className={step === 4 ? 'process-step-count active' : 'process-step-count'}>4</div>
         </div>
         <div>
           {
@@ -115,7 +116,7 @@ class InnovationCreate extends Component {
                 updateInnovationLogo={this.updateInnovationLogo}
               />
               <div className="create-innovation-user-actions">
-                <ButtonSubmit label="Next" onClick={() => this.setState({ step: step + 1})} />
+                <ButtonInnovationNext label="Next" onClick={() => this.setState({ step: step + 1})} />
               </div>
             </div>
           }
@@ -134,9 +135,8 @@ class InnovationCreate extends Component {
                 {backButton}
                 {
                   newTeamMembers.length > 0
-                    // TODO: Save the users within the innovation with a status of invited, once they join this can be updated.
-                    ?  <ButtonSubmit label="Send Invites" onClick={this.sendNewMemberInvites} />
-                    :  <ButtonSubmit label="Skip Step" onClick={() => this.setState({ step: step + 1})} />
+                    ?  <ButtonInnovationNext label="Next" onClick={() => this.setState({ step: step + 1})} />
+                    :  <ButtonInnovationNext label="Skip Step" onClick={() => this.setState({ step: step + 1})} />
                 }
               </div>
             </div>
@@ -145,23 +145,17 @@ class InnovationCreate extends Component {
             step === 3 &&
             <div>
               <InnovationAddDates
-                requiredKeyDates={requiredKeyDates}
                 innovationKeyDates={innovationKeyDates}
                 editKeyDate={this.editKeyDate}
+                deleteKeyDate={this.deleteKeyDate}
               />
               <div className="create-innovation-user-actions">
                 {backButton}
-                <ButtonSubmit label="Next" onClick={() => this.setState({ step: step + 1})} />
-              </div>
-            </div>
-          }
-          {
-            step === 4 &&
-            <div>
-              <InnovationAddAreas></InnovationAddAreas>
-              <div className="create-innovation-user-actions">
-                {backButton}
-                <ButtonSubmit disabled={!fieldsCompleted} label="Complete" onClick={this.submitNewInnovation} />
+                {
+                  fieldsCompleted
+                    ? <ButtonInnovationNext label="Complete Setup" onClick={this.submitNewInnovation} />
+                    : <ButtonInnovationNext disabled={true} label="Enter Required Dates" />
+                }
               </div>
             </div>
           }

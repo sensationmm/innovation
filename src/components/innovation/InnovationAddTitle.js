@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Uploader from '../Uploader';
 
-import '../../styles/css/innovation-add-details.css';
+import '../../styles/css/innovation-add-title.css';
 
 const InnovationAddDetails = (props) => {
   const { innovationName, innovationLogo, updateInnovationName, updateInnovationLogo } = props;
   return (
     <div>
-      <div className="innovation-add-details-name">
+      <div className="innovation-add-title-name">
         <input
           type="text"
           id="title"
-          placeholder="Add innovation name"
+          placeholder="Enter innovation name"
           onChange={(e) => updateInnovationName('innovationName', e.target.value)}
           value={innovationName}
         />
       </div>
-      <div className="innovation-add-details-logo">
-        <Uploader logo={innovationLogo} storeLogo={updateInnovationLogo}/>
+      <div className="innovation-add-title-logo">
+        <Uploader
+          logo={innovationLogo}
+          storeLogo={updateInnovationLogo}
+          messageText="Upload Innovation Logo"
+        />
       </div>
     </div>
   )

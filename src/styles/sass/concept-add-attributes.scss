@@ -1,0 +1,92 @@
+@import './modules/colors.scss';
+
+.concept-add-attributes-header {
+  background: $background-grey-lighter;
+  padding: 20px;
+  margin-bottom: 2px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.concept-add-attributes-header-title {
+  font-weight: 500;
+  color: $text-off-white;
+  padding: 0 0 5px 0;
+}
+
+.concept-add-attributes-header-subtitle {
+  font-weight: 400;
+  color: $text-off-white;
+  font-size: 12px;
+}
+
+
+.concept-add-attributes-options-container {
+  margin: 1px 1px 12px 1px;
+  padding: 15px 20px;
+  font-size: 14px;
+  color: $text-off-white;
+
+  &.incomplete {
+    border: 2px solid $red;
+    border-radius: 6px;
+  }
+}
+
+.concept-add-attributes-option-container {
+  color: $text-off-white;
+  font-size: 13px;
+}
+
+.concept-add-attributes-options-row {
+  display: flex;
+  align-items: center;
+
+  > div {
+    flex-grow: 1;
+    width: 0; //forces equal width columns
+    margin-right: 20px;
+  }
+}
+
+.concept-add-attributes-option-input {
+  appearance: none;
+  position: relative;
+  top: 10px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  transition: all 0.15s ease-out 0s;
+  background: $text-offset;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+
+  &.radio {
+    border-radius: 15px;
+    padding: 0;
+    z-index: 1;
+  }
+
+  &.checkbox {
+    border-radius: 4px;
+    padding: 0;
+    z-index: 1;
+  }
+
+  &:checked {
+    background-color: $green;
+  }
+}
+
+.concept-attribute-checkmark {
+  position: absolute;
+  z-index: 4;
+  left: 9px;
+  top: 18px;
+  }

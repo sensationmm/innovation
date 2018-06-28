@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import ConceptV2 from './ConceptV2';
 import InnovationCreate from './InnovationCreate';
+import ConceptCreate from './ConceptCreate';
 import Grouping from './Grouping';
 import Tracking from './Tracking';
 import Header from '../components/Header';
@@ -24,6 +25,8 @@ const App = () => (
 
         <Route exact path="/innovation/create" component={InnovationCreate} />
 
+        <Route exact path="/concept/create" component={ConceptCreate} />
+        <Route exact path="/concept/:conceptId?" component={Concept} />
         <Route component={NotFound} />
       </Switch>
     </main>

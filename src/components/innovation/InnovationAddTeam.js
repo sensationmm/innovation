@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 import { validateEmail } from '../../utils/functions';
 
@@ -24,7 +21,7 @@ class InnovationAddTeam extends Component {
   }
 
   render() {
-    const { curTeamMembers, newTeamMembers, addNewTeamMember, removeNewTeamMember, allVentureViewUsers, innovationName } = this.props;
+    const { curTeamMembers, newTeamMembers, removeNewTeamMember, allVentureViewUsers, innovationName } = this.props;
     const { newMemberEmail } = this.state;
     const isValidEmail  = validateEmail(newMemberEmail);
     return (

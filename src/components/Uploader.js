@@ -43,7 +43,7 @@ class Uploader extends Component {
   }
 
   render() {
-    const { logo } = this.props;
+    const { logo, messageText } = this.props;
     const { hover, error } = this.state;
     return (
       <div className={classnames('logo-upload-container', { 'hover': hover })} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
@@ -56,6 +56,9 @@ class Uploader extends Component {
           className="logo-upload-dropzone"
           accept="image/*"
         />
+        {
+          !logo.preview && <div className="logo-upload-message-text">{messageText}</div>
+        }
         { error && <div className="logo-upload-error">{error}</div> }
       </div>
     );

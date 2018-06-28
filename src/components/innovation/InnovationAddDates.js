@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -13,8 +11,13 @@ class InnovationKeyDate extends Component {
   state = {
     openDatePicker: false
   }
+  handleEditKeyDate = (newDate) => {
+    const { id, editKeyDate } = this.props;
+    editKeyDate(id, 'date', newDate)
+    this.setState({ openDatePicker: false });
+  }
   render() {
-    const { id, date, name, editKeyDate, deleteKeyDate, type } = this.props;
+    const { id, date, name, deleteKeyDate, type } = this.props;
     const { openDatePicker } = this.state;
     return (
       <div className="innovation-keydate">
@@ -32,17 +35,12 @@ class InnovationKeyDate extends Component {
         }
         {
           openDatePicker &&
-            <div className="innovation-date-picker-mask" onClick={() => this.setState({ openDatePicker: false })}>
+            <div className="innovation-date-picker-mask">
               <DatePicker
-                openToDate={moment()}
+                openToDate={date ? date : moment()}
                 selected={date ? date : null}
-                onChange={(e) => editKeyDate(id, 'date', e)}
+                onChange={(newDate) => this.handleEditKeyDate(newDate)}
                 inline
-                fixedHeight
-                dateFormatCalendar={"MMM YYYY"}
-                showMonthDropdown
-                showYearDropdown
-                scrollableYearDropdown
               />
             </div>
         }
@@ -65,6 +63,9 @@ class AddNewKeyDateForm extends Component {
     const { missingFields } = this.state;
     const newMissingFields = missingFields.filter(field => field !== key);
     this.setState({ [key]: value, missingFields: newMissingFields })
+    if (key === 'newCustomDate') {
+      this.setState({ openDatePicker: false })
+    }
   }
 
   handleCreateNewKeyDate = () => {
@@ -87,9 +88,8 @@ class AddNewKeyDateForm extends Component {
     }
   }
   render() {
-    const { newId, createNewKeyDate, cancelNewKeyDate } = this.props;
+    const { cancelNewKeyDate } = this.props;
     const { openDatePicker, newCustomTitle, newCustomDate, missingFields } = this.state;
-    const fieldsComplete = newCustomTitle && newCustomDate;
     return (
       <div>
         <div className="innovation-keydate">
@@ -108,19 +108,16 @@ class AddNewKeyDateForm extends Component {
           </div>
           {
             openDatePicker &&
+            <div>
               <div className="innovation-date-picker-mask" onClick={() => this.setState({ openDatePicker: false })}>
-                <DatePicker
-                  openToDate={moment()}
-                  selected={newCustomDate ? newCustomDate : null}
-                  onChange={(e) => this.onChange('newCustomDate', e)}
-                  inline
-                  fixedHeight
-                  dateFormatCalendar={"MMM YYYY"}
-                  showMonthDropdown
-                  showYearDropdown
-                  scrollableYearDropdown
-                />
+              <DatePicker
+                openToDate={newCustomDate ? newCustomDate : moment()}
+                selected={newCustomDate ? newCustomDate : null}
+                onChange={(e) => this.onChange('newCustomDate', e)}
+                inline
+              />
               </div>
+            </div>
           }
           <span className="add-new-keydate-actions confirm" onClick={this.handleCreateNewKeyDate}>Confirm</span>
           <span className="add-new-keydate-actions cancel" onClick={() => cancelNewKeyDate()}>Cancel</span>
@@ -137,12 +134,12 @@ class InnovationAddDates extends Component {
 
   render() {
     const { innovationKeyDates, deleteKeyDate, editKeyDate, createNewKeyDate } = this.props;
-    const { openNewKeyDateForm, newCustomDateTitle, newCustomDateDate } = this.state;
+    const { openNewKeyDateForm } = this.state;
     return (
       <div>
         <div className="innovation-add-dates-header">
           <div className="innovation-add-dates-header-title">Enter Immersion Session Key Dates</div>
-          <div className="innovation-add-dates-header-subtitle">These are required to create your innovation timeline, you can edit these later if required</div>
+          <div className="innovation-add-dates-header-subtitle">These are required to create your innovation timeline, you can edit these later if you need to</div>
         </div>
         <div className="innovation-keydates-container">
           <div className="innovation-keydates">

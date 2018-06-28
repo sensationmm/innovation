@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../styles/css/button-innovation-next.css';
+import '../../styles/css/button-next.css';
 
 /**
  * ButtonSubmit

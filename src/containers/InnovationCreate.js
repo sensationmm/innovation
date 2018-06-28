@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
+import InnovationAddTitle from '../components/innovation/InnovationAddTitle';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import InnovationAddDates from '../components/innovation/InnovationAddDates';
 
-import ButtonInnovationNext from '../components/buttons/ButtonInnovationNext';
+import ButtonNext from '../components/buttons/ButtonNext';
 
 import '../styles/css/innovation-create.css';
 
@@ -22,13 +21,12 @@ const keyDates = [
   {id: 1, name: 'Ideation', date: '', type: 'required'},
   {id: 2, name: 'IS1', date: '', type: 'required'},
   {id: 3, name: 'IS2', date: '', type: 'required'},
-  {id: 4, name: 'IS3', date: '', type: 'required'},
-  {id: 5, name: 'Custom1', date: moment('01/01/2000'), type: 'custom'}
+  {id: 4, name: 'IS3', date: '', type: 'required'}
 ]
 
 class InnovationCreate extends Component {
   state = {
-    step: 3,
+    step: 1,
     innovationName: '',
     logo: {},
     curTeamMembers: curInnovationUsers,
@@ -77,10 +75,11 @@ class InnovationCreate extends Component {
 
   submitNewInnovation = () => {
     // Need to also send all user invites at this stage.
+    console.log('state', this.state);
     console.log('Call create a new innovation action');
   }
 
-  fieldsCompleted = () => {
+  fieldsAreCompleted = () => {
     const { step } = this.state;
     if (step === 1) {
       const { innovationName, logo } = this.state;
@@ -95,8 +94,8 @@ class InnovationCreate extends Component {
   }
 
   render() {
-    const { step, innovationName, logo, curTeamMembers, newTeamMembers, innovationKeyDates, opportunityAreas } = this.state;
-    const fieldsCompleted = this.fieldsCompleted();
+    const { step, innovationName, logo, curTeamMembers, newTeamMembers, innovationKeyDates } = this.state;
+    const fieldsAreCompleted = this.fieldsAreCompleted();
     const backButton = (
       <div className="step-back-link">
         <i className="fas fa-chevron-left"></i>
@@ -115,14 +114,18 @@ class InnovationCreate extends Component {
           {
             step === 1 &&
             <div>
-              <InnovationAddDetails
+              <InnovationAddTitle
                 innovationName={innovationName}
                 updateInnovationName={this.updateDetails}
                 innovationLogo={logo}
                 updateInnovationLogo={this.updateInnovationLogo}
               />
               <div className="create-innovation-user-actions">
-                <ButtonInnovationNext label="Next" onClick={() => this.setState({ step: step + 1})} />
+                {
+                  fieldsAreCompleted
+                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
+                    : <ButtonNext disabled={true} label="Next" />
+                }
               </div>
             </div>
           }
@@ -141,8 +144,8 @@ class InnovationCreate extends Component {
                 {backButton}
                 {
                   newTeamMembers.length > 0
-                    ?  <ButtonInnovationNext label="Next" onClick={() => this.setState({ step: step + 1})} />
-                    :  <ButtonInnovationNext label="Skip Step" onClick={() => this.setState({ step: step + 1})} />
+                    ?  <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1})} />
+                    :  <ButtonNext label="Skip Step" onClick={() => this.setState({ step: step + 1})} />
                 }
               </div>
             </div>
@@ -159,9 +162,9 @@ class InnovationCreate extends Component {
               <div className="create-innovation-user-actions">
                 {backButton}
                 {
-                  fieldsCompleted
-                    ? <ButtonInnovationNext label="Complete Setup" onClick={this.submitNewInnovation} />
-                    : <ButtonInnovationNext disabled={true} label="Enter Required Dates" />
+                  fieldsAreCompleted
+                    ? <ButtonNext label="Complete Setup" onClick={this.submitNewInnovation} />
+                    : <ButtonNext disabled={true} label="Enter Required Dates" />
                 }
               </div>
             </div>

@@ -9,7 +9,7 @@
   justify-content: center;
   cursor: pointer;
   background: center center no-repeat;
-  background-size: 100px;
+  background-size: 50px;
   height: 300px;
 
   div {
@@ -17,21 +17,9 @@
     height: 100%;
   }
 }
-//
-// .hover:before {
-//   content: "";
-//   border: 2px dashed #fff;
-//   position: absolute;
-//   width: calc(100% - 24px);
-//   height: calc(100% - 24px);
-//   top: 10px;
-//   left: 10px;
-// }
-//
-// .logo-upload-dropzone {
-//   height: 100%;
-// }
-//
-// .venture-upload-error {
-//
-// }
+
+.logo-upload-message-text {
+  position: absolute;
+  top: 65%;
+  text-align: center;
+}

@@ -13,7 +13,7 @@ h1, h2, h3, h4, h5, p {
 header, article, section, aside, footer, div {
   display: block;
   position: relative;
-  z-index: 1; }
+  z-index: auto; }
 
 ul, li {
   padding: 0px;

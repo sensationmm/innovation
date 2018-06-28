@@ -22,12 +22,12 @@ const PortfolioSummary = props => {
       <h2>{name}</h2>
       <p>Portfolio ID: {id}</p>
       <p>Location: {location}</p>
-      <p>Opportunity Areas:<ul>
+      <p>Opportunity Areas:</p>
+      <ul>
       {opportunityAreas.map((area, count) => {
         return <li key={`area-${count}`}>{area.name}</li>
       })}
       </ul>
-      </p>
     </div> 
   );
 };

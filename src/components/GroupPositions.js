@@ -169,7 +169,7 @@ GroupPositions.propTypes = {
       logo: PropTypes.string,
       ident: PropTypes.string,
       color: PropTypes.string,
-      confidence: PropTypes.string
+      confidence: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     })
   ),
   onFocus: PropTypes.func

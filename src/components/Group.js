@@ -77,7 +77,7 @@ Group.propTypes = {
       ident: PropTypes.string,
       color: PropTypes.string,
       filteredOut: PropTypes.bool,
-      confidence: PropTypes.string
+      confidence: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     })
   ),
   onSetFocus: PropTypes.func

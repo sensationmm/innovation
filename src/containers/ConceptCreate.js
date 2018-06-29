@@ -165,18 +165,10 @@ class ConceptCreate extends Component {
 //   // TODO
 // });
 //
-<<<<<<< HEAD
+
 const mapDispatchToProps = dispatch => ({
   createConcept: bindActionCreators(createConcept, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(ConceptCreate);
-=======
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    createConcept
-  }, dispatch
-);
-
-export default connect(mapDispatchToProps, null)(ConceptCreate);
->>>>>>> components built and working - api required
+>>>>>>> innovation endpoint basic testing

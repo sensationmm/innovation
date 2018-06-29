@@ -12,7 +12,7 @@ import ButtonNext from '../components/buttons/ButtonNext';
 
 import '../styles/css/innovation-create.css';
 
-import { createInnovation } from '../actions/innovations';
+import { createInnovation, getActiveInnovationData } from '../actions/innovations';
 
 // TODO: get data from the API or from config
 const allUsers = [ 'a@notinn.com', 'b@notinn.com', 'c@notinn.com', 'd@notinn.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
@@ -77,6 +77,8 @@ class InnovationCreate extends Component {
     // Need to also send all user invites at this stage.
     console.log('state', this.state);
     console.log('Call create a new innovation action');
+    const { createInnovation } = this.props;
+    createInnovation(this.state);
   }
 
   fieldsAreCompleted = () => {
@@ -120,11 +122,11 @@ class InnovationCreate extends Component {
                 innovationLogo={logo}
                 updateInnovationLogo={this.updateInnovationLogo}
               />
-              <div className="create-innovation-user-actions">
+              <div className="create-innovation-user-actions step-1">
                 {
                   fieldsAreCompleted
                     ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                    : <ButtonNext disabled={true} label="Next" />
+                    : <ButtonNext disabled={true} label="Enter Some Details" />
                 }
               </div>
             </div>
@@ -184,10 +186,10 @@ class InnovationCreate extends Component {
 //   // TODO
 // });
 //
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    createInnovation
-  }, dispatch
-);
 
-export default connect(mapDispatchToProps, null)(InnovationCreate);
+const mapDispatchToProps = dispatch => ({
+  createInnovation: bindActionCreators(createInnovation, dispatch),
+  getActiveInnovationData: bindActionCreators(getActiveInnovationData, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(InnovationCreate);

@@ -25,6 +25,8 @@
   align-items: center;
   position: relative;
   z-index: 0; }
+  .create-innovation-user-actions.step-1 {
+    justify-content: flex-end; }
 
 .step-back-link {
   color: #eff1f2;

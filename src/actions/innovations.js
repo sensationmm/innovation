@@ -51,6 +51,7 @@ export const createInnovation = (innovationData) => async (dispatch) => {
     for (let email of newTeamMembers) {
       let role = new Role({ name: email }); // TODO. Implement access levels setup and correct attributes.
       await role.save();
+      // TODO: Once the role is saved you should add it to the Innovation
     }
     dispatch({ type: CREATE_INNOVATION_SUCCESS })
 

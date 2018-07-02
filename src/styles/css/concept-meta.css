@@ -21,6 +21,8 @@
     padding: 20px 0;
     margin-right: 80px;
     font-size: 14px; }
+    .concept-meta-stat .dropdown.small select {
+      font-size: 12px; }
     .concept-meta-stat:nth-child(2n) {
       margin-right: 0; }
     .concept-meta-stat-label {
@@ -30,4 +32,43 @@
       display: flex;
       justify-content: center;
       text-align: center;
-      min-width: 40%; }
+      min-width: 40%;
+      white-space: normal; }
+  .concept-meta-summary {
+    color: #656E74;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6; }
+  .concept-meta.stacked {
+    display: block; }
+    .concept-meta.stacked .concept-meta-label {
+      margin-bottom: 40px; }
+    .concept-meta.stacked .concept-meta-stat {
+      width: 100%;
+      margin-right: 0;
+      padding: 10px 0; }
+      .concept-meta.stacked .concept-meta-stat-content {
+        display: block;
+        text-align: left; }
+  .concept-meta.stats {
+    display: block;
+    height: 100%; }
+    .concept-meta.stats .concept-meta-stats {
+      align-items: center;
+      flex-wrap: nowrap;
+      height: 100%; }
+    .concept-meta.stats .concept-meta-spacer {
+      height: 20px;
+      width: 2px;
+      background: #656E74;
+      margin: 0 10px; }
+    .concept-meta.stats .concept-meta-stat {
+      width: auto;
+      flex-direction: column-reverse;
+      margin: 0;
+      text-align: center;
+      max-width: 200px; }
+      .concept-meta.stats .concept-meta-stat-content {
+        font-size: 20px; }
+      .concept-meta.stats .concept-meta-stat-label {
+        padding: 0; }

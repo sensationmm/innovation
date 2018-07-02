@@ -4,13 +4,22 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
 
+import jwtDecode from 'jwt-decode';
+import { authFromJWT } from './actions/auth';
+
 import App from './containers/App.js';
 
-import { getPortfolio } from './actions/portfolios';
-import { getConcepts } from './actions/concepts';
+console.log('boot up');
 
-store.dispatch(getPortfolio(1));
-store.dispatch(getConcepts(1));
+// Check if user is authed.
+const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
+console.log('storedToken', storedToken);
+let isTokenInDate = storedToken !== null && storedToken.token !== null && (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;
+console.log('isTokenInDate', isTokenInDate);
+if (true) {
+  console.log('isTokenInDate');
+ store.dispatch(authFromJWT());
+}
 
 render(
   <Provider store={store}>

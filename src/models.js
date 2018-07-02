@@ -37,6 +37,15 @@ export const Innovation = ApplicationRecord.extend({
   }
 });
 
+export const Concept = ApplicationRecord.extend({
+  static: {
+    jsonapiType: "concepts"
+  },
+  attrs: {
+
+  }
+})
+
 export const User = ApplicationRecord.extend({
   static: {
     jsonapiType: "users"
@@ -61,7 +70,7 @@ export const Role = ApplicationRecord.extend({
     name: attr(),
     email: attr(),
     user: belongsTo(),
-    innovationId: attr(),
-    innovation: belongsTo()
+    rolableId: attr(),
+    rolableType: belongsTo()
   }
 });

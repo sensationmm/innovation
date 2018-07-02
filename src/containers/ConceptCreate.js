@@ -171,4 +171,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(null, mapDispatchToProps)(ConceptCreate);
->>>>>>> innovation endpoint basic testing

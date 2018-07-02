@@ -9,14 +9,15 @@
     border-radius: 10px; }
   .progress-bar-track {
     width: 100%;
-    background: #232D33;
+    background: #656E74;
     z-index: 1; }
   .progress-bar-progress {
     background: rgba(80, 227, 194, 0.6);
     z-index: 2; }
   .progress-bar-bar {
     height: 20px;
-    z-index: 2; }
+    z-index: 2;
+    margin-bottom: 10px; }
   .progress-bar-pip {
     position: absolute;
     width: 20px;
@@ -67,3 +68,5 @@
     white-space: nowrap; }
     .progress-bar-label.past, .progress-bar-date.past {
       color: #50E3C2; }
+  .progress-bar-date {
+    color: #656E74; }

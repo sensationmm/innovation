@@ -48,8 +48,10 @@ export const createInnovation = (innovationData) => async (dispatch) => {
 
     // If there are users added then create them and add them to the innovation before saving.
     // innovationData.newTeamMembers[]
-    for (let email of newTeamMembers) {
-      let role = new Role({ name: email }); // TODO. Implement access levels setup and correct attributes.
+    for (let member of newTeamMembers) {
+      const { name, email } = member;
+      let role = new Role({ name, email, innovationId: newInnovation.id }); // TODO: Or should this be rolableId instead??
+      // TODO. Implement access levels setup and correct attributes.
       await role.save();
       // TODO: Once the role is saved you should add it to the Innovation
     }

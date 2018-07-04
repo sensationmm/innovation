@@ -37,7 +37,7 @@ const ConceptAvatar = props => {
         { filtered: filteredOut }
       )} 
       style={{ 
-        backgroundColor: !logo ? color : 'transparent',
+        backgroundColor: !logo ? color : '',
         backgroundImage: logo !== '' ? `url(${logo})` : 'none'
       }}
     >

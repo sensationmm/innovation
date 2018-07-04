@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import ConceptV2 from './ConceptV2';
 import Grouping from './Grouping';
+import Tracking from './Tracking';
 import Header from '../components/Header';
 import NotFound from '../components/NotFound';
 
@@ -17,6 +18,9 @@ const App = () => (
         <Route exact path="/" component={Home} />
         <Route exact path="/grouping" component={Grouping} />
         <Route exact path="/concept/:conceptId?" component={ConceptV2} />
+
+        <Route exact path="/tracking" component={Tracking} />
+
         <Route component={NotFound} />
       </Switch>
     </main>

@@ -42,6 +42,7 @@
       "matrix": "digitalattacker",
       "technology": "ml",
       "confidence": "72",
+      "createdAt": "2018-07-21",
       "killedAt": null
     },
     {
@@ -58,7 +59,9 @@
       "matrix": "digitalattacker",
       "technology": "iot",
       "confidence": "36",
-      "killedAt": null
+      "createdAt": "2018-05-14",
+      "killedAt": null,
+      "pivotedAt": "2018-07-21"
     },
     {
       "id": 3,
@@ -74,7 +77,8 @@
       "matrix": "reengineer",
       "technology": "ai",
       "confidence": "89",
-      "killedAt": "2018-06-18"
+      "createdAt": "2018-05-14",
+      "mergedAt": "2018-06-18"
     },
     {
       "id": 4,
@@ -90,7 +94,8 @@
       "matrix": "reimagine",
       "technology": "blockchain",
       "confidence": "18",
-      "killedAt": "2018-05-18"
+      "createdAt": "2018-05-14",
+      "killedAt": "2018-08-12"
     },
     {
       "id": 5,
@@ -106,7 +111,9 @@
       "matrix": "reimagine",
       "technology": "ml",
       "confidence": "52",
-      "killedAt": "2018-05-18"
+      "createdAt": "2018-05-14",
+      "killedAt": null,
+      "mergedAt": "2018-06-18"
     },
     {
       "id": 6,
@@ -122,7 +129,8 @@
       "matrix": "reimagine",
       "technology": "ml",
       "confidence": "27",
-      "killedAt": "2018-05-14"
+      "createdAt": "2018-05-14",
+      "mergedAt": "2018-07-24"
     },
     {
       "id": 7,
@@ -138,7 +146,8 @@
       "matrix": "digitalattacker",
       "technology": "ai",
       "confidence": "76",
-      "killedAt": "2018-05-18"
+      "createdAt": "2018-06-18",
+      "killedAt": null
     },
     {
       "id": 8,
@@ -154,7 +163,9 @@
       "matrix": "reengineer",
       "technology": "iot",
       "confidence": "34",
-      "killedAt": "2018-06-20"
+      "createdAt": "2018-05-14",
+      "killedAt": null,
+      "splitAt": "2018-06-18"
     },
     {
       "id": 9,
@@ -170,7 +181,8 @@
       "matrix": "newbusinesses",
       "technology": "iot",
       "confidence": "65",
-      "killedAt": "2018-05-18"
+      "createdAt": "2018-06-18",
+      "killedAt": null
     }
   ]
 }

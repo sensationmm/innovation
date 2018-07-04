@@ -10,7 +10,7 @@ class InnovationAddTeam extends Component {
     newMemberEmail: ''
   }
 
-  handleAddingEmail = (e) => {
+  handleEnteringEmail = (e) => {
     this.setState({ newMemberEmail: e.target.value })
   }
 
@@ -18,6 +18,16 @@ class InnovationAddTeam extends Component {
     const { addNewTeamMember } = this.props;
     addNewTeamMember(email);
     this.setState({ newMemberEmail: '' })
+  }
+
+  handleClickEnterKey = (e) => {
+    if (e.key === 'Enter') {
+      const { newMemberEmail } = this.state;
+      const isValidEmail  = validateEmail(newMemberEmail);
+      if (isValidEmail) {
+        this.addNewMember(newMemberEmail);
+      }
+    }
   }
 
   render() {
@@ -46,12 +56,13 @@ class InnovationAddTeam extends Component {
         <div className="innovation-add-user-container">
           {/* {validateEmail(newMemberEmail) && getById(ventureUsers, newUser, 'email') &&
             <div className="add-new-user-error">User already a member</div>
-            // TODO
+            // TODO: Re-implement this once we have working data.
           } */}
           <input
             type="email"
             value={newMemberEmail}
-            onChange={this.handleAddingEmail}
+            onChange={this.handleEnteringEmail}
+            onKeyPress={this.handleClickEnterKey}
             placeholder="Type to search / invite new user..."
           />
           {  isValidEmail &&
@@ -68,7 +79,11 @@ class InnovationAddTeam extends Component {
                             )
                     .map(availableUserEmail => {
                       return (
-                        <div key={`list-${availableUserEmail}`} onClick={() => this.addNewMember(availableUserEmail)} className='innovation-all-users-list-item'>
+                        <div
+                          key={`list-${availableUserEmail}`}
+                          onClick={() => this.addNewMember(availableUserEmail)}
+                          className='innovation-all-users-list-item'
+                        >
                           <i className="fas fa-plus add-user-icon"></i>
                           <span className="user-list-email-name">{availableUserEmail}</span>
                         </div>

@@ -14,6 +14,8 @@ import '../styles/css/innovation-create.css';
 
 import { createInnovation, getActiveInnovationData } from '../actions/innovations';
 
+import { getDataUri } from '../utils/functions';
+
 // TODO: get data from the API or from config
 const allUsers = [ 'a@notinn.com', 'b@notinn.com', 'c@notinn.com', 'd@notinn.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
 const curInnovationUsers = [ 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
@@ -28,7 +30,8 @@ class InnovationCreate extends Component {
   state = {
     step: 1,
     innovationName: '',
-    logo: {},
+    logo: {}, // For react-dropzone preview.
+    logoDataUri: null, // For sending to API
     curTeamMembers: curInnovationUsers,
     newTeamMembers: [],
     innovationKeyDates: keyDates
@@ -40,6 +43,9 @@ class InnovationCreate extends Component {
 
   updateInnovationLogo = (logo) => {
     this.setState({ logo });
+    getDataUri(logo.preview, (dataUri) => {
+      this.setState({ logoDataUri: dataUri })
+    })
   }
 
   addNewTeamMember = (email) => {
@@ -84,13 +90,12 @@ class InnovationCreate extends Component {
   fieldsAreCompleted = () => {
     const { step } = this.state;
     if (step === 1) {
-      const { innovationName, logo } = this.state;
-      return innovationName && logo;
+      const { innovationName } = this.state;
+      return innovationName;
     }
     if (step === 3) {
       const { innovationKeyDates } = this.state;
       const requiredKeyDates = innovationKeyDates.filter(keyDate => keyDate.type === 'required')
-      // TODO: Check for presence of all of the required keyDates (IS1 -> 3)
       return requiredKeyDates.length >= 4 && requiredKeyDates.every(keyDate => keyDate.date);
     }
   }
@@ -188,8 +193,7 @@ class InnovationCreate extends Component {
 //
 
 const mapDispatchToProps = dispatch => ({
-  createInnovation: bindActionCreators(createInnovation, dispatch),
-  getActiveInnovationData: bindActionCreators(getActiveInnovationData, dispatch)
+  createInnovation: bindActionCreators(createInnovation, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(InnovationCreate);

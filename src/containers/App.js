@@ -12,33 +12,46 @@ import Tracking from './Tracking';
 import Header from '../components/Header';
 import NotFound from '../components/NotFound';
 
+import { getActiveInnovationData } from '../actions/innovations';
+
 import '../styles/css/app.css';
 
 class App extends Component {
+  componentDidMount = () => {
+    const { authedUser, getActiveInnovationData } = this.props;
+    if (authedUser) {
+      getActiveInnovationData();
+    }
+  }
   render() {
-    let { authedUser } = this.props;
-    console.log('authedUser', authedUser);
-    authedUser = true;
+    const { authedUser } = this.props;
     return (
-          authedUser === null
-            ? <Redirect to='/inventure-login-tbc' />
-            : (
-              <div>
-                <Header />
-                <main>
-                  <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/grouping" component={Grouping} />
-                    <Route exact path="/tracking" component={Tracking} />
-                    <Route exact path="/concept/create" component={ConceptCreate} />
-                    <Route exact path="/concept/:conceptId?" component={ConceptV2} />
-                    <Route exact path="/innovation/create" component={InnovationCreate} />
-                    <Route exact path="/innovation/select" render={() => <h1>Select Innovation Screen</h1>} />
-                    <Route component={NotFound} />
-                  </Switch>
-                </main>
-              </div>
-            )
+      authedUser
+        ? (
+          <div>
+            <Header />
+            <main>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/concept/create" component={ConceptCreate} />
+                <Route exact path="/innovation/create" component={InnovationCreate} />
+                <Route exact path="/innovation/select" render={() => <h1>Select Innovation Screen</h1>} />
+                <Route exact path="/grouping" component={Grouping} />
+                <Route exact path="/tracking" component={Tracking} />
+                <Route exact path="/concept/:conceptId?" component={ConceptV2} />
+                <Route component={NotFound} />
+              </Switch>
+            </main>
+          </div>
+        )
+        : (
+          <div>
+            <Header />
+            <main>
+              You are not logged in - this needs to be a redirect or replication of the login process
+            </main>
+          </div>
+        )
     )
   }
 }
@@ -49,4 +62,8 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps,null)(App);
+const mapDispatchToProps = dispatch => ({
+  getActiveInnovationData: bindActionCreators(getActiveInnovationData, dispatch)
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

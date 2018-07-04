@@ -1,7 +1,7 @@
 import {
   CREATE_CONCEPT_BEGIN,
-  // CREATE_CONCEPT_SUCCESS,
-  // CREATE_CONCEPT_ERROR,
+  CREATE_CONCEPT_SUCCESS,
+  CREATE_CONCEPT_ERROR,
   // GET_CONCEPT_BEGIN,
   // GET_CONCEPT_SUCCESS,
   // GET_CONCEPT_ERROR,
@@ -18,9 +18,23 @@ import {
 
 import axios from 'axios';
 
-export const createConcept = (newConcept) => (dispatch) => {
-  dispatch({ type: CREATE_CONCEPT_BEGIN })
-  console.log('Creating a concept with: ', newConcept);
+import { Concept } from '../models';
+
+export const createConcept = (conceptData) => async (dispatch) => {
+  dispatch({ type: CREATE_CONCEPT_BEGIN });
+  console.log('newConcept', conceptData);
+  try {
+    let newConcept = new Concept({
+
+    })
+    await newConcept.save();
+
+    dispatch({ type: CREATE_CONCEPT_SUCCESS });
+  }
+  catch (err) {
+    console.log(err);
+    dispatch({ type: CREATE_CONCEPT_ERROR });
+  }
 }
 
 // Testing.

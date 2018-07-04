@@ -32,6 +32,8 @@ export const Innovation = ApplicationRecord.extend({
     updatedAt: attr(),
     kickedOffAt: attr(),
     logo: attr(),
+    logoName: attr(),
+    keyDates: hasMany(),
     users: hasMany(),
     roles: hasMany()
   }
@@ -42,7 +44,10 @@ export const Concept = ApplicationRecord.extend({
     jsonapiType: "concepts"
   },
   attrs: {
-
+    id: attr(),
+    name: attr(),
+    opportunityAreas: attr(),
+    archetypes: attr()
   }
 })
 
@@ -71,6 +76,21 @@ export const Role = ApplicationRecord.extend({
     email: attr(),
     user: belongsTo(),
     rolableId: attr(),
-    rolableType: belongsTo()
+    rolable: belongsTo(),
+    rolableType: attr()
+  }
+});
+
+export const KeyDate = ApplicationRecord.extend({
+  static: {
+    jsonapiType: "key_dates"
+  },
+  attrs: {
+    id: attr(),
+    name: attr(),
+    date: attr(),
+    keyDatableId: attr(),
+    keyDatable: belongsTo(),
+    keyDatableType: attr()
   }
 });

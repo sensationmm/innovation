@@ -76,8 +76,9 @@ class AddNewKeyDateForm extends Component {
       if (!newCustomDate) { missingFields.push('newCustomDate') }
       this.setState({ incompleteSubmission: true, missingFields })
     } else {
-    const { newId, createNewKeyDate } = this.props;
+    const { newId, createNewKeyDate, toggleFormOpen } = this.props;
       createNewKeyDate(newId, newCustomTitle, newCustomDate);
+      toggleFormOpen()
       this.setState({
         openDatePicker: false,
         newCustomTitle: '',
@@ -88,7 +89,7 @@ class AddNewKeyDateForm extends Component {
     }
   }
   render() {
-    const { cancelNewKeyDate } = this.props;
+    const { toggleFormOpen } = this.props;
     const { openDatePicker, newCustomTitle, newCustomDate, missingFields } = this.state;
     return (
       <div>
@@ -120,7 +121,7 @@ class AddNewKeyDateForm extends Component {
             </div>
           }
           <span className="add-new-keydate-actions confirm" onClick={this.handleCreateNewKeyDate}>Confirm</span>
-          <span className="add-new-keydate-actions cancel" onClick={() => cancelNewKeyDate()}>Cancel</span>
+          <span className="add-new-keydate-actions cancel" onClick={() => toggleFormOpen()}>Cancel</span>
         </div>
       </div>
     )
@@ -130,6 +131,10 @@ class AddNewKeyDateForm extends Component {
 class InnovationAddDates extends Component {
   state = {
     openNewKeyDateForm: false
+  }
+
+  toggleFormOpen = () => {
+    this.setState({ openNewKeyDateForm: !this.state.openNewKeyDateForm })
   }
 
   render() {
@@ -164,8 +169,9 @@ class InnovationAddDates extends Component {
               <div className="innovation-add-keydate-form">
                 <AddNewKeyDateForm
                   createNewKeyDate={createNewKeyDate}
-                  cancelNewKeyDate={() => this.setState({ openNewKeyDateForm: false })}
+                  toggleFormOpen={() => this.setState({ openNewKeyDateForm: false })}
                   newId={innovationKeyDates.length + 1}
+                  toggleForm={this.toggleForm}
                 />
               </div>
             )

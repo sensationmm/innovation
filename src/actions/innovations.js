@@ -17,15 +17,18 @@ import {
 } from '../config/constants';
 
 // Import JSON API models.
-import { Innovation, Role } from '../models';
+import { Innovation, Role, KeyDate } from '../models';
+
+import moment from 'moment';
 
 export const getActiveInnovationData = (ventureId) => async (dispatch) => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
-  console.log('getActiveInnovationData');
   try {
-    let { data } = await Innovation.find(2);
+    let { data } = await Innovation.includes([
+      "key_dates", "roles"
+    ]).find(29);
     console.log('data from DB', data);
-    dispatch({ type: GET_INNOVATION_DATA_SUCCESS })
+    dispatch({ type: GET_INNOVATION_DATA_SUCCESS, data });
     return data;
   }
   catch (err) {
@@ -35,27 +38,44 @@ export const getActiveInnovationData = (ventureId) => async (dispatch) => {
 }
 
 export const createInnovation = (innovationData) => async (dispatch) => {
-  const { innovationName, logo, newTeamMembers, innovationKeyDates } = innovationData;
+  const { innovationName, logo, logoDataUri, newTeamMembers, innovationKeyDates } = innovationData;
+  console.log('newTeamMembers', newTeamMembers);
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   console.log('Creating an innovation with: ', innovationData);
   try {
     let newInnovation = new Innovation({
       name: innovationName,
-      // logo: logo && logo.preview ? logo.preview : null // TODO. The logo file may need formatting before being sent to the API.
+      logo: logoDataUri,
+      logoName: logo.name
     })
-
+    console.log('newInnovation before save', newInnovation);
     await newInnovation.save();
-
+    console.log('newInnovation after save', newInnovation);
     // If there are users added then create them and add them to the innovation before saving.
     // innovationData.newTeamMembers[]
-    for (let member of newTeamMembers) {
-      const { name, email } = member;
-      let role = new Role({ name, email, innovationId: newInnovation.id }); // TODO: Or should this be rolableId instead??
+    for (let email of newTeamMembers) { // TODO: Revert back to member of newTeamMembers
+      // const { name, email } = member; // TODO: You will need to pass a name, and email and an access level.
+      console.log('email to add', email);
+      let role = new Role({ name: 'admin', email, rolableId: newInnovation.id, rolableType: 'Innovation' });
       // TODO. Implement access levels setup and correct attributes.
       await role.save();
       // TODO: Once the role is saved you should add it to the Innovation
     }
-    dispatch({ type: CREATE_INNOVATION_SUCCESS })
+    for (let innovationKeyDate of innovationKeyDates) { // TODO: Revert back to member of newTeamMembers
+      // const { name, email } = member; // TODO: You will need to pass a name, and email and an access level.
+      console.log('date', innovationKeyDate);
+      const { name, date } = innovationKeyDate;
+      const formattedDate = moment(date).format('YYYY-MM-DD');
+      console.log('formattedDate', formattedDate);
+      let keyDate = new KeyDate({ name, date: formattedDate, keyDatableId: newInnovation.id, keyDatableType: 'Innovation' });
+      // TODO. Implement access levels setup and correct attributes.
+      await keyDate.save();
+    }
+    let updatedInnovation = (await Innovation.includes([ { role: "users" }, "key_dates" ]).find(newInnovation.id)).data;
+    console.log('updatedInnovation', updatedInnovation);
+    let { data } = await Innovation.includes({ roles: "user" }).select(['roles']).find(newInnovation.id);
+    console.log('roles:user', data);
+    dispatch({ type: CREATE_INNOVATION_SUCCESS });
 
     // TODO: What should happen after you create an innovation. how does this process work in real life?
     // Does one innovation lead just create all the innovations, add the team, key dates etc.

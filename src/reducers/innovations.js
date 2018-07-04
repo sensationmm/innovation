@@ -11,15 +11,16 @@ const initialState = {
     dates: {},
     objectives: {},
     opportunityAreas: []
-  }
+  },
+  allInnovationsList: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
-      console.log(action.data); // TODO. This API call will also be caught on the concepts and users reducers.
-      const { activePortfolio } = action.data;
-      return { ...state, activePortfolio };
+      const keyDates = action.data.keyDates.map(keyDate => ( {...keyDate.attributes} ));
+      const activeInnovation = { ...action.data.attributes, keyDates };
+      return { ...state, activeInnovation };
     }
 
     default:

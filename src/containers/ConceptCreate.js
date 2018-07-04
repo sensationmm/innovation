@@ -105,11 +105,13 @@ class ConceptCreate extends Component {
                 conceptLogo={logo}
                 updateConceptLogo={this.updateConceptLogo}
               />
-              {
-                fieldsAreCompleted
-                  ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                  : <ButtonNext disabled={true} label="Next" />
-              }
+              <div className="create-concept-user-actions step-1">
+                {
+                  fieldsAreCompleted
+                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
+                    : <ButtonNext disabled={true} label="Next" />
+                }
+              </div>
             </div>
           }
           {

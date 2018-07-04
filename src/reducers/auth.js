@@ -1,7 +1,5 @@
 import {
-  AUTH_FROM_JWT_BEGIN,
-  AUTH_FROM_JWT_SUCCESS,
-  AUTH_FROM_JWT_ERROR
+  AUTH_FROM_JWT_SUCCESS
 } from '../config/constants';
 
 const initialState = {

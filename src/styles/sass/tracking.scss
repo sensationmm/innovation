@@ -1,0 +1,53 @@
+@import './modules/colors.scss';
+
+.tracking {
+  .concept-avatar {
+    transform: translateX(-50%);
+    background-color: $background-grey-light;
+  }
+
+  svg {
+    position: absolute;
+    left: 40px;
+    width: calc(100% - 40px - 40px);
+    height: calc(100% - 30px);
+    // border: 1px solid red;
+
+    line {
+      position: relative;
+      margin-top: 26px;
+
+      &.line, &.arrow {
+        stroke: $green;
+        stroke-width: 2px;
+      }
+
+      &.merge {
+        stroke-dasharray: 4;
+      }
+
+      &.icon {
+        stroke: white;
+        stroke-width: 2px;
+      }
+    }
+
+    circle {
+      position: relative;
+      margin-top: 26px;
+
+      &.killmark {
+        fill: red;
+      }
+    }
+  }
+
+  &-row {
+    padding: 10px 20px;
+    // border-top: 1px dashed $background-grey-lightest;
+
+    &:last-of-type {
+      // border-bottom: 1px dashed $background-grey-lightest;
+    }
+  }
+}

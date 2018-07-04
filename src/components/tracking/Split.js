@@ -15,9 +15,9 @@ import PropTypes from 'prop-types';
 
 const Split = props => {
   return [
-    <line key="progress" className="line" x1={props.start} y1={props.row} x2={props.end} y2={props.row} />,
-    <line key="splitA" className="line merge" x1={props.end} y1={props.row} x2={props.end + 25} y2={props.rowSplitA} />,
-    <line key="splitB" className="line merge" x1={props.end} y1={props.row} x2={props.end + 25} y2={props.rowSplitB} />
+    <line key="progress" className="line" x1={props.start} y1={props.row} x2={props.end - 25} y2={props.row} />,
+    <line key="splitA" className="line merge" x1={props.end - 25} y1={props.row} x2={props.end} y2={props.rowSplitA} />,
+    <line key="splitB" className="line merge" x1={props.end - 25} y1={props.row} x2={props.end} y2={props.rowSplitB} />
   ]
 };
 

@@ -23,9 +23,8 @@ import moment from 'moment';
 
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
-  console.log('getAllInnovationsList');
   try {
-    let { data } = Innovation.select([ 'id', 'title', 'logo' ]).all()
+    let { data } = await Innovation.select([ 'id', 'name', 'logo' ]).all()
     dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, data });
   }
   catch (err) {

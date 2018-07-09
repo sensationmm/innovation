@@ -10,8 +10,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
-      console.log('GET_INNOVATION_DATA_SUCCESS users', action.data);
-      let activeInnovationUsers = [];
+      const activeInnovationUsers = action.data.roles.map(({ user }) => { return { ...user.attributes } } );
       return { ...state, activeInnovationUsers }
     }
 

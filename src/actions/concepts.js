@@ -20,16 +20,18 @@ import axios from 'axios';
 
 import { Concept } from '../models';
 
-export const createConcept = (conceptData) => async (dispatch) => {
+export const createConcept = (conceptData, innovationId) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
-  console.log('newConcept', conceptData);
   try {
     let newConcept = new Concept({
-
+      name: conceptData.conceptName,
+      strapline: conceptData.conceptStrapline,
+      description: conceptData.conceptDescription,
+      innovationId: innovationId
     })
     await newConcept.save();
 
-    dispatch({ type: CREATE_CONCEPT_SUCCESS });
+    dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
   }
   catch (err) {
     console.log(err);

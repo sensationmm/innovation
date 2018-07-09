@@ -35,7 +35,8 @@ export const Innovation = ApplicationRecord.extend({
     logoName: attr(),
     keyDates: hasMany(),
     users: hasMany(),
-    roles: hasMany()
+    roles: hasMany(),
+    concepts: hasMany()
   }
 });
 
@@ -46,8 +47,12 @@ export const Concept = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     name: attr(),
+    strapline: attr(),
+    description: attr(),
     opportunityAreas: attr(),
-    archetypes: attr()
+    archetypes: attr(),
+    innovationId: attr(),
+    innovation: belongsTo()
   }
 })
 

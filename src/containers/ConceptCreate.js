@@ -8,6 +8,7 @@ import ConceptAddTitle from '../components/concept/ConceptAddTitle';
 import ConceptAddDetails from '../components/concept/ConceptAddDetails';
 import ConceptAddAttributes from '../components/concept/ConceptAddAttributes';
 
+import UserProgressIndicator from '../components/UserProgressIndicator';
 import ButtonNext from '../components/buttons/ButtonNext';
 
 import '../styles/css/concept-create.css';
@@ -50,9 +51,12 @@ class ConceptCreate extends Component {
   }
 
   submitNewConcept = () => {
+    const { createConcept, activeInnovationId } = this.props;
     // Need to also send all user invites at this stage.
     console.log('state', this.state);
     console.log('Call create a new concept action');
+    // TODO: Once concept attributes confirmed only pass that data from state, not entire state.
+    createConcept(this.state, activeInnovationId);
   }
 
   fieldsAreCompleted = () => {
@@ -90,11 +94,7 @@ class ConceptCreate extends Component {
     return (
       <div>
         <div className="create-concept-page-title">Create Concept</div>
-        <div className="process-step-count-container">
-          <div className={step === 1 ? 'process-step-count active' : 'process-step-count'}>1</div>
-          <div className={step === 2 ? 'process-step-count active' : 'process-step-count'}>2</div>
-          <div className={step === 3 ? 'process-step-count active' : 'process-step-count'}>3</div>
-        </div>
+        <UserProgressIndicator totalSteps={3} activeStep={step} />
         <div>
           {
             step === 1 &&
@@ -163,13 +163,14 @@ class ConceptCreate extends Component {
 //  // TODO
 // };
 //
-// const mapStateToProps = state => ({
-//   // TODO
-// });
-//
+
+const mapStateToProps = state => ({
+  activeInnovationId: state.innovations.activeInnovation.id,
+});
+
 
 const mapDispatchToProps = dispatch => ({
   createConcept: bindActionCreators(createConcept, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(ConceptCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(ConceptCreate);

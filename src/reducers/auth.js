@@ -9,7 +9,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case AUTH_FROM_JWT_SUCCESS: {
-      return { authedUser: { ...action.authedUser } }
+      return { authedUser: { ...action.authedUser }, isAuthorised: true }
     }
 
     default:

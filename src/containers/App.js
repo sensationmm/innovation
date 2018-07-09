@@ -12,21 +12,24 @@ import Tracking from './Tracking';
 import Header from '../components/Header';
 import NotFound from '../components/NotFound';
 
-import { getActiveInnovationData } from '../actions/innovations';
+import { getActiveInnovationData, getAllInnovationsList } from '../actions/innovations';
 
 import '../styles/css/app.css';
 
 class App extends Component {
-  componentDidMount = () => {
-    const { authedUser, getActiveInnovationData } = this.props;
-    if (authedUser) {
+  render() {
+    const { isAuthorised, getActiveInnovationData, getAllInnovationsList } = this.props;
+    if (isAuthorised) {
+      getAllInnovationsList();
+      /*
+      TODO
+        if authedUser.activeInnovationId => get data for this innovation and re-direct
+        else re-direct to innovation select screen
+      */
       getActiveInnovationData();
     }
-  }
-  render() {
-    const { authedUser } = this.props;
     return (
-      authedUser
+      isAuthorised
         ? (
           <div>
             <Header />
@@ -58,11 +61,12 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    authedUser: state.auth.authedUser
+    isAuthorised: state.auth.isAuthorised
   }
 };
 
 const mapDispatchToProps = dispatch => ({
+  getAllInnovationsList: bindActionCreators(getAllInnovationsList, dispatch),
   getActiveInnovationData: bindActionCreators(getActiveInnovationData, dispatch)
 });
 

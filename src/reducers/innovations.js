@@ -1,4 +1,5 @@
 import {
+  GET_INNOVATIONS_LIST_SUCCESS,
   GET_INNOVATION_DATA_SUCCESS
 } from '../config/constants';
 
@@ -8,7 +9,7 @@ const initialState = {
     name: null,
     color: null,
     location: null,
-    dates: {},
+    keyDates: {},
     objectives: {},
     opportunityAreas: []
   },
@@ -21,6 +22,10 @@ export default (state = initialState, action) => {
       const keyDates = action.data.keyDates.map(keyDate => ( {...keyDate.attributes} ));
       const activeInnovation = { ...action.data.attributes, keyDates };
       return { ...state, activeInnovation };
+    }
+
+    case GET_INNOVATIONS_LIST_SUCCESS: {
+      console.log('innovation list', action.data);
     }
 
     default:

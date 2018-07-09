@@ -187,6 +187,7 @@ class InnovationCreate extends Component {
 //  // TODO
 // };
 //
+
 // const mapStateToProps = state => ({
 //   // TODO
 // });

@@ -9,7 +9,7 @@ import { authFromJWT } from './actions/auth';
 
 import App from './containers/App.js';
 
-// Check if user is authed.
+// Check if a valid token is stored.
 const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
 let isTokenInDate = storedToken !== null && storedToken.token !== null && (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;
 if (isTokenInDate) {

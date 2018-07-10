@@ -38,7 +38,7 @@ class App extends Component {
         <main>
           {
             isAuthed === "authing"
-              ? <div>Logging you in...</div>
+              ? <div>Logging you in...replace with 'logging in animation'</div>
               : (
                 <Switch>
                   <PrivateRoute exact path="/" component={Home} />

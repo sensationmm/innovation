@@ -7,7 +7,7 @@ import store, { history } from './store';
 import App from './containers/App.js';
 
 import jwtDecode from 'jwt-decode';
-import { authFromJWT } from '../actions/auth';
+import { authFromJWT } from './actions/auth';
 
 const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
 let isTokenInDate = storedToken !== null && storedToken.token !== null && (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;

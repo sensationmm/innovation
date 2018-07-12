@@ -2,19 +2,16 @@ import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-class PrivateRoute extends Component {
-  render() {
-    const { component: Component } = this.props;
-    const { isAuthed, ...rest } = this.props;
-    return (
-      <Route
-        render={props => (isAuthed
-            ? <Component { ...props } />
-            : <Redirect to={`/inventure-login`} />
-        )}
-      />
-    )
-  }
+const PrivateRoute = ({ component: Component, ...rest, isAuthed }) => {
+  return (
+    <Route {...rest} render={(props) => (
+      isAuthed === "authing"
+        ? <div>Logging you in...replace with 'logging in animation'</div>
+        : isAuthed === true
+          ? <Component {...props} />
+          : <Redirect to={`/inventure-login`} />
+    )} />
+  )
 }
 
 const mapStateToProps = state => {

@@ -17,9 +17,6 @@ import PrivateRoute from './PrivateRoute';
 
 import '../styles/css/app.css';
 
-import jwtDecode from 'jwt-decode';
-import { authFromJWT } from '../actions/auth';
-
 class App extends Component {
   componentDidMount = () => {
     // Check if a valid token is stored.

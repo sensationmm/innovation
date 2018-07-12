@@ -26,11 +26,12 @@ class App extends Component {
     const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
     let isTokenInDate = storedToken !== null && storedToken.token !== null && (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;
     if (isTokenInDate) {
-      store.dispatch(authFromJWT());
+      store.dispatch(authFromJWT()); // Once authed redux state can be populated.
     }
   }
 
   render() {
+    console.log('this.props app', this.props);
     const { isAuthed } = this.props;
     return (
       <div>
@@ -47,9 +48,9 @@ class App extends Component {
                   <PrivateRoute exact path="/innovation/select" render={() => <h1>Select Innovation Screen</h1>} />
                   <PrivateRoute exact path="/grouping" component={Grouping} />
                   <PrivateRoute exact path="/tracking" component={Tracking} />
-                  <PrivateRoute exact path="/concept/:conceptId?" component={ConceptV2} />
+                  <PrivateRoute exact path="/concept/:conceptId" component={ConceptV2} />
                   <Route exact path="/inventure-login" render={() => <h1>You are not logged in (Redirect to InVenture login)</h1>} />
-                  <Route component={NotFound} />
+                  <PrivateRoute component={NotFound} />
                 </Switch>
               )
           }

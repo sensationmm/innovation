@@ -3,15 +3,36 @@ import {
   GET_INNOVATION_DATA_SUCCESS
 } from '../config/constants';
 
+
 const initialState = {
   activeInnovation: {
-    id: null,
-    name: null,
-    color: null,
-    location: null,
-    keyDates: {},
-    objectives: {},
-    opportunityAreas: []
+    id: 1,
+    name: "InVenture",
+    color: "#ff0000",
+    location: "London",
+    keyDates: {
+      "KO": "2018-05-14",
+      "IS1": "2018-06-18",
+      "IS2": "2018-08-12",
+      "IS3": "2018-09-01"
+    },
+    objectives: {
+      "KO": [
+        "Objective 1",
+        "Objective 2"
+      ],
+      "IS1": [
+        "Objective 3"
+      ],
+      "IS2": [],
+      "IS3": []
+    },
+    opportunityAreas: [
+      { "id": 1, "name": "Field Research" },
+      { "id": 2, "name": "Concept Tracking & Prioritising" },
+      { "id": 3, "name": "Concept Voting" },
+      { "id": 4, "name": "Venture Development" }
+    ]
   },
   allInnovationsList: []
 };

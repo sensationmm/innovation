@@ -19,30 +19,33 @@ class ConceptV2 extends Component {
   }
 
   render() {
-    const { 
-      conceptsById, 
+    const {
+      conceptsById,
       match: { params: { conceptId } },
-      portfolioDates,
-      portfolioLocation
+      innovationDates,
+      innovationLocation
     } = this.props;
-
-    const concept = getByKey(makeArrayFromIndexedObject(conceptsById), parseInt((conceptId) ? conceptId : 1, 10));
-
+    console.log('this.props', this.props);
+    console.log('conceptsById', conceptsById);
+    console.log('conceptId', conceptId);
+    // const concept = getByKey(makeArrayFromIndexedObject(conceptsById), parseInt((conceptId) ? conceptId : 1, 10));
+    const concept = conceptsById[conceptId];
+    console.log('concept', concept);
     if(!concept) {
       return null
     }
 
-    const conceptDetails = concept[0];
+    // const conceptDetails = concept[0];
 
     return (
       <div className='concept'>
         <ConceptHeader
-          logo={conceptDetails.logo}
-          name={conceptDetails.name}
-          strapline={conceptDetails.strapline}
-          location={portfolioLocation}
-          portfolioDates={portfolioDates}
-          killMark={conceptDetails.killedAt}
+          logo={concept.logo}
+          name={concept.name}
+          strapline={concept.strapline}
+          location={innovationLocation}
+          portfolioDates={innovationDates}
+          killMark={concept.killedAt}
         />
 
         <ContentBox background={false} padded>
@@ -126,15 +129,15 @@ ConceptV2.propTypes = {
   conceptsById: PropTypes.object,
   match: PropTypes.object,
   opportunityAreas: PropTypes.array,
-  portfolioDates: PropTypes.object,
-  portfolioLocation: PropTypes.string
+  innovationDates: PropTypes.object,
+  innovationLocation: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById,
-  opportunityAreas: state.portfolios.activePortfolio.opportunityAreas,
-  portfolioDates: state.portfolios.activePortfolio.dates,
-  portfolioLocation: state.portfolios.activePortfolio.location
+  opportunityAreas: state.innovations.activeInnovation.opportunityAreas,
+  innovationDates: state.innovations.activeInnovation.keyDates,
+  innovationLocation: state.innovations.activeInnovation.location
 });
 
 const mapDispatchToProps = dispatch =>

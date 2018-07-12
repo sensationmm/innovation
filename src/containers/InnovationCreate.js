@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import moment from 'moment';
+// import PropTypes from 'prop-types';
 
-import InnovationAddTitle from '../components/innovation/InnovationAddTitle';
+import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import InnovationAddDates from '../components/innovation/InnovationAddDates';
 
@@ -12,7 +11,7 @@ import ButtonNext from '../components/buttons/ButtonNext';
 
 import '../styles/css/innovation-create.css';
 
-import { createInnovation, getActiveInnovationData } from '../actions/innovations';
+import { createInnovation } from '../actions/innovations';
 
 import { getDataUri } from '../utils/functions';
 
@@ -106,7 +105,13 @@ class InnovationCreate extends Component {
     const backButton = (
       <div className="step-back-link">
         <i className="fas fa-chevron-left"></i>
-        <span className="step-back-link-text" onClick={() => this.setState({ step: step - 1})}>Back</span>
+        <span className="step-back-link-text"
+          onClick={
+            step === 1
+              ? () => this.props.history.goBack()
+              : () => this.setState({ step: step - 1})
+          }
+        >{step === 1 ? 'Cancel' : 'Back'}</span>
       </div>
     );
     return (
@@ -121,13 +126,14 @@ class InnovationCreate extends Component {
           {
             step === 1 &&
             <div>
-              <InnovationAddTitle
+              <InnovationAddDetails
                 innovationName={innovationName}
                 updateInnovationName={this.updateDetails}
                 innovationLogo={logo}
                 updateInnovationLogo={this.updateInnovationLogo}
               />
-              <div className="create-innovation-user-actions step-1">
+              <div className="create-innovation-user-actions">
+                {backButton}
                 {
                   fieldsAreCompleted
                     ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />

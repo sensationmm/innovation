@@ -63,12 +63,13 @@ class Uploader extends Component {
       </div>
     );
   }
-};
+}
 
 Uploader.propTypes = {
   logo: PropTypes.object,
   showLabel: PropTypes.bool,
-  storeLogo: PropTypes.func
+  storeLogo: PropTypes.func,
+  messageText: PropTypes.string
 };
 
 Uploader.defaultProps = {

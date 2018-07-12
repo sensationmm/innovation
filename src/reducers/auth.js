@@ -5,7 +5,7 @@ import {
 
 const initialState = {
   authedUser: null,
-  isAuthed: "authing"
+  isAuthed: 'authing'
 };
 
 export default (state = initialState, action) => {

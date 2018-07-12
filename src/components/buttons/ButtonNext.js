@@ -29,7 +29,8 @@ const ButtonInnovationNext = props => {
 
 ButtonInnovationNext.propTypes = {
   label: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 ButtonInnovationNext.defaultProps = {

@@ -6,13 +6,13 @@ const {
   attr,
   belongsTo,
   hasMany
-} = require("jsorm/dist/jsorm");
+} = require('jsorm/dist/jsorm');
 
 const ApplicationRecord = JSORMBase.extend({
   static: {
     baseUrl: Config.apiDomain,
     apiNamespace: Config.apiNamespace,
-    jwtStorage: "inventure-auth",
+    jwtStorage: 'inventure-auth',
     generateAuthHeader(auth) {
       const authObj = JSON.parse(auth);
       return `Bearer ${authObj.token}`
@@ -22,7 +22,7 @@ const ApplicationRecord = JSORMBase.extend({
 
 export const Innovation = ApplicationRecord.extend({
   static: {
-    jsonapiType: "innovations"
+    jsonapiType: 'innovations'
   },
   attrs: {
     id: attr(),
@@ -42,7 +42,7 @@ export const Innovation = ApplicationRecord.extend({
 
 export const Concept = ApplicationRecord.extend({
   static: {
-    jsonapiType: "concepts"
+    jsonapiType: 'concepts'
   },
   attrs: {
     id: attr(),
@@ -58,7 +58,7 @@ export const Concept = ApplicationRecord.extend({
 
 export const User = ApplicationRecord.extend({
   static: {
-    jsonapiType: "users"
+    jsonapiType: 'users'
   },
   attrs: {
     id: attr(),
@@ -74,7 +74,7 @@ export const User = ApplicationRecord.extend({
 
 export const Role = ApplicationRecord.extend({
   static: {
-    jsonapiType: "roles"
+    jsonapiType: 'roles'
   },
   attrs: {
     name: attr(),
@@ -88,7 +88,7 @@ export const Role = ApplicationRecord.extend({
 
 export const KeyDate = ApplicationRecord.extend({
   static: {
-    jsonapiType: "key_dates"
+    jsonapiType: 'key_dates'
   },
   attrs: {
     id: attr(),

@@ -24,7 +24,7 @@ import moment from 'moment';
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
   try {
-    let { data } = await Innovation.select([ 'id', 'name', 'logo' ]).all()
+    const { data } = await Innovation.select([ 'id', 'name', 'logo' ]).all()
     dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, data });
   }
   catch (err) {
@@ -36,8 +36,8 @@ export const getAllInnovationsList = () => async dispatch => {
 export const getActiveInnovationData = ventureId => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
-    let { data } = await Innovation.includes([
-      "key_dates", { roles: "user" }, "concepts"
+    const { data } = await Innovation.includes([
+      'key_dates', { roles: 'user' }, 'concepts'
     ]).find(29); // TODO: Remove hardcoded value.
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, data });
     return data;
@@ -52,7 +52,7 @@ export const createInnovation = (innovationData) => async (dispatch) => {
   const { innovationName, logo, logoDataUri, newTeamMembers, innovationKeyDates } = innovationData;
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   try {
-    let newInnovation = new Innovation({
+    const newInnovation = new Innovation({
       name: innovationName,
       logo: logoDataUri,
       logoName: logo.name
@@ -60,17 +60,17 @@ export const createInnovation = (innovationData) => async (dispatch) => {
     await newInnovation.save();
     // If there are users added then create them and add them to the innovation before saving.
     // innovationData.newTeamMembers[]
-    for (let email of newTeamMembers) { // TODO: Revert back to member of newTeamMembers
+    for (const email of newTeamMembers) { // TODO: Revert back to member of newTeamMembers
       // const { name, email } = member; // TODO: You will need to pass a name, and email and an access level.
-      let role = new Role({ name: 'admin', email, rolableId: newInnovation.id, rolableType: 'Innovation' });
+      const role = new Role({ name: 'admin', email, rolableId: newInnovation.id, rolableType: 'Innovation' });
       // TODO. Implement access levels setup and final attributes.
       await role.save();
     }
-    for (let innovationKeyDate of innovationKeyDates) {
+    for (const innovationKeyDate of innovationKeyDates) {
       // const { name, email } = member; // TODO: You will need to pass a name, and email and an access level.
       const { name, date } = innovationKeyDate;
       const formattedDate = moment(date).format('YYYY-MM-DD');
-      let keyDate = new KeyDate({ name, date: formattedDate, keyDatableId: newInnovation.id, keyDatableType: 'Innovation' });
+      const keyDate = new KeyDate({ name, date: formattedDate, keyDatableId: newInnovation.id, keyDatableType: 'Innovation' });
       await keyDate.save();
     }
 

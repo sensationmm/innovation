@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import moment from 'moment';
+// import PropTypes from 'prop-types';
 
 import ConceptAddTitle from '../components/concept/ConceptAddTitle';
 import ConceptAddDetails from '../components/concept/ConceptAddDetails';

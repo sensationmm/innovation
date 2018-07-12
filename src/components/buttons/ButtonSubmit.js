@@ -29,7 +29,8 @@ const ButtonSubmit = props => {
 
 ButtonSubmit.propTypes = {
   label: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 ButtonSubmit.defaultProps = {

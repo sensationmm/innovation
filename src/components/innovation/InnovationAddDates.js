@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import classnames from 'classnames';
@@ -95,14 +95,14 @@ class AddNewKeyDateForm extends Component {
       <div>
         <div className="innovation-keydate">
           <input
-            className={classnames("add-new-keydate-form-input", {"highlight-missing-info": missingFields.includes('newCustomTitle')})}
+            className={classnames('add-new-keydate-form-input', {'highlight-missing-info': missingFields.includes('newCustomTitle')})}
             type="text"
             value={newCustomTitle}
             placeholder="Enter Key Event"
             onChange={(e) => this.onChange('newCustomTitle', e.target.value)}
           />
           <div
-            className={classnames("innovation-keydate-date", {"highlight-missing-info": missingFields.includes('newCustomDate')})}
+            className={classnames('innovation-keydate-date', {'highlight-missing-info': missingFields.includes('newCustomDate')})}
             onClick={() => this.setState({ openDatePicker: !openDatePicker })}
           >
             {(newCustomDate) ? moment(newCustomDate).format('DD/MM/YYYY') : 'Enter date'}

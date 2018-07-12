@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-import Uploader from '../Uploader';
+// import PropTypes from 'prop-types';
 
 import '../../styles/css/concept-add-details.css';
 

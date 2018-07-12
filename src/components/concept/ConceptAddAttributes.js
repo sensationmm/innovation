@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import ContentBox from '../../components/layout/ContentBox';
@@ -39,7 +39,7 @@ class ConceptAddAttributes extends Component {
               className={
                 classnames('concept-add-attributes-option-input', {'radio': inputType === 'radio'}, {'checkbox': inputType === 'checkbox'})
               }
-              type={inputType === 'radio' ? "radio" : "checkbox"}
+              type={inputType === 'radio' ? 'radio' : 'checkbox'}
               name={id}
               id={id}
               value={name}

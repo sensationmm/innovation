@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { validateEmail } from '../../utils/functions';
 
@@ -38,7 +38,7 @@ class InnovationAddTeam extends Component {
       <div>
         <div className="innovation-selected-users-container">
           <div className="innovation-selected-users-description">
-            <span className="innovation-add-team-subtitle">Invite team members to</span> '{innovationName}'</div>
+            <span className="innovation-add-team-subtitle">Invite team members to</span><span> {innovationName}</span></div>
           <div className="innovation-selected-users">
             {
               newTeamMembers.length > 0 &&

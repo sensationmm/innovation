@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { makeArrayFromIndexedObject, getByKey } from '../utils/functions';
-
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
 import ConceptHeader from '../components/concept/ConceptHeader';
@@ -25,17 +23,11 @@ class ConceptV2 extends Component {
       innovationDates,
       innovationLocation
     } = this.props;
-    console.log('this.props', this.props);
-    console.log('conceptsById', conceptsById);
-    console.log('conceptId', conceptId);
-    // const concept = getByKey(makeArrayFromIndexedObject(conceptsById), parseInt((conceptId) ? conceptId : 1, 10));
+
     const concept = conceptsById[conceptId];
-    console.log('concept', concept);
     if(!concept) {
       return null
     }
-
-    // const conceptDetails = concept[0];
 
     return (
       <div className='concept'>

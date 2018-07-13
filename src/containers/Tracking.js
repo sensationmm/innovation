@@ -97,23 +97,47 @@ class Tracking extends Component {
               return (
                 <g key={`group-${count}`}>
                 {splitAt && 
-                  <Split start={this.calculatePos(createdAt)} end={this.calculatePos(splitAt)} row={this.calculateRowPos(count)} rowSplitA={this.calculateRowPos(count-1)} rowSplitB={this.calculateRowPos(count+1)} />
+                  <Split 
+                    start={this.calculatePos(createdAt)} 
+                    end={this.calculatePos(splitAt)} 
+                    row={this.calculateRowPos(count)} 
+                    rowSplitA={this.calculateRowPos(count-1)} 
+                    rowSplitB={this.calculateRowPos(count+1)} 
+                  />
                 }
 
                 {mergedAt &&
-                  <Merged start={this.calculatePos(createdAt)} end={this.calculatePos(mergedAt)} row={this.calculateRowPos(count)} rowMerge={this.calculateRowPos(count+1)} />
+                  <Merged 
+                    start={this.calculatePos(createdAt)} 
+                    end={this.calculatePos(mergedAt)} 
+                    row={this.calculateRowPos(count)} 
+                    rowMerge={this.calculateRowPos(count+1)} 
+                  />
                 }
 
                 {pivotedAt &&
-                  <Pivoted start={this.calculatePos(createdAt)} end={this.calculatePos(pivotedAt)} row={this.calculateRowPos(count)} rowPivot={this.calculateRowPos(count-1)} />
+                  <Pivoted 
+                    start={this.calculatePos(createdAt)} 
+                    end={this.calculatePos(pivotedAt)} 
+                    row={this.calculateRowPos(count)} 
+                    rowPivot={this.calculateRowPos(count-1)} 
+                  />
                 }
 
                 {killedAt &&
-                  <Killed start={this.calculatePos(createdAt)} end={this.calculatePos(killedAt)} row={this.calculateRowPos(count)} />
+                  <Killed 
+                    start={this.calculatePos(createdAt)} 
+                    end={this.calculatePos(killedAt)} 
+                    row={this.calculateRowPos(count)} 
+                  />
                 }
 
                 {active &&
-                  <Active start={this.calculatePos(createdAt)} end={this.calculatePos()} row={this.calculateRowPos(count)} /> 
+                  <Active 
+                    start={this.calculatePos(createdAt)} 
+                    end={this.calculatePos()} 
+                    row={this.calculateRowPos(count)} 
+                  /> 
                 }
                 </g>
               )

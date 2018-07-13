@@ -1,0 +1,61 @@
+@import './modules/colors.scss';
+
+.canvas-grid {
+  height: calc(100% - 30px);
+
+  &-header {
+    height: 30px;
+  }
+
+  &-item {
+    position: absolute;
+    padding: 5px;
+    background: $background-grey-dark;
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px white;
+    z-index: 9;
+    width: 30%;
+    height: 30%;
+    overflow: auto;
+
+    textarea {
+      background: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      color: #ffffff;
+      outline: 0;
+      border: 0;
+    }
+
+    &.active {
+      textarea {
+        color: $background-grey-dark;
+        background: #ffffff;
+      }
+    }
+  }
+
+  &-editor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background: $background-grey-dark;
+    z-index: 10;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      background: rgba($background-grey-dark, 0.4);
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+}

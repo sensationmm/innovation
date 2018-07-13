@@ -1,18 +1,18 @@
 import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
 
-import '../../styles/css/flex-row.css';
+import '../../styles/css/flex-column.css';
 
 /**
-* FlexRow
+* FlexColumn
 *
-* Wrapper component to display on a flex:row basis width equal width
+* Wrapper component to display on a flex:column basis with equal height
 *
 * @param {element|array} children - any HTML/React components to display as the content
 * @param {array} layout - array of relative width % values to pass to flex-basis. Length should match the number of children
 */
 
-const FlexRow = props => {
+const FlexColumn = props => {
   const { style } = props;
 
   const elStyle = {};
@@ -21,7 +21,7 @@ const FlexRow = props => {
   }
 
   return (
-    <div className="flex-row" style={elStyle}>
+    <div className="flex-column" style={elStyle}>
       {!props.layout && props.children}
 
       {props.layout &&
@@ -33,7 +33,7 @@ const FlexRow = props => {
   )
 };
 
-FlexRow.propTypes = {
+FlexColumn.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.array,
@@ -42,8 +42,8 @@ FlexRow.propTypes = {
   style: PropTypes.array
 };
 
-FlexRow.defaultProps = {
+FlexColumn.defaultProps = {
   layout: null
 };
 
-export default FlexRow;
+export default FlexColumn;

@@ -1,0 +1,17 @@
+.flex-column {
+  display: flex;
+  flex-direction: column;
+
+  > div {
+    flex-grow: 1;
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  > .flex-row .content-box {
+    margin-bottom: 0;
+  }
+}

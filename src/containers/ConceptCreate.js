@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import ConceptAddTitle from '../components/concept/ConceptAddTitle';
 import ConceptAddDetails from '../components/concept/ConceptAddDetails';
@@ -158,10 +158,11 @@ class ConceptCreate extends Component {
   }
 }
 
-// CreateConcept.propTypes = {
-//  // TODO
-// };
-//
+ConceptCreate.propTypes = {
+ createConcept: PropTypes.func,
+ activeInnovationId: PropTypes.number
+};
+
 
 const mapStateToProps = state => ({
   activeInnovationId: state.innovations.activeInnovation.id,

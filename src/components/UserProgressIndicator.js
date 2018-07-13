@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import '../styles/css/user-progress-indicator.css';
 
@@ -16,6 +17,11 @@ const UserProgressIndicator = (props) => {
       }
     </div>
   )
+}
+
+UserProgressIndicator.propTypes = {
+  totalSteps: PropTypes.number,
+  activeStep: PropTypes.number
 }
 
 export default UserProgressIndicator;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import ContentBox from '../../components/layout/ContentBox';
@@ -23,11 +23,13 @@ const availableArchetypes = [
 
 class ConceptAddAttributes extends Component {
   /**
-  * @param {string} optionType - the name of the options (e.g. Opportunity Areas) - or use a key / id when you have one from API
-  * @param {array {id,name}} availableOptionsArray
-   * @param {array [int]} selectedValueIds - either an array of ids or a single id value
-   * @param {string} inputType - either single select 'radio' or multi-select 'checkbox'
-   */
+    * @param {function} updateAttributeArray - function that will update an array of values that are selected for a particular checkbox form
+    * @param {function} updateAttributeValue - function that will update the value that is selected when using a radio button form
+    * @param {string} optionType - the name of the options (e.g. Opportunity Areas) - or use a key / id when you have one from API
+    * @param {array {id,name}} availableOptionsArray
+    * @param {array [int]} selectedValueIds - either an array of ids or a single id value
+    * @param {string} inputType - either single select 'radio' or multi-select 'checkbox'
+  */
   createOptions = (optionType, availableOptionsArray, selectedValueIds, inputType) => {
     const { updateAttributeArray, updateAttributeValue } = this.props
     return availableOptionsArray.map(option => {
@@ -107,8 +109,13 @@ class ConceptAddAttributes extends Component {
   }
 }
 
-export default ConceptAddAttributes;
+ConceptAddAttributes.propTypes = {
+  updateAttributeArray: PropTypes.func,
+  updateAttributeValue: PropTypes.func,
+  selectedOpportunityAreas: PropTypes.array,
+  selectedDvMatrixType: PropTypes.string,
+  selectedKeyTechnologies: PropTypes.array,
+  selectedDvArchetypes: PropTypes.array
+}
 
-// ConceptAddAttributes.propTypes = {
-//   // TODO.
-// }
+export default ConceptAddAttributes;

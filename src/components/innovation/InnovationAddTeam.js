@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { validateEmail } from '../../utils/functions';
 
@@ -103,8 +103,13 @@ class InnovationAddTeam extends Component {
   }
 }
 
-export default InnovationAddTeam;
+InnovationAddTeam.propTypes = {
+  addNewTeamMember: PropTypes.func,
+  curTeamMembers: PropTypes.array,
+  newTeamMembers: PropTypes.array,
+  removeNewTeamMember: PropTypes.func,
+  allVentureViewUsers: PropTypes.array,
+  innovationName: PropTypes.string
+}
 
-// InnovationAddTeam.propTypes = {
-//   // TODO.
-// }
+export default InnovationAddTeam;

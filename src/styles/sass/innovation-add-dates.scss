@@ -49,8 +49,8 @@
   background-color: #b2b5b7;
   font-size: 12px;
   background-image:
-    linear-gradient(45deg, transparent 50%, #808080 50%),
-    linear-gradient(135deg, #808080 50%, transparent 50%);
+  linear-gradient(45deg, transparent 50%, #808080 50%),
+  linear-gradient(135deg, #808080 50%, transparent 50%);
   background-position: calc(100% - 20px) calc(0.8em + 1px), calc(100% - 15px) calc(0.8em + 1px);
   background-size: 4px 5px, 5px 4px;
   background-repeat: no-repeat;
@@ -120,9 +120,9 @@
 
 .add-new-keydate-form-input {
   background: $background-grey-light;
-  border-left: none;
-  border-right: none;
-  border-top: none;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
   border-bottom: 1px solid $form-element;
   color: $form-element;
   font-size: 14px;

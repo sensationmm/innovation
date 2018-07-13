@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Uploader from '../Uploader';
 
@@ -29,8 +29,11 @@ const InnovationAddDetails = (props) => {
   )
 }
 
-export default InnovationAddDetails;
+InnovationAddDetails.propTypes = {
+  innovationName: PropTypes.string,
+  innovationLogo: PropTypes.object,
+  updateInnovationName: PropTypes.func,
+  updateInnovationLogo: PropTypes.func
+}
 
-// InnovationAddTeam.propTypes = {
-//   // TODO.
-// }
+export default InnovationAddDetails;

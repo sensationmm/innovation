@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
@@ -189,10 +189,10 @@ class InnovationCreate extends Component {
   }
 }
 
-// CreateInnovation.propTypes = {
-//  // TODO
-// };
-//
+InnovationCreate.propTypes = {
+ createInnovation: PropTypes.func,
+ history: PropTypes.object
+}
 
 // const mapStateToProps = state => ({
 //   // TODO

@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import '../../styles/css/concept-add-details.css';
 
@@ -29,8 +29,10 @@ const ConceptAddDetails = (props) => {
   )
 }
 
-export default ConceptAddDetails;
+ConceptAddDetails.propTypes = {
+  conceptStrapline: PropTypes.string,
+  conceptDescription: PropTypes.string,
+  updateConceptDetails: PropTypes.func
+}
 
-// ConceptAddDetails.propTypes = {
-//   // TODO.
-// }
+export default ConceptAddDetails;

@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Uploader from '../Uploader';
 
@@ -29,8 +29,13 @@ const ConceptAddTitle = (props) => {
   )
 }
 
-export default ConceptAddTitle;
 
-// ConceptAddTitle.propTypes = {
-//   // TODO.
-// }
+
+ConceptAddTitle.propTypes = {
+  conceptName: PropTypes.string,
+  conceptLogo: PropTypes.object,
+  updateConceptName: PropTypes.func,
+  updateConceptLogo: PropTypes.func
+}
+
+export default ConceptAddTitle;

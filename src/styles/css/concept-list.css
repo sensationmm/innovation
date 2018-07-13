@@ -1,0 +1,19 @@
+.concept-list-header {
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #fff;
+  margin-bottom: 20px; }
+
+.concept-list-items {
+  max-height: 300px;
+  overflow: auto; }
+
+.concept-list-item {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px; }
+  .concept-list-item-details {
+    padding-left: 10px; }
+
+.concept-list h3 {
+  margin: 0; }

@@ -1,0 +1,38 @@
+@import './modules/colors.scss';
+
+.concept-add-details-strapline {
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px;
+
+  input {
+    width: 100%;
+    border: 0;
+    padding: 15px 10px;
+    background: none;
+    font-size: 16px;
+    color: $text;
+    outline: 0;
+    text-align: center;
+  }
+}
+
+.concept-add-details-description {
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px;
+
+  textarea {
+    width: 100%;
+    border: 0;
+    padding: 15px 10px;
+    background: none;
+    font-size: 16px;
+    color: $text;
+    outline: 0;
+    text-align: center;
+    height: 300px;
+  }
+}

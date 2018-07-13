@@ -1,0 +1,5 @@
+.page-actions {
+  display: flex;
+  justify-content: center; }
+  .page-actions > div, .page-actions > button {
+    margin: 0 10px; }

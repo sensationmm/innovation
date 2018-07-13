@@ -2,25 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * PortfolioSummary
+ * InnovationSummary
  *
- * Outputs basic portfolio information
+ * Outputs basic innovation information
  *
- * @param {object} activePortfolio - from redux store
+ * @param {object} activeInnovation - from redux store
  */
 
-const PortfolioSummary = props => {
+const InnovationSummary = props => {
   const {
     id,
     name,
     location,
     opportunityAreas
-  } = props.activePortfolio;
+  } = props.activeInnovation;
 
   return (
     <div>
       <h2>{name}</h2>
-      <p>Portfolio ID: {id}</p>
+      <p>Innovation ID: {id}</p>
       <p>Location: {location}</p>
       <p>Opportunity Areas:</p>
       <ul>
@@ -28,12 +28,12 @@ const PortfolioSummary = props => {
         return <li key={`area-${count}`}>{area.name}</li>
       })}
       </ul>
-    </div> 
+    </div>
   );
 };
 
-PortfolioSummary.propTypes = {
-  activePortfolio: PropTypes.object.isRequired
+InnovationSummary.propTypes = {
+  activeInnovation: PropTypes.object.isRequired
 };
 
-export default PortfolioSummary;
+export default InnovationSummary;

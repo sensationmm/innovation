@@ -1,0 +1,168 @@
+@import './modules/colors.scss';
+
+.innovation-add-dates-header {
+  background: $background-grey-lighter;
+  padding: 20px;
+  margin-bottom: 2px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.innovation-add-dates-header-title {
+  font-weight: 500;
+  color: $background-grey-white;
+}
+
+.innovation-add-dates-header-subtitle {
+  color: $form-element;
+}
+
+.innovation-keydates-container {
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.innovation-keydate {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  position: relative;
+  z-index: auto;
+}
+
+.innovation-keydate-name {
+  text-align: right;
+  padding: 8px 25px 8px 22%;
+  width: 100px;
+  font-size: 14px;
+}
+
+.innovation-keydate-date {
+  position: relative;
+  z-index: 0;
+  width: 200px;
+  margin-right: 20px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  color: #232d33;
+  background-color: #b2b5b7;
+  font-size: 12px;
+  background-image:
+  linear-gradient(45deg, transparent 50%, #808080 50%),
+  linear-gradient(135deg, #808080 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(0.8em + 1px), calc(100% - 15px) calc(0.8em + 1px);
+  background-size: 4px 5px, 5px 4px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+
+  &.highlight-missing-info {
+    border: 2px solid $red;
+    color: $red;
+  }
+}
+
+.innovation-date-picker-mask {
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+
+  .react-datepicker {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+.react-datepicker__day, .react-datepicker__day:hover {
+  border-radius: 15px;
+}
+
+.react-datepicker__day--selected, .react-datepicker__day--selected:hover {
+  background: $green;
+}
+
+.innovation-add-keydate {
+  z-index: auto;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  background: $background-grey-light;
+  cursor: pointer;
+}
+
+.innovation-add-keydate-form {
+  z-index: auto;
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+  background: $background-grey-light;
+  align-items: center;
+}
+
+.innovation-add-keydate-text {
+  z-index: auto;
+  color: $form-element;
+  font-size: 14px;
+  padding-left: 15px;
+}
+
+.add-new-keydate-icon, .add-new-keydate-icon-container {
+  z-index: auto;
+  color: $green;
+  font-size: 14px;
+}
+
+.add-new-keydate-form-input {
+  background: $background-grey-light;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 1px solid $form-element;
+  color: $form-element;
+  font-size: 14px;
+  text-align: center;
+  margin-right: 20px;
+  z-index: auto;
+
+  &.highlight-missing-info {
+    border-bottom: 2px solid $red;
+    color: $red;
+  }
+}
+
+.add-new-keydate-actions {
+  padding-left: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  z-index: auto;
+
+  &.confirm {
+    color: $green;
+  }
+  &.cancel {
+    color: $text-off-white;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.innovation-is-required {
+  color: $text-offset;
+  font-size: 10px;
+}
+
+.innovation-delete-keydate {
+  cursor: pointer;
+}
+
+.innovation-delete-keydate-icon {
+  color: $text-offset;
+  font-size: 14px;
+}

@@ -6,11 +6,16 @@ import store, { history } from './store';
 
 import App from './containers/App.js';
 
-import { getPortfolio } from './actions/portfolios';
-import { getConcepts } from './actions/concepts';
+import jwtDecode from 'jwt-decode';
+import { authFromJWT } from './actions/auth';
 
-store.dispatch(getPortfolio(1));
-store.dispatch(getConcepts(1));
+const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
+const isTokenInDate = storedToken !== null && storedToken.token !== null && (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;
+if (isTokenInDate) {
+  store.dispatch(authFromJWT(true)); // Once authed redux state can be populated.
+} else {
+  store.dispatch(authFromJWT(false)); // Token not present or out of date.
+}
 
 render(
   <Provider store={store}>

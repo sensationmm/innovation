@@ -1,0 +1,30 @@
+.progress-dot {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ffffff; }
+  .progress-dot-inner {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 50%; }
+  .progress-dot.pink {
+    border-color: #D64A89; }
+    .progress-dot.pink .progress-dot-inner {
+      background: #D64A89; }
+  .progress-dot.green {
+    border-color: #50E3C2; }
+    .progress-dot.green .progress-dot-inner {
+      background: #50E3C2; }
+  .progress-dot.yellow {
+    border-color: #D8C444; }
+    .progress-dot.yellow .progress-dot-inner {
+      background: #D8C444; }
+  .progress-dot.blue {
+    border-color: #259AED; }
+    .progress-dot.blue .progress-dot-inner {
+      background: #259AED; }

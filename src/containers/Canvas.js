@@ -8,7 +8,7 @@ import FlexColumn from '../components/layout/FlexColumn';
 import CanvasGrid from '../components/CanvasGrid';
 
 import '../styles/css/canvas.css';
-
+ 
 const Canvas = () => {
   return (
     <div className="canvas">

@@ -38,7 +38,7 @@ export const getActiveInnovationData = ventureId => async dispatch => {
   try {
     const { data } = await Innovation.includes([
       'key_dates', { roles: 'user' }, 'concepts'
-    ]).find(29); // TODO: Remove hardcoded value.
+    ]).find(ventureId); // TODO: auth action is not calling this at the momemnt so as not to overwrite dummy data in redux store.
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, data });
     return data;
   }

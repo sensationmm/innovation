@@ -22,7 +22,7 @@ class ConceptCreate extends Component {
     conceptStrapline: '',
     conceptDescription: '',
     selectedOpportunityAreas: [],
-    selectedDvMatrixType: '',
+    selectedDvMatrixType: null,
     selectedKeyTechnologies: [],
     selectedDvArchetypes: []
   }

@@ -19,10 +19,10 @@ import { getDataUri } from '../utils/functions';
 const allUsers = [ 'a@notinn.com', 'b@notinn.com', 'c@notinn.com', 'd@notinn.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
 const curInnovationUsers = [ 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
 const keyDates = [
-  {id: 1, name: 'Ideation', date: '', type: 'required'},
-  {id: 2, name: 'IS1', date: '', type: 'required'},
-  {id: 3, name: 'IS2', date: '', type: 'required'},
-  {id: 4, name: 'IS3', date: '', type: 'required'}
+  {id: 1, name: 'Ideation', date: null, type: 'required'},
+  {id: 2, name: 'IS1', date: null, type: 'required'},
+  {id: 3, name: 'IS2', date: null, type: 'required'},
+  {id: 4, name: 'IS3', date: null, type: 'required'}
 ]
 
 class InnovationCreate extends Component {
@@ -193,11 +193,6 @@ InnovationCreate.propTypes = {
  createInnovation: PropTypes.func,
  history: PropTypes.object
 }
-
-// const mapStateToProps = state => ({
-//   // TODO
-// });
-//
 
 const mapDispatchToProps = dispatch => ({
   createInnovation: bindActionCreators(createInnovation, dispatch)

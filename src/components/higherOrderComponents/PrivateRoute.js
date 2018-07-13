@@ -16,8 +16,10 @@ const PrivateRoute = ({ component: Component, ...rest, isAuthed }) => {
 }
 
 PrivateRoute.propTypes = {
-  component: PropTypes.object,
-  isAuthed: PropTypes.bool
+  component: PropTypes.func,
+  isAuthed: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.bool
+  ])
 
 };
 

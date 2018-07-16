@@ -3,9 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import InnovationAddPartner from '../components/innovation/InnovationAddPartner';
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import InnovationAddDates from '../components/innovation/InnovationAddDates';
+import UserProgressIndicator from '../components/UserProgressIndicator';
 
 import ButtonNext from '../components/buttons/ButtonNext';
 
@@ -25,19 +27,37 @@ const keyDates = [
   {id: 4, name: 'IS3', date: null, type: 'required'}
 ]
 
+const stepTitles = ['Corporate Partner Details', 'Innovation Sprint Details', 'Assign GM']
+
 class InnovationCreate extends Component {
   state = {
-    step: 1,
-    innovationName: '',
-    logo: {}, // For react-dropzone preview.
-    logoDataUri: null, // For sending to API
-    curTeamMembers: curInnovationUsers,
-    newTeamMembers: [],
-    innovationKeyDates: keyDates
+    step: 2,
+    datePickerOpen: false,
+    partnerCCode: null,
+    partnerIndustry: null,
+    partnerCity: null,
+    partnerCountry: null,
+    partnerDescription: null,
+    innovationName: null,
+    innovationName: null,
+    dvOffice: null,
+    dvPartner1: null,
+    dvPartner2: null,
+    innovationOpenDate: null,
+    innovationDuration: null
+    // logo: {}, // For react-dropzone preview.
+    // logoDataUri: null, // For sending to API
+    // curTeamMembers: curInnovationUsers,
+    // newTeamMembers: [],
+    // innovationKeyDates: keyDates
   }
 
-  updateDetails = (key, value) => {
-    this.setState({ [key]: value })
+  updateFormField = (e) => {
+    this.setState({ [e.target.id]: e.target.value })
+  }
+
+  toggleDatePicker = () => {
+    this.setState({ datePickerOpen: !this.state.datePickerOpen });
   }
 
   updateInnovationLogo = (logo) => {
@@ -89,6 +109,10 @@ class InnovationCreate extends Component {
   fieldsAreCompleted = () => {
     const { step } = this.state;
     if (step === 1) {
+      const { partnerCCode, partnerIndustry, partnerCity, partnerCountry, partnerDescription } = this.state;
+      return partnerCCode && partnerIndustry && partnerCity && partnerCountry && partnerDescription;
+    }
+    if (step === 2) {
       const { innovationName } = this.state;
       return innovationName;
     }
@@ -100,7 +124,7 @@ class InnovationCreate extends Component {
   }
 
   render() {
-    const { step, innovationName, logo, curTeamMembers, newTeamMembers, innovationKeyDates } = this.state;
+    const { step } = this.state;
     const fieldsAreCompleted = this.fieldsAreCompleted();
     const backButton = (
       <div className="step-back-link">
@@ -116,21 +140,49 @@ class InnovationCreate extends Component {
     );
     return (
       <div>
-        <div className="create-innovation-page-title">Create Innovation</div>
-        <div className="process-step-count-container">
-          <div className={step === 1 ? 'process-step-count active' : 'process-step-count'}>1</div>
-          <div className={step === 2 ? 'process-step-count active' : 'process-step-count'}>2</div>
-          <div className={step === 3 ? 'process-step-count active' : 'process-step-count'}>3</div>
-        </div>
+        <div className="create-innovation-page-title">Create A New Innovation</div>
+        <UserProgressIndicator
+          totalSteps={3}
+          activeStep={step}
+          stepTitle={stepTitles[step-1]}
+        />
         <div>
           {
             step === 1 &&
             <div>
+              <InnovationAddPartner
+                updateFormField={this.updateFormField}
+                partnerCCode={this.state.partnerCCode}
+                partnerIndustry={this.state.partnerIndustry}
+                partnerCity={this.state.partnerCity}
+                partnerCountry={this.state.partnerCountry}
+                partnerDescription={this.state.partnerDescription}
+              />
+              <div className="create-innovation-user-actions">
+                {backButton}
+                {
+                  fieldsAreCompleted
+                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
+                    : <ButtonNext disabled={true} label="Enter Required Details" />
+                }
+              </div>
+            </div>
+          }
+          {
+            step === 2 &&
+            <div>
               <InnovationAddDetails
-                innovationName={innovationName}
-                updateInnovationName={this.updateDetails}
-                innovationLogo={logo}
-                updateInnovationLogo={this.updateInnovationLogo}
+                updateFormField={this.state.updateFormField}
+                innovationName={this.state.innovationName}
+                dvOffice={this.state.dvOffice}
+                dvPartner1={this.state.dvPartner1}
+                dvPartner2={this.state.dvPartner2}
+                innovationOpenDate={this.state.innovationOpenDate}
+                innovationDuration={this.state.innovationDuration}
+                datePickerOpen={this.state.datePickerOpen}
+                toggleDatePicker={this.toggleDatePicker}
+                // innovationLogo={logo}
+                // updateInnovationLogo={this.updateInnovationLogo}
               />
               <div className="create-innovation-user-actions">
                 {backButton}
@@ -142,8 +194,8 @@ class InnovationCreate extends Component {
               </div>
             </div>
           }
-          {
-            step === 2 &&
+          {/* {
+            step === 3 &&
             <div>
               <InnovationAddTeam
                 innovationName={innovationName}
@@ -162,8 +214,8 @@ class InnovationCreate extends Component {
                 }
               </div>
             </div>
-          }
-          {
+          } */}
+          {/* {
             step === 3 &&
             <div>
               <InnovationAddDates
@@ -181,7 +233,7 @@ class InnovationCreate extends Component {
                 }
               </div>
             </div>
-          }
+          } */}
         </div>
 
       </div>

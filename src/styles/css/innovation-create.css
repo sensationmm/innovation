@@ -1,23 +1,31 @@
 .create-innovation-page-title {
   text-align: center; }
 
-.process-step-count-container {
-  display: flex;
-  justify-content: center;
-  margin: 5px 0 15px 0; }
+.create-innovation-textinput {
+  background: #232D33;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px; }
+  .create-innovation-textinput input, .create-innovation-textinput textarea {
+    width: 100%;
+    border: 0;
+    padding: 15px 10px;
+    background: none;
+    font-size: 16px;
+    color: #ffffff;
+    outline: 0;
+    text-align: center; }
 
-.process-step-count {
-  border-radius: 50%;
-  border: 1px solid #656E74;
-  color: #656E74;
-  width: 25px;
-  height: 25px;
+.create-innovation-dropdown-container {
+  background: #232D33;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 8px; }
-  .process-step-count.active {
-    border: 1px solid #50E3C2; }
+  justify-content: center; }
+
+.create-innovation-dropdown select {
+  width: 300px; }
 
 .create-innovation-user-actions {
   display: flex;

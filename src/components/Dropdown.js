@@ -10,14 +10,15 @@ import '../styles/css/dropdown.css';
  *
  * @param {string} id - typically used to target state item in parent
  * @param {integer|string} value - selected value
- * @param {array} options - array of id:value pairs to represent select options
+ * @param {array} options - array of { value: 'value', label: 'label' } pairs to represent id/value for select options
  * @param {function} onChange - callback function when new option selected
+ * @param {string} placeholder - placeholder text to default to onload (optional)
  * @param {string} classes - addtional css classes to pass to wrapper
  * @param {string} colors - ??
  */
 
 const Dropdown = (props) => {
-  const { colors, id, value, options, onChange, classes } = props;
+  const { colors, id, value, options, onChange, classes, placeholder } = props;
   const elStyle = {};
 
   if (colors !== undefined) {
@@ -29,6 +30,10 @@ const Dropdown = (props) => {
   return (
     <div className={`dropdown ${classes}`}>
       <select id={id} value={value} onChange={onChange} style={elStyle}>
+        {
+          placeholder &&
+            <option value="" selected disabled hidden>{placeholder}</option>
+        }
         {options.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
       </select>
     </div>
@@ -36,14 +41,14 @@ const Dropdown = (props) => {
 };
 
 Dropdown.propTypes = {
-  colors: PropTypes.string, 
+  colors: PropTypes.string,
   value: PropTypes.oneOfType([
-    PropTypes.string, 
+    PropTypes.string,
     PropTypes.number
-  ]), 
-  id: PropTypes.string, 
-  options: PropTypes.array, 
-  onChange: PropTypes.func, 
+  ]),
+  id: PropTypes.string,
+  options: PropTypes.array,
+  onChange: PropTypes.func,
   classes: PropTypes.string
 };
 

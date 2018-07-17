@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
@@ -9,7 +10,7 @@ import '../styles/css/slider.css';
  *
  * Renders slidable content
  *
- * @param {number} viewable - number of children in view
+ * @param {number} viewable - number of children in view. Defaults to 1 in mobile view
  * @param {element|array} children - content to render in slider
  * @param {integer} slides - number of slides in slider (as a child component can be ssupplied this cannot be automatic)
  *
@@ -48,11 +49,13 @@ import '../styles/css/slider.css';
   }
 
   componentDidMount() {
-    const { slides, viewable } = this.props;
+    const { slides, viewable, breakpoint } = this.props;
     const sliderItems = document.querySelectorAll('.slider .slider-item');
     const maxWidth = document.getElementById('slider');
 
-    const slideWidth = maxWidth.clientWidth / viewable;
+    const slidesInView = (breakpoint !== 'mobile') ? viewable : 1;
+
+    const slideWidth = maxWidth.clientWidth / slidesInView;
 
     for(let i=0; i<sliderItems.length; i++) {
       sliderItems[i].style.width = `${slideWidth}px`;
@@ -102,11 +105,16 @@ Slider.propTypes = {
     PropTypes.element,
     PropTypes.array
   ]).isRequired,
-  slides: PropTypes.number.isRequired
+  slides: PropTypes.number.isRequired,
+  breakpoint: PropTypes.string
 };
 
 Slider.defaultProps = {
   viewable: 1
 };
 
-export default Slider;
+const mapStateToProps = state => ({
+  breakpoint: state.ui.breakpoint
+});
+
+export default connect(mapStateToProps, null)(Slider);

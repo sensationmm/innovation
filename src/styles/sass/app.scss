@@ -1,6 +1,7 @@
 // reset
 @import './modules/reset.scss';
 @import './modules/colors.scss';
+@import './modules/breakpoints.scss';
 
 body {
   background: $background-grey-dark;
@@ -17,4 +18,12 @@ main {
 
 h1, h2, h3, h4, h5 {
   font-weight: normal;
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  main {
+    width: calc(100% - 40px);
+    padding-top: 0;
+    padding-bottom: 40px;
+  }
 }

@@ -1,3 +1,5 @@
+@import './modules/breakpoints.scss';
+
 .slider {
   width: 100%;
 
@@ -32,6 +34,31 @@
     &.disabled {
       opacity: 0.4;
       pointer-events: none;
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .slider {
+    &-control {
+      &.next {
+        right: -30px;
+      }
+
+      &.prev {
+        left: -30px;
+      }
+    }
+
+    .concept-meta-spacer {
+      display: none;
+    }
+
+    .concept-meta.stats {
+      .concept-meta-stat {
+        max-width: none;
+        padding: 20px;
+      }
     }
   }
 }

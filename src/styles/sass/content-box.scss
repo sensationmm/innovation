@@ -1,4 +1,5 @@
 @import './modules/colors.scss';
+@import './modules/breakpoints.scss';
 
 .content-box {
   margin-bottom: 20px;
@@ -20,5 +21,13 @@
 
   &.padded {
     padding: 40px 50px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .content-box {
+    &.padded {
+      padding: 20px;
+    }
   }
 }

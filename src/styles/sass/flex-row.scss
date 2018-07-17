@@ -1,3 +1,5 @@
+@import './modules/breakpoints.scss';
+
 .flex-row {
   display: flex;
 
@@ -7,6 +9,17 @@
     margin-right: 20px;
 
     &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-tablet) {
+  .flex-row {
+    display: block;
+
+    > div {
+      width: auto;
       margin-right: 0;
     }
   }

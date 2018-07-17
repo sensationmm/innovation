@@ -8,9 +8,13 @@ import App from './containers/App.js';
 
 import { getPortfolio } from './actions/portfolios';
 import { getConcepts } from './actions/concepts';
+import { checkBreakPoint } from './actions/ui';
 
 store.dispatch(getPortfolio(1));
 store.dispatch(getConcepts(1));
+
+//Detect resize
+window.addEventListener('resize', () => store.dispatch(checkBreakPoint()) );
 
 render(
   <Provider store={store}>

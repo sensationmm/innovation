@@ -8,8 +8,8 @@ import { authFromJWT } from './actions/auth';
 
 import App from './containers/App.js';
 
-import { getPortfolio } from './actions/portfolios';
-import { getConcepts } from './actions/concepts';
+// import { getPortfolio } from './actions/portfolios';
+// import { getConcepts } from './actions/concepts';
 import { checkBreakPoint } from './actions/ui';
 
 const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));

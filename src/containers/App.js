@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
 import ConceptV2 from './ConceptV2';
 import InnovationCreate from './InnovationCreate';
+import InnovationComplete from './InnovationComplete';
 // import InnovationDashboard from './InnovationDashboard';
 import ConceptCreate from './ConceptCreate';
 import Grouping from './Grouping';
@@ -15,7 +16,7 @@ import Header from '../components/Header';
 import NotMobile from '../components/NotMobile';
 import NotFound from '../components/NotFound';
 
-import PrivateRoute from '../components/higherOrderComponents/PrivateRoute';
+import PrivateRoute from '../components/higherOrder/PrivateRoute';
 
 import '../styles/css/app.css';
 
@@ -25,9 +26,10 @@ const App = () => (
     <main>
       <Switch>
         <PrivateRoute exact path="/" component={Home} />
-        <PrivateRoute exact path="/concept/create" component={ConceptCreate} />
+        <PrivateRoute exact path="/create-concept" component={ConceptCreate} />
         {/* <PrivateRoute exact path="/innovation/dashboard" component={InnovationDashboard} /> */}
-        <PrivateRoute exact path="/innovation/create" component={InnovationCreate} />
+        <PrivateRoute exact path="/create-innovation" component={InnovationCreate} />
+        <PrivateRoute exact path="/complete-innovation" component={InnovationComplete} />
         <PrivateRoute exact path="/grouping" component={Grouping} />
         <PrivateRoute exact path="/tracking" component={Tracking} />
         <PrivateRoute exact path="/schedule" component={Schedule} />

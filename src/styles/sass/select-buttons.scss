@@ -1,0 +1,25 @@
+@import './modules/colors.scss';
+
+.inventure-select-buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.inventure-select-button {
+  width: 100px;
+  background: $blue-grey;
+  padding: 15px;
+  margin: 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.selected-button {
+    background: $green;
+  }
+}

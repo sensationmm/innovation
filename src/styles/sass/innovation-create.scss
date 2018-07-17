@@ -1,7 +1,44 @@
 @import './modules/colors.scss';
 
+.create-innovation-container {
+  margin-bottom: 30px;
+}
+
 .create-innovation-page-title {
   text-align: center;
+  padding: 15px;
+  font-size: 20px;
+}
+
+.create-innovation-welcome {
+  font-size: 16px;
+  padding: 15px;
+}
+
+.create-innovation-section-header {
+  background: $background-grey-lighter;
+  padding: 20px;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.create-innovation-section-header-title {
+  font-weight: 500;
+  color: $background-grey-white;
+}
+
+.create-innovation-section-header-subtitle {
+  color: $form-element;
+  font-size: 12px;
+}
+
+.create-innovation-section-header {
+  padding: 12px;
+  font-size: 16px;
+}
+
+.create-innovation-section-container {
+  margin-bottom: 10px;
 }
 
 .create-innovation-textinput {
@@ -37,17 +74,37 @@
   }
 }
 
+.create-innovation-keydate-date {
+  position: relative;
+  z-index: 0;
+  width: 260px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  color: $background-grey-light;
+  background-color: $form-element;
+  background-image:
+  linear-gradient(45deg, transparent 50%, $form-element-offset 50%),
+  linear-gradient(135deg, $form-element-offset 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(0.8em + 5px), calc(100% - 15px) calc(0.8em + 5px);
+  background-size: 4px 5px, 5px 4px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.create-innovation-required-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: $light-red;
+}
+
 .create-innovation-user-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   z-index: 0;
-
-  &.step-1 {
-    justify-content: flex-end;
-  }
-
 }
 
 .step-back-link {

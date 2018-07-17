@@ -3,24 +3,31 @@ import PropTypes from 'prop-types';
 
 import Dropdown from '../Dropdown';
 
+import '../../styles/css/innovation-create.css';
+
+import { industries } from '../../config/innovationOptions';
+
 const InnovationAddPartner = (props) => {
   const { updateFormField, partnerCCode, partnerName, partnerIndustry, partnerCity, partnerCountry, partnerDescription } = props;
+  const requiredLabel = (<div className="create-innovation-required-label">Required</div>);
   return (
     <div>
       <div className="create-innovation-textinput">
+        {!partnerCCode && requiredLabel}
         <input
           type="text"
           id="partnerCCode"
-          placeholder="Enter Corporate Partner's C-Code"
+          placeholder="Corporate Partner's C-Code"
           onChange={updateFormField}
           value={partnerCCode}
         />
       </div>
       <div className="create-innovation-textinput">
+        {!partnerName && requiredLabel}
         <input
           type="text"
           id="partnerName"
-          placeholder="Enter Corporate Partner's name"
+          placeholder="Corporate Partner's name"
           onChange={updateFormField}
           value={partnerName}
         />
@@ -29,9 +36,9 @@ const InnovationAddPartner = (props) => {
         <Dropdown
           id="partnerIndustry"
           value={partnerIndustry}
-          options={[{value: 'energy', label: 'Energy'},{value: 'finance', label: 'Finance'},{value: 'health', label: 'Health'}]}
+          options={industries}
           onChange={updateFormField}
-          placeholder="Select CPs industry..."
+          placeholder="CPs industry..."
           classes='create-innovation-dropdown'
         />
       </div>
@@ -39,7 +46,7 @@ const InnovationAddPartner = (props) => {
         <input
           type="text"
           id="partnerCity"
-          placeholder="Enter Corporate Partner's city"
+          placeholder="Corporate Partner's city"
           onChange={updateFormField}
           value={partnerCity}
         />
@@ -48,7 +55,7 @@ const InnovationAddPartner = (props) => {
         <input
           type="text"
           id="partnerCountry"
-          placeholder="Enter Corporate Partner country"
+          placeholder="Corporate Partners country"
           onChange={updateFormField}
           value={partnerCountry}
         />
@@ -57,7 +64,7 @@ const InnovationAddPartner = (props) => {
         <textarea
           type="text"
           id="partnerDescription"
-          placeholder="Enter a brief description CPs business"
+          placeholder="Corporate Partner business description"
           onChange={updateFormField}
           value={partnerDescription}
         />

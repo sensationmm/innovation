@@ -36,23 +36,23 @@ class InnovationAddTeam extends Component {
     const isValidEmail  = validateEmail(newMemberEmail);
     return (
       <div>
-        <div className="innovation-selected-users-container">
-          <div className="innovation-selected-users-description">
-            <span className="innovation-add-team-subtitle">Invite team members to</span><span> {innovationName}</span></div>
-          <div className="innovation-selected-users">
-            {
-              newTeamMembers.length > 0 &&
-                newTeamMembers.map(newTeamMemberEmail => (
-                  <div key={`selected-user-${newTeamMemberEmail}`} className="innovation-selected-user">
-                    <div className="selected-user-email">{newTeamMemberEmail}</div>
-                    <div className="remove-selected-user-icon-container" onClick={() => removeNewTeamMember(newTeamMemberEmail)}>
-                      <i className="fas fa-times remove-selected-user-icon" />
+        {
+          newTeamMembers.length > 0 &&
+            <div className="innovation-selected-users-container">
+              <div className="innovation-selected-users">
+                {
+                  newTeamMembers.map(newTeamMemberEmail => (
+                    <div key={`selected-user-${newTeamMemberEmail}`} className="innovation-selected-user">
+                      <div className="selected-user-email">{newTeamMemberEmail}</div>
+                      <div className="remove-selected-user-icon-container" onClick={() => removeNewTeamMember(newTeamMemberEmail)}>
+                        <i className="fas fa-times remove-selected-user-icon" />
+                      </div>
                     </div>
-                  </div>
-                ))
-            }
-          </div>
-        </div>
+                  ))
+                }
+              </div>
+            </div>
+        }
         <div className="innovation-add-user-container">
           {/* {validateEmail(newMemberEmail) && getById(ventureUsers, newUser, 'email') &&
             <div className="add-new-user-error">User already a member</div>

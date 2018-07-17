@@ -16,7 +16,6 @@ import { createConcept } from '../actions/concepts';
 
 class ConceptCreate extends Component {
   state = {
-    step: 1,
     conceptName: '',
     logo: {},
     conceptStrapline: '',
@@ -59,23 +58,9 @@ class ConceptCreate extends Component {
   }
 
   fieldsAreCompleted = () => {
-    const { step } = this.state;
-    if (step === 1) {
-      const { conceptName, logo } = this.state;
-      return conceptName && logo;
-    }
-    if (step === 2) {
-      const { conceptStrapline, conceptDescription } = this.state;
-      return conceptStrapline && conceptDescription;
-    }
-    if (step === 3) {
-      const { selectedOpportunityAreas, selectedDvMatrixType, selectedKeyTechnologies, selectedDvArchetypes } = this.state;
-
-      return selectedOpportunityAreas.length > 0 &&
-             selectedDvMatrixType !== '' &&
-             selectedKeyTechnologies.length > 0 &&
-             selectedDvArchetypes.length > 0;
-    }
+    // const { conceptName, logo, conceptStrapline } = this.state;
+    // const { conceptStrapline, conceptDescription } = this.state;
+    // const { selectedOpportunityAreas, selectedDvMatrixType, selectedKeyTechnologies, selectedDvArchetypes } = this.state;
   }
 
   render() {
@@ -93,65 +78,40 @@ class ConceptCreate extends Component {
     return (
       <div>
         <div className="create-concept-page-title">Create Concept</div>
-        <UserProgressIndicator totalSteps={3} activeStep={step} />
         <div>
-          {
-            step === 1 &&
-            <div>
-              <ConceptAddTitle
-                conceptName={conceptName}
-                updateConceptName={this.updateDetails}
-                conceptLogo={logo}
-                updateConceptLogo={this.updateConceptLogo}
-              />
-              <div className="create-concept-user-actions step-1">
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                    : <ButtonNext disabled={true} label="Next" />
-                }
-              </div>
-            </div>
-          }
-          {
-            step === 2 &&
-            <div>
-              <ConceptAddDetails
-                conceptStrapline={conceptStrapline}
-                conceptDescription={conceptDescription}
-                updateConceptDetails={this.updateDetails}
-              />
-              <div className="create-concept-user-actions">
-                {backButton}
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                    : <ButtonNext disabled={true} label="Enter Details First" />
-                }
-              </div>
-            </div>
-          }
-          {
-            step === 3 &&
-            <div>
-              <ConceptAddAttributes
-                selectedOpportunityAreas={selectedOpportunityAreas}
-                selectedDvMatrixType={selectedDvMatrixType}
-                selectedKeyTechnologies={selectedKeyTechnologies}
-                selectedDvArchetypes={selectedDvArchetypes}
-                updateAttributeArray={this.updateAttributeArray}
-                updateAttributeValue={this.updateAttributeValue}
-              />
-              <div className="create-concept-user-actions">
-                {backButton}
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Complete Setup" onClick={this.submitNewConcept} />
-                    : <ButtonNext disabled={true} label="Select at least one of each" />
-                }
-              </div>
-            </div>
-          }
+          <div>
+            <ConceptAddTitle
+              conceptName={conceptName}
+              updateConceptName={this.updateDetails}
+              conceptLogo={logo}
+              updateConceptLogo={this.updateConceptLogo}
+            />
+          </div>
+          <div>
+            <ConceptAddDetails
+              conceptStrapline={conceptStrapline}
+              conceptDescription={conceptDescription}
+              updateConceptDetails={this.updateDetails}
+            />
+          </div>
+          <div>
+            <ConceptAddAttributes
+              selectedOpportunityAreas={selectedOpportunityAreas}
+              selectedDvMatrixType={selectedDvMatrixType}
+              selectedKeyTechnologies={selectedKeyTechnologies}
+              selectedDvArchetypes={selectedDvArchetypes}
+              updateAttributeArray={this.updateAttributeArray}
+              updateAttributeValue={this.updateAttributeValue}
+            />
+          </div>
+          <div className="create-concept-user-actions">
+            {backButton}
+            {
+              fieldsAreCompleted
+                ? <ButtonNext label="Complete Setup" onClick={this.submitNewConcept} />
+                : <ButtonNext disabled={true} label="Select at least one of each" />
+            }
+          </div>
         </div>
       </div>
     )

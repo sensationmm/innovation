@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 
 import InnovationAddPartner from '../components/innovation/InnovationAddPartner';
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
-import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
-import InnovationAddDates from '../components/innovation/InnovationAddDates';
-import UserProgressIndicator from '../components/UserProgressIndicator';
+import CreateSectionHeader from '../components/innovation/CreateSectionHeader';
+// import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
+// import InnovationAddDates from '../components/innovation/InnovationAddDates';
+// import UserProgressIndicator from '../components/UserProgressIndicator';
 
 import ButtonNext from '../components/buttons/ButtonNext';
 
@@ -15,185 +16,132 @@ import '../styles/css/innovation-create.css';
 
 import { createInnovation } from '../actions/innovations';
 
-import { getDataUri } from '../utils/functions';
-
-// TODO: get data from the API or from config
-const allUsers = [ 'a@notinn.com', 'b@notinn.com', 'c@notinn.com', 'd@notinn.com', 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
-const curInnovationUsers = [ 'a@inn.com', 'b@inn.com', 'c@inn.com', 'd@inn.com' ];
-const keyDates = [
-  {id: 1, name: 'Ideation', date: null, type: 'required'},
-  {id: 2, name: 'IS1', date: null, type: 'required'},
-  {id: 3, name: 'IS2', date: null, type: 'required'},
-  {id: 4, name: 'IS3', date: null, type: 'required'}
-]
-
-const stepTitles = ['Corporate Partner Details', 'Innovation Sprint Details', 'Assign GM']
+// import { getDataUri } from '../utils/functions';
 
 class InnovationCreate extends Component {
   state = {
-    step: 2,
     datePickerOpen: false,
-    partnerCCode: null,
-    partnerIndustry: null,
-    partnerCity: null,
-    partnerCountry: null,
-    partnerDescription: null,
-    innovationName: null,
-    innovationName: null,
-    dvOffice: null,
-    dvPartner1: null,
-    dvPartner2: null,
-    innovationOpenDate: null,
-    innovationDuration: null
+    partnerCCode: '',
+    partnerName: '',
+    partnerIndustry: '',
+    partnerCity: '',
+    partnerCountry: '',
+    partnerDescription: '',
+    innovationType: '',
+    innovationName: '',
+    dvOffice: '',
+    dvPartner1: '',
+    dvPartner2: '',
+    teamGMEmail: '',
+    innovationOpenDate: '',
+    innovationDuration: ''
     // logo: {}, // For react-dropzone preview.
     // logoDataUri: null, // For sending to API
-    // curTeamMembers: curInnovationUsers,
-    // newTeamMembers: [],
-    // innovationKeyDates: keyDates
   }
 
   updateFormField = (e) => {
     this.setState({ [e.target.id]: e.target.value })
   }
 
+  updateDateField = (newDate) => {
+    this.setState({ innovationOpenDate: newDate })
+  }
+
   toggleDatePicker = () => {
     this.setState({ datePickerOpen: !this.state.datePickerOpen });
   }
 
-  updateInnovationLogo = (logo) => {
-    this.setState({ logo });
-    getDataUri(logo.preview, (dataUri) => {
-      this.setState({ logoDataUri: dataUri })
-    })
+  selectOption = (key, value) => {
+    this.setState({ [key]: value })
   }
 
-  addNewTeamMember = (email) => {
-    const { newTeamMembers } = this.state;
-    this.setState({ newTeamMembers: [ ...newTeamMembers, email ] })
-  }
-
-  removeNewTeamMember = (email) => {
-    const { newTeamMembers } = this.state;
-    this.setState({ newTeamMembers: newTeamMembers.filter(teamMember => teamMember !== email) })
-  }
-
-  createNewKeyDate = (id, name, date) => {
-    const { innovationKeyDates } = this.state;
-    this.setState({ innovationKeyDates:  [ ...innovationKeyDates, { id, name, date, type: 'custom' } ] })
-  }
-
-  editKeyDate = (keyDateId, key, value) => {
-    const { innovationKeyDates } = this.state;
-    const keyDatesCopy = [ ...innovationKeyDates ];
-    const indexToUpdate = keyDatesCopy.findIndex(keyDate => keyDate.id === keyDateId);
-    if (indexToUpdate > -1) {
-      keyDatesCopy[indexToUpdate][key] = value;
-      this.setState({ innovationKeyDates: keyDatesCopy })
-    }
-  }
-
-  deleteKeyDate = (keyDateId) => {
-    const { innovationKeyDates } = this.state;
-    const newKeyDates = innovationKeyDates.filter(keyDate => keyDate.id !== keyDateId);
-    this.setState({ innovationKeyDates: newKeyDates })
-  }
+  // updateInnovationLogo = (logo) => {
+  //   this.setState({ logo });
+  //   getDataUri(logo.preview, (dataUri) => {
+  //     this.setState({ logoDataUri: dataUri })
+  //   })
+  // }
 
   submitNewInnovation = () => {
     // Need to also send all user invites at this stage.
     console.log('state', this.state);
     console.log('Call create a new innovation action');
     const { createInnovation } = this.props;
+    // TODO: Format this.state removing any null attributes. Form into a data object that can be sent to the API.
+    // TODO: Sync up this.state innovation attributes with the ORM model.
+    // TODO: Format moment object from date picker into UTC time for DB.
     createInnovation(this.state);
   }
 
   fieldsAreCompleted = () => {
-    const { step } = this.state;
-    if (step === 1) {
-      const { partnerCCode, partnerIndustry, partnerCity, partnerCountry, partnerDescription } = this.state;
-      return partnerCCode && partnerIndustry && partnerCity && partnerCountry && partnerDescription;
-    }
-    if (step === 2) {
-      const { innovationName } = this.state;
-      return innovationName;
-    }
-    if (step === 3) {
-      const { innovationKeyDates } = this.state;
-      const requiredKeyDates = innovationKeyDates.filter(keyDate => keyDate.type === 'required')
-      return requiredKeyDates.length >= 4 && requiredKeyDates.every(keyDate => keyDate.date);
-    }
+      const {
+        partnerCCode, partnerName, innovationType, innovationName, teamGMEmail, innovationOpenDate
+      } = this.state;
+      return partnerCCode && partnerName && innovationType && innovationName && innovationOpenDate && teamGMEmail;
   }
 
   render() {
-    const { step } = this.state;
     const fieldsAreCompleted = this.fieldsAreCompleted();
     const backButton = (
       <div className="step-back-link">
         <i className="fas fa-chevron-left"></i>
         <span className="step-back-link-text"
-          onClick={
-            step === 1
-              ? () => this.props.history.goBack()
-              : () => this.setState({ step: step - 1})
-          }
-        >{step === 1 ? 'Cancel' : 'Back'}</span>
+          onClick={() => this.props.history.goBack()}
+        >Back</span>
       </div>
     );
     return (
-      <div>
+      <div className="create-innovation-container">
         <div className="create-innovation-page-title">Create A New Innovation</div>
-        <UserProgressIndicator
+        {/* <UserProgressIndicator
           totalSteps={3}
           activeStep={step}
           stepTitle={stepTitles[step-1]}
-        />
-        <div>
+        /> */}
+        <div className="create-innovation-section-container">
+          <CreateSectionHeader
+            title="Corporate Partner Details"
+          />
+          <InnovationAddPartner
+            updateFormField={this.updateFormField}
+            partnerCCode={this.state.partnerCCode}
+            partnerName={this.state.partnerName}
+            partnerIndustry={this.state.partnerIndustry}
+            partnerCity={this.state.partnerCity}
+            partnerCountry={this.state.partnerCountry}
+            partnerDescription={this.state.partnerDescription}
+          />
+        </div>
+        <div className="create-innovation-section-container">
+          <CreateSectionHeader
+            title="Innovation Details"
+          />
+          <InnovationAddDetails
+            updateFormField={this.updateFormField}
+            selectOption={this.selectOption}
+            updateDateField={this.updateDateField}
+            innovationType={this.state.innovationType}
+            innovationName={this.state.innovationName}
+            dvOffice={this.state.dvOffice}
+            dvPartner1={this.state.dvPartner1}
+            dvPartner2={this.state.dvPartner2}
+            teamGMEmail={this.state.teamGMEmail}
+            innovationOpenDate={this.state.innovationOpenDate}
+            innovationDuration={this.state.innovationDuration}
+            datePickerOpen={this.state.datePickerOpen}
+            toggleDatePicker={this.toggleDatePicker}
+            // innovationLogo={logo}
+            // updateInnovationLogo={this.updateInnovationLogo}
+          />
+        </div>
+        <div className="create-innovation-user-actions">
+          {backButton}
           {
-            step === 1 &&
-            <div>
-              <InnovationAddPartner
-                updateFormField={this.updateFormField}
-                partnerCCode={this.state.partnerCCode}
-                partnerIndustry={this.state.partnerIndustry}
-                partnerCity={this.state.partnerCity}
-                partnerCountry={this.state.partnerCountry}
-                partnerDescription={this.state.partnerDescription}
-              />
-              <div className="create-innovation-user-actions">
-                {backButton}
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                    : <ButtonNext disabled={true} label="Enter Required Details" />
-                }
-              </div>
-            </div>
+            fieldsAreCompleted
+              ? <ButtonNext label="Save" onClick={() => this.submitNewInnovation()} />
+              : <ButtonNext disabled={true} label="Complete Required Fields" />
           }
-          {
-            step === 2 &&
-            <div>
-              <InnovationAddDetails
-                updateFormField={this.state.updateFormField}
-                innovationName={this.state.innovationName}
-                dvOffice={this.state.dvOffice}
-                dvPartner1={this.state.dvPartner1}
-                dvPartner2={this.state.dvPartner2}
-                innovationOpenDate={this.state.innovationOpenDate}
-                innovationDuration={this.state.innovationDuration}
-                datePickerOpen={this.state.datePickerOpen}
-                toggleDatePicker={this.toggleDatePicker}
-                // innovationLogo={logo}
-                // updateInnovationLogo={this.updateInnovationLogo}
-              />
-              <div className="create-innovation-user-actions">
-                {backButton}
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                    : <ButtonNext disabled={true} label="Enter Some Details" />
-                }
-              </div>
-            </div>
-          }
+        </div>
           {/* {
             step === 3 &&
             <div>
@@ -215,27 +163,6 @@ class InnovationCreate extends Component {
               </div>
             </div>
           } */}
-          {/* {
-            step === 3 &&
-            <div>
-              <InnovationAddDates
-                innovationKeyDates={innovationKeyDates}
-                createNewKeyDate={this.createNewKeyDate}
-                editKeyDate={this.editKeyDate}
-                deleteKeyDate={this.deleteKeyDate}
-              />
-              <div className="create-innovation-user-actions">
-                {backButton}
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Complete Setup" onClick={this.submitNewInnovation} />
-                    : <ButtonNext disabled={true} label="Enter Required Dates" />
-                }
-              </div>
-            </div>
-          } */}
-        </div>
-
       </div>
     )
   }

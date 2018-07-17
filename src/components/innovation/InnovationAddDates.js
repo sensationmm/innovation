@@ -20,10 +20,6 @@ class InnovationAddDates extends Component {
     const { openNewKeyDateForm } = this.state;
     return (
       <div>
-        <div className="innovation-add-dates-header">
-          <div className="innovation-add-dates-header-title">Enter Immersion Session Key Dates</div>
-          <div className="innovation-add-dates-header-subtitle">These are required to create your innovation timeline, you can edit these later if you need to</div>
-        </div>
         <div className="innovation-keydates-container">
           <div className="innovation-keydates">
             {

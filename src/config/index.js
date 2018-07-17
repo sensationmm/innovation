@@ -13,7 +13,7 @@ if (url.match(/http:\/\/localhost/)) {
   // production
   env = 'production';
   Config = prodConfig;
-} else if (url.match(/https:\/\/inventure-innovation-staging(-pr-\d*)?.herokuapp.com/)) {
+} else if (url.match(/staging/)) {
   // staging or review apps
   env = 'staging';
   Config = devConfig;

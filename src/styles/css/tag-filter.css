@@ -1,0 +1,50 @@
+.tag-filter {
+  display: flex;
+  justify-content: flex-end; }
+  .tag-filter * {
+    box-sizing: border-box; }
+  .tag-filter-items {
+    z-index: 2; }
+  .tag-filter-item {
+    text-align: right;
+    color: #b2b5b7;
+    padding: 5px 40px 5px 0;
+    transition: all 0.5s;
+    cursor: pointer;
+    font-size: 12px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .tag-filter-item.selected {
+      color: #fff; }
+  .tag-filter-track {
+    width: 20px;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    z-index: 1; }
+    .tag-filter-track:before {
+      position: absolute;
+      width: 20px;
+      height: calc(100% - 10px);
+      margin: 5px 0;
+      background: #232d33;
+      border-radius: 10px;
+      content: '';
+      display: block; }
+    .tag-filter-track-pip {
+      width: 20px;
+      height: 30px;
+      transform-origin: 50% 50%;
+      transform: translateY(-50%);
+      transition: all 0.2s; }
+      .tag-filter-track-pip:before {
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 10px;
+        top: 5px;
+        position: absolute;
+        content: '';
+        right: 0; }

@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { makeArrayFromIndexedObject, getByKey } from '../utils/functions';
-
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
 import ConceptHeader from '../components/concept/ConceptHeader';
@@ -19,30 +17,27 @@ class ConceptV2 extends Component {
   }
 
   render() {
-    const { 
-      conceptsById, 
+    const {
+      conceptsById,
       match: { params: { conceptId } },
-      portfolioDates,
-      portfolioLocation
+      innovationDates,
+      innovationLocation
     } = this.props;
 
-    const concept = getByKey(makeArrayFromIndexedObject(conceptsById), parseInt((conceptId) ? conceptId : 1, 10));
-
+    const concept = conceptsById[conceptId];
     if(!concept) {
       return null
     }
 
-    const conceptDetails = concept[0];
-
     return (
       <div className='concept'>
         <ConceptHeader
-          logo={conceptDetails.logo}
-          name={conceptDetails.name}
-          strapline={conceptDetails.strapline}
-          location={portfolioLocation}
-          portfolioDates={portfolioDates}
-          killMark={conceptDetails.killedAt}
+          logo={concept.logo}
+          name={concept.name}
+          strapline={concept.strapline}
+          location={innovationLocation}
+          portfolioDates={innovationDates}
+          killMark={concept.killedAt}
         />
 
         <ContentBox background={false} padded>
@@ -126,15 +121,15 @@ ConceptV2.propTypes = {
   conceptsById: PropTypes.object,
   match: PropTypes.object,
   opportunityAreas: PropTypes.array,
-  portfolioDates: PropTypes.object,
-  portfolioLocation: PropTypes.string
+  innovationDates: PropTypes.object,
+  innovationLocation: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById,
-  opportunityAreas: state.portfolios.activePortfolio.opportunityAreas,
-  portfolioDates: state.portfolios.activePortfolio.dates,
-  portfolioLocation: state.portfolios.activePortfolio.location
+  opportunityAreas: state.innovations.activeInnovation.opportunityAreas,
+  innovationDates: state.innovations.activeInnovation.keyDates,
+  innovationLocation: state.innovations.activeInnovation.location
 });
 
 const mapDispatchToProps = dispatch =>

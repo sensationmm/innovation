@@ -45,8 +45,8 @@ class Grouping extends Component {
           (filterTechnology !== null && filterTechnology !== concept.technology) ||
           (filterArchetype !== null && filterArchetype !== concept.archetype) ||
           (
-            filterIdeation !== null && 
-            concept.killedAt !== null && 
+            filterIdeation !== null &&
+            concept.killedAt !== null &&
             moment(concept.killedAt).format('YYYY-MM-DD') <= moment(filterIdeation).format('YYYY-MM-DD')
           )
         ) {
@@ -71,7 +71,7 @@ class Grouping extends Component {
         matrixes.forEach(item => {
           const initialConcepts = getByKey(concepts, item.value, 'matrix');
           const filteredConcepts = this.filterConcepts(initialConcepts);
-          
+
           groupings.push(filteredConcepts);
           groupingLabels.push(item.label);
         });
@@ -90,7 +90,7 @@ class Grouping extends Component {
       default:
         break;
     }
- 
+
     if(groupings.length%2 !== 0) {
       groupings.push(null); // maintain 2x2 layout
     }
@@ -113,7 +113,7 @@ class Grouping extends Component {
 
   render() {
     const { group, filterIdeation, filterTechnology, filterArchetype, focusGroup } = this.state;
-    const { conceptsById, portfolioDates } = this.props;
+    const { conceptsById, innovationDates } = this.props;
     const concepts = makeArrayFromIndexedObject(conceptsById);
 
     const { groupings, groupingLabels } = this.getGrouping(concepts);
@@ -127,7 +127,7 @@ class Grouping extends Component {
 
     const ideationDates = ideation.slice(0).map((ideation, count) => {
       const hold = ideation;
-      hold.value = portfolioDates[ideation.label];
+      hold.value = innovationDates[ideation.label];
       return hold;
     });
 
@@ -146,7 +146,7 @@ class Grouping extends Component {
 
             return (
               <ContentBox key={`group-${count2}`} background={focusGroup === null}>
-                <Group 
+                <Group
                   items={group}
                   label={groupingLabels[(count*2) + count2]}
                   onSetFocus={this.setFocus}
@@ -221,14 +221,14 @@ class Grouping extends Component {
 
 Grouping.propTypes = {
   conceptsById: PropTypes.object,
-  portfolioDates: PropTypes.object,
+  innovationDates: PropTypes.object,
   opportunityAreas: PropTypes.array
 };
 
 const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById,
-  opportunityAreas: state.portfolios.activePortfolio.opportunityAreas,
-  portfolioDates: state.portfolios.activePortfolio.dates
+  opportunityAreas: state.innovations.activeInnovation.opportunityAreas,
+  innovationDates: state.innovations.activeInnovation.keyDates
 });
 
 export default connect(mapStateToProps, null)(Grouping);

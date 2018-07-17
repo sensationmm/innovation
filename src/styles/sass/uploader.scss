@@ -1,0 +1,25 @@
+@import './modules/colors.scss';
+
+.logo-upload-container {
+  position: relative;
+  color: $text-offset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: center center no-repeat;
+  background-size: 50px;
+  height: 300px;
+
+  div {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.logo-upload-message-text {
+  position: absolute;
+  top: 65%;
+  text-align: center;
+}

@@ -1,0 +1,12 @@
+.content-box {
+  margin-bottom: 20px; }
+  .content-box.background {
+    padding: 15px 20px;
+    background: #232D33;
+    border-radius: 5px; }
+  .content-box :last-child {
+    margin-bottom: 0; }
+  .content-box.bordered {
+    border-top: 5px solid #656E74; }
+  .content-box.padded {
+    padding: 40px 50px; }

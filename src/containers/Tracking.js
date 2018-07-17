@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { makeArrayFromIndexedObject } from '../utils/functions'; 
+import { makeArrayFromIndexedObject } from '../utils/functions';
 
 import ContentBox from '../components/layout/ContentBox';
 import ProgressBar from '../components/ProgressBar';
@@ -23,14 +23,14 @@ class Tracking extends Component {
     super(props);
 
     this.state = {
-      
+
     };
   }
 
   calculatePos = (date = null) => {
-    const { portfolioDates } = this.props;
+    const { innovationDates } = this.props;
 
-    const dates = makeArrayFromIndexedObject(portfolioDates);
+    const dates = makeArrayFromIndexedObject(innovationDates);
     dates.sort();
 
     if(date === null) {
@@ -40,8 +40,8 @@ class Tracking extends Component {
     const start = moment(dates[0]);
     const end = moment(dates[dates.length - 1]);
     const lifespan = end.diff(start);
-
-    const svgWidth = document.getElementById('svg-grid').clientWidth;
+    console.log(document.getElementById('svg-grid'))
+    const svgWidth = document.getElementById('svg-grid') ? document.getElementById('svg-grid').clientWidth : 800;
 
     console.log(svgWidth, lifespan);
 
@@ -53,14 +53,16 @@ class Tracking extends Component {
   }
 
   render() {
-    const { conceptsById, portfolioDates } = this.props;
+    const { conceptsById, innovationDates } = this.props;
 
     const concepts = makeArrayFromIndexedObject(conceptsById);
 
-    const milestonesLabels = Object.keys(portfolioDates);
+    const milestonesLabels = Object.keys(innovationDates);
+    console.log('milestonesLabels', milestonesLabels);
     const milestonesDates = milestonesLabels.map(label => {
-      return portfolioDates[label];
+      return innovationDates[label];
     });
+    console.log('milestonesDates', milestonesDates);
 
     const avatars = [];
 
@@ -69,7 +71,7 @@ class Tracking extends Component {
         <ContentBox background={false}>
           <ProgressBar dates={milestonesDates} labels={milestonesLabels} />
         </ContentBox>
-        
+
         <ContentBox>
           <svg id="svg-grid">
           {
@@ -137,7 +139,7 @@ class Tracking extends Component {
                     start={this.calculatePos(createdAt)} 
                     end={this.calculatePos()} 
                     row={this.calculateRowPos(count)} 
-                  /> 
+                  />
                 }
                 </g>
               )
@@ -154,12 +156,12 @@ class Tracking extends Component {
 
 Tracking.propTypes = {
   conceptsById: PropTypes.object,
-  portfolioDates: PropTypes.object
+  innovationDates: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById,
-  portfolioDates: state.portfolios.activePortfolio.dates
+  innovationDates: state.innovations.activeInnovation.keyDates
 });
 
 export default connect(mapStateToProps, null)(Tracking);

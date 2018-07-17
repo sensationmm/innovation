@@ -1,0 +1,13 @@
+.group {
+  height: 200px; }
+  .group-items {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    height: calc(100% - 20px); }
+    .group-items > div {
+      margin: 5px;
+      transform: translateY(-50%); }
+  .group-label {
+    text-align: center;
+    height: 20px; }

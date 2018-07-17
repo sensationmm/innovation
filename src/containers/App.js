@@ -8,7 +8,11 @@ import InnovationCreate from './InnovationCreate';
 import ConceptCreate from './ConceptCreate';
 import Grouping from './Grouping';
 import Tracking from './Tracking';
+import Canvas from './Canvas';
+import CanvasV2 from './CanvasV2';
+import Schedule from './Schedule';
 import Header from '../components/Header';
+import NotMobile from '../components/NotMobile';
 import NotFound from '../components/NotFound';
 
 import PrivateRoute from '../components/higherOrderComponents/PrivateRoute';
@@ -26,8 +30,12 @@ const App = () => (
         <PrivateRoute exact path="/innovation/create" component={InnovationCreate} />
         <PrivateRoute exact path="/grouping" component={Grouping} />
         <PrivateRoute exact path="/tracking" component={Tracking} />
+        <PrivateRoute exact path="/schedule" component={Schedule} />
+        <PrivateRoute exact path="/canvas" component={Canvas} />
+        <PrivateRoute exact path="/canvas2" component={CanvasV2} />
         <PrivateRoute exact path="/concept/:conceptId" component={ConceptV2} />
         <Route exact path="/inventure-login" render={() => <h1>You are not logged in (Redirect to InVenture login)</h1>} />
+        <PrivateRoute component={NotMobile} />
         <PrivateRoute component={NotFound} />
       </Switch>
     </main>

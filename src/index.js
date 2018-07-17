@@ -3,11 +3,14 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
+import jwtDecode from 'jwt-decode';
+import { authFromJWT } from './actions/auth';
 
 import App from './containers/App.js';
 
-import jwtDecode from 'jwt-decode';
-import { authFromJWT } from './actions/auth';
+import { getPortfolio } from './actions/portfolios';
+import { getConcepts } from './actions/concepts';
+import { checkBreakPoint } from './actions/ui';
 
 const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
 const isTokenInDate = storedToken !== null && storedToken.token !== null && (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;
@@ -16,6 +19,9 @@ if (isTokenInDate) {
 } else {
   store.dispatch(authFromJWT(false)); // Token not present or out of date.
 }
+
+//Detect resize
+window.addEventListener('resize', () => store.dispatch(checkBreakPoint()) );
 
 render(
   <Provider store={store}>

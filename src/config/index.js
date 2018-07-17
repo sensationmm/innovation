@@ -9,14 +9,14 @@ if (url.match(/http:\/\/localhost/)) {
   // localhost
   env = 'developement';
   Config = devConfig;
-} else if (url.match(/https:\/\/www.inventu.re/)) {
-  // production
-  env = 'production';
-  Config = prodConfig;
 } else if (url.match(/staging/)) {
   // staging or review apps
   env = 'staging';
   Config = devConfig;
+} else if (url.match(/inventu.re/)) {
+  // production
+  env = 'production';
+  Config = prodConfig;
 } else {
   // other cases
   window.alert('Unkown Enviroment!');

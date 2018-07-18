@@ -8,8 +8,6 @@ import { authFromJWT } from './actions/auth';
 
 import App from './containers/App.js';
 
-// import { getPortfolio } from './actions/portfolios';
-// import { getConcepts } from './actions/concepts';
 import { checkBreakPoint } from './actions/ui';
 
 const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
@@ -22,9 +20,6 @@ if (isTokenInDate) {
 
 //Detect resize
 window.addEventListener('resize', () => store.dispatch(checkBreakPoint()) );
-
-store.dispatch(getPortfolio(1));
-store.dispatch(getConcepts(1));
 
 render(
   <Provider store={store}>

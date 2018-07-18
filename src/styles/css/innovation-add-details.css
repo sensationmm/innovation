@@ -1,0 +1,21 @@
+.innovation-add-details-name {
+  background: #232D33;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px; }
+  .innovation-add-details-name input {
+    width: 100%;
+    border: 0;
+    padding: 15px 10px;
+    background: none;
+    font-size: 16px;
+    color: #ffffff;
+    outline: 0;
+    text-align: center; }
+
+.innovation-add-details-logo {
+  height: 300px;
+  background: #232D33 center center no-repeat;
+  background-size: 100px;
+  cursor: pointer;
+  position: relative; }

@@ -1,0 +1,111 @@
+@import './modules/colors.scss';
+
+.innovation-add-team-subtitle {
+  color: $text-off-white;
+  font-weight: 300;
+}
+
+.innovation-selected-users-container {
+  background: $background-grey-lighter;
+  padding: 20px;
+  margin-bottom: 2px;
+}
+
+.innovation-selected-users-description {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.innovation-selected-users {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 100px;
+  overflow: auto;
+}
+
+.innovation-selected-user {
+  border-radius: 2px;
+  color: $background-grey-light;
+  background: $background-grey-white ;
+  margin: 0 10px 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected-user-email {
+  padding: 10px;
+}
+
+.remove-selected-user-icon-container {
+  cursor: pointer;
+  border-left: 1px solid;
+  padding: 10px;
+}
+
+.remove-selected-user-icon {
+  color: $background-grey-light;
+  font-size: 14px;
+}
+
+.innovation-add-user-container {
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  input {
+    width: 100%;
+    border: 0;
+    padding: 15px 10px;
+    background: none;
+    font-size: 16px;
+    color: $text;
+    outline: 0;
+  }
+}
+
+.innovation-all-users-list {
+  max-height: 300px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.innovation-all-users-list-item {
+  padding: 20px 30px;
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.add-user-icon {
+  cursor: pointer;
+  color: $green;
+}
+
+.all-users-list-empty {
+  padding: 50px 30px;
+  text-align: center;
+  display: block;
+}
+
+.user-list-email-name {
+  padding-left: 30px;
+}
+
+.innovation-add-new-user-error {
+  color: $red;
+  text-transform: uppercase;
+  text-align: center;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+}

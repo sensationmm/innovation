@@ -23,6 +23,9 @@ if (isTokenInDate) {
 //Detect resize
 window.addEventListener('resize', () => store.dispatch(checkBreakPoint()) );
 
+store.dispatch(getPortfolio(1));
+store.dispatch(getConcepts(1));
+
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

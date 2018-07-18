@@ -44,10 +44,10 @@ const ConceptReportRanking = (props) => {
 }
 
 ConceptReportRanking.propTypes = {
-  solutionScore: PropTypes.string,
-  businessModelScore: PropTypes.string,
-  marketSizeScore: PropTypes.string,
-  corpAdvantageScore: PropTypes.string,
+  solutionScore: PropTypes.number,
+  businessModelScore: PropTypes.number,
+  marketSizeScore: PropTypes.number,
+  corpAdvantageScore: PropTypes.number,
   selectOption: PropTypes.func
 }
 

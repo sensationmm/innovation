@@ -111,7 +111,7 @@ class InnovationUpdate extends Component {
         <div className="create-innovation-section-container">
           <FormSectionHeader
             title="Add New Team Members"
-            subtitle="Invites will be sent to new members when you save"
+            subtitle="Invites will be sent to new team members when you save"
           />
           <InnovationAddTeam
             addNewTeamMember={this.addNewTeamMember}

@@ -41,7 +41,7 @@ const RankSelectForm = (props) => {
 RankSelectForm.propTypes = {
   keyToUpdate: PropTypes.string,
   rankRange: PropTypes.number,
-  selectedValue: PropTypes.string,
+  selectedValue: PropTypes.number,
   selectOption: PropTypes.func,
   isRequired: PropTypes.bool,
   labels: PropTypes.array,

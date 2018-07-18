@@ -85,8 +85,19 @@
 }
 
 .add-user-icon {
+  position: absolute;
   cursor: pointer;
   color: $green;
+
+  &.right-align {
+    top: 34%;
+    right: 15px;
+  }
+
+  &.left-align {
+    top: 34%;
+    left: 15px;
+  }
 }
 
 .all-users-list-empty {

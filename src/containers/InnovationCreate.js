@@ -30,7 +30,7 @@ class InnovationCreate extends Component {
     dvPartner1: '',
     dvPartner2: '',
     teamGMEmail: '',
-    innovationOpenDate: '',
+    innovationOpenDate: null,
     innovationDuration: ''
   }
 

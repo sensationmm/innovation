@@ -35,7 +35,7 @@ const ConceptConviction = (props) => {
 }
 
 ConceptConviction.propTypes = {
-  GMRank: PropTypes.string,
+  GMRank: PropTypes.number,
   GMComments: PropTypes.string,
   CPPreferences: PropTypes.string,
   unitEconomics: PropTypes.string,

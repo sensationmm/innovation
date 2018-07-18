@@ -54,10 +54,6 @@ class InnovationAddTeam extends Component {
             </div>
         }
         <div className="innovation-add-user-container">
-          {/* {validateEmail(newMemberEmail) && getById(ventureUsers, newUser, 'email') &&
-            <div className="add-new-user-error">User already a member</div>
-            // TODO: Re-implement this once we have working data.
-          } */}
           <input
             type="email"
             value={newMemberEmail}
@@ -66,7 +62,7 @@ class InnovationAddTeam extends Component {
             placeholder="Type to search / invite new user..."
           />
           {  isValidEmail &&
-              <i onClick={() => this.addNewMember(newMemberEmail)} className="fa fa-plus add-user-icon"></i>
+              <i onClick={() => this.addNewMember(newMemberEmail)} className="fa fa-plus add-user-icon right-align"></i>
           }
         </div>
         <div className='innovation-all-users-list'>
@@ -84,7 +80,7 @@ class InnovationAddTeam extends Component {
                           onClick={() => this.addNewMember(availableUserEmail)}
                           className='innovation-all-users-list-item'
                         >
-                          <i className="fas fa-plus add-user-icon"></i>
+                          <i className="fas fa-plus add-user-icon left-align"></i>
                           <span className="user-list-email-name">{availableUserEmail}</span>
                         </div>
                       )

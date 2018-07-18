@@ -32,7 +32,7 @@ const ConceptReportOverview = (props) => {
 
 ConceptReportOverview.propTypes = {
   conceptName: PropTypes.string,
-  conceptRank: PropTypes.string,
+  conceptRank: PropTypes.number,
   VFComments: PropTypes.string,
   selectOption: PropTypes.func,
   updateFormField: PropTypes.func

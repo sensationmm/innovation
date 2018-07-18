@@ -39,7 +39,7 @@ FormTextInput.propTypes = {
   onChange: PropTypes.func,
   value: PropTypes.string,
   isRequired: PropTypes.bool,
-  emailValidation: PropTypes.func
+  emailValidation: PropTypes.bool
 }
 
 export default FormTextInput

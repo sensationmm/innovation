@@ -24,7 +24,7 @@ const curTeamMembers = [
   {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
   {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
 ];
-const allUsers = ['dv1Person', 'dv2Person', 'dv3Person', 'dv4Person', 'dv5Person', 'dv6Person', ];
+const allUsers = ['dv1Personx', 'dv1Persony', 'dv1Personz', 'dv2Personx', 'dv3Personx', 'dv4Person', 'dv5Person', 'dv6Person', ];
 
 class InnovationUpdate extends Component {
   state = {
@@ -73,7 +73,6 @@ class InnovationUpdate extends Component {
   }
 
   render() {
-    const { innovationKeyDates, newTeamMembers } = this.state;
     const backButton = (
       <div className="step-back-link">
         <i className="fas fa-chevron-left"></i>
@@ -101,7 +100,7 @@ class InnovationUpdate extends Component {
             subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
           />
           <InnovationAddDates
-            innovationKeyDates={innovationKeyDates}
+            innovationKeyDates={this.state.innovationKeyDates}
             createNewKeyDate={this.createNewKeyDate}
             editKeyDate={this.editKeyDate}
             deleteKeyDate={this.deleteKeyDate}
@@ -125,7 +124,7 @@ class InnovationUpdate extends Component {
             addNewTeamMember={this.addNewTeamMember}
             removeNewTeamMember={this.removeNewTeamMember}
             curTeamMembers={curTeamMembers}
-            newTeamMembers={newTeamMembers}
+            newTeamMembers={this.state.newTeamMembers}
             allVentureViewUsers={allUsers}
           />
         </div>
@@ -145,7 +144,7 @@ class InnovationUpdate extends Component {
           {backButton}
           {
             true
-              ? <ButtonNext label="Save" onClick={this.submitNewInnovation} />
+              ? <ButtonNext label="Save" onClick={this.updateInnovation} />
               : <ButtonNext disabled={true} label="Enter Required Details" />
           }
         </div>

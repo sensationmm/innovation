@@ -35,8 +35,6 @@ const ConceptSummary = (props) => {
   )
 }
 
-
-
 ConceptSummary.propTypes = {
 
 }

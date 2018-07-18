@@ -10,10 +10,7 @@ import ConceptBusinessModel from '../components/concept/ConceptBusinessModel';
 import ConceptCorpAdvantage from '../components/concept/ConceptCorpAdvantage';
 import ConceptCosts from '../components/concept/ConceptCosts';
 import ConceptConviction from '../components/concept/ConceptConviction';
-// import ConceptAddDetails from '../components/concept/ConceptAddDetails';
-// import ConceptAddAttributes from '../components/concept/ConceptAddAttributes';
 
-import FormTextInput from '../components/layout/FormTextInput';
 import FormSectionHeader from '../components/layout/FormSectionHeader';
 import ButtonNext from '../components/buttons/ButtonNext';
 
@@ -83,7 +80,7 @@ class ConceptCreate extends Component {
     console.log('state', this.state);
     console.log('Call create a new concept action');
     // TODO: Once concept attributes confirmed only pass that data from state, not entire state.
-    createConcept(this.state, activeInnovationId);
+    // createConcept(this.state, activeInnovationId);
   }
 
   fieldsAreCompleted = () => {

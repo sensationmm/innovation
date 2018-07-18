@@ -5,18 +5,14 @@ import PropTypes from 'prop-types';
 
 import InnovationAddPartner from '../components/innovation/InnovationAddPartner';
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
-import CreateSectionHeader from '../components/innovation/CreateSectionHeader';
-// import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
-// import InnovationAddDates from '../components/innovation/InnovationAddDates';
-// import UserProgressIndicator from '../components/UserProgressIndicator';
+import FormSectionHeader from '../components/layout/FormSectionHeader';
 
 import ButtonNext from '../components/buttons/ButtonNext';
 
-import '../styles/css/innovation-create.css';
-
 import { createInnovation } from '../actions/innovations';
+import { validateEmail } from '../utils/functions';
 
-// import { getDataUri } from '../utils/functions';
+import '../styles/css/innovation-create.css';
 
 class InnovationCreate extends Component {
   state = {
@@ -27,7 +23,7 @@ class InnovationCreate extends Component {
     partnerCity: '',
     partnerCountry: '',
     partnerDescription: '',
-    innovationType: '',
+    innovationType: [],
     innovationName: '',
     dvOffice: '',
     dvPartner1: '',
@@ -35,8 +31,6 @@ class InnovationCreate extends Component {
     teamGMEmail: '',
     innovationOpenDate: '',
     innovationDuration: ''
-    // logo: {}, // For react-dropzone preview.
-    // logoDataUri: null, // For sending to API
   }
 
   updateFormField = (e) => {
@@ -55,13 +49,6 @@ class InnovationCreate extends Component {
     this.setState({ [key]: value })
   }
 
-  // updateInnovationLogo = (logo) => {
-  //   this.setState({ logo });
-  //   getDataUri(logo.preview, (dataUri) => {
-  //     this.setState({ logoDataUri: dataUri })
-  //   })
-  // }
-
   submitNewInnovation = () => {
     // Need to also send all user invites at this stage.
     console.log('state', this.state);
@@ -77,7 +64,8 @@ class InnovationCreate extends Component {
       const {
         partnerCCode, partnerName, innovationType, innovationName, teamGMEmail, innovationOpenDate
       } = this.state;
-      return partnerCCode && partnerName && innovationType && innovationName && innovationOpenDate && teamGMEmail;
+      return partnerCCode && partnerName && innovationType && innovationName &&
+             innovationOpenDate && teamGMEmail && validateEmail(teamGMEmail);
   }
 
   render() {
@@ -93,13 +81,8 @@ class InnovationCreate extends Component {
     return (
       <div className="create-innovation-container">
         <div className="create-innovation-page-title">Create A New Innovation</div>
-        {/* <UserProgressIndicator
-          totalSteps={3}
-          activeStep={step}
-          stepTitle={stepTitles[step-1]}
-        /> */}
         <div className="create-innovation-section-container">
-          <CreateSectionHeader
+          <FormSectionHeader
             title="Corporate Partner Details"
           />
           <InnovationAddPartner
@@ -113,7 +96,7 @@ class InnovationCreate extends Component {
           />
         </div>
         <div className="create-innovation-section-container">
-          <CreateSectionHeader
+          <FormSectionHeader
             title="Innovation Details"
           />
           <InnovationAddDetails
@@ -142,27 +125,6 @@ class InnovationCreate extends Component {
               : <ButtonNext disabled={true} label="Complete Required Fields" />
           }
         </div>
-          {/* {
-            step === 3 &&
-            <div>
-              <InnovationAddTeam
-                innovationName={innovationName}
-                addNewTeamMember={this.addNewTeamMember}
-                removeNewTeamMember={this.removeNewTeamMember}
-                curTeamMembers={curTeamMembers}
-                newTeamMembers={newTeamMembers}
-                allVentureViewUsers={allUsers}
-              />
-              <div className="create-innovation-user-actions">
-                {backButton}
-                {
-                  newTeamMembers.length > 0
-                    ?  <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1})} />
-                    :  <ButtonNext label="Skip Step" onClick={() => this.setState({ step: step + 1})} />
-                }
-              </div>
-            </div>
-          } */}
       </div>
     )
   }

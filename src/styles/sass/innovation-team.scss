@@ -2,5 +2,13 @@
 
 .innovation-team-container-display {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 5px;
+  flex-wrap: wrap;
+}
+
+.innovation-team-member {
+  text-align: center;
+  padding: 0 20px 20px 20px;
+  flex-wrap: wrap;
 }

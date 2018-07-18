@@ -25,3 +25,23 @@ export const keyTechs = [
   { value: 'ml', label: 'ML' },
   { value: 'blockchain', label: 'Blockchain' }
 ];
+
+export const targetIndustries = [
+  { value: 'finance', label: 'Finance' },
+  { value: 'automotive', label: 'Automotive' },
+  { value: 'health', label: 'Health' },
+  { value: 'software', label: 'Software' }
+];
+
+export const businessTypes = [
+  { value: 'platform', label: 'Platform' },
+  { value: 'product', label: 'Product' },
+  { value: 'service', label: 'Service' },
+  { value: 'marketplace', label: 'Marketplace' }
+];
+
+export const salesChannels = [
+  { value: '1-b2b', label: 'B2B' },
+  { value: '2-b2c', label: 'B2C' },
+  { value: '3-b2b2c', label: 'B2B2C' }
+];

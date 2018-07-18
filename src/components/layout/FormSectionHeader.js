@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../styles/css/innovation-create.css';
+import '../../styles/css/form-section.header.css';
 
 // These are required to create your innovation timeline, you can edit these later if you need to
 // Enter Immersion Session Key Dates
@@ -8,11 +8,11 @@ import '../../styles/css/innovation-create.css';
 const CreateSectionHeader = (props) => {
   const { title, subtitle } = props;
   return (
-    <div className="create-innovation-section-header">
-      <div className="create-innovation-section-header-title">{title}</div>
+    <div className="form-section-header">
+      <div className="form-section-header-title">{title}</div>
       {
         subtitle &&
-          <div className="create-innovation-section-header-subtitle">{subtitle}</div>
+          <div className="form-section-header-subtitle">{subtitle}</div>
       }
     </div>
   )

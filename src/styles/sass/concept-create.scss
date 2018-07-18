@@ -1,7 +1,33 @@
 @import './modules/colors.scss';
 
+.create-concept-container {
+  margin-bottom: 30px;
+}
+
 .create-concept-page-title {
   text-align: center;
+  padding: 15px;
+  font-size: 20px;
+}
+
+.create-concept-section-container {
+  margin-bottom: 10px;
+}
+
+.create-concept-dropdown-container {
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.create-concept-dropdown {
+  select {
+    width: 300px;
+  }
 }
 
 .create-concept-user-actions {
@@ -10,11 +36,6 @@
   align-items: center;
   position: relative;
   z-index: 0;
-
-  &.step-1 {
-    justify-content: flex-end;
-  }
-
 }
 
 .step-back-link {

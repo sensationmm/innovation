@@ -4,7 +4,9 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import Dropdown from '../Dropdown';
-import SelectButtons from '../SelectButtons';
+import FormSelectButtons from '../layout/FormSelectButtons';
+import FormTextInput from '../layout/FormTextInput';
+import FormTextArea from '../layout/FormTextArea';
 // import Uploader from '../Uploader';
 
 import '../../styles/css/innovation-create.css';
@@ -19,36 +21,22 @@ const InnovationAddDetails = (props) => {
   const requiredLabel = (<div className="create-innovation-required-label">Required</div>);
   return (
     <div>
-      <div className="create-innovation-textinput">
-        {!innovationType && requiredLabel}
-        <SelectButtons
-          isMultiSelect={false}
-          options={innovationTypes}
-          selectedValues={[innovationType]}
-          selectOption={selectOption}
-          keyToUpdate='innovationType'
-        />
-      </div>
-      {/* <div className="create-innovation-dropdown-container">
-        <Dropdown
-          id="innovationType"
-          value={innovationType}
-          options={innovationTypes}
-          onChange={updateFormField}
-          placeholder="Innovation Type"
-          classes='create-innovation-dropdown'
-        />
-      </div> */}
-      <div className="create-innovation-textinput">
-        {!innovationName && requiredLabel}
-        <input
-          type="text"
-          id="innovationName"
-          placeholder="Innovation name"
-          onChange={updateFormField}
-          value={innovationName}
-        />
-      </div>
+      <FormSelectButtons
+        isMultiSelect={false}
+        options={innovationTypes}
+        selectedValues={innovationType}
+        selectOption={selectOption}
+        keyToUpdate='innovationType'
+        isRequired={true}
+        title='Innovation Type'
+      />
+      <FormTextInput
+        id="innovationName"
+        placeholder="Innovation name"
+        onChange={updateFormField}
+        value={innovationName}
+        isRequired={true}
+      />
       <div className="create-innovation-dropdown-container">
         <Dropdown
           id="dvOffice"
@@ -59,34 +47,26 @@ const InnovationAddDetails = (props) => {
           classes='create-innovation-dropdown'
         />
       </div>
-      <div className="create-innovation-textinput">
-        <input
-          type="text"
-          id="dvPartner1"
-          placeholder="DV partner 1"
-          onChange={updateFormField}
-          value={dvPartner1}
-        />
-      </div>
-      <div className="create-innovation-textinput">
-        <input
-          type="text"
-          id="dvPartner2"
-          placeholder="DV partner 2"
-          onChange={updateFormField}
-          value={dvPartner2}
-        />
-      </div>
-      <div className="create-innovation-textinput">
-        {!teamGMEmail && requiredLabel}
-        <input
-          type="text"
-          id="teamGMEmail"
-          placeholder="Team GM Email"
-          onChange={updateFormField}
-          value={teamGMEmail}
-        />
-      </div>
+      <FormTextInput
+        id="dvPartner1"
+        placeholder="DV partner 1"
+        onChange={updateFormField}
+        value={dvPartner1}
+      />
+      <FormTextInput
+        id="dvPartner2"
+        placeholder="DV partner 2"
+        onChange={updateFormField}
+        value={dvPartner2}
+      />
+      <FormTextInput
+        id="teamGMEmail"
+        placeholder="Team GM Email"
+        onChange={updateFormField}
+        value={teamGMEmail}
+        isRequired={true}
+        emailValidation={true}
+      />
       <div className="create-innovation-dropdown-container">
         {!innovationOpenDate && requiredLabel}
         <div
@@ -107,15 +87,12 @@ const InnovationAddDetails = (props) => {
             </div>
         }
       </div>
-      <div className="create-innovation-textinput">
-        <input
-          type="text"
-          id="innovationDuration"
-          placeholder="Expected Innovation Sprint duration"
-          onChange={updateFormField}
-          value={innovationDuration}
-        />
-      </div>
+      <FormTextInput
+        id="innovationDuration"
+        placeholder="Expected Innovation Sprint duration (weeks)"
+        onChange={updateFormField}
+        value={innovationDuration}
+      />
       {/* <div className="innovation-add-title-logo">
         <Uploader
           logo={innovationLogo}

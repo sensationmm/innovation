@@ -8,10 +8,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: center center no-repeat;
+  background: top center no-repeat;
   background-size: 50px;
-  height: 300px;
-
+  height: 75px;
   div {
     width: 100%;
     height: 100%;
@@ -20,6 +19,6 @@
 
 .logo-upload-message-text {
   position: absolute;
-  top: 65%;
+  top: 80%;
   text-align: center;
 }

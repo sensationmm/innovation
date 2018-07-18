@@ -51,7 +51,6 @@
 .innovation-add-user-container {
   background: $background-grey-light;
   margin-bottom: 2px;
-  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,16 +58,20 @@
   input {
     width: 100%;
     border: 0;
-    padding: 15px 10px;
+    padding: 20px 15px;
     background: none;
-    font-size: 16px;
+    font-size: 14px;
     color: $text;
     outline: 0;
+
+    &:focus {
+      box-shadow: 0 0 10px 0 $cyan-offset;
+    }
   }
 }
 
 .innovation-all-users-list {
-  max-height: 300px;
+  height: 240px;
   overflow: auto;
   display: flex;
   flex-direction: column;

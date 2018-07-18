@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
 import ConceptV2 from './ConceptV2';
 import InnovationCreate from './InnovationCreate';
-import InnovationComplete from './InnovationComplete';
+import InnovationUpdate from './InnovationUpdate';
 // import InnovationDashboard from './InnovationDashboard';
 import ConceptCreate from './ConceptCreate';
 import Grouping from './Grouping';
@@ -29,7 +29,7 @@ const App = () => (
         <PrivateRoute exact path="/create-concept" component={ConceptCreate} />
         {/* <PrivateRoute exact path="/innovation/dashboard" component={InnovationDashboard} /> */}
         <PrivateRoute exact path="/create-innovation" component={InnovationCreate} />
-        <PrivateRoute exact path="/complete-innovation" component={InnovationComplete} />
+        <PrivateRoute exact path="/update-innovation" component={InnovationUpdate} />
         <PrivateRoute exact path="/grouping" component={Grouping} />
         <PrivateRoute exact path="/tracking" component={Tracking} />
         <PrivateRoute exact path="/schedule" component={Schedule} />

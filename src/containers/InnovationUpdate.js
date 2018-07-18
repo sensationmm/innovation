@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 
 import InnovationAddDates from '../components/innovation/InnovationAddDates';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
-import CreateSectionHeader from '../components/innovation/CreateSectionHeader';
 import CorporatePartnerSummary from '../components/innovation/CorporatePartnerSummary';
 import InnovationTeam from '../components/innovation/InnovationTeam';
+import FormSectionHeader from '../components/layout/FormSectionHeader';
+import FormTextArea from '../components/layout/FormTextArea';
 import ContentBox from '../components/layout/ContentBox';
 import ButtonNext from '../components/buttons/ButtonNext';
 
@@ -16,10 +17,16 @@ import '../styles/css/innovation-create.css';
 import { editInnovation } from '../actions/innovations';
 import { keyDatesOptions } from '../config/innovationOptions';
 
-const curTeamMembers = [{name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'}, {name: 'Clem', position: 'SD'}];
-const allUsers = ['dv1', 'dv2', 'dv3'];
+const curTeamMembers = [
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
+  {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
+];
+const allUsers = ['dv1Person', 'dv2Person', 'dv3Person', 'dv4Person', 'dv5Person', 'dv6Person', ];
 
-class InnovationComplete extends Component {
+class InnovationUpdate extends Component {
   state = {
     innovationKeyDates: keyDatesOptions,
     newTeamMembers: [],
@@ -81,7 +88,7 @@ class InnovationComplete extends Component {
           Hi xxxxx, you've been assigned as GM for this project. We just need a few details from you:
         </div>
         <div className="create-innovation-section-container">
-          <CreateSectionHeader
+          <FormSectionHeader
             title='Corporate Partner Summary'
           />
           <ContentBox>
@@ -89,7 +96,7 @@ class InnovationComplete extends Component {
           </ContentBox>
         </div>
         <div className="create-innovation-section-container">
-          <CreateSectionHeader
+          <FormSectionHeader
             title='Enter Immersion Session Key Dates'
             subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
           />
@@ -101,7 +108,7 @@ class InnovationComplete extends Component {
           />
         </div>
         <div className="create-innovation-section-container">
-          <CreateSectionHeader
+          <FormSectionHeader
             title='Your Current Team'
           />
           <InnovationTeam
@@ -110,7 +117,7 @@ class InnovationComplete extends Component {
         </div>
 
         <div className="create-innovation-section-container">
-          <CreateSectionHeader
+          <FormSectionHeader
             title="Add New Team Members"
             subtitle="Invites will be sent to new members when you save"
           />
@@ -123,18 +130,16 @@ class InnovationComplete extends Component {
           />
         </div>
         <div className="create-innovation-section-container">
-          <CreateSectionHeader
+          <FormSectionHeader
             title="Innovation Mandate"
+            subtitle="What is the focus? Who is the champion? CEO or middle management?"
           />
-          <div className="create-innovation-textinput">
-            <textarea
-              type="text"
-              id="innovationMandate"
-              placeholder="What is your innovation mandate?"
-              onChange={this.updateFormField}
-              value={this.state.innovationMandate}
-            />
-          </div>
+          <FormTextArea
+            id="innovationMandate"
+            placeholder="What is your innovation mandate?"
+            onChange={this.updateFormField}
+            value={this.state.innovationMandate}
+          />
         </div>
         <div className="create-innovation-user-actions">
           {backButton}
@@ -149,7 +154,7 @@ class InnovationComplete extends Component {
   }
 }
 
-InnovationComplete.propTypes = {
+InnovationUpdate.propTypes = {
 
 }
 
@@ -157,4 +162,4 @@ const mapDispatchToProps = dispatch => ({
   editInnovation: bindActionCreators(editInnovation, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(InnovationComplete);
+export default connect(null, mapDispatchToProps)(InnovationUpdate);

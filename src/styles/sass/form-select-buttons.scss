@@ -1,0 +1,47 @@
+@import './modules/colors.scss';
+
+.inventure-select-button-input {
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px;
+}
+
+.inventure-select-buttons-required-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: $grey-red;
+}
+
+.inventure-select-buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.inventure-select-buttons-title {
+  color: $text-off-white;
+  font-size: 14px;
+  text-align: center;
+}
+
+.inventure-select-button {
+  width: 90px;
+  background: $cyan-blue;
+  padding: 15px;
+  margin: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  transition: all 0.3s;
+  font-size: 14px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.selected-button {
+    background: $green;
+  }
+}

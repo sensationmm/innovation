@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import classnames from 'classnames';
 
+import ContentBox from './layout/ContentBox';
+
 import '../styles/css/uploader.css';
 
 import IconUpload from '../images/upload-icon.svg';
@@ -46,21 +48,23 @@ class Uploader extends Component {
     const { logo, messageText } = this.props;
     const { hover, error } = this.state;
     return (
-      <div className={classnames('logo-upload-container', { 'hover': hover })} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
-        <Dropzone
-          onDrop={this.onDrop}
-          onDragEnter={this.onDragEnter}
-          onDragLeave={this.onDragLeave}
-          // maxSize={this.props.maxSize}
-          multiple={false}
-          className="logo-upload-dropzone"
-          accept="image/*"
-        />
-        {
-          !logo.preview && <div className="logo-upload-message-text">{messageText}</div>
-        }
-        { error && <div className="logo-upload-error">{error}</div> }
-      </div>
+      <ContentBox>
+        <div className={classnames('logo-upload-container', { 'hover': hover })} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
+          <Dropzone
+            onDrop={this.onDrop}
+            onDragEnter={this.onDragEnter}
+            onDragLeave={this.onDragLeave}
+            // maxSize={this.props.maxSize}
+            multiple={false}
+            className="logo-upload-dropzone"
+            accept="image/*"
+          />
+          {
+            !logo.preview && <div className="logo-upload-message-text">{messageText}</div>
+          }
+          { error && <div className="logo-upload-error">{error}</div> }
+        </div>
+      </ContentBox>
     );
   }
 }

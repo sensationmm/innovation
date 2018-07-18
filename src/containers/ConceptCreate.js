@@ -3,11 +3,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ConceptAddTitle from '../components/concept/ConceptAddTitle';
-import ConceptAddDetails from '../components/concept/ConceptAddDetails';
-import ConceptAddAttributes from '../components/concept/ConceptAddAttributes';
+import ConceptSummary from '../components/concept/ConceptSummary';
+import ConceptMarket from '../components/concept/ConceptMarket';
+import ConceptSolution from '../components/concept/ConceptSolution';
+import ConceptBusinessModel from '../components/concept/ConceptBusinessModel';
+import ConceptCorpAdvantage from '../components/concept/ConceptCorpAdvantage';
+import ConceptCosts from '../components/concept/ConceptCosts';
+import ConceptConviction from '../components/concept/ConceptConviction';
+// import ConceptAddDetails from '../components/concept/ConceptAddDetails';
+// import ConceptAddAttributes from '../components/concept/ConceptAddAttributes';
 
-import UserProgressIndicator from '../components/UserProgressIndicator';
+import FormTextInput from '../components/layout/FormTextInput';
+import FormSectionHeader from '../components/layout/FormSectionHeader';
 import ButtonNext from '../components/buttons/ButtonNext';
 
 import '../styles/css/concept-create.css';
@@ -17,35 +24,57 @@ import { createConcept } from '../actions/concepts';
 class ConceptCreate extends Component {
   state = {
     conceptName: '',
-    logo: {},
-    conceptStrapline: '',
     conceptDescription: '',
-    selectedOpportunityAreas: [],
-    selectedDvMatrixType: null,
-    selectedKeyTechnologies: [],
-    selectedDvArchetypes: []
+    conceptLogo: {},
+    customerSegment: '',
+    friction: '',
+    marketSize: '',
+    targetCustomers: '',
+    targetIndustry: '',
+    targetGeography: '',
+    solutionDescription: '',
+    primaryTechnology: '',
+    successFactors: '',
+    keyRisks: '',
+    businessType: [],
+    salesChannel: [],
+    revenueModel: '',
+    unitEconomics: '',
+    corporateAdvantage: '',
+    leveragedAssets: '',
+    incubationCost: '',
+    breakEvenCost: '',
+    breakEvenYear: '',
+    willGMLeave: [],
+    GMRank: [],
+    GMComments: '',
+    CPPreferences: ''
   }
 
   updateDetails = (key, value) => {
     this.setState({ [key]: value })
   }
 
-  updateConceptLogo = (logo) => {
-    this.setState({ logo });
+  updateFormField = (e) => {
+    this.setState({ [e.target.id]: e.target.value })
+  }
+
+  updateConceptLogo = (conceptLogo) => {
+    this.setState({ conceptLogo });
+  }
+
+  // For single select options
+  selectOption = (key, value) => {
+    this.setState({ [key]: value })
   }
 
   // For multi-select checkboxes. Effectively a toggle on the id being in the array or not.
-  updateAttributeArray = (arrayName, id) => {
+  updateSelectedOptions = (arrayName, id) => {
     const arrayToUpdate = this.state[arrayName];
     const updatedArray = arrayToUpdate.includes(id)
                                       ? arrayToUpdate.filter(optionId => optionId !== id)
                                       : arrayToUpdate.concat(id)
     this.setState({ [arrayName]: updatedArray })
-  }
-
-  // For single select radio buttons.
-  updateAttributeValue = (key, value) => {
-    this.setState({ [key]: value })
   }
 
   submitNewConcept = () => {
@@ -58,9 +87,8 @@ class ConceptCreate extends Component {
   }
 
   fieldsAreCompleted = () => {
-    // const { conceptName, logo, conceptStrapline } = this.state;
-    // const { conceptStrapline, conceptDescription } = this.state;
-    // const { selectedOpportunityAreas, selectedDvMatrixType, selectedKeyTechnologies, selectedDvArchetypes } = this.state;
+    const { conceptName } = this.state;
+    return conceptName;
   }
 
   render() {
@@ -72,12 +100,107 @@ class ConceptCreate extends Component {
     const backButton = (
       <div className="step-back-link">
         <i className="fas fa-chevron-left"></i>
-        <span className="step-back-link-text" onClick={() => this.setState({ step: step - 1})}>Back</span>
+        <span className="step-back-link-text"
+          onClick={() => this.props.history.goBack()}
+        >Back</span>
       </div>
     );
     return (
-      <div>
-        <div className="create-concept-page-title">Create Concept</div>
+      <div className="create-concept-container">
+        <div className="create-concept-page-title">Create A New Concept</div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Concept Summary"
+          />
+          <ConceptSummary
+            updateFormField={this.updateFormField}
+            updateConceptLogo={this.updateConceptLogo}
+            conceptName={this.state.conceptName}
+            conceptDescription={this.state.conceptDescription}
+            conceptLogo={this.state.conceptLogo}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Customers and Market"
+          />
+          <ConceptMarket
+            updateFormField={this.updateFormField}
+            customerSegment={this.state.customerSegment}
+            friction={this.state.friction}
+            marketSize={this.state.marketSize}
+            targetCustomers={this.state.targetCustomers}
+            targetIndustry={this.state.targetIndustry}
+            targetGeography={this.state.targetGeography}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Solution Details"
+          />
+          <ConceptSolution
+            updateFormField={this.updateFormField}
+            solutionDescription={this.state.solutionDescription}
+            primaryTechnology={this.state.primaryTechnology}
+            successFactors={this.state.successFactors}
+            keyRisks={this.state.keyRisks}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Business Model"
+          />
+          <ConceptBusinessModel
+            updateFormField={this.updateFormField}
+            selectOption={this.selectOption}
+            businessType={this.state.businessType}
+            salesChannel={this.state.salesChannel}
+            revenueModel={this.state.revenueModel}
+            unitEconomics={this.state.unitEconomics}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Corporate Advantage"
+          />
+          <ConceptCorpAdvantage
+            updateFormField={this.updateFormField}
+            corporateAdvantage={this.state.corporateAdvantage}
+            leveragedAssets={this.state.leveragedAssets}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Cost and Implementation"
+          />
+          <ConceptCosts
+            updateFormField={this.updateFormField}
+            selectOption={this.selectOption}
+            incubationCost={this.state.incubationCost}
+            breakEvenCost={this.state.breakEvenCost}
+            breakEvenYear={this.state.breakEvenYear}
+            willGMLeave={this.state.willGMLeave}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Conviction"
+          />
+          <ConceptConviction
+            updateFormField={this.updateFormField}
+            selectOption={this.selectOption}
+            GMRank={this.state.GMRank}
+            GMComments={this.state.GMComments}
+            CPPreferences={this.state.CPPreferences}
+          />
+        </div>
+
+
+
+
+
+
+        {/* <div className="create-concept-page-title">Create Concept</div>
         <div>
           <div>
             <ConceptAddTitle
@@ -103,16 +226,15 @@ class ConceptCreate extends Component {
               updateAttributeArray={this.updateAttributeArray}
               updateAttributeValue={this.updateAttributeValue}
             />
-          </div>
+          </div> */}
           <div className="create-concept-user-actions">
             {backButton}
             {
               fieldsAreCompleted
-                ? <ButtonNext label="Complete Setup" onClick={this.submitNewConcept} />
-                : <ButtonNext disabled={true} label="Select at least one of each" />
+                ? <ButtonNext label="Save" onClick={() => this.submitNewConcept()} />
+                : <ButtonNext disabled={true} label="Complete Required Fields" />
             }
           </div>
-        </div>
       </div>
     )
   }

@@ -1,0 +1,19 @@
+@import './modules/colors.scss';
+
+.form-section-header {
+  background: $background-grey-lighter;
+  padding: 15px;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.form-section-header-title {
+  font-weight: 500;
+  color: $background-grey-white;
+  margin-bottom: 5px;
+}
+
+.form-section-header-subtitle {
+  color: $form-element;
+  font-size: 12px;
+}

@@ -28,7 +28,8 @@ const UserProgressIndicator = (props) => {
 
 UserProgressIndicator.propTypes = {
   totalSteps: PropTypes.number,
-  activeStep: PropTypes.number
+  activeStep: PropTypes.number,
+  stepTitle: PropTypes.string
 }
 
 export default UserProgressIndicator;

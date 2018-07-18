@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import FormTextInput from '../layout/FormTextInput';
 import FormTextArea from '../layout/FormTextArea';
-import Dropdown from '../Dropdown';
 
 import '../../styles/css/concept-create.css';
 
@@ -40,7 +39,11 @@ const ConceptSolution = (props) => {
 }
 
 ConceptSolution.propTypes = {
-
+  solutionDescription: PropTypes.string,
+  primaryTechnology: PropTypes.string,
+  successFactors: PropTypes.string,
+  keyRisks: PropTypes.string,
+  updateFormField: PropTypes.func
 }
 
 export default ConceptSolution;

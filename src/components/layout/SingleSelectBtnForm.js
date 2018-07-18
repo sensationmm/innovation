@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import '../../styles/css/form-select-buttons.css'
@@ -7,12 +8,12 @@ import '../../styles/css/form-select-buttons.css'
 // selectOption from single select
 // Default for selectedValues should be an empty array
 
-const FormSelectButtons = (props) => {
-  const { keyToUpdate, options, selectedValues, isMultiSelect, toggleOption, selectOption, isRequired, title } = props;
+const SingleSelectBtnForm = (props) => {
+  const { keyToUpdate, options, selectedValue, selectOption, isRequired, title } = props;
   return (
     <div className="inventure-select-button-input">
       {
-        isRequired && !selectedValues.length > 0 &&
+        isRequired && !selectedValue &&
           <div className="inventure-select-buttons-required-label">Required</div>
       }
       <div className="inventure-select-buttons-title">{title}</div>
@@ -21,8 +22,8 @@ const FormSelectButtons = (props) => {
           options.map(option => (
             <div
               key={`selectbutton-${option.value}`}
-              className={classnames('inventure-select-button', { 'selected-button': selectedValues.includes(option.value)})}
-              onClick={isMultiSelect ? () => toggleOption(keyToUpdate, option.value) : () => selectOption(keyToUpdate, option.value)}
+              className={classnames('inventure-select-button', { 'selected-button': selectedValue === option.value })}
+              onClick={() => selectOption(keyToUpdate, option.value)}
             >
               {option.label}
             </div>
@@ -33,8 +34,13 @@ const FormSelectButtons = (props) => {
   )
 }
 
-FormSelectButtons.propTypes = {
-
+SingleSelectBtnForm.propTypes = {
+  keyToUpdate: PropTypes.string,
+  options: PropTypes.array,
+  selectedValue: PropTypes.string,
+  selectOption: PropTypes.func,
+  isRequired: PropTypes.bool,
+  title: PropTypes.string
 }
 
-export default FormSelectButtons;
+export default SingleSelectBtnForm;

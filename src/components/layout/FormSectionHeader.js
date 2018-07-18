@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import '../../styles/css/form-section.header.css';
 
@@ -16,6 +17,11 @@ const CreateSectionHeader = (props) => {
       }
     </div>
   )
+}
+
+CreateSectionHeader.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string
 }
 
 export default CreateSectionHeader;

@@ -6,11 +6,8 @@ import RankSelectForm from '../layout/RankSelectForm';
 
 import '../../styles/css/concept-create.css';
 
-import { businessTypes, salesChannels } from '../../config/conceptOptions';
-
 const ConceptConviction = (props) => {
   const { GMRank, GMComments, CPPreferences, selectOption, updateFormField } = props;
-
   return (
     <div>
       <RankSelectForm
@@ -38,7 +35,12 @@ const ConceptConviction = (props) => {
 }
 
 ConceptConviction.propTypes = {
-
+  GMRank: PropTypes.string,
+  GMComments: PropTypes.string,
+  CPPreferences: PropTypes.string,
+  unitEconomics: PropTypes.string,
+  selectOption: PropTypes.func,
+  updateFormField: PropTypes.func
 }
 
 export default ConceptConviction;

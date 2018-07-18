@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import '../../styles/css/rank-select-form.css'
@@ -35,6 +36,16 @@ const RankSelectForm = (props) => {
       </div>
     </div>
   )
+}
+
+RankSelectForm.propTypes = {
+  keyToUpdate: PropTypes.string,
+  rankRange: PropTypes.number,
+  selectedValue: PropTypes.string,
+  selectOption: PropTypes.func,
+  isRequired: PropTypes.bool,
+  labels: PropTypes.array,
+  title: PropTypes.string
 }
 
 export default RankSelectForm;

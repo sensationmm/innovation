@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import RankSelectForm from '../layout/RankSelectForm';
 
@@ -40,6 +41,14 @@ const ConceptReportRanking = (props) => {
       />
     </div>
   )
+}
+
+ConceptReportRanking.propTypes = {
+  solutionScore: PropTypes.string,
+  businessModelScore: PropTypes.string,
+  marketSizeScore: PropTypes.string,
+  corpAdvantageScore: PropTypes.string,
+  selectOption: PropTypes.func
 }
 
 export default ConceptReportRanking;

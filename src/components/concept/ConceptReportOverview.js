@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ContentBox from '../layout/ContentBox';
-import FormTextInput from '../layout/FormTextInput';
 import FormTextArea from '../layout/FormTextArea';
 import RankSelectForm from '../layout/RankSelectForm';
 
 import '../../styles/css/concept-summary.css';
 
 const ConceptReportOverview = (props) => {
-  const { conceptName, conceptRank, conceptComments, updateFormField, selectOption } = props;
+  const { conceptName, conceptRank, VFComments, updateFormField, selectOption } = props;
   return (
     <div>
       <div className="finance-report-overview-name">Concept Name: {conceptName}</div>
@@ -23,17 +21,21 @@ const ConceptReportOverview = (props) => {
         isRequired={true}
       />
       <FormTextArea
-        id="conceptComments"
+        id="VFComments"
         placeholder="Add any comments"
         onChange={updateFormField}
-        value={conceptComments}
+        value={VFComments}
       />
     </div>
   )
 }
 
 ConceptReportOverview.propTypes = {
-
+  conceptName: PropTypes.string,
+  conceptRank: PropTypes.string,
+  VFComments: PropTypes.string,
+  selectOption: PropTypes.func,
+  updateFormField: PropTypes.func
 }
 
 export default ConceptReportOverview;

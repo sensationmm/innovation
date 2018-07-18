@@ -7,7 +7,8 @@ import InnovationAddPartner from '../components/innovation/InnovationAddPartner'
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import FormSectionHeader from '../components/layout/FormSectionHeader';
 
-import ButtonNext from '../components/buttons/ButtonNext';
+import BackTextLink from '../components/buttons/BackTextLink';
+import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
 import { createInnovation } from '../actions/innovations';
 import { validateEmail } from '../utils/functions';
@@ -23,7 +24,7 @@ class InnovationCreate extends Component {
     partnerCity: '',
     partnerCountry: '',
     partnerDescription: '',
-    innovationType: [],
+    innovationType: null,
     innovationName: '',
     dvOffice: '',
     dvPartner1: '',
@@ -70,14 +71,6 @@ class InnovationCreate extends Component {
 
   render() {
     const fieldsAreCompleted = this.fieldsAreCompleted();
-    const backButton = (
-      <div className="step-back-link">
-        <i className="fas fa-chevron-left"></i>
-        <span className="step-back-link-text"
-          onClick={() => this.props.history.goBack()}
-        >Back</span>
-      </div>
-    );
     return (
       <div className="create-innovation-container">
         <div className="create-innovation-page-title">Create A New Innovation</div>
@@ -113,17 +106,18 @@ class InnovationCreate extends Component {
             innovationDuration={this.state.innovationDuration}
             datePickerOpen={this.state.datePickerOpen}
             toggleDatePicker={this.toggleDatePicker}
-            // innovationLogo={logo}
-            // updateInnovationLogo={this.updateInnovationLogo}
           />
         </div>
         <div className="create-innovation-user-actions">
-          {backButton}
-          {
-            fieldsAreCompleted
-              ? <ButtonNext label="Save" onClick={() => this.submitNewInnovation()} />
-              : <ButtonNext disabled={true} label="Complete Required Fields" />
-          }
+          <BackTextLink
+            label="Back"
+            onClick={() => this.props.history.goBack()}
+          />
+          <ButtonSubmit
+            label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
+            onClick={() => this.submitNewInnovation()}
+            disabled={!fieldsAreCompleted}
+          />
         </div>
       </div>
     )

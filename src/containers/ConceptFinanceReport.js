@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ConceptReportOverview from '../components/concept/ConceptReportOverview';
 import ConceptReportRanking from '../components/concept/ConceptReportRanking';
 import FormSectionHeader from '../components/layout/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
+import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-finance-report.css'
 
@@ -30,14 +32,6 @@ class ConceptFinanceReport extends Component {
   }
 
   render() {
-    const backButton = (
-      <div className="step-back-link">
-        <i className="fas fa-chevron-left"></i>
-        <span className="step-back-link-text"
-          onClick={() => this.props.history.goBack()}
-        >Back</span>
-      </div>
-    );
     return (
       <div className="finance-report-container">
         <div className="finance-report-page-title">Concept Finance Report</div>
@@ -66,16 +60,22 @@ class ConceptFinanceReport extends Component {
           />
         </div>
         <div className="create-innovation-user-actions">
-          {backButton}
-          {
-            true
-              ? <ButtonSubmit label="Save" onClick={this.createConceptFinanceReport} />
-              : <ButtonSubmit disabled={true} label="Enter Required Details" />
-          }
+          <BackTextLink
+            label="Back"
+            onClick={() => this.props.history.goBack()}
+          />
+          <ButtonSubmit
+            label="Save"
+            onClick={() => this.createConceptFinanceReport()}
+          />
         </div>
       </div>
     )
   }
 }
+
+ConceptFinanceReport.propTypes = {
+  history: PropTypes.object
+};
 
 export default ConceptFinanceReport;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import '../../styles/css/form-text-input.css'
@@ -24,6 +25,14 @@ const FormTextArea = (props) => {
       />
     </div>
   )
+}
+
+FormTextArea.propTypes = {
+  id: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+  isRequired: PropTypes.bool
 }
 
 export default FormTextArea

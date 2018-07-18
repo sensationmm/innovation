@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FormTextInput from '../layout/FormTextInput';
-import FormSelectButtons from '../layout/FormSelectButtons';
+import SingleSelectBtnForm from '../layout/SingleSelectBtnForm';
 
 import '../../styles/css/concept-create.css';
 
@@ -12,18 +12,18 @@ const ConceptBusinessModel = (props) => {
   const { businessType, salesChannel, revenueModel, unitEconomics, selectOption, updateFormField } = props;
   return (
     <div>
-      <FormSelectButtons
+      <SingleSelectBtnForm
         isMultiSelect={false}
         options={businessTypes}
-        selectedValues={businessType}
+        selectedValue={businessType}
         selectOption={selectOption}
         keyToUpdate='businessType'
         title='Business Type'
       />
-      <FormSelectButtons
+      <SingleSelectBtnForm
         isMultiSelect={false}
         options={salesChannels}
-        selectedValues={salesChannel}
+        selectedValue={salesChannel}
         selectOption={selectOption}
         keyToUpdate='salesChannel'
         title='Sales Channel'
@@ -45,7 +45,12 @@ const ConceptBusinessModel = (props) => {
 }
 
 ConceptBusinessModel.propTypes = {
-
+  businessType: PropTypes.string,
+  salesChannel: PropTypes.string,
+  revenueModel: PropTypes.string,
+  unitEconomics: PropTypes.string,
+  selectOption: PropTypes.func,
+  updateFormField: PropTypes.func
 }
 
 export default ConceptBusinessModel;

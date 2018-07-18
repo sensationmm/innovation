@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FormTextInput from '../layout/FormTextInput';
-import FormSelectButtons from '../layout/FormSelectButtons';
+import SingleSelectBtnForm from '../layout/SingleSelectBtnForm';
 
 import '../../styles/css/concept-create.css';
 
@@ -28,11 +28,10 @@ const ConceptCosts = (props) => {
         onChange={updateFormField}
         value={breakEvenYear}
       />
-      <FormSelectButtons
+      <SingleSelectBtnForm
         label="Would you (GM) leave DV?"
-        isMultiSelect={false}
         options={[{value: 'yes', label: 'Yes'}, {value: 'no', label: 'No'}]}
-        selectedValues={willGMLeave}
+        selectedValue={willGMLeave}
         selectOption={selectOption}
         keyToUpdate='willGMLeave'
         title='Would you (GM) leave DV?'
@@ -42,7 +41,12 @@ const ConceptCosts = (props) => {
 }
 
 ConceptCosts.propTypes = {
-
+  incubationCost: PropTypes.string,
+  breakEvenCost: PropTypes.string,
+  breakEvenYear: PropTypes.string,
+  willGMLeave: PropTypes.string,
+  selectOption: PropTypes.func,
+  updateFormField: PropTypes.func
 }
 
 export default ConceptCosts;

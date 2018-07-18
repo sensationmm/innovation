@@ -58,7 +58,14 @@ const ConceptMarket = (props) => {
 }
 
 ConceptMarket.propTypes = {
-
+  customerSegment: PropTypes.string,
+  friction: PropTypes.string,
+  marketSize: PropTypes.string,
+  targetCustomers: PropTypes.string,
+  targetIndustry: PropTypes.string,
+  targetGeography: PropTypes.string,
+  selectOption: PropTypes.func,
+  updateFormField: PropTypes.func
 }
 
 export default ConceptMarket;

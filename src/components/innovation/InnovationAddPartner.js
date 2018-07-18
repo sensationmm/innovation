@@ -10,8 +10,7 @@ import '../../styles/css/innovation-create.css';
 import { industries } from '../../config/innovationOptions';
 
 const InnovationAddPartner = (props) => {
-  const { updateFormField, partnerCCode, partnerName, partnerIndustry, partnerCity, partnerCountry, partnerDescription } = props;
-  const requiredLabel = (<div className="create-innovation-required-label">Required</div>);
+  const { partnerCCode, partnerName, partnerIndustry, partnerCity, partnerCountry, partnerDescription, updateFormField } = props;
   return (
     <div>
       <FormTextInput
@@ -61,7 +60,13 @@ const InnovationAddPartner = (props) => {
 }
 
 InnovationAddPartner.propTypes = {
-
+  partnerCCode: PropTypes.string,
+  partnerName: PropTypes.string,
+  partnerIndustry: PropTypes.string,
+  partnerCity: PropTypes.string,
+  partnerCountry: PropTypes.string,
+  partnerDescription: PropTypes.string,
+  updateFormField: PropTypes.func
 }
 
 export default InnovationAddPartner;

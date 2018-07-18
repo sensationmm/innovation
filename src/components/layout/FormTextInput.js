@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import { validateEmail } from '../../utils/functions';
@@ -30,6 +31,15 @@ const FormTextInput = (props) => {
       />
     </div>
   )
+}
+
+FormTextInput.propTypes = {
+  id: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+  isRequired: PropTypes.bool,
+  emailValidation: PropTypes.func
 }
 
 export default FormTextInput

@@ -4,10 +4,8 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import Dropdown from '../Dropdown';
-import FormSelectButtons from '../layout/FormSelectButtons';
+import SingleSelectBtnForm from '../layout/SingleSelectBtnForm';
 import FormTextInput from '../layout/FormTextInput';
-import FormTextArea from '../layout/FormTextArea';
-// import Uploader from '../Uploader';
 
 import '../../styles/css/innovation-create.css';
 
@@ -15,16 +13,15 @@ import { innovationTypes, dvOfficeLocations } from '../../config/innovationOptio
 
 const InnovationAddDetails = (props) => {
   const {
-    updateFormField, selectOption, updateDateField, innovationName, dvOffice, dvPartner1, dvPartner2, innovationOpenDate,
-    innovationDuration, toggleDatePicker, datePickerOpen, innovationType, teamGMEmail
+    innovationName, dvOffice, dvPartner1, dvPartner2, innovationOpenDate, innovationDuration, toggleDatePicker,
+    datePickerOpen, innovationType, teamGMEmail, updateFormField, selectOption, updateDateField
   } = props;
   const requiredLabel = (<div className="create-innovation-required-label">Required</div>);
   return (
     <div>
-      <FormSelectButtons
-        isMultiSelect={false}
+      <SingleSelectBtnForm
         options={innovationTypes}
-        selectedValues={innovationType}
+        selectedValue={innovationType}
         selectOption={selectOption}
         keyToUpdate='innovationType'
         isRequired={true}
@@ -93,22 +90,24 @@ const InnovationAddDetails = (props) => {
         onChange={updateFormField}
         value={innovationDuration}
       />
-      {/* <div className="innovation-add-title-logo">
-        <Uploader
-          logo={innovationLogo}
-          storeLogo={updateInnovationLogo}
-          messageText="Upload Innovation Logo"
-        />
-      </div> */}
     </div>
   )
 }
 
 InnovationAddDetails.propTypes = {
   innovationName: PropTypes.string,
-  innovationLogo: PropTypes.object,
-  updateInnovationName: PropTypes.func,
-  updateInnovationLogo: PropTypes.func
+  dvOffice: PropTypes.string,
+  dvPartner1: PropTypes.string,
+  dvPartner2: PropTypes.string,
+  innovationOpenDate: PropTypes.object,
+  innovationDuration: PropTypes.string,
+  toggleDatePicker: PropTypes.func,
+  datePickerOpen: PropTypes.bool,
+  innovationType: PropTypes.string,
+  teamGMEmail: PropTypes.string,
+  updateFormField: PropTypes.func,
+  selectOption: PropTypes.func,
+  updateDateField: PropTypes.func
 }
 
 export default InnovationAddDetails;

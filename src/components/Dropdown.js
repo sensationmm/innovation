@@ -49,6 +49,7 @@ Dropdown.propTypes = {
   id: PropTypes.string,
   options: PropTypes.array,
   onChange: PropTypes.func,
+  placeholder: PropTypes.string,
   classes: PropTypes.string
 };
 

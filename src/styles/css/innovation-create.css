@@ -56,11 +56,3 @@
   align-items: center;
   position: relative;
   z-index: 0; }
-
-.step-back-link {
-  color: #eff1f2;
-  cursor: pointer; }
-
-.step-back-link-text {
-  padding-left: 8px;
-  font-size: 14px; }

@@ -31,7 +31,7 @@ class InnovationAddTeam extends Component {
   }
 
   render() {
-    const { curTeamMembers, newTeamMembers, removeNewTeamMember, allVentureViewUsers, innovationName } = this.props;
+    const { curTeamMembers, newTeamMembers, removeNewTeamMember, allVentureViewUsers } = this.props;
     const { newMemberEmail } = this.state;
     const isValidEmail  = validateEmail(newMemberEmail);
     return (

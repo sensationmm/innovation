@@ -10,7 +10,8 @@ import InnovationTeam from '../components/innovation/InnovationTeam';
 import FormSectionHeader from '../components/layout/FormSectionHeader';
 import FormTextArea from '../components/layout/FormTextArea';
 import ContentBox from '../components/layout/ContentBox';
-import ButtonNext from '../components/buttons/ButtonNext';
+import ButtonSubmit from '../components/buttons/ButtonSubmit';
+import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/innovation-create.css';
 
@@ -73,18 +74,10 @@ class InnovationUpdate extends Component {
   }
 
   render() {
-    const backButton = (
-      <div className="step-back-link">
-        <i className="fas fa-chevron-left"></i>
-        <span className="step-back-link-text"
-          onClick={() => this.props.history.goBack()}
-        >Back</span>
-      </div>
-    );
     return (
       <div className="create-innovation-container">
         <div className="create-innovation-welcome">
-          Hi xxxxx, you've been assigned as GM for this project. We just need a few details from you:
+          Hi there, you‘ve been assigned as GM for this project. We just need a few details from you
         </div>
         <div className="create-innovation-section-container">
           <FormSectionHeader
@@ -141,12 +134,14 @@ class InnovationUpdate extends Component {
           />
         </div>
         <div className="create-innovation-user-actions">
-          {backButton}
-          {
-            true
-              ? <ButtonNext label="Save" onClick={this.updateInnovation} />
-              : <ButtonNext disabled={true} label="Enter Required Details" />
-          }
+          <BackTextLink
+            label="Back"
+            onClick={() => this.props.history.goBack()}
+          />
+          <ButtonSubmit
+            label="Save"
+            onClick={() => this.updateInnovation()}
+          />
         </div>
       </div>
     )
@@ -154,7 +149,7 @@ class InnovationUpdate extends Component {
 }
 
 InnovationUpdate.propTypes = {
-
+  history: PropTypes.object
 }
 
 const mapDispatchToProps = dispatch => ({

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,11 +12,12 @@ import ConceptCosts from '../components/concept/ConceptCosts';
 import ConceptConviction from '../components/concept/ConceptConviction';
 
 import FormSectionHeader from '../components/layout/FormSectionHeader';
-import ButtonNext from '../components/buttons/ButtonNext';
+import ButtonSubmit from '../components/buttons/ButtonSubmit';
+import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-import { createConcept } from '../actions/concepts';
+// import { createConcept } from '../actions/concepts';
 
 class ConceptCreate extends Component {
   state = {
@@ -33,8 +34,8 @@ class ConceptCreate extends Component {
     primaryTechnology: '',
     successFactors: '',
     keyRisks: '',
-    businessType: [],
-    salesChannel: [],
+    businessType: null,
+    salesChannel: null,
     revenueModel: '',
     unitEconomics: '',
     corporateAdvantage: '',
@@ -42,8 +43,8 @@ class ConceptCreate extends Component {
     incubationCost: '',
     breakEvenCost: '',
     breakEvenYear: '',
-    willGMLeave: [],
-    GMRank: [],
+    willGMLeave: null,
+    GMRank: null,
     GMComments: '',
     CPPreferences: ''
   }
@@ -75,7 +76,8 @@ class ConceptCreate extends Component {
   }
 
   submitNewConcept = () => {
-    const { createConcept, activeInnovationId } = this.props;
+    // const { activeInnovationId } = this.props;
+    // const { createConcept } = this.props;
     // Need to also send all user invites at this stage.
     console.log('state', this.state);
     console.log('Call create a new concept action');
@@ -89,19 +91,7 @@ class ConceptCreate extends Component {
   }
 
   render() {
-    const {
-      step, conceptName, logo, conceptStrapline, conceptDescription,
-      selectedOpportunityAreas, selectedDvMatrixType, selectedKeyTechnologies, selectedDvArchetypes
-    } = this.state;
     const fieldsAreCompleted = this.fieldsAreCompleted();
-    const backButton = (
-      <div className="step-back-link">
-        <i className="fas fa-chevron-left"></i>
-        <span className="step-back-link-text"
-          onClick={() => this.props.history.goBack()}
-        >Back</span>
-      </div>
-    );
     return (
       <div className="create-concept-container">
         <div className="create-concept-page-title">Create A New Concept</div>
@@ -191,46 +181,16 @@ class ConceptCreate extends Component {
             CPPreferences={this.state.CPPreferences}
           />
         </div>
-
-
-
-
-
-
-        {/* <div className="create-concept-page-title">Create Concept</div>
-        <div>
-          <div>
-            <ConceptAddTitle
-              conceptName={conceptName}
-              updateConceptName={this.updateDetails}
-              conceptLogo={logo}
-              updateConceptLogo={this.updateConceptLogo}
-            />
-          </div>
-          <div>
-            <ConceptAddDetails
-              conceptStrapline={conceptStrapline}
-              conceptDescription={conceptDescription}
-              updateConceptDetails={this.updateDetails}
-            />
-          </div>
-          <div>
-            <ConceptAddAttributes
-              selectedOpportunityAreas={selectedOpportunityAreas}
-              selectedDvMatrixType={selectedDvMatrixType}
-              selectedKeyTechnologies={selectedKeyTechnologies}
-              selectedDvArchetypes={selectedDvArchetypes}
-              updateAttributeArray={this.updateAttributeArray}
-              updateAttributeValue={this.updateAttributeValue}
-            />
-          </div> */}
           <div className="create-concept-user-actions">
-            {backButton}
-            {
-              fieldsAreCompleted
-                ? <ButtonNext label="Save" onClick={() => this.submitNewConcept()} />
-                : <ButtonNext disabled={true} label="Complete Required Fields" />
-            }
+            <BackTextLink
+              label="Back"
+              onClick={() => this.props.history.goBack()}
+            />
+            <ButtonSubmit
+              label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
+              onClick={() => this.submitNewConcept()}
+              disabled={!fieldsAreCompleted}
+            />
           </div>
       </div>
     )
@@ -238,18 +198,18 @@ class ConceptCreate extends Component {
 }
 
 ConceptCreate.propTypes = {
- createConcept: PropTypes.func,
- activeInnovationId: PropTypes.number
+  history: PropTypes.object,
+  createConcept: PropTypes.func,
+  activeInnovationId: PropTypes.number
 };
 
+// const mapStateToProps = state => ({
+//   activeInnovationId: state.innovations.activeInnovation.id,
+// });
+//
+//
+// const mapDispatchToProps = dispatch => ({
+//   createConcept: bindActionCreators(createConcept, dispatch)
+// });
 
-const mapStateToProps = state => ({
-  activeInnovationId: state.innovations.activeInnovation.id,
-});
-
-
-const mapDispatchToProps = dispatch => ({
-  createConcept: bindActionCreators(createConcept, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConceptCreate);
+export default connect(null, null)(ConceptCreate);

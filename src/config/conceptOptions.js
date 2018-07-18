@@ -41,7 +41,7 @@ export const businessTypes = [
 ];
 
 export const salesChannels = [
-  { value: '1-b2b', label: 'B2B' },
-  { value: '2-b2c', label: 'B2C' },
-  { value: '3-b2b2c', label: 'B2B2C' }
+  { value: 'b2b', label: 'B2B' },
+  { value: 'b2c', label: 'B2C' },
+  { value: 'b2b2c', label: 'B2B2C' }
 ];

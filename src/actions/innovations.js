@@ -17,7 +17,8 @@ import {
 } from '../config/constants';
 
 // Import JSON API models.
-import { Innovation, Role, KeyDate } from '../models';
+import { Innovation } from '../models';
+// import { Role, KeyDate } from '../models';
 
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })

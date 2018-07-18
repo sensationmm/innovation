@@ -26,7 +26,9 @@ const ConceptCorpAdvantage = (props) => {
 }
 
 ConceptCorpAdvantage.propTypes = {
-
+  corporateAdvantage: PropTypes.string,
+  leveragedAssets: PropTypes.string,
+  updateFormField: PropTypes.func
 }
 
 export default ConceptCorpAdvantage;

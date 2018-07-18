@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ContentBox from '../layout/ContentBox';
 
@@ -20,7 +21,10 @@ const InnovationTeam = (props) => {
       </div>
     </ContentBox>
   )
+}
 
+InnovationTeam.propTypes = {
+  teamMembers: PropTypes.array
 }
 
 export default InnovationTeam;

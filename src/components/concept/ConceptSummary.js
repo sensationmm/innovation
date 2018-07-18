@@ -36,7 +36,11 @@ const ConceptSummary = (props) => {
 }
 
 ConceptSummary.propTypes = {
-
+  conceptName: PropTypes.string,
+  conceptDescription: PropTypes.string,
+  conceptLogo: PropTypes.object,
+  updateFormField: PropTypes.func,
+  updateConceptLogo: PropTypes.func
 }
 
 export default ConceptSummary;

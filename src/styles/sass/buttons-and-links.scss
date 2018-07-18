@@ -1,6 +1,6 @@
 @import './modules/colors.scss';
 
-.button-innovation-next {
+.form-submit-button {
   padding: 8px 10px;
   min-width: 120px;
   text-align: center;
@@ -20,4 +20,14 @@
     cursor: auto;
     font-weight: normal;
   }
+}
+
+.back-text-link {
+  color: $text-off-white;
+  cursor: pointer;
+}
+
+.back-text-link-label {
+  padding-left: 8px;
+  font-size: 14px;
 }

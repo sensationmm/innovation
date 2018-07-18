@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../styles/css/button-submit.css';
+import '../../styles/css/buttons-and-links.css';
 
 /**
  * ButtonSubmit
@@ -21,7 +21,7 @@ const ButtonSubmit = props => {
   } = props;
 
   return (
-    <button disabled={disabled} className="button-submit" onClick={onClick}>
+    <button disabled={disabled} className={disabled ? 'form-submit-button disabled': 'form-submit-button'} onClick={onClick}>
       {label}
     </button>
   );

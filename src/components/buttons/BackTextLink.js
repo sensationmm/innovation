@@ -16,7 +16,7 @@ import '../../styles/css/back-text-link.css';
    <div className="back-text-link">
      <i className="fas fa-chevron-left"></i>
      <span className="back-text-link-label"
-       onClick={() => this.props.history.goBack()}
+       onClick={() => props.onClick()}
      >{props.label}</span>
    </div>
  );

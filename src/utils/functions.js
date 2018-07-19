@@ -23,6 +23,19 @@ export const getIndexByKey = (arr, id, key = 'id') => {
   return index;
 };
 
+// Remove all attributes that have null or falsey values.
+export const removeNullValueAttrs = (obj) => {
+  Object.keys(obj).forEach((key) => (obj[key] == null) && delete obj[key]);
+}
+
+// As above but uses recusion to delete nested attributes that have null or 'falsey' values.
+export const deepRemoveNullValueAttrs = (obj) => {
+  Object.keys(obj).forEach(key => {
+    if (obj[key] && typeof obj[key] === 'object') deepRemoveNullValueAttrs(obj[key]);
+    else if (obj[key] == null) delete obj[key];
+  });
+}
+
 export const validateEmail = (email) => {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);

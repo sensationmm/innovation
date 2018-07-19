@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import moment from 'moment';
+
 import InnovationAddPartner from '../components/innovation/InnovationAddPartner';
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import FormSectionHeader from '../components/layout/FormSectionHeader';
@@ -51,14 +53,32 @@ class InnovationCreate extends Component {
   }
 
   submitNewInnovation = () => {
-    // Need to also send all user invites at this stage.
-    console.log('state', this.state);
-    console.log('Call create a new innovation action');
     const { createInnovation } = this.props;
-    // TODO: Format this.state removing any null attributes. Form into a data object that can be sent to the API.
-    // TODO: Sync up this.state innovation attributes with the ORM model.
-    // TODO: Format moment object from date picker into UTC time for DB.
-    createInnovation(this.state);
+    const {
+      partnerCCode, partnerName, partnerIndustry, partnerCity, partnerCountry, partnerDescription,
+      innovationType, innovationName, dvOffice, dvPartner1, dvPartner2, innovationOpenDate
+    } = this.state;
+    // Need to pass the two separate data objects to the action. One for the Partner and one for the Innovation.
+    const newPartner = {
+      name: partnerName,
+      description: partnerDescription,
+      hqCity: partnerCity,
+      hqCountry: partnerCountry,
+      industry: partnerIndustry
+    }
+    const newInnovation = {
+      chargeCode: partnerCCode,
+      innovationType: innovationType,
+      sprintName: innovationName,
+      dvPartner1: dvPartner1,
+      dvPartner2: dvPartner2,
+      mandate: null, // Currently being added in form 2.
+      openDate: moment(innovationOpenDate).format('YYYY-MM-DD'),
+      keyDates: null, // Currently being added in form 2.
+      users: null, // Currently being added in form 2.
+      dvOffice: dvOffice
+    }
+    createInnovation(newPartner, newInnovation);
   }
 
   fieldsAreCompleted = () => {

@@ -6,7 +6,7 @@ import '../../styles/css/back-text-link.css';
 /**
  * BackTextLink
  *
- * Renders a link that will take you back to the previous page you were on. Can only be used when props.history
+ * Renders a text link with a back arrow.
  *
  * @param {string} label - button text
  * @param {function} onClick - action to fire when button is clicked

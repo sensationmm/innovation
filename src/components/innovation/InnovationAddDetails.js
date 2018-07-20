@@ -14,7 +14,7 @@ import { innovationTypes, dvOfficeLocations } from '../../config/innovationOptio
 const InnovationAddDetails = (props) => {
   const {
     innovationName, dvOffice, dvPartner1, dvPartner2, innovationOpenDate, innovationDuration, toggleDatePicker,
-    datePickerOpen, innovationType, teamGMEmail, updateFormField, selectOption, updateDateField
+    datePickerOpen, innovationType, updateFormField, selectOption, updateDateField
   } = props;
   const requiredLabel = (<div className="create-innovation-required-label">Required</div>);
   return (
@@ -55,14 +55,6 @@ const InnovationAddDetails = (props) => {
         placeholder="DV partner 2"
         onChange={updateFormField}
         value={dvPartner2}
-      />
-      <FormTextInput
-        id="teamGMEmail"
-        placeholder="Team GM Email"
-        onChange={updateFormField}
-        value={teamGMEmail}
-        isRequired={true}
-        emailValidation={true}
       />
       <div className="create-innovation-dropdown-container">
         {!innovationOpenDate && requiredLabel}

@@ -21,17 +21,6 @@ const ApplicationRecord = JSORMBase.extend({
   }
 });
 
-export const DvOffice = ApplicationRecord.extend({
-  static: {
-    jsonapiType: 'dv_offices'
-  },
-  attrs: {
-    id: attr(),
-    name: attr(),
-    innovations: hasMany()
-  }
-});
-
 export const Industry = ApplicationRecord.extend({
   static: {
     jsonapiType: 'industries'
@@ -51,12 +40,25 @@ export const Partner = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
+    chargeCode: attr(),
     name: attr(),
     description: attr(),
     hqCity: attr(),
     hqCountry: attr(),
+    industryId: attr(), // TODO: Is this setup so we receive ids from relationships when sideloading?
     innovation: hasOne(),
     industry: belongsTo()
+  }
+});
+
+export const DvOffice = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'dv_offices'
+  },
+  attrs: {
+    id: attr(),
+    name: attr(),
+    innovations: hasMany()
   }
 });
 
@@ -67,7 +69,6 @@ export const Innovation = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
-    chargeCode: attr(), // TODO: Should this be on Innovation or on Partner?
     innovationType: attr(),
     sprintName: attr(),
     dvPartner1: attr(),
@@ -77,6 +78,7 @@ export const Innovation = ApplicationRecord.extend({
     openDate: attr(),
     kickedOffAt: attr(),
     colour: attr(),
+    dvOfficeId: attr(),
     keyDates: hasMany(),
     roles: hasMany(),
     concepts: hasMany(),
@@ -117,7 +119,7 @@ export const Concept = ApplicationRecord.extend({
     successFactors: attr(),
     keyRisks: attr(),
     businessType: attr(),
-    salesModel: attr(),
+    salesChannel: attr(),
     revenueModel: attr(),
     unitEconomics: attr(),
     corporateAdvantage: attr(),
@@ -130,9 +132,11 @@ export const Concept = ApplicationRecord.extend({
     gmComments: attr(),
     partnerPreferences: attr(),
     innovationId: attr(),
+    targetIndustryId: attr(),
+    conceptChanges: hasMany(),
     innovation: belongsTo(),
-    targetIndustry: belongsTo(),
-    conceptChanges: hasMany()
+    targetIndustry: belongsTo()
+
   }
 });
 
@@ -168,6 +172,7 @@ export const ConceptChange = ApplicationRecord.extend({
     gmConviction: attr(),
     gmComments: attr(),
     partnerPreferences: attr(),
+    conceptId: attr(),
     concept: belongsTo()
   }
 });
@@ -178,7 +183,6 @@ export const conceptReport = ApplicationRecord.extend({
   },
   attrs: {
     id: attr(),
-    userId: attr(),
     overallRank: attr(),
     comments: attr(),
     solutionRank: attr(),
@@ -187,6 +191,20 @@ export const conceptReport = ApplicationRecord.extend({
     corporateAdvantage: attr(),
     conceptId: attr(),
     concept: belongsTo()
+  }
+});
+
+export const Role = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'roles'
+  },
+  attrs: {
+    name: attr(),
+    email: attr(),
+    rolableId: attr(),
+    rolableType: attr(),
+    rolable: belongsTo(),
+    user: belongsTo()
   }
 });
 
@@ -200,23 +218,10 @@ export const User = ApplicationRecord.extend({
     email: attr(),
     password: attr(),
     currentPassword: attr(),
-    innovation: belongsTo(),
+    innovationId: attr(),
     roles: hasMany(),
-    role: belongsTo()
-  }
-});
-
-export const Role = ApplicationRecord.extend({
-  static: {
-    jsonapiType: 'roles'
-  },
-  attrs: {
-    name: attr(),
-    email: attr(),
-    user: belongsTo(),
-    rolableId: attr(),
-    rolable: belongsTo(),
-    rolableType: attr()
+    role: belongsTo(),
+    innovation: belongsTo()
   }
 });
 
@@ -229,7 +234,7 @@ export const KeyDate = ApplicationRecord.extend({
     name: attr(),
     date: attr(),
     keyDatableId: attr(),
-    keyDatable: belongsTo(),
-    keyDatableType: attr()
+    keyDatableType: attr(),
+    keyDatable: belongsTo()
   }
 });

@@ -77,7 +77,7 @@ class InnovationUpdate extends Component {
     return (
       <div className="create-innovation-container">
         <div className="create-innovation-welcome">
-          Hi there, you‘ve been assigned as GM for this project. We just need a few details from you
+          Please enter the IS dates, team members and innovation mandate
         </div>
         <div className="create-innovation-section-container">
           <FormSectionHeader

@@ -31,7 +31,6 @@ class InnovationCreate extends Component {
     dvOffice: '',
     dvPartner1: '',
     dvPartner2: '',
-    teamGMEmail: '',
     innovationOpenDate: null,
     innovationDuration: ''
   }
@@ -72,10 +71,7 @@ class InnovationCreate extends Component {
       sprintName: innovationName,
       dvPartner1: dvPartner1,
       dvPartner2: dvPartner2,
-      mandate: null, // Currently being added in form 2.
       openDate: moment(innovationOpenDate).format('YYYY-MM-DD'),
-      keyDates: null, // Currently being added in form 2.
-      users: null, // Currently being added in form 2.
       dvOffice: dvOffice
     }
     createInnovation(newPartner, newInnovation);

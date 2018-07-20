@@ -34,20 +34,44 @@ const initialState = {
       { 'id': 4, 'name': 'Venture Development' }
     ]
   },
-  allInnovationsList: []
+  allInnovationsList: [
+    {
+      id: 1,
+      sprintName: 'Sprint 1',
+      partner: 'Big Company 1',
+      chargeCode: 'GF65F56',
+      keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+    },
+    {
+      id: 2,
+      sprintName: 'Sprint 2',
+      partner: 'Big Company 2',
+      chargeCode: 'GF65D43',
+      keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+    },
+    {
+      id: 3,
+      sprintName: 'Sprint 3',
+      partner: 'Big Company 3',
+      chargeCode: 'GB35F50',
+      keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+    }
+  ]
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
-      const keyDates = action.data.keyDates.map(keyDate => ( { ...keyDate.attributes } ));
-      const activeInnovation = { ...action.data.attributes, keyDates };
-      return { ...state, activeInnovation };
+      // const keyDates = action.data.keyDates.map(keyDate => ( { ...keyDate.attributes } ));
+      // const activeInnovation = { ...action.data.attributes, keyDates };
+      // return { ...state, activeInnovation };
+      return state; // TODO: Uncomment above once api to filling redux state.
     }
 
     case GET_INNOVATIONS_LIST_SUCCESS: {
-      const allInnovationsList = action.data.map(innovation => { return { ...innovation.attributes } })
-      return { ...state, allInnovationsList }
+      // const allInnovationsList = action.data.map(innovation => { return { ...innovation.attributes } })
+      // return { ...state, allInnovationsList }
+      return state; // TODO: Uncomment above once api to filling redux state.
     }
 
     default:

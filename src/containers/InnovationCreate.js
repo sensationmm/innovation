@@ -31,7 +31,7 @@ class InnovationCreate extends Component {
     dvOffice: '',
     dvPartner1: '',
     dvPartner2: '',
-    teamGMEmail: '',
+    teamGMEmail: '', // TODO: If user is Team GM then autofill teamGMEmail on mount.
     innovationOpenDate: null,
     innovationDuration: ''
   }

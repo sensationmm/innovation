@@ -19,7 +19,7 @@ const ConceptList = props => {
 
   return (
     <div className="concept-list">
-      <div className="concept-list-header">My Concepts</div>
+      <div className="concept-list-header">Concepts</div>
       <div className="concept-list-items">
       {
         list.map(concept => {

@@ -24,8 +24,8 @@ const ContentBox = props => {
   }
 
   return (
-    <div 
-      className={classnames('content-box', {'background': background}, {'bordered': border}, {'padded': padded})} 
+    <div
+      className={classnames('content-box', {'background': background}, {'bordered': border}, {'padded': padded})}
       style={elStyle}
     >
       {children}

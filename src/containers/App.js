@@ -2,11 +2,12 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Home from './Home';
+import InnovationOverview from '../components/innovation/InnovationOverview';
 import ConceptV2 from './ConceptV2';
 import InnovationCreate from './InnovationCreate';
 import InnovationUpdate from './InnovationUpdate';
 import ConceptFinanceReport from './ConceptFinanceReport';
-import InnovationDashboard from './InnovationDashboard';
+import InnovationDashboard from '../components/innovation/InnovationDashboard';
 import ConceptCreate from './ConceptCreate';
 import Grouping from './Grouping';
 import Tracking from './Tracking';
@@ -27,6 +28,7 @@ const App = () => (
     <main>
       <Switch>
         <PrivateRoute exact path="/" component={Home} />
+        <PrivateRoute exact path="/innovation-overview/:innovationId?" component={InnovationOverview} />
         <PrivateRoute exact path="/dashboard" component={InnovationDashboard} />
         <PrivateRoute exact path="/create-innovation" component={InnovationCreate} />
         <PrivateRoute exact path="/update-innovation" component={InnovationUpdate} />

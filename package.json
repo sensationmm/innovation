@@ -1,5 +1,6 @@
 {
   "name": "inventure-innovation",
+  "homepage": "/innovation",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -48,7 +49,8 @@
     "presasslint": "echo 'Running sasslint'",
     "sasslint": "sass-lint -c .sass-lint.yml 'src/styles/sass/*.scss' -v --no-exit",
     "precommit-msg": "echo 'Pre-commit checks... linting Sass and JS, please fix any errors'",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom",
+    "postbuild": "mkdir build/innovation && mv build/static build/innovation/static"
   },
   "pre-commit": [
     "precommit-msg",

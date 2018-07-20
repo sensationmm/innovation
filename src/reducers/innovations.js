@@ -3,36 +3,41 @@ import {
   GET_INNOVATION_DATA_SUCCESS
 } from '../config/constants';
 
-
 const initialState = {
   activeInnovation: {
     id: 1,
-    name: 'InVenture',
-    color: '#ff0000',
-    location: 'London',
+    createdAt: '2018-03-23',
+    innovationType: 'Portfolio Sprint',
+    sprintName: 'Fake Innovation 1',
+    dvPartner1: 'Steven Kentishly-Warren',
+    dvPartner2: 'Bez',
+    mandate: 'To smear the president at every opportunity',
+    openDate: '2018-04-14',
+    kickedOffAt: '2018-05-14',
+    dvOffice: 'London',
     keyDates: {
       'KO': '2018-05-14',
       'IS1': '2018-06-18',
       'IS2': '2018-08-12',
       'IS3': '2018-09-01'
-    },
-    objectives: {
-      'KO': [
-        'Objective 1',
-        'Objective 2'
-      ],
-      'IS1': [
-        'Objective 3'
-      ],
-      'IS2': [],
-      'IS3': []
-    },
-    opportunityAreas: [
-      { 'id': 1, 'name': 'Field Research' },
-      { 'id': 2, 'name': 'Concept Tracking & Prioritising' },
-      { 'id': 3, 'name': 'Concept Voting' },
-      { 'id': 4, 'name': 'Venture Development' }
-    ]
+    }
+    // objectives: {
+    //   'KO': [
+    //     'Objective 1',
+    //     'Objective 2'
+    //   ],
+    //   'IS1': [
+    //     'Objective 3'
+    //   ],
+    //   'IS2': [],
+    //   'IS3': []
+    // },
+    // opportunityAreas: [
+    //   { 'id': 1, 'name': 'Field Research' },
+    //   { 'id': 2, 'name': 'Concept Tracking & Prioritising' },
+    //   { 'id': 3, 'name': 'Concept Voting' },
+    //   { 'id': 4, 'name': 'Venture Development' }
+    // ]
   },
   allInnovationsList: [
     {

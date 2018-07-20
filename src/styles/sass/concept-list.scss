@@ -1,4 +1,7 @@
+@import './modules/colors.scss';
+
 .concept-list {
+  font-size: 14px;
 
   &-header {
     text-transform: uppercase;
@@ -8,16 +11,37 @@
   }
 
   &-items {
-    max-height: 300px;
-    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 
   &-item {
+    background: $background-grey-light;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     margin-bottom: 20px;
+    width: 220px;
+    height: 220px;
+    padding: 5px 10px;
+    margin: 15px;
+    text-decoration: none;
+
+    h3, p, div {
+      padding: 8px;
+    }
+
+    &:hover {
+      background: $background-grey-lighter;
+      cursor: pointer;
+    }
 
     &-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
       padding-left: 10px;
     }
   }

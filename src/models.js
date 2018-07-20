@@ -69,6 +69,7 @@ export const Innovation = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
+    currentSession: attr(), // Either KO -> IS3 or pull from an innovations keyDates?
     innovationType: attr(),
     sprintName: attr(),
     dvPartner1: attr(),
@@ -107,6 +108,7 @@ export const Concept = ApplicationRecord.extend({
     id: attr(),
     createdAt: attr(),
     name: attr(),
+    status: attr(), // killed, incomplete, complete, scored
     description: attr(),
     logo: attr(),
     segment: attr(),
@@ -177,9 +179,9 @@ export const ConceptChange = ApplicationRecord.extend({
   }
 });
 
-export const conceptReport = ApplicationRecord.extend({
+export const conceptFinanceScore = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'concept_reports'
+    jsonapiType: 'concept_finance_scores'
   },
   attrs: {
     id: attr(),

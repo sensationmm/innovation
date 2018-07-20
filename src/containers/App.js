@@ -7,7 +7,7 @@ import ConceptV2 from './ConceptV2';
 import InnovationCreate from './InnovationCreate';
 import InnovationUpdate from './InnovationUpdate';
 import ConceptFinanceReport from './ConceptFinanceReport';
-import InnovationDashboard from '../components/innovation/InnovationDashboard';
+import InnovationDashboard from './InnovationDashboard';
 import ConceptCreate from './ConceptCreate';
 import Grouping from './Grouping';
 import Tracking from './Tracking';

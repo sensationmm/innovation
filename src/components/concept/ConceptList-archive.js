@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'
 import { makeArrayFromIndexedObject } from '../../utils/functions';
 
 import ConceptAvatar from './ConceptAvatar';
@@ -34,14 +33,13 @@ const ConceptList = props => {
           } = concept;
 
           return (
-            <Link className="concept-list-item" key={`concept-${id}`} to={`/concept/${id}`}>
+            <div className="concept-list-item" key={`concept-${id}`}>
+              <ConceptAvatar conceptId={id} ident={ident} color={color} logo={logo} />
               <div className="concept-list-item-details">
-                <ConceptAvatar conceptId={id} ident={ident} color={color} logo={logo} showLink={false}/>
                 <h3>{name}</h3>
                 <p>{strapline}</p>
-                <div>Kill Concept</div>
               </div>
-            </Link>
+            </div>
           )
         })
       }

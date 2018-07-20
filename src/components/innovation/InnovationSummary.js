@@ -13,8 +13,7 @@ const InnovationSummary = props => {
   const {
     id,
     name,
-    location,
-    opportunityAreas
+    location
   } = props.activeInnovation;
 
   return (
@@ -22,12 +21,6 @@ const InnovationSummary = props => {
       <h2>{name}</h2>
       <p>Innovation ID: {id}</p>
       <p>Location: {location}</p>
-      <p>Opportunity Areas:</p>
-      <ul>
-      {opportunityAreas.map((area, count) => {
-        return <li key={`area-${count}`}>{area.name}</li>
-      })}
-      </ul>
     </div>
   );
 };

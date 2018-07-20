@@ -5,6 +5,7 @@ const CorporatePartnerSummary = (props) => {
   const { name, industry, city, businessDescription} = props;
   return (
     <div>
+      <h3>Corporate Partner</h3>
       <div>Name: {name}</div>
       <div>Industry: {industry}</div>
       <div>City: {city}</div>

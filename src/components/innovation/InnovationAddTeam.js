@@ -59,41 +59,44 @@ class InnovationAddTeam extends Component {
             value={newMemberEmail}
             onChange={this.handleEnteringEmail}
             onKeyPress={this.handleClickEnterKey}
-            placeholder="Type to search / invite new user..."
+            placeholder="Type in an email..."
           />
           {  isValidEmail &&
               <i onClick={() => this.addNewMember(newMemberEmail)} className="fa fa-plus add-user-icon right-align"></i>
           }
         </div>
-        <div className='innovation-all-users-list'>
-          {
-            allVentureViewUsers.length > 0 &&
-                    allVentureViewUsers.filter(userEmail =>
-                              !newTeamMembers.includes(userEmail) &&
-                              !curTeamMembers.includes(userEmail) &&
-                              userEmail.toLowerCase().indexOf(newMemberEmail.toLowerCase()) >= 0
-                            )
-                    .map(availableUserEmail => {
-                      return (
-                        <div
-                          key={`list-${availableUserEmail}`}
-                          onClick={() => this.addNewMember(availableUserEmail)}
-                          className='innovation-all-users-list-item'
-                        >
-                          <i className="fas fa-plus add-user-icon left-align"></i>
-                          <span className="user-list-email-name">{availableUserEmail}</span>
-                        </div>
-                      )
-                    })
-          }
-          {
-            !allVentureViewUsers.length > 0 &&
-              <div className="all-users-list-empty">
-                <p>No existing users to show</p>
-                <p>Enter a full email address to invite a new user</p>
-              </div>
-          }
-        </div>
+        {
+          allVentureViewUsers &&
+            <div className='innovation-all-users-list'>
+              {
+                allVentureViewUsers && allVentureViewUsers.length > 0 &&
+                        allVentureViewUsers.filter(userEmail =>
+                                  !newTeamMembers.includes(userEmail) &&
+                                  !curTeamMembers.includes(userEmail) &&
+                                  userEmail.toLowerCase().indexOf(newMemberEmail.toLowerCase()) >= 0
+                                )
+                        .map(availableUserEmail => {
+                          return (
+                            <div
+                              key={`list-${availableUserEmail}`}
+                              onClick={() => this.addNewMember(availableUserEmail)}
+                              className='innovation-all-users-list-item'
+                            >
+                              <i className="fas fa-plus add-user-icon left-align"></i>
+                              <span className="user-list-email-name">{availableUserEmail}</span>
+                            </div>
+                          )
+                        })
+              }
+              {
+                allVentureViewUsers && !allVentureViewUsers.length > 0 &&
+                  <div className="all-users-list-empty">
+                    <p>No existing users to show</p>
+                    <p>Enter a full email address to invite a new user</p>
+                  </div>
+              }
+            </div>
+        }
       </div>
     )
   }

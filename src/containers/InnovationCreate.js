@@ -31,6 +31,7 @@ class InnovationCreate extends Component {
     dvOffice: '',
     dvPartner1: '',
     dvPartner2: '',
+    teamGMEmail: '',
     innovationOpenDate: null,
     innovationDuration: ''
   }

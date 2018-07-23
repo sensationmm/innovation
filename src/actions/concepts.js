@@ -8,9 +8,9 @@ import {
   // GET_CONCEPTS_BEGIN,
   // GET_CONCEPTS_SUCCESS,
   // GET_CONCEPTS_ERROR,
-  // UPDATE_CONCEPT_BEGIN,
-  // UPDATE_CONCEPT_SUCCESS,
-  // UPDATE_CONCEPT_ERROR,
+  EDIT_CONCEPT_BEGIN,
+  EDIT_CONCEPT_SUCCESS,
+  EDIT_CONCEPT_ERROR,
   // DELETE_CONCEPT_BEGIN,
   // DELETE_CONCEPT_SUCCESS,
   // DELETE_CONCEPT_ERROR
@@ -34,6 +34,17 @@ export const createConcept = (conceptData, innovationId) => async (dispatch) => 
   catch (err) {
     console.log(err);
     dispatch({ type: CREATE_CONCEPT_ERROR });
+  }
+}
+
+export const editConcept = (conceptId) => async (dispatch) => {
+  dispatch({ type: EDIT_CONCEPT_BEGIN });
+  try {
+    dispatch({ type: EDIT_CONCEPT_SUCCESS });
+  }
+  catch (err) {
+    console.log(err);
+    dispatch({ type: EDIT_CONCEPT_ERROR });
   }
 }
 

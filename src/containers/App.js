@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Home from './Home';
 import InnovationOverview from '../components/innovation/InnovationOverview';
-import ConceptV2 from './ConceptV2';
+import ConceptOverview from './ConceptOverview';
 import InnovationCreate from './InnovationCreate';
 import InnovationUpdate from './InnovationUpdate';
 import ConceptFinanceReport from './ConceptFinanceReport';

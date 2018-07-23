@@ -34,7 +34,7 @@ import '../../styles/css/concept-header.css';
       <div className="concept-header-strapline">{strapline}</div>
       <div className="concept-header-location">{location}</div>
 
-      <ProgressBar dates={milestonesDates} labels={milestonesLabels} killMark={killMark} />
+      {/* <ProgressBar dates={milestonesDates} labels={milestonesLabels} killMark={killMark} /> */}
     </div>
   );
 };

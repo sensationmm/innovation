@@ -17,7 +17,7 @@ import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-// import { createConcept } from '../actions/concepts';
+// import { createConcept, editConcept } from '../actions/concepts';
 
 class ConceptCreate extends Component {
   state = {
@@ -91,10 +91,11 @@ class ConceptCreate extends Component {
   }
 
   render() {
+    const { editExisting } = this.props;
     const fieldsAreCompleted = this.fieldsAreCompleted();
     return (
       <div className="create-concept-container">
-        <div className="create-concept-page-title">Create A New Concept</div>
+        <div className="create-concept-page-title">{editExisting ? 'Update Concept' : 'Create A New Concept'}</div>
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Concept Summary"
@@ -200,7 +201,8 @@ class ConceptCreate extends Component {
 ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
-  activeInnovationId: PropTypes.number
+  activeInnovationId: PropTypes.number,
+  editExisting: PropTypes.bool // If true then populate fields from redux
 };
 
 // const mapStateToProps = state => ({

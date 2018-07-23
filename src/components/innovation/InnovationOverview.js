@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
@@ -15,8 +16,14 @@ import ConceptList from '../concept/ConceptList';
 
 import '../../styles/css/innovation-overview.css';
 
+import { makeArrayFromIndexedObject } from '../../utils/functions';
+
 const InnovationOverview = (props) => {
   const { activeInnovation, conceptsById } = props;
+  const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
+  const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
+
+  const isPostIS2 = moment().isAfter(moment(activeInnovation.keyDates.IS2));
 
   const milestonesLabels = Object.keys(activeInnovation.keyDates);
   const milestonesDates = milestonesLabels.map(label => {
@@ -35,15 +42,27 @@ const InnovationOverview = (props) => {
         <ProgressBar dates={milestonesDates} labels={milestonesLabels} />
       </ContentBox>
 
-      <Link className="innovation-overview-add-concept-link" to="/create-concept">
-        <div>
-          <i className="fas fa-plus fa-2x add-concept-icon"></i>
-        </div>
-        <div>Add Concept</div>
-      </Link>
+      <div className="innovation-overview-toplinks">
+        <Link className="innovation-overview-add-concept-link" to="/update-innovation">
+          <div>
+            <i className="fas fa-plus fa-2x add-concept-icon"></i>
+          </div>
+          <div>Edit Key Dates and Team</div>
+        </Link>
+        <Link className="innovation-overview-add-concept-link" to="/create-concept">
+          <div>
+            <i className="fas fa-plus fa-2x add-concept-icon"></i>
+          </div>
+          <div>Add Concept</div>
+        </Link>
+      </div>
 
       <ContentBox background={false}>
-        <ConceptList conceptsById={conceptsById} />
+        <ConceptList concepts={activeConcepts} title='Active Concepts' postIS2={isPostIS2} />
+      </ContentBox>
+
+      <ContentBox background={false}>
+        <ConceptList concepts={killedConcepts} title='Killed Concepts' postIS2={isPostIS2} />
       </ContentBox>
 
       <FlexRow>
@@ -65,7 +84,6 @@ const InnovationOverview = (props) => {
             city="London"
             businessDescription="Make money"
           />
-          {/* <InnovationSummary activeInnovation={activeInnovation} /> */}
         </ContentBox>
 
       </FlexRow>

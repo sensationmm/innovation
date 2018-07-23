@@ -3,7 +3,8 @@
 .innovation-overview-add-concept-link {
   display: flex;
   align-items: center;
-  padding: 15px;
+  min-width: 46%;
+  padding: 15px 2%;
   margin: 15px 0;
   background: $background-grey-light;
   text-decoration: none;
@@ -24,4 +25,11 @@
 
 .add-concept-icon {
   color: $ocean;
+}
+
+.innovation-overview-toplinks {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 50%;
 }

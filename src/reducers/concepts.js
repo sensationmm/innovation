@@ -9,23 +9,63 @@ const initialState = {
     1: {
       'id': 1,
       'name': 'Venture View',
+      'status': 'reviewed',
       'ident': 'VV',
       'strapline': `Your venture's progress at a glance`,
       'description': 'A web app to support the creation and lifecycle of concepts for a possible venture. Ideation can easily create 100 concepts. This application takes those concepts and gives clarity into the voting process, the progression of ideas, and ultimately the conversion of a concept into a venture or its demise.',
       'logo': '/favicon.ico',
       'image': '',
       'color': '#33FF66',
-      'archetype': 'marketplace',
-      'opportunityArea': 1,
-      'matrix': 'digitalattacker',
-      'technology': 'ml',
-      'confidence': '72',
+      'market': {
+        'segment': 'Large corporates',
+        'friction': 'Analysing a venture is complicated and hard',
+        'size': '65 billion',
+        'customers': 'Large corporates that want start up like adaptability',
+        'industry': 'Venture Capital',
+        'geography': 'Worldwide'
+      },
+      'solution': {
+        'description': 'A web app to support the creation and lifecycle of concepts for a possible venture. Ideation can easily create 100 concepts. This application takes those concepts and gives clarity into the voting process, the progression of ideas, and ultimately the conversion of a concept into a venture or its demise.',
+        'technology': 'Web application',
+        'successFactors': 'It should be good',
+        'keyRisks': 'No one is interested'
+      },
+      'businessModel': {
+        'type': 'platform',
+        'channel': 'b2b',
+        'revenueModel': 'client fees',
+        'unitEconomics': 'Development vs utility'
+      },
+      'corpAdvantage': {
+        'advantage': 'Access to data and resources',
+        'assets': 'Experienced tech teams'
+      },
+      'cost': {
+        'incubation': '6 million',
+        'breakEvenCost': '8 million',
+        'breakEvenYear': 2020,
+        'willGMLeave': false
+      },
+      'conviction': {
+        'gmConviction': 5,
+        'gmComments': 'I am certain that this will work',
+        'partnerPreferences': 'Internal partners like regular updates'
+      },
+      'financeReport': {
+        'conceptRank': 5,
+        'VFComments': 'comment about the concept',
+        'solutionScore': 2,
+        'businessModelScore': 3,
+        'marketSizeScore': 1,
+        'corpAdvantageScore': 4
+      },
       'createdAt': '2018-07-21',
       'killedAt': null
     },
     2: {
       'id': 2,
       'name': 'Venture View Vote',
+      'status': 'active',
       'ident': 'VO',
       'strapline': 'Voting on a concept',
       'description': 'A tool to help promote or eliminate venture concepts. Concepts up for voting are displayed in a useful window that details key elements of the idea. People involved in the voting process submit their vote which is registered in the tool. These results then decide the outcome of that particular concept.',
@@ -44,6 +84,7 @@ const initialState = {
     3: {
       'id': 3,
       'name': 'HAUQs & DUVs',
+      'status': 'killed',
       'ident': 'HD',
       'strapline': 'Validating and reducing risk',
       'description': 'A tool to help incubate and progress ventures while minimising risk. Risk bubbles are created by adding HAUQs which are then subsequently reduced through the work defined by DUVs. As risk is reduced the bubble gets smaller until no risk remains.',
@@ -61,6 +102,7 @@ const initialState = {
     4: {
       'id': 4,
       'name': 'InField',
+      'status': 'active',
       'ident': 'IF',
       'strapline': 'Verify a concept idea with a live consultant',
       'description': 'Speak with a live consultant via a 2-way video chat. Consultants are hand selected to have specific knowledge of your market space.',
@@ -78,6 +120,7 @@ const initialState = {
     5: {
       'id': 5,
       'name': 'ConsultMe',
+      'status': 'complete',
       'ident': 'CM',
       'strapline': 'Data collection tool',
       'description': 'This allows the team to research and define the validity of concepts.',
@@ -96,6 +139,7 @@ const initialState = {
     6: {
       'id': 6,
       'name': 'Idea Generator',
+      'status': 'active',
       'ident': 'IG',
       'strapline': 'Automatically generates new ideas',
       'description': 'Let the Idea Generator do all of the heavy lifting for you. No need to come up with your own concepts, just enter a market space and a number and click generate!',
@@ -113,6 +157,7 @@ const initialState = {
     7: {
       'id': 7,
       'name': 'Koncept Killer',
+      'status': 'killed',
       'ident': 'KK',
       'strapline': 'A way to quickly validate a concept',
       'description': 'An quick and easy way to kill bad concepts.',
@@ -130,6 +175,7 @@ const initialState = {
     8: {
       'id': 8,
       'name': 'Innovation Visual',
+      'status': 'killed',
       'ident': 'IV',
       'strapline': 'Represent a concept as an image',
       'description': 'Sort of like a collage this tool takes a concept and retrieves images from Google Image and creates a mood board.',
@@ -148,6 +194,7 @@ const initialState = {
     9: {
       'id': 9,
       'name': 'QuickLogo',
+      'status': 'complete',
       'ident': 'QL',
       'strapline': 'Quickly generate a logo for your concept',
       'description': 'Using interpretive machine learning this app takes the description and strapline of your idea and creates a colourful logo.',

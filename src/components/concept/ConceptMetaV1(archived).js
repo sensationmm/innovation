@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import FormTextInput from '../layout/FormTextInput';
-
 import '../../styles/css/concept-meta.css';
 
 /**
@@ -24,7 +22,7 @@ const ConceptMeta = props => {
   return (
     <div className={classnames('concept-meta', {stacked: stacked & !isStats}, {stats: isStats})}>
       <div className="concept-meta-label">{label}</div>
-      {summary &&
+      {summary && 
         <div className="concept-meta-summary">{summary}</div>
       }
       <div className="concept-meta-stats">

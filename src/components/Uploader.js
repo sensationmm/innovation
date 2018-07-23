@@ -60,7 +60,7 @@ class Uploader extends Component {
             accept="image/*"
           />
           {
-            !logo.preview && <div className="logo-upload-message-text">{messageText}</div>
+            (logo && !logo.preview) && <div className="logo-upload-message-text">{messageText}</div>
           }
           { error && <div className="logo-upload-error">{error}</div> }
         </div>

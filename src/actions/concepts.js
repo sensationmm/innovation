@@ -18,18 +18,24 @@ import {
 
 import { Concept } from '../models';
 
-export const createConcept = (conceptData, innovationId) => async (dispatch) => {
+/**
+ * @param {int} innovationId - id of the innovation which the concept will belong to
+ * @param {object} conceptData - object of key / value pairs to create the new concept with
+ */
+export const createConcept = (innovationId, conceptData) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
+  console.log('Create concept on', innovationId);
+  console.log('With', conceptData);
   try {
-    const newConcept = new Concept({
-      name: conceptData.conceptName,
-      strapline: conceptData.conceptStrapline,
-      description: conceptData.conceptDescription,
-      innovationId: innovationId
-    })
-    await newConcept.save();
+    // const newConcept = new Concept({
+    //   name: conceptData.conceptName,
+    //   strapline: conceptData.conceptStrapline,
+    //   description: conceptData.conceptDescription,
+    //   innovationId: innovationId
+    // })
+    // await newConcept.save();
 
-    dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
+    dispatch({ type: CREATE_CONCEPT_SUCCESS });
   }
   catch (err) {
     console.log(err);
@@ -37,8 +43,14 @@ export const createConcept = (conceptData, innovationId) => async (dispatch) => 
   }
 }
 
-export const editConcept = (conceptId) => async (dispatch) => {
+/**
+ * @param {int} conceptId - id of the concept to be updated
+ * @param {object} conceptData - object of key / value pairs to add / overwrite on to the concept
+ */
+export const editConcept = (conceptId, conceptData) => async (dispatch) => {
   dispatch({ type: EDIT_CONCEPT_BEGIN });
+  console.log('Edit concept', conceptId);
+  console.log('With', conceptData);
   try {
     dispatch({ type: EDIT_CONCEPT_SUCCESS });
   }
@@ -47,24 +59,3 @@ export const editConcept = (conceptId) => async (dispatch) => {
     dispatch({ type: EDIT_CONCEPT_ERROR });
   }
 }
-
-// Testing.
-// export const getConcepts = (portfolioId) => (dispatch) => {
-//   var requestUrl = `/client-${portfolioId}.json`;
-//   dispatch({ type: GET_CONCEPTS_BEGIN });
-//
-//   return axios({
-//     method: 'get',
-//     url: requestUrl,
-//   }).then(function(response) {
-//     if(response.data) {
-//       dispatch({ type: GET_CONCEPTS_SUCCESS, concepts: response.data.concepts });
-//     } else {
-//       return 'Unable to fetch concepts';
-//     }
-//
-//   }, function(response) {
-//     dispatch({ type: GET_CONCEPTS_ERROR });
-//     throw new Error('Unable to fetch concepts');
-//   });
-// }

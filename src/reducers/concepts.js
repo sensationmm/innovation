@@ -13,52 +13,38 @@ const initialState = {
       'ident': 'VV',
       'strapline': `Your venture's progress at a glance`,
       'description': 'A web app to support the creation and lifecycle of concepts for a possible venture. Ideation can easily create 100 concepts. This application takes those concepts and gives clarity into the voting process, the progression of ideas, and ultimately the conversion of a concept into a venture or its demise.',
-      'logo': '/favicon.ico',
+      'logo': { 'preview': '/favicon.ico' },
       'image': '',
       'color': '#33FF66',
-      'market': {
-        'segment': 'Large corporates',
-        'friction': 'Analysing a venture is complicated and hard',
-        'size': '65 billion',
-        'customers': 'Large corporates that want start up like adaptability',
-        'industry': 'Venture Capital',
-        'geography': 'Worldwide'
-      },
-      'solution': {
-        'description': 'A web app to support the creation and lifecycle of concepts for a possible venture. Ideation can easily create 100 concepts. This application takes those concepts and gives clarity into the voting process, the progression of ideas, and ultimately the conversion of a concept into a venture or its demise.',
-        'technology': 'Web application',
-        'successFactors': 'It should be good',
-        'keyRisks': 'No one is interested'
-      },
-      'businessModel': {
-        'type': 'platform',
-        'channel': 'b2b',
-        'revenueModel': 'client fees',
-        'unitEconomics': 'Development vs utility'
-      },
-      'corpAdvantage': {
-        'advantage': 'Access to data and resources',
-        'assets': 'Experienced tech teams'
-      },
-      'cost': {
-        'incubation': '6 million',
-        'breakEvenCost': '8 million',
-        'breakEvenYear': 2020,
-        'willGMLeave': false
-      },
-      'conviction': {
-        'gmConviction': 5,
-        'gmComments': 'I am certain that this will work',
-        'partnerPreferences': 'Internal partners like regular updates'
-      },
-      'financeReport': {
-        'conceptRank': 5,
-        'VFComments': 'comment about the concept',
-        'solutionScore': 2,
-        'businessModelScore': 3,
-        'marketSizeScore': 1,
-        'corpAdvantageScore': 4
-      },
+      'marketSegment': 'Large corporates',
+      'marketFriction': 'Analysing a venture is complicated and hard',
+      'marketSize': '65 billion',
+      'targetCustomers': 'Large corporates that want start up like adaptability',
+      'targetIndustry': 'Venture Capital',
+      'targetGeography': 'Worldwide',
+      'solutionDescription': 'A web app to support the creation and lifecycle of concepts for a possible venture. Ideation can easily create 100 concepts. This application takes those concepts and gives clarity into the voting process, the progression of ideas, and ultimately the conversion of a concept into a venture or its demise.',
+      'primaryTechnology': 'Web application',
+      'successFactors': 'It should be good',
+      'keyRisks': 'No one is interested',
+      'businessType': 'platform',
+      'salesChannel': 'b2b',
+      'revenueModel': 'client fees',
+      'unitEconomics': 'Development vs utility',
+      'corporateAdvantage': 'Access to data and resources',
+      'leveragedAssets': 'Experienced tech teams',
+      'incubationCost': '6 million',
+      'breakEvenCost': '8 million',
+      'breakEvenYear': '2020',
+      'willGMLeave': 'yes',
+      'gmConviction': 5,
+      'gmComments': 'I am certain that this will work',
+      'partnerPreferences': 'Internal partners like regular updates',
+      'VFTConceptScore': 5,
+      'VFTComments': 'comment about the concept',
+      'VFTSolutionScore': 2,
+      'VFTModelScore': 3,
+      'VFTMarketScore': 1,
+      'VFTAdvantageScore': 4,
       'createdAt': '2018-07-21',
       'killedAt': null
     },
@@ -209,20 +195,17 @@ const initialState = {
       'createdAt': '2018-06-18',
       'killedAt': null
     }
-  },
-  conceptIds: []
+  }
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
       const conceptsById = {};
-      const conceptIds = [];
       action.data.concepts.forEach(concept => {
         conceptsById[concept.id] = { ...concept.attributes };
-        conceptIds.push(concept.id)
       })
-      return { ...state, conceptsById, conceptIds }
+      return { ...state, conceptsById }
     }
     case GET_CONCEPTS_SUCCESS: { // TODO: Remove if no longer required when all concept data is coming from GET_INNOVATION_DATA_SUCCESS.
       const conceptsById = {};

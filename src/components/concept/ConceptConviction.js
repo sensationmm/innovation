@@ -7,37 +7,37 @@ import RankSelectForm from '../layout/RankSelectForm';
 import '../../styles/css/concept-create.css';
 
 const ConceptConviction = (props) => {
-  const { GMRank, GMComments, CPPreferences, selectOption, updateFormField } = props;
+  const { gmConviction, gmComments, partnerPreferences, selectOption, updateFormField } = props;
   return (
     <div>
       <RankSelectForm
-        keyToUpdate="GMRank"
+        keyToUpdate="gmConviction"
         rankRange={5}
-        selectedValue={GMRank}
+        selectedValue={gmConviction}
         selectOption={selectOption}
         labels={['weak', 'strong']}
         title="GM's Conviction"
       />
       <FormTextArea
-        id="GMComments"
+        id="gmComments"
         placeholder="GM's Comments"
         onChange={updateFormField}
-        value={GMComments}
+        value={gmComments}
       />
       <FormTextArea
-        id="CPPreferences"
+        id="partnerPreferences"
         placeholder="Comments on Corporate Partner preferences"
         onChange={updateFormField}
-        value={CPPreferences}
+        value={partnerPreferences}
       />
     </div>
   )
 }
 
 ConceptConviction.propTypes = {
-  GMRank: PropTypes.number,
-  GMComments: PropTypes.string,
-  CPPreferences: PropTypes.string,
+  gmConviction: PropTypes.number,
+  gmComments: PropTypes.string,
+  partnerPreferences: PropTypes.string,
   unitEconomics: PropTypes.string,
   selectOption: PropTypes.func,
   updateFormField: PropTypes.func

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ConceptSummary from '../components/concept/ConceptSummary';
+import ConceptFinanceReport from './ConceptFinanceReport';
 import ConceptMarket from '../components/concept/ConceptMarket';
 import ConceptSolution from '../components/concept/ConceptSolution';
 import ConceptBusinessModel from '../components/concept/ConceptBusinessModel';
@@ -17,36 +17,18 @@ import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-// import { createConcept, editConcept } from '../actions/concepts';
+import { createConcept, editConcept } from '../actions/concepts';
 
 class ConceptCreate extends Component {
-  state = {
-    conceptName: '',
-    conceptDescription: '',
-    conceptLogo: {},
-    customerSegment: '',
-    friction: '',
-    marketSize: '',
-    targetCustomers: '',
-    targetIndustry: '',
-    targetGeography: '',
-    solutionDescription: '',
-    primaryTechnology: '',
-    successFactors: '',
-    keyRisks: '',
-    businessType: null,
-    salesChannel: null,
-    revenueModel: '',
-    unitEconomics: '',
-    corporateAdvantage: '',
-    leveragedAssets: '',
-    incubationCost: '',
-    breakEvenCost: '',
-    breakEvenYear: '',
-    willGMLeave: null,
-    GMRank: null,
-    GMComments: '',
-    CPPreferences: ''
+
+  state = {};
+
+  // TODO: Look into this
+  // https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops
+  // If you want to re-compute some data only when a prop changes, use a memoization helper instead.
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    console.log('nextProps', nextProps);
+    return { ...nextProps.activeConcept }
   }
 
   updateDetails = (key, value) => {
@@ -75,24 +57,29 @@ class ConceptCreate extends Component {
     this.setState({ [arrayName]: updatedArray })
   }
 
-  submitNewConcept = () => {
-    // const { activeInnovationId } = this.props;
-    // const { createConcept } = this.props;
-    // Need to also send all user invites at this stage.
-    console.log('state', this.state);
-    console.log('Call create a new concept action');
-    // TODO: Once concept attributes confirmed only pass that data from state, not entire state.
-    // createConcept(this.state, activeInnovationId);
+  handleSaveConcept = () => {
+    const { editExisting, createConcept, editConcept, activeInnovationId, conceptId } = this.props;
+    if (editExisting) {
+      editConcept(conceptId, this.state);
+    } else {
+      createConcept(activeInnovationId, this.state)
+    }
   }
 
-  fieldsAreCompleted = () => {
-    const { conceptName } = this.state;
-    return conceptName;
+  requiredFieldsAreCompleted = () => {
+    const requiredFields = ['name', 'description']; // TODO: Move to config file.
+    return requiredFields
+      .every(attr => this.state[attr] !== null || this.state[attr] !== '' || this.state[attr] !== {} || this.state[attr] !== undefined);
+  }
+
+  allFieldsAreCompleted = () => {
+    return Object.values(this.state).every(field => field !== null || field !== '' || field !== {} || field !== undefined);
   }
 
   render() {
-    const { editExisting } = this.props;
-    const fieldsAreCompleted = this.fieldsAreCompleted();
+    const { editExisting, editConcept, conceptId, activeConcept } = this.props;
+    const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
+    const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (
       <div className="create-concept-container">
         <div className="create-concept-page-title">{editExisting ? 'Update Concept' : 'Create A New Concept'}</div>
@@ -103,19 +90,28 @@ class ConceptCreate extends Component {
           <ConceptSummary
             updateFormField={this.updateFormField}
             updateConceptLogo={this.updateConceptLogo}
-            conceptName={this.state.conceptName}
-            conceptDescription={this.state.conceptDescription}
-            conceptLogo={this.state.conceptLogo}
+            conceptName={this.state.name}
+            conceptDescription={this.state.description}
+            conceptLogo={this.state.logo}
           />
         </div>
+        {
+          activeConcept && activeConcept.status === 'reviewed' &&
+            <div className="create-concept-section-container">
+              <FormSectionHeader
+                title="Finance Team Analysis"
+              />
+              <div>Venture Finance Team Analysis - Display Only</div>
+            </div>
+        }
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Customers and Market"
           />
           <ConceptMarket
             updateFormField={this.updateFormField}
-            customerSegment={this.state.customerSegment}
-            friction={this.state.friction}
+            customerSegment={this.state.marketSegment}
+            friction={this.state.marketFriction}
             marketSize={this.state.marketSize}
             targetCustomers={this.state.targetCustomers}
             targetIndustry={this.state.targetIndustry}
@@ -177,9 +173,9 @@ class ConceptCreate extends Component {
           <ConceptConviction
             updateFormField={this.updateFormField}
             selectOption={this.selectOption}
-            GMRank={this.state.GMRank}
-            GMComments={this.state.GMComments}
-            CPPreferences={this.state.CPPreferences}
+            gmConviction={this.state.gmConviction}
+            gmComments={this.state.GMComments}
+            partnerPreferences={this.state.partnerPreferences}
           />
         </div>
           <div className="create-concept-user-actions">
@@ -187,11 +183,25 @@ class ConceptCreate extends Component {
               label="Back"
               onClick={() => this.props.history.goBack()}
             />
-            <ButtonSubmit
-              label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
-              onClick={() => this.submitNewConcept()}
-              disabled={!fieldsAreCompleted}
-            />
+            <div className="create-concept-user-actions-button-container">
+              <div className="create-concept-user-actions-buttons">
+                <ButtonSubmit
+                  label={requiredFieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
+                  onClick={() => this.handleSaveConcept()}
+                  disabled={!requiredFieldsAreCompleted}
+                />
+              </div>
+              <div className="create-concept-user-actions-buttons">
+                {
+                  editExisting &&
+                    <ButtonSubmit
+                      label={allFieldsAreCompleted ? 'Mark as Complete' : 'Complete All Fields'}
+                      onClick={() => editConcept(conceptId, { status: 'complete' })}
+                      disabled={!allFieldsAreCompleted}
+                    />
+                }
+            </div>
+            </div>
           </div>
       </div>
     )
@@ -205,13 +215,11 @@ ConceptCreate.propTypes = {
   editExisting: PropTypes.bool // If true then populate fields from redux
 };
 
-// const mapStateToProps = state => ({
-//   activeInnovationId: state.innovations.activeInnovation.id,
-// });
-//
-//
-// const mapDispatchToProps = dispatch => ({
-//   createConcept: bindActionCreators(createConcept, dispatch)
-// });
+const mapStateToProps = (state, props) => ({
+  activeInnovationId: state.innovations.activeInnovation.id,
+  activeConcept: state.concepts.conceptsById[props.conceptId]
+});
 
-export default connect(null, null)(ConceptCreate);
+const actions = { createConcept, editConcept };
+
+export default connect(mapStateToProps, actions)(ConceptCreate);

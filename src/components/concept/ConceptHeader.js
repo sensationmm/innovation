@@ -29,7 +29,7 @@ import '../../styles/css/concept-header.css';
 
   return (
     <div className="concept-header">
-      {logo && <ConceptLogo logo={logo} name={name} />}
+      {logo && <ConceptLogo logo={logo.preview} name={name} />}
       <div className="concept-header-name"><h1>{name}</h1></div>
       <div className="concept-header-strapline">{strapline}</div>
       <div className="concept-header-location">{location}</div>

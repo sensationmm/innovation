@@ -36,4 +36,13 @@
   align-items: center;
   position: relative;
   z-index: 0;
+
+  &-button-container {
+    display: flex;
+    align-items: center;
+  }
+
+  &-buttons {
+    margin-left: 10px;
+  }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -34,12 +33,10 @@ class ConceptOverview extends Component {
       return null
     }
 
-    console.log('concept', concept);
-
     return (
       <div className='concept'>
         <ConceptHeader
-          logo={concept.logo}
+          logo={concept.logo.preview}
           name={concept.name}
           strapline={concept.strapline}
           location={innovationLocation}
@@ -47,7 +44,7 @@ class ConceptOverview extends Component {
           killMark={concept.killedAt}
         />
 
-        <ConceptCreate editExisting={true} />
+        <ConceptCreate editExisting={true} conceptId={conceptId} />
 
         {/* <FlexRow>
           <ContentBox border padded>
@@ -119,10 +116,6 @@ const mapStateToProps = state => ({
   innovationLocation: state.innovations.activeInnovation.location
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    editConcept
-  }, dispatch
-);
+const actions = { editConcept };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConceptOverview);
+export default connect(mapStateToProps, actions)(ConceptOverview);

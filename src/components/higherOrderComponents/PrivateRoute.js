@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest, isAuthed }) => {
         ? <div>Logging you in...replace with logging in animation</div>
         : isAuthed === true
           ? <Component {...props} />
-          : <Redirect to='/' />
+          : <Redirect to='/login' />
     )} />
   )
 }

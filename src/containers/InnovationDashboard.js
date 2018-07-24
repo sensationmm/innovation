@@ -130,7 +130,6 @@ InnovationDashboard.propTypes = {
    innovations: PropTypes.array
 };
 
-
 const mapStateToProps = state => ({
   innovations: state.innovations.allInnovationsList
 });

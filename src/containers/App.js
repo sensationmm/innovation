@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import Home from './Home';
 import ConceptV2 from './ConceptV2';
@@ -35,6 +35,8 @@ const App = () => (
         <PrivateRoute exact path="/canvas2" component={CanvasV2} />
         <PrivateRoute exact path="/concept/:conceptId" component={ConceptV2} />
         <PrivateRoute exact path="/no-mobile" component={NotMobile} />
+        <Route path='/login' component={() => window.location = '/'}/>
+
         <PrivateRoute component={NotFound} />
       </Switch>
     </main>

@@ -27,10 +27,26 @@ export const keyTechs = [
 ];
 
 export const targetIndustries = [
-  { value: 'finance', label: 'Finance' },
+  { value: 'agriculture', label: 'Agriculture' },
   { value: 'automotive', label: 'Automotive' },
-  { value: 'health', label: 'Health' },
-  { value: 'software', label: 'Software' }
+  { value: 'construction', label: 'Construction' },
+  { value: 'consumer', label: 'Consumer Goods' },
+  { value: 'education', label: 'Education' },
+  { value: 'energy', label: 'Energy' },
+  { value: 'entertainment', label: 'Entertainment' },
+  { value: 'healthcare', label: 'Healthcare' },
+  { value: 'industrial', label: 'Industrial Goods' },
+  { value: 'insurance', label: 'Insurance' },
+  { value: 'logistics', label: 'Logistics' },
+  { value: 'consulting', label: 'Management Consulting' },
+  { value: 'oilAndGas', label: 'Oil and Gas' },
+  { value: 'realEstate', label: 'Real Estate' },
+  { value: 'retail', label: 'Retail' },
+  { value: 'software', label: 'Software' },
+  { value: 'technology', label: 'Technology' },
+  { value: 'telecom', label: 'Telecom' },
+  { value: 'transportation', label: 'Transportation' },
+  { value: 'travel', label: 'Travel' }
 ];
 
 export const businessTypes = [

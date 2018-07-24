@@ -4,7 +4,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({ basename: '/innovation' });
 
 const connectedRouterReducer = connectRouter(history)(rootReducer)
 

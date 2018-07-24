@@ -23,6 +23,8 @@ if (url.match(/http:\/\/localhost/)) {
   Config = devConfig;
 }
 
+Config.app = 'innovation';
+
 console.log(`You are in ${env}!!`);
 
 export default Config;

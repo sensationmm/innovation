@@ -35,7 +35,7 @@ const App = () => (
         <PrivateRoute exact path="/canvas2" component={CanvasV2} />
         <PrivateRoute exact path="/concept/:conceptId" component={ConceptV2} />
         <Route exact path="/inventure-login" render={() => <h1>You are not logged in (Redirect to InVenture login)</h1>} />
-        <PrivateRoute component={NotMobile} />
+        <PrivateRoute exact path="/no-mobile" component={NotMobile} />
         <PrivateRoute component={NotFound} />
       </Switch>
     </main>

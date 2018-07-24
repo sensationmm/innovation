@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import { validateEmail } from '../../utils/functions';
 
@@ -67,7 +68,7 @@ class InnovationAddTeam extends Component {
         </div>
         {
           allVentureViewUsers &&
-            <div className='innovation-all-users-list'>
+            <div className={classnames('innovation-all-users-list', { 'hidden': newMemberEmail.length < 4 })}>
               {
                 allVentureViewUsers && allVentureViewUsers.length > 0 &&
                         allVentureViewUsers.filter(userEmail =>

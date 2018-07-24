@@ -23,7 +23,7 @@ const curTeamMembers = [
   {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
   {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
 ];
-const allUsers = ['dv1Personx', 'dv1Persony', 'dv1Personz', 'dv2Personx', 'dv3Personx', 'dv4Person', 'dv5Person', 'dv6Person', ];
+const allUsers = ['dv1Personx', 'dv2Persony', 'dv3Personz', 'dv2Personx', 'dv3Personx', 'dv4Person', 'dv5Person', 'dv6Person', ];
 
 class InnovationUpdate extends Component {
   state = {

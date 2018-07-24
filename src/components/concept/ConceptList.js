@@ -15,12 +15,12 @@ import '../../styles/css/concept-list.css';
  *
  * @param {array} concepts - array of concept objects to display.
  * @param {string} title - title for the concepts list header
- * @param {string} status - status of the concepts being displayed - killed, active, complete.
  * @param {bool} postIS2 - is the innovation now past IS2? Causes some functionality changes.
+ * @param {string} userType - user type will determine some functionality - may be better to get directly from redux store > auth > user
  */
 
 const ConceptList = props => {
-  const { postIS2, userType } = props;
+  const { postIS2, userType, concepts } = props;
   return (
     <div className="concept-list">
       <div className="concept-list-header">{props.title}</div>
@@ -28,7 +28,7 @@ const ConceptList = props => {
       <div>For testing: {postIS2 ? 'Post IS2' : 'Pre IS2'}</div>
       <div className="concept-list-items">
       {
-        props.concepts.map(concept => {
+        concepts.map(concept => {
           const {
             id,
             name,
@@ -117,7 +117,10 @@ const ConceptList = props => {
 };
 
 ConceptList.propTypes = {
-  conceptsById: PropTypes.array
+  concepts: PropTypes.array,
+  title: PropTypes.string,
+  postIS2: PropTypes.bool,
+  userType: PropTypes.string
 };
 
 export default ConceptList;

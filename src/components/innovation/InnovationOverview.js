@@ -8,7 +8,6 @@ import moment from 'moment';
 
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
-import InnovationSummary from './InnovationSummary';
 import CorporatePartnerSummary from './CorporatePartnerSummary';
 import InnovationTeam from './InnovationTeam';
 import ProgressBar from '../ProgressBar';
@@ -39,7 +38,7 @@ const InnovationOverview = (props) => {
         <div>Innovation Type</div>
         <div>Sprint Duration</div>
         {
-          activeInnovation.mandate && false
+          activeInnovation.mandate
             ? <div>Mandate: {activeInnovation.mandate}</div>
             : <Link className="innovation-overview-add-concept-link" to="/update-innovation">
                 <div>

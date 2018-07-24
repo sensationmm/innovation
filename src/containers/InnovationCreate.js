@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -13,7 +12,7 @@ import BackTextLink from '../components/buttons/BackTextLink';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
 import { createInnovation } from '../actions/innovations';
-import { validateEmail, removeNullValueAttrs } from '../utils/functions';
+import { removeNullValueAttrs } from '../utils/functions';
 
 import '../styles/css/innovation-create.css';
 

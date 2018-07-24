@@ -29,7 +29,7 @@ const InnovationAddPartner = (props) => {
         isRequired={true}
       />
       <div className="create-innovation-dropdown-container">
-        <div className="create-innovation-dropdown-input-title">Select CP's Industry</div>
+        <div className="create-innovation-dropdown-input-title">Select CP’s Industry</div>
         <Dropdown
           id="partnerIndustry"
           value={partnerIndustry}

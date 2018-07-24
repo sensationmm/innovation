@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-// import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import ContentBox from '../components/layout/ContentBox';
@@ -64,6 +63,7 @@ class InnovationDashboard extends Component {
                   <BackTextLink
                     label="Cancel"
                     onClick={() => this.toggleOpenSendSummary()}
+                    textColor='black'
                   />
                   <ButtonSubmit
                     label="Send"
@@ -127,16 +127,12 @@ class InnovationDashboard extends Component {
 }
 
 InnovationDashboard.propTypes = {
- // TODO
+   innovations: PropTypes.array
 };
 
 
 const mapStateToProps = state => ({
   innovations: state.innovations.allInnovationsList
 });
-
-// const mapDispatchToProps = dispatch => ({
-//   createInnovation: bindActionCreators(createInnovation, dispatch)
-// });
 
 export default connect(mapStateToProps, null)(InnovationDashboard)

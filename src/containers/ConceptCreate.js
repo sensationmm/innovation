@@ -85,21 +85,13 @@ class ConceptCreate extends Component {
       .every(attr => (this.state[attr] !== null && this.state[attr] !== '' && this.state[attr] !== {} && this.state[attr] !== undefined));
   }
 
-  allFieldsAreCompleted = () => {
-    return Object.values(this.state).every(field => (field !== null && field !== '' && field !== {} && field !== undefined));
-  }
-
   render() {
-    const { editExisting, editConcept, conceptId, activeConcept } = this.props;
     const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
-    const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (
       <div className="create-concept-container">
-        <BackTextLink
-          label="Back"
-          onClick={() => this.props.history.goBack()}
-        />
-        <div className="create-concept-page-title">Create A New Concept</div>
+        <div className="create-concept-page-title">
+          <span>Create A New Concept</span>
+        </div>
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Concept Summary"

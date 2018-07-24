@@ -52,24 +52,16 @@ class ConceptOverviewEditable extends Component {
     editConcept(activeConcept.id, { [arrayName]: updatedArray })
   }
 
-  requiredFieldsAreCompleted = () => {
-    const { activeConcept } = this.props;
-    const requiredFields = ['name', 'description']; // TODO: Move to config file.
-    return requiredFields
-      .every(attr => activeConcept[attr] !== null || activeConcept[attr] !== '' || activeConcept[attr] !== {} || activeConcept[attr] !== undefined);
-  }
-
   allFieldsAreCompleted = () => {
     const { activeConcept } = this.props;
     return Object.values(activeConcept).every(field => field !== null || field !== '' || field !== {} || field !== undefined);
   }
 
   render() {
-    const { editConcept, activeConcept } = this.props;
+    const { activeConcept } = this.props;
     if (!activeConcept) {
       return null;
     }
-    const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (
       <div className="create-concept-container">
@@ -190,6 +182,14 @@ class ConceptOverviewEditable extends Component {
               label="Back"
               onClick={() => this.props.history.goBack()}
             />
+            {
+              allFieldsAreCompleted &&
+                <ButtonSubmit
+                  label={allFieldsAreCompleted ? 'Mark as Complete' : 'Complete Required Fields'}
+                  onClick={() => console.log('Set concept status to complete')}
+                  disabled={!allFieldsAreCompleted}
+                />
+            }
           </div>
       </div>
     )
@@ -199,8 +199,9 @@ class ConceptOverviewEditable extends Component {
 ConceptOverviewEditable.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
+  editConcept: PropTypes.func,
   activeInnovationId: PropTypes.number,
-  editExisting: PropTypes.bool // If true then populate fields from redux
+  activeConcept: PropTypes.object
 };
 
 const mapStateToProps = (state, props) => ({

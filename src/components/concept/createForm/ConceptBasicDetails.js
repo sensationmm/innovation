@@ -36,9 +36,9 @@ const ConceptBasicDetails = (props) => {
 }
 
 ConceptBasicDetails.propTypes = {
-  conceptName: PropTypes.string,
-  conceptDescription: PropTypes.string,
-  conceptLogo: PropTypes.object,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  logo: PropTypes.object,
   updateFormField: PropTypes.func,
   updateConceptLogo: PropTypes.func
 }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import VFTConceptOverview from '../components/concept/VFTScores/VFTConceptOverview';
 import VFTConceptScores from '../components/concept/VFTScores/VFTConceptScores';
-import VFTScoresDisplay from '../components/concept/VFTScores/VFTScoresDisplay';
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
@@ -78,7 +77,8 @@ class ConceptFinanceReport extends Component {
 }
 
 ConceptFinanceReport.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object
 };
 
 export default ConceptFinanceReport;

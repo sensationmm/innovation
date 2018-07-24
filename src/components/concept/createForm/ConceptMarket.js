@@ -59,8 +59,8 @@ const ConceptMarket = (props) => {
 }
 
 ConceptMarket.propTypes = {
-  customerSegment: PropTypes.string,
-  friction: PropTypes.string,
+  marketSegment: PropTypes.string,
+  marketFriction: PropTypes.string,
   marketSize: PropTypes.string,
   targetCustomers: PropTypes.string,
   targetIndustry: PropTypes.string,

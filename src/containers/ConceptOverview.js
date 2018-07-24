@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ConceptCreate from './ConceptCreate';
 import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
 import ConceptHeader from '../components/concept/ConceptHeader';
-import ConceptMetaEditable from '../components/concept/ConceptMetaEditable';
-// import RiskLevel from '../components/RiskLevel';
+import ConceptMeta from '../components/concept/ConceptMeta';
+import RiskLevel from '../components/RiskLevel';
 // import Slider from '../components/Slider';
 
 import '../styles/css/concept-overview.css'
@@ -33,7 +32,6 @@ class ConceptOverview extends Component {
       return null
     }
 
-    const {} = concept;
     return (
       <div className='concept'>
         <ConceptHeader
@@ -47,7 +45,7 @@ class ConceptOverview extends Component {
 
         <FlexRow>
           <ContentBox border padded>
-            <ConceptMetaEditable
+            <ConceptMeta
               label='Summary'
               stats={[
                 { label: 'Primary technology', content: 'Mobile' },
@@ -60,7 +58,7 @@ class ConceptOverview extends Component {
             />
           </ContentBox>
         </FlexRow>
-        
+
         <FlexRow>
           <ContentBox border padded>
             <ConceptMeta

@@ -2,7 +2,6 @@ import {
   CREATE_INNOVATION_BEGIN,
   CREATE_INNOVATION_SUCCESS,
   CREATE_INNOVATION_ERROR,
-  CREATE_PARTNER_SUCCESS,
   GET_INNOVATION_DATA_BEGIN,
   GET_INNOVATION_DATA_SUCCESS,
   GET_INNOVATION_DATA_ERROR,
@@ -59,7 +58,7 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatc
       newPartner[key] = partnerAttrs[key];
     }
     newPartner.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id
-    
+
     // await partner.save();
     console.log('newPartner', newPartner);
 

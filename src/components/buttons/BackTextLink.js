@@ -27,7 +27,7 @@ import '../../styles/css/buttons-and-links.css';
 BackTextLink.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
-  color: PropTypes.string
+  textColor: PropTypes.string
 };
 
 BackTextLink.defaultProps = {

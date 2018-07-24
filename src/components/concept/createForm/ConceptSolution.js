@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextInput from '../layout/FormTextInput';
-import FormTextArea from '../layout/FormTextArea';
+import FormTextInput from '../../layout/FormTextInput';
+import FormTextArea from '../../layout/FormTextArea';
 
-import '../../styles/css/concept-create.css';
+import '../../../styles/css/concept-create.css';
 
 const ConceptSolution = (props) => {
   const { solutionDescription, primaryTechnology, successFactors, keyRisks, updateFormField } = props;

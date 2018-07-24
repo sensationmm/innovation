@@ -1,7 +1,8 @@
 import {
-  CREATE_CONCEPT_SUCCESS,
   GET_CONCEPTS_SUCCESS, // TODO: Remove if no longer required when all concept data is coming from GET_INNOVATION_DATA_SUCCESS.
-  GET_INNOVATION_DATA_SUCCESS
+  GET_INNOVATION_DATA_SUCCESS,
+  CREATE_CONCEPT_SUCCESS,
+  EDIT_CONCEPT_SUCCESS
 } from '../config/constants';
 
 const initialState = {
@@ -36,15 +37,15 @@ const initialState = {
       'breakEvenCost': '8 million',
       'breakEvenYear': '2020',
       'willGMLeave': 'yes',
-      'gmConviction': 5,
+      'gmConviction': 4,
       'gmComments': 'I am certain that this will work',
       'partnerPreferences': 'Internal partners like regular updates',
-      'VFTConceptScore': 5,
+      'VFTConceptScore': 2,
       'VFTComments': 'comment about the concept',
-      'VFTSolutionScore': 2,
-      'VFTModelScore': 3,
+      'VFTSolutionScore': 0,
+      'VFTModelScore': 2,
       'VFTMarketScore': 1,
-      'VFTAdvantageScore': 4,
+      'VFTAdvantageScore': 0,
       'createdAt': '2018-07-21',
       'killedAt': null
     },
@@ -209,25 +210,27 @@ export default (state = initialState, action) => {
     }
     case GET_CONCEPTS_SUCCESS: { // TODO: Remove if no longer required when all concept data is coming from GET_INNOVATION_DATA_SUCCESS.
       const conceptsById = {};
-      const conceptIds = [];
 
       action.concepts.forEach(concept => {
-        conceptIds.push(concept.id);
         conceptsById[concept.id] = concept;
       });
 
-      return {
-        ...state,
-        conceptsById,
-        conceptIds
-      };
+      return { ...state, conceptsById };
     }
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;
       const conceptsById = { ...state.conceptsById, [newConcept.id]: newConcept }
-      const conceptIds = [ ...state.conceptIds, newConcept.id ]
-      return { ...state, conceptsById, conceptIds }
+      return { ...state, conceptsById }
+    }
+
+    case EDIT_CONCEPT_SUCCESS: {
+      const { conceptId, newConceptAttrs } = action;
+      const updatedConcept = { ...state.conceptsById[conceptId], ...newConceptAttrs };
+      return {
+        ...state,
+        conceptsById: { ...state.conceptsById, [conceptId]: updatedConcept }
+      }
     }
 
     default:

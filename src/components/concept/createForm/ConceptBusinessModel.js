@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextInput from '../layout/FormTextInput';
-import SingleSelectBtnForm from '../layout/SingleSelectBtnForm';
+import FormTextInput from '../../layout/FormTextInput';
+import SingleSelectBtnForm from '../../layout/SingleSelectBtnForm';
 
-import '../../styles/css/concept-create.css';
+import '../../../styles/css/concept-create.css';
 
-import { businessTypes, salesChannels } from '../../config/conceptOptions';
+import { businessTypes, salesChannels } from '../../../config/conceptOptions';
 
 const ConceptBusinessModel = (props) => {
   const { businessType, salesChannel, revenueModel, unitEconomics, selectOption, updateFormField } = props;

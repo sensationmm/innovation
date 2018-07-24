@@ -86,7 +86,7 @@ class InnovationDashboard extends Component {
             (userType === 'teamGM' || userType === 'teamMember') &&
               <div className="innovation-dash-send-summary-container" onClick={() => this.toggleOpenSendSummary()}>
                 <div><i className="fas fa-envelope fa-2x send-summary-icon"></i></div>
-                <div>Send Summary Innovations</div>
+                <div>Send Innovations Summary</div>
               </div>
           }
         </div>

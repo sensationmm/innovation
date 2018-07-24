@@ -24,10 +24,18 @@
     }
 
     &::placeholder {
-      color: $text-grey-white;
+      color: $text-off-white;
     }
   }
+
+  textarea {
+    height: 120px;
+    padding-top: 30px;
+  }
+
 }
+
+
 
 .inventure-form-textinput-required-label {
   position: absolute;

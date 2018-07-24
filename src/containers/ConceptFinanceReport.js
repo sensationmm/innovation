@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ConceptReportOverview from '../components/concept/ConceptReportOverview';
-import ConceptReportRanking from '../components/concept/ConceptReportRanking';
+import VFTConceptOverview from '../components/concept/VFTScores/VFTConceptOverview';
+import VFTConceptScores from '../components/concept/VFTScores/VFTConceptScores';
+import VFTScoresDisplay from '../components/concept/VFTScores/VFTScoresDisplay';
 import FormSectionHeader from '../components/layout/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
@@ -28,6 +29,8 @@ class ConceptFinanceReport extends Component {
   }
 
   createConceptFinanceReport = () => {
+    const { match: { params: { conceptId } } } = this.props;
+    console.log('create finance on concept', conceptId);
     console.log('create finance report with', this.state);
   }
 
@@ -39,7 +42,7 @@ class ConceptFinanceReport extends Component {
           <FormSectionHeader
             title="Concept Overview"
           />
-          <ConceptReportOverview
+          <VFTConceptOverview
             updateFormField={this.updateFormField}
             selectOption={this.selectOption}
             conceptName="Hardcoded Name"
@@ -51,7 +54,7 @@ class ConceptFinanceReport extends Component {
           <FormSectionHeader
             title="Concept Rankings"
           />
-          <ConceptReportRanking
+          <VFTConceptScores
             selectOption={this.selectOption}
             solutionScore={this.state.solutionScore}
             businessModelScore={this.state.businessModelScore}

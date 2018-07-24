@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../styles/css/back-text-link.css';
+import '../../styles/css/buttons-and-links.css';
 
 /**
  * BackTextLink

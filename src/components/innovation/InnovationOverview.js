@@ -36,6 +36,7 @@ const InnovationOverview = (props) => {
         <h1>Innovation Name</h1>
         <div>Innovation Type</div>
         <div>Innovation Mandate</div>
+        <div>Sprint Duration</div>
       </ContentBox>
 
       <ContentBox background={false}>

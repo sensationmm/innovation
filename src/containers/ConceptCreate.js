@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ConceptSummary from '../components/concept/ConceptSummary';
-import ConceptFinanceReport from './ConceptFinanceReport';
-import ConceptMarket from '../components/concept/ConceptMarket';
-import ConceptSolution from '../components/concept/ConceptSolution';
-import ConceptBusinessModel from '../components/concept/ConceptBusinessModel';
-import ConceptCorpAdvantage from '../components/concept/ConceptCorpAdvantage';
-import ConceptCosts from '../components/concept/ConceptCosts';
-import ConceptConviction from '../components/concept/ConceptConviction';
+import ConceptBasicDetails from '../components/concept/createForm/ConceptBasicDetails';
+import ConceptMarket from '../components/concept/createForm/ConceptMarket';
+import ConceptSolution from '../components/concept/createForm/ConceptSolution';
+import ConceptBusinessModel from '../components/concept/createForm/ConceptBusinessModel';
+import ConceptCorpAdvantage from '../components/concept/createForm/ConceptCorpAdvantage';
+import ConceptCosts from '../components/concept/createForm/ConceptCosts';
+import ConceptConviction from '../components/concept/createForm/ConceptConviction';
 
 import FormSectionHeader from '../components/layout/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
@@ -21,26 +20,41 @@ import { createConcept, editConcept } from '../actions/concepts';
 
 class ConceptCreate extends Component {
 
-  state = {};
-
-  // TODO: Look into this
-  // https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops
-  // If you want to re-compute some data only when a prop changes, use a memoization helper instead.
-  static getDerivedStateFromProps = (nextProps, prevState) => {
-    console.log('nextProps', nextProps);
-    return { ...nextProps.activeConcept }
-  }
-
-  updateDetails = (key, value) => {
-    this.setState({ [key]: value })
+  state = {
+    name: '',
+    description: '',
+    logo: {},
+    marketSegment: '',
+    marketFriction: '',
+    marketSize: '',
+    targetCustomers: '',
+    targetIndustry: '',
+    targetGeography: '',
+    solutionDescription: '',
+    primaryTechnology: '',
+    successFactors: '',
+    keyRisks: '',
+    businessType: null,
+    salesChannel: null,
+    revenueModel: '',
+    unitEconomics: '',
+    corporateAdvantage: '',
+    leveragedAssets: '',
+    incubationCost: '',
+    breakEvenCost: '',
+    breakEvenYear: '',
+    willGMLeave: null,
+    gmConviction: null,
+    gmComments: '',
+    partnerPreferences: ''
   }
 
   updateFormField = (e) => {
     this.setState({ [e.target.id]: e.target.value })
   }
 
-  updateConceptLogo = (conceptLogo) => {
-    this.setState({ conceptLogo });
+  updateConceptLogo = (logo) => {
+    this.setState({ logo });
   }
 
   // For single select options
@@ -58,12 +72,8 @@ class ConceptCreate extends Component {
   }
 
   handleSaveConcept = () => {
-    const { editExisting, createConcept, editConcept, activeInnovationId, conceptId } = this.props;
-    if (editExisting) {
-      editConcept(conceptId, this.state);
-    } else {
-      createConcept(activeInnovationId, this.state)
-    }
+    const { createConcept, activeInnovationId } = this.props;
+    createConcept(activeInnovationId, this.state)
   }
 
   requiredFieldsAreCompleted = () => {
@@ -87,23 +97,14 @@ class ConceptCreate extends Component {
           <FormSectionHeader
             title="Concept Summary"
           />
-          <ConceptSummary
+          <ConceptBasicDetails
             updateFormField={this.updateFormField}
             updateConceptLogo={this.updateConceptLogo}
-            conceptName={this.state.name}
-            conceptDescription={this.state.description}
-            conceptLogo={this.state.logo}
+            name={this.state.name}
+            description={this.state.description}
+            logo={this.state.logo}
           />
         </div>
-        {
-          activeConcept && activeConcept.status === 'reviewed' &&
-            <div className="create-concept-section-container">
-              <FormSectionHeader
-                title="Finance Team Analysis"
-              />
-              <div>Venture Finance Team Analysis - Display Only</div>
-            </div>
-        }
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Customers and Market"
@@ -184,23 +185,11 @@ class ConceptCreate extends Component {
               onClick={() => this.props.history.goBack()}
             />
             <div className="create-concept-user-actions-button-container">
-              <div className="create-concept-user-actions-buttons">
-                <ButtonSubmit
-                  label={requiredFieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
-                  onClick={() => this.handleSaveConcept()}
-                  disabled={!requiredFieldsAreCompleted}
-                />
-              </div>
-              <div className="create-concept-user-actions-buttons">
-                {
-                  editExisting &&
-                    <ButtonSubmit
-                      label={allFieldsAreCompleted ? 'Mark as Complete' : 'Complete All Fields'}
-                      onClick={() => editConcept(conceptId, { status: 'complete' })}
-                      disabled={!allFieldsAreCompleted}
-                    />
-                }
-            </div>
+              <ButtonSubmit
+                label={requiredFieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
+                onClick={() => this.handleSaveConcept()}
+                disabled={!requiredFieldsAreCompleted}
+              />
             </div>
           </div>
       </div>
@@ -211,8 +200,7 @@ class ConceptCreate extends Component {
 ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
-  activeInnovationId: PropTypes.number,
-  editExisting: PropTypes.bool // If true then populate fields from redux
+  activeInnovationId: PropTypes.number
 };
 
 const mapStateToProps = (state, props) => ({

@@ -47,12 +47,12 @@ export const createConcept = (innovationId, conceptData) => async (dispatch) => 
  * @param {int} conceptId - id of the concept to be updated
  * @param {object} conceptData - object of key / value pairs to add / overwrite on to the concept
  */
-export const editConcept = (conceptId, conceptData) => async (dispatch) => {
+export const editConcept = (conceptId, newConceptAttrs) => async (dispatch) => {
   dispatch({ type: EDIT_CONCEPT_BEGIN });
   console.log('Edit concept', conceptId);
-  console.log('With', conceptData);
+  console.log('With', newConceptAttrs);
   try {
-    dispatch({ type: EDIT_CONCEPT_SUCCESS });
+    dispatch({ type: EDIT_CONCEPT_SUCCESS, conceptId, newConceptAttrs });
   }
   catch (err) {
     console.log(err);

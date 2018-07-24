@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextInput from '../layout/FormTextInput';
-import SingleSelectBtnForm from '../layout/SingleSelectBtnForm';
+import FormTextInput from '../../layout/FormTextInput';
+import SingleSelectBtnForm from '../../layout/SingleSelectBtnForm';
 
-import '../../styles/css/concept-create.css';
+import '../../../styles/css/concept-create.css';
 
 const ConceptCosts = (props) => {
   const { incubationCost, breakEvenCost, breakEvenYear, willGMLeave, selectOption, updateFormField } = props;

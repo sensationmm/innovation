@@ -8,8 +8,8 @@ const RankSelectForm = (props) => {
   const { keyToUpdate, rankRange, selectedValue, selectOption, isRequired, labels, title } = props;
   const options = [...Array(rankRange).keys()].map(key => {
     return {
-      value: key + 1,
-      label: (key + 1).toString()
+      value: key,
+      label: key.toString()
     }
   })
   return (

@@ -90,7 +90,7 @@ const ConceptList = props => {
                     {
                       (status === 'complete') &&
                         <div className="concept-list-item-user-actions">
-                          <Link to='/concept-finance-report'>
+                          <Link to={`/vft-concept-report/${id}`}>
                             <CompleteButton label='Complete Analysis Form' />
                           </Link>
                         </div>

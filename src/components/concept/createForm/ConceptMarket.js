@@ -1,29 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextInput from '../layout/FormTextInput';
-import FormTextArea from '../layout/FormTextArea';
-import Dropdown from '../Dropdown';
+import FormTextInput from '../../layout/FormTextInput';
+import FormTextArea from '../../layout/FormTextArea';
+import Dropdown from '../../Dropdown';
 
-import '../../styles/css/concept-create.css';
+import '../../../styles/css/concept-create.css';
 
-import { targetIndustries } from '../../config/conceptOptions';
+import { targetIndustries } from '../../../config/conceptOptions';
 
 const ConceptMarket = (props) => {
-  const { customerSegment, friction, marketSize, targetCustomers, targetIndustry, targetGeography, updateFormField } = props;
+  const { marketSegment, marketFriction, marketSize, targetCustomers, targetIndustry, targetGeography, updateFormField } = props;
   return (
     <div>
       <FormTextInput
-        id="customerSegment"
+        id="marketSegment"
         placeholder="Customer Segment"
         onChange={updateFormField}
-        value={customerSegment}
+        value={marketSegment}
       />
       <FormTextArea
-        id="friction"
+        id="marketFriction"
         placeholder="Friction"
         onChange={updateFormField}
-        value={friction}
+        value={marketFriction}
       />
       <FormTextInput
         id="marketSize"

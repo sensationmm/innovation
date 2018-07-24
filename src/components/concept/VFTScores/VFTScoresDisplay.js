@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import FormTextInput from '../layout/FormTextInput';
-
-import '../../styles/css/concept-meta.css';
+import '../../../styles/css/concept-meta.css';
 
 /**
  * ConceptMeta
@@ -18,7 +16,7 @@ import '../../styles/css/concept-meta.css';
  * @param {boolean} isStats - if true will render the stat value in larger font
  */
 
-const ConceptMeta = props => {
+const VFTScoresDisplay = props => {
   const { label, stats, summary, stacked, isStats } = props;
 
   return (
@@ -50,7 +48,7 @@ const ConceptMeta = props => {
   );
 };
 
-ConceptMeta.propTypes = {
+VFTScoresDisplay.propTypes = {
   label: PropTypes.string,
   stats: PropTypes.array,
   summary: PropTypes.string,
@@ -58,11 +56,11 @@ ConceptMeta.propTypes = {
   isStats: PropTypes.bool
 };
 
-ConceptMeta.defaultProps = {
+VFTScoresDisplay.defaultProps = {
   stacked: false,
   isStats: false,
   stats: [],
   summary: ''
 };
 
-export default ConceptMeta;
+export default VFTScoresDisplay;

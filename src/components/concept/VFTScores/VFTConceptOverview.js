@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextArea from '../layout/FormTextArea';
-import RankSelectForm from '../layout/RankSelectForm';
+import FormTextArea from '../../layout/FormTextArea';
+import RankSelectForm from '../../layout/RankSelectForm';
 
-import '../../styles/css/concept-summary.css';
+import '../../../styles/css/concept-summary.css';
 
 const ConceptReportOverview = (props) => {
   const { conceptName, conceptRank, VFComments, updateFormField, selectOption } = props;
@@ -13,7 +13,7 @@ const ConceptReportOverview = (props) => {
       <div className="finance-report-overview-name">Concept Name: {conceptName}</div>
       <RankSelectForm
         keyToUpdate="conceptRank"
-        rankRange={5}
+        rankRange={3}
         selectedValue={conceptRank}
         selectOption={selectOption}
         labels={['weak', 'strong']}

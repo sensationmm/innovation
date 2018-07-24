@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import RankSelectForm from '../layout/RankSelectForm';
+import RankSelectForm from '../../layout/RankSelectForm';
 
 const ConceptReportRanking = (props) => {
   const { solutionScore, businessModelScore, marketSizeScore, corpAdvantageScore, selectOption } = props;
@@ -9,7 +9,7 @@ const ConceptReportRanking = (props) => {
     <div>
       <RankSelectForm
         keyToUpdate="solutionScore"
-        rankRange={5}
+        rankRange={3}
         selectedValue={solutionScore}
         selectOption={selectOption}
         labels={['weak', 'strong']}
@@ -17,7 +17,7 @@ const ConceptReportRanking = (props) => {
       />
       <RankSelectForm
         keyToUpdate="businessModelScore"
-        rankRange={5}
+        rankRange={3}
         selectedValue={businessModelScore}
         selectOption={selectOption}
         labels={['weak', 'strong']}
@@ -25,7 +25,7 @@ const ConceptReportRanking = (props) => {
       />
       <RankSelectForm
         keyToUpdate="marketSizeScore"
-        rankRange={5}
+        rankRange={3}
         selectedValue={marketSizeScore}
         selectOption={selectOption}
         labels={['weak', 'strong']}
@@ -33,7 +33,7 @@ const ConceptReportRanking = (props) => {
       />
       <RankSelectForm
         keyToUpdate="corpAdvantageScore"
-        rankRange={5}
+        rankRange={3}
         selectedValue={corpAdvantageScore}
         selectOption={selectOption}
         labels={['weak', 'strong']}

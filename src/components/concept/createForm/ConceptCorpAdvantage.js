@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextArea from '../layout/FormTextArea';
+import FormTextArea from '../../layout/FormTextArea';
 
-import '../../styles/css/concept-create.css';
+import '../../../styles/css/concept-create.css';
 
 const ConceptCorpAdvantage = (props) => {
   const { corporateAdvantage, leveragedAssets, updateFormField } = props;

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextArea from '../layout/FormTextArea';
-import RankSelectForm from '../layout/RankSelectForm';
+import FormTextArea from '../../layout/FormTextArea';
+import RankSelectForm from '../../layout/RankSelectForm';
 
-import '../../styles/css/concept-create.css';
+import '../../../styles/css/concept-create.css';
 
 const ConceptConviction = (props) => {
   const { gmConviction, gmComments, partnerPreferences, selectOption, updateFormField } = props;

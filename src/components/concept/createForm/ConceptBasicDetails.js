@@ -1,32 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextInput from '../layout/FormTextInput';
-import FormTextArea from '../layout/FormTextArea';
-import Uploader from '../Uploader';
+import FormTextInput from '../../layout/FormTextInput';
+import FormTextArea from '../../layout/FormTextArea';
+import Uploader from '../../Uploader';
 
-import '../../styles/css/concept-summary.css';
+import '../../../styles/css/concept-create.css';
 
-const ConceptSummary = (props) => {
-  const { conceptName, conceptDescription, conceptLogo, updateFormField, updateConceptLogo } = props;
+const ConceptBasicDetails = (props) => {
+  const { name, description, logo, updateFormField, updateConceptLogo } = props;
   return (
     <div>
       <FormTextInput
-        id="conceptName"
+        id="name"
         placeholder="Concept name"
         onChange={updateFormField}
-        value={conceptName}
+        value={name}
         isRequired={true}
       />
       <FormTextArea
-        id="conceptDescription"
+        id="description"
         placeholder="Concept description"
         onChange={updateFormField}
-        value={conceptDescription}
+        value={description}
       />
       <div className="concept-add-title-logo">
         <Uploader
-          logo={conceptLogo}
+          logo={logo}
           storeLogo={updateConceptLogo}
           messageText="Upload Concept Logo"
         />
@@ -35,7 +35,7 @@ const ConceptSummary = (props) => {
   )
 }
 
-ConceptSummary.propTypes = {
+ConceptBasicDetails.propTypes = {
   conceptName: PropTypes.string,
   conceptDescription: PropTypes.string,
   conceptLogo: PropTypes.object,
@@ -43,4 +43,4 @@ ConceptSummary.propTypes = {
   updateConceptLogo: PropTypes.func
 }
 
-export default ConceptSummary;
+export default ConceptBasicDetails;

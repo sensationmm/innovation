@@ -1,6 +1,7 @@
 import {
   GET_INNOVATIONS_LIST_SUCCESS,
-  GET_INNOVATION_DATA_SUCCESS
+  GET_INNOVATION_DATA_SUCCESS,
+  CREATE_INNOVATION_SUCCESS
 } from '../config/constants';
 
 const initialState = {
@@ -11,7 +12,7 @@ const initialState = {
     sprintName: 'Fake Innovation 1',
     dvPartner1: 'Steven Kentishly-Warren',
     dvPartner2: 'Bez',
-    mandate: 'To smear the president at every opportunity',
+    mandate: 'Tweet a lot of tweets',
     openDate: '2018-04-14',
     kickedOffAt: '2018-05-14',
     dvOffice: 'London',
@@ -20,6 +21,9 @@ const initialState = {
       'IS1': '2018-06-18',
       'IS2': '2018-07-22',
       'IS3': '2018-09-01'
+    },
+    partner: {
+
     }
     // objectives: {
     //   'KO': [
@@ -77,6 +81,21 @@ export default (state = initialState, action) => {
       // const allInnovationsList = action.data.map(innovation => { return { ...innovation.attributes } })
       // return { ...state, allInnovationsList }
       return state; // TODO: Uncomment above once api to filling redux state.
+    }
+
+    case CREATE_INNOVATION_SUCCESS: {
+      const { newPartner, newInnovation } = action;
+      const activeInnovation = { ...newInnovation, partner: { ...newPartner }};
+      const newInnovationSummary = {
+        id: 1,
+        sprintName: newInnovation.sprintName,
+        partner: newPartner.name,
+        chargeCode: newPartner.chargeCode,
+        keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+      }
+      const newInnovationsList = [ ...state.allInnovationsList, newInnovationSummary ]
+
+      return { ...state, activeInnovation, allInnovationsList: newInnovationsList }
     }
 
     default:

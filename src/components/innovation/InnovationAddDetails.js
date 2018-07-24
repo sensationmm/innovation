@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import Dropdown from '../Dropdown';
-import SingleSelectBtnForm from '../layout/SingleSelectBtnForm';
-import FormTextInput from '../layout/FormTextInput';
+import Dropdown from '../formInputs/Dropdown.js';
+import SingleSelectBtnForm from '../formInputs/SingleSelectBtnForm';
+import FormTextInput from '../formInputs/FormTextInput';
 
 import '../../styles/css/innovation-create.css';
 
@@ -35,6 +35,7 @@ const InnovationAddDetails = (props) => {
         isRequired={true}
       />
       <div className="create-innovation-dropdown-container">
+        <div className="create-innovation-dropdown-input-title">Select DV office</div>
         <Dropdown
           id="dvOffice"
           value={dvOffice}
@@ -43,18 +44,21 @@ const InnovationAddDetails = (props) => {
           placeholder="Select DV office..."
           classes='create-innovation-dropdown'
         />
+        {!dvOffice && requiredLabel}
       </div>
       <FormTextInput
         id="dvPartner1"
         placeholder="DV partner 1"
         onChange={updateFormField}
         value={dvPartner1}
+        isRequired={true}
       />
       <FormTextInput
         id="dvPartner2"
         placeholder="DV partner 2"
         onChange={updateFormField}
         value={dvPartner2}
+        isRequired={true}
       />
       <FormTextInput
         id="teamGMEmail"
@@ -65,6 +69,7 @@ const InnovationAddDetails = (props) => {
         emailValidation={true}
       />
       <div className="create-innovation-dropdown-container">
+        <div className="create-innovation-dropdown-input-title">Innovation Open Date</div>
         {!innovationOpenDate && requiredLabel}
         <div
           className="create-innovation-keydate-date"
@@ -86,9 +91,10 @@ const InnovationAddDetails = (props) => {
       </div>
       <FormTextInput
         id="innovationDuration"
-        placeholder="Expected Innovation Sprint duration (weeks)"
+        placeholder="Sprint duration (weeks)"
         onChange={updateFormField}
         value={innovationDuration}
+        isRequired={true}
       />
     </div>
   )

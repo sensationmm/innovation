@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 import '../../styles/css/form-text-input.css'
 
@@ -12,8 +11,7 @@ const FormTextArea = (props) => {
         isRequired && !value &&
           <div className="inventure-form-textinput-required-label">Required</div>
       }
-      <div
-        className={classnames('inventure-form-textinput-placeholder', { 'disabled': !value }, { 'active': value })}>
+      <div className="inventure-form-textinput-placeholder">
         {placeholder}
       </div>
       <textarea

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextInput from '../../layout/FormTextInput';
-import FormTextArea from '../../layout/FormTextArea';
-import Uploader from '../../Uploader';
+import FormTextInput from '../../formInputs/FormTextInput.js';
+import FormTextArea from '../../formInputs/FormTextArea';
+import Uploader from '../../formInputs/Uploader.js';
 
 import '../../../styles/css/concept-create.css';
 

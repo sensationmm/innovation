@@ -10,7 +10,7 @@ import ContentBox from '../components/layout/ContentBox';
 import FlexRow from '../components/layout/FlexRow';
 import Group from '../components/Group';
 import GroupAxes from '../components/GroupAxes';
-import Dropdown from '../components/Dropdown';
+import Dropdown from '../components/formInputs/Dropdown';
 import TagFilter from '../components/TagFilter';
 
 import '../styles/css/groupings.css';

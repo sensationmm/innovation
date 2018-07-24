@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import classnames from 'classnames';
 
-import '../../styles/css/innovation-add-dates.css';
+import '../../../styles/css/innovation-add-dates.css';
 
 class AddNewKeyDateForm extends Component {
   state = {

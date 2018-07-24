@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import classnames from 'classnames';
 
-import ContentBox from './layout/ContentBox';
+import ContentBox from '../layout/ContentBox';
 
-import '../styles/css/uploader.css';
+import '../../styles/css/uploader.css';
 
-import IconUpload from '../images/upload-icon.svg';
+import IconUpload from '../../images/upload-icon.svg';
 
 class Uploader extends Component {
   state = {

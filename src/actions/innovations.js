@@ -21,8 +21,6 @@ import {
 import { Innovation, Partner } from '../models';
 // import { Role, KeyDate } from '../models';
 
-import { removeNullValueAttrs } from '../utils/functions';
-
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
   try {
@@ -50,29 +48,32 @@ export const getActiveInnovationData = ventureId => async dispatch => {
   }
 }
 
-export const createInnovation = (newPartner, newInnovation) => async dispatch => {
+export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatch => {
   dispatch({ type: CREATE_INNOVATION_BEGIN })
-  // Remove all null attributes.
-  const partnerData = removeNullValueAttrs(newPartner);
-  const innovationData = removeNullValueAttrs(newInnovation);
   try {
-    // 1. Create the new Partner instance from the data and then save to API.
-    const partner = new Partner();
-    for ( const key of Object.keys(partnerData) ) {
-      partner[key] = partnerData[key];
+    // 1. Find the industry model selected by the user.
+    console.log(partnerAttrs.industry);
+    // 2. Create the new Partner instance from the data, connect it to the industry and then save to API.
+    const newPartner = new Partner();
+    for ( const key of Object.keys(partnerAttrs) ) {
+      newPartner[key] = partnerAttrs[key];
     }
-    await partner.save();
+    newPartner.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id
+    
+    // await partner.save();
+    console.log('newPartner', newPartner);
 
     // TODO: Create a new innovation, attach the new innovation to the partner instance by its id, then save.
-    const innovation = new Innovation();
-    for ( const key of Object.keys(innovationData) ) {
-      innovation[key] = innovationData[key]
+    const newInnovation = new Innovation();
+    for ( const key of Object.keys(innovationAttrs) ) {
+      newInnovation[key] = innovationAttrs[key]
     }
-    innovation.partnerId = partner.id;
-    await innovation.save();
+    newInnovation.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id.
+    console.log('newInnovation', newInnovation);
+    // newInnovation.partnerId = newPartner.id;
+    // await innovation.save();
 
-    dispatch({ type: CREATE_INNOVATION_SUCCESS, innovation });
-    dispatch({ type: CREATE_PARTNER_SUCCESS, partner });
+    dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation } });
   }
   catch (err) {
     console.log(err);

@@ -7,13 +7,13 @@ import moment from 'moment';
 
 import InnovationAddPartner from '../components/innovation/InnovationAddPartner';
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
-import FormSectionHeader from '../components/layout/FormSectionHeader';
+import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 
 import BackTextLink from '../components/buttons/BackTextLink';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
 import { createInnovation } from '../actions/innovations';
-import { validateEmail } from '../utils/functions';
+import { validateEmail, removeNullValueAttrs } from '../utils/functions';
 
 import '../styles/css/innovation-create.css';
 
@@ -31,7 +31,7 @@ class InnovationCreate extends Component {
     dvOffice: '',
     dvPartner1: '',
     dvPartner2: '',
-    teamGMEmail: '', // TODO: If user is Team GM then autofill teamGMEmail on mount.
+    teamGMEmail: '',
     innovationOpenDate: null,
     innovationDuration: ''
   }
@@ -59,14 +59,14 @@ class InnovationCreate extends Component {
       innovationType, innovationName, dvOffice, dvPartner1, dvPartner2, innovationOpenDate
     } = this.state;
     // Need to pass the two separate data objects to the action. One for the Partner and one for the Innovation.
-    const newPartner = {
+    const partnerData = {
       name: partnerName,
       description: partnerDescription,
       hqCity: partnerCity,
       hqCountry: partnerCountry,
       industry: partnerIndustry
     }
-    const newInnovation = {
+    const innovationData = {
       chargeCode: partnerCCode,
       innovationType: innovationType,
       sprintName: innovationName,
@@ -75,15 +75,13 @@ class InnovationCreate extends Component {
       openDate: moment(innovationOpenDate).format('YYYY-MM-DD'),
       dvOffice: dvOffice
     }
+    const newPartner = removeNullValueAttrs(partnerData);
+    const newInnovation = removeNullValueAttrs(innovationData);
     createInnovation(newPartner, newInnovation);
   }
 
   fieldsAreCompleted = () => {
-      const {
-        partnerCCode, partnerName, innovationType, innovationName, teamGMEmail, innovationOpenDate
-      } = this.state;
-      return partnerCCode && partnerName && innovationType && innovationName &&
-             innovationOpenDate && teamGMEmail && validateEmail(teamGMEmail);
+    return Object.values(this.state).every(field => (field !== null && field !== '' && field !== {} && field !== undefined));
   }
 
   render() {
@@ -146,8 +144,6 @@ InnovationCreate.propTypes = {
  history: PropTypes.object
 }
 
-const mapDispatchToProps = dispatch => ({
-  createInnovation: bindActionCreators(createInnovation, dispatch)
-});
+const actions = { createInnovation };
 
-export default connect(null, mapDispatchToProps)(InnovationCreate);
+export default connect(null, actions)(InnovationCreate);

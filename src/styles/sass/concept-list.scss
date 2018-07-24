@@ -62,6 +62,13 @@
       align-items: center;
       color: $green;
     }
+
+    &-marked-incomplete {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: $light-red;
+    }
   }
 
   h3 {

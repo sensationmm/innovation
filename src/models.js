@@ -69,7 +69,6 @@ export const Innovation = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
-    currentSession: attr(), // Either KO -> IS3 or pull from an innovations keyDates?
     innovationType: attr(),
     sprintName: attr(),
     dvPartner1: attr(),
@@ -83,8 +82,8 @@ export const Innovation = ApplicationRecord.extend({
     keyDates: hasMany(),
     roles: hasMany(),
     concepts: hasMany(),
-    users: hasMany(),
-    dvOffice: belongsTo()
+    users: hasMany()
+    // dvOffice: belongsTo()
   }
 });
 
@@ -138,7 +137,6 @@ export const Concept = ApplicationRecord.extend({
     conceptChanges: hasMany(),
     innovation: belongsTo(),
     targetIndustry: belongsTo()
-
   }
 });
 

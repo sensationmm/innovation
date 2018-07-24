@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 import { validateEmail } from '../../utils/functions';
 
@@ -18,8 +17,7 @@ const FormTextInput = (props) => {
         emailValidation && value && !validateEmail(value) &&
           <div className="inventure-form-textinput-invalid-email">Enter Valid Email</div>
       }
-      <div
-        className={classnames('inventure-form-textinput-placeholder', { 'disabled': !value }, { 'active': value })}>
+      <div className="inventure-form-textinput-placeholder">
         {placeholder}
       </div>
       <input

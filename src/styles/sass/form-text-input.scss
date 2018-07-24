@@ -24,7 +24,8 @@
     }
 
     &::placeholder {
-      color: $text-off-white;
+      color: $text-offset;
+      opacity: 0.5;
     }
   }
 
@@ -34,8 +35,6 @@
   }
 
 }
-
-
 
 .inventure-form-textinput-required-label {
   position: absolute;
@@ -54,18 +53,8 @@
 }
 
 .inventure-form-textinput-placeholder {
-  transition: all 0.3s;
-  color: $text-offset;
-  font-size: 14px;
+  color: $text-off-white;
   position: absolute;
   top: 5px;
   left: 12px;
-
-  &.disabled {
-    opacity: 0;
-  }
-
-  &.active {
-    opacity: 1;
-  }
 }

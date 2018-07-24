@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextArea from '../../layout/FormTextArea';
+import FormTextArea from '../../formInputs/FormTextArea';
 
 import '../../../styles/css/concept-create.css';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextArea from '../../layout/FormTextArea';
-import RankSelectForm from '../../layout/RankSelectForm';
+import FormTextArea from '../../formInputs/FormTextArea';
+import RankSelectForm from '../../formInputs/RankSelectForm';
 
 import '../../../styles/css/concept-summary.css';
 

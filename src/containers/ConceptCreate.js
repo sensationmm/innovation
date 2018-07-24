@@ -10,13 +10,14 @@ import ConceptCorpAdvantage from '../components/concept/createForm/ConceptCorpAd
 import ConceptCosts from '../components/concept/createForm/ConceptCosts';
 import ConceptConviction from '../components/concept/createForm/ConceptConviction';
 
-import FormSectionHeader from '../components/layout/FormSectionHeader';
+import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
 import { createConcept, editConcept } from '../actions/concepts';
+import  { removeNullValueAttrs } from '../utils/functions';
 
 class ConceptCreate extends Component {
 
@@ -73,17 +74,19 @@ class ConceptCreate extends Component {
 
   handleSaveConcept = () => {
     const { createConcept, activeInnovationId } = this.props;
-    createConcept(activeInnovationId, this.state)
+    const attrsToCreate = removeNullValueAttrs({ ...this.state })
+    console.log('attrsToCreate', attrsToCreate);
+    createConcept(activeInnovationId, attrsToCreate)
   }
 
   requiredFieldsAreCompleted = () => {
-    const requiredFields = ['name', 'description']; // TODO: Move to config file.
+    const requiredFields = ['name']; // TODO: Move to config file.
     return requiredFields
-      .every(attr => this.state[attr] !== null || this.state[attr] !== '' || this.state[attr] !== {} || this.state[attr] !== undefined);
+      .every(attr => (this.state[attr] !== null && this.state[attr] !== '' && this.state[attr] !== {} && this.state[attr] !== undefined));
   }
 
   allFieldsAreCompleted = () => {
-    return Object.values(this.state).every(field => field !== null || field !== '' || field !== {} || field !== undefined);
+    return Object.values(this.state).every(field => (field !== null && field !== '' && field !== {} && field !== undefined));
   }
 
   render() {
@@ -92,7 +95,11 @@ class ConceptCreate extends Component {
     const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (
       <div className="create-concept-container">
-        <div className="create-concept-page-title">{editExisting ? 'Update Concept' : 'Create A New Concept'}</div>
+        <BackTextLink
+          label="Back"
+          onClick={() => this.props.history.goBack()}
+        />
+        <div className="create-concept-page-title">Create A New Concept</div>
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Concept Summary"

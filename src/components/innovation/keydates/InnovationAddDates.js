@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import InnovationKeyDate from './InnovationKeyDate';
 import AddNewKeyDateForm from './AddNewKeyDateForm';
 
-import '../../styles/css/innovation-add-dates.css';
+import '../../../styles/css/innovation-add-dates.css'
 
 class InnovationAddDates extends Component {
   state = {

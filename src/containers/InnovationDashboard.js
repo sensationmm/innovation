@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import ContentBox from '../components/layout/ContentBox';
-import FormSectionHeader from '../components/layout/FormSectionHeader';
+import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
 

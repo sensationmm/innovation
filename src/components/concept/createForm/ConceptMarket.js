@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormTextInput from '../../layout/FormTextInput';
-import FormTextArea from '../../layout/FormTextArea';
-import Dropdown from '../../Dropdown';
+import FormTextInput from '../../formInputs/FormTextInput';
+import FormTextArea from '../../formInputs/FormTextArea';
+import Dropdown from '../../formInputs/Dropdown';
 
 import '../../../styles/css/concept-create.css';
 
@@ -38,6 +38,7 @@ const ConceptMarket = (props) => {
         value={targetCustomers}
       />
       <div className="create-concept-dropdown-container">
+        <div className="create-concept-dropdown-input-title">Target Industry</div>
         <Dropdown
           id="targetIndustry"
           value={targetIndustry}

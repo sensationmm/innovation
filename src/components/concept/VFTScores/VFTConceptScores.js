@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import RankSelectForm from '../../layout/RankSelectForm';
+import RankSelectForm from '../../formInputs/RankSelectForm';
 
 const ConceptReportRanking = (props) => {
   const { solutionScore, businessModelScore, marketSizeScore, corpAdvantageScore, selectOption } = props;

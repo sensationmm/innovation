@@ -11,7 +11,7 @@ import ConceptCosts from '../components/concept/createForm/ConceptCosts';
 import ConceptConviction from '../components/concept/createForm/ConceptConviction';
 import VFTScoresDisplay from '../components/concept/VFTScores/VFTScoresDisplay';
 
-import FormSectionHeader from '../components/layout/FormSectionHeader';
+import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
 
@@ -69,7 +69,6 @@ class ConceptOverviewEditable extends Component {
     if (!activeConcept) {
       return null;
     }
-    console.log('activeConcept', activeConcept.status);
     const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (

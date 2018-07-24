@@ -19,14 +19,13 @@ import '../../styles/css/concept-list.css';
  * @param {bool} postIS2 - is the innovation now past IS2? Causes some functionality changes.
  */
 
-const userType = 'finance'; // TODO: get this conditionally from  redux store auth.user
-
 const ConceptList = props => {
-  const { postIS2 } = props;
+  const { postIS2, userType } = props;
   return (
     <div className="concept-list">
       <div className="concept-list-header">{props.title}</div>
       <div>For testing: {userType}</div>
+      <div>For testing: {postIS2 ? 'Post IS2' : 'Pre IS2'}</div>
       <div className="concept-list-items">
       {
         props.concepts.map(concept => {
@@ -43,31 +42,30 @@ const ConceptList = props => {
             <div className="concept-list-item" key={`concept-${id}`}>
               <Link className="concept-list-item-link" to={`/concept/${id}`}>
                 <div className="concept-list-item-details">
-                  <ConceptAvatar conceptId={id} ident={ident} color={color} logo={logo} showLink={false}/>
+                  <ConceptAvatar conceptId={id} ident={ident} color={color} logo={logo.preview || logo} showLink={false}/>
                   <h3>{name}</h3>
                   <p>{strapline}</p>
                   <div>For testing: {status}</div>
                 </div>
               </Link>
               {
-                !postIS2 &&
+                (!postIS2 && userType === 'teamGM') &&
                   <div className="concept-list-item-user-actions">
-                      {
-                        (status === 'active' || status ==='complete')
-                          ? <KillButton label='Kill' onClick={() => console.log('set concept.status to killed')} />
-                          : <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status to active')} />
-                      }
+                    {
+                      (status === 'active' || status ==='complete')
+                        ? <KillButton label='Kill' onClick={() => console.log('set concept.status to killed')} />
+                        : <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status to active')} />
+                    }
                   </div>
               }
               {
-                userType === 'teamGM' && postIS2 &&
+                (postIS2 && userType === 'teamGM') &&
                   <div>
                     {
                       (status === 'complete') &&
                         <div className="concept-list-item-user-actions">
                           <div className="concept-list-item-marked-complete"><i className="far fa-clock"></i>Awaiting VFT Analysis</div>
                         </div>
-
                     }
                     {
                       (status === 'active') &&
@@ -77,15 +75,15 @@ const ConceptList = props => {
                         </div>
                     }
                     {
-                      status === 'killed' &&
-                      <div className="concept-list-item-user-actions">
-                        <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status active')} />
-                      </div>
+                      (status === 'killed') &&
+                        <div className="concept-list-item-user-actions">
+                          <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status active')} />
+                        </div>
                     }
                   </div>
               }
               {
-                userType !== 'teamGM' && postIS2 &&
+                (postIS2 && userType === 'finance') &&
                   <div>
                     {
                       (status === 'complete') &&
@@ -98,7 +96,7 @@ const ConceptList = props => {
                     {
                       (status === 'active') &&
                         <div className="concept-list-item-user-actions">
-                          <div className="concept-list-item-marked-complete"><i className="far fa-clock"></i>Concept Incomplete</div>
+                          <div className="concept-list-item-marked-incomplete"><i className="far fa-clock"></i>Concept Incomplete</div>
                         </div>
                     }
                   </div>

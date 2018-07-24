@@ -43,5 +43,10 @@
       justify-content: space-around;
       align-items: center;
       color: #50E3C2; }
+    .concept-list-item-marked-incomplete {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: #c32929; }
   .concept-list h3 {
     margin: 0; }

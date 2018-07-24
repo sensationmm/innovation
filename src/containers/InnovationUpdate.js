@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import InnovationAddDates from '../components/innovation/InnovationAddDates';
+import InnovationAddDates from '../components/innovation/keydates/InnovationAddDates';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import CorporatePartnerSummary from '../components/innovation/CorporatePartnerSummary';
 import InnovationTeam from '../components/innovation/InnovationTeam';
-import FormSectionHeader from '../components/layout/FormSectionHeader';
-import FormTextArea from '../components/layout/FormTextArea';
+import FormSectionHeader from '../components/formInputs/FormSectionHeader';
+import FormTextArea from '../components/formInputs/FormTextArea';
 import ContentBox from '../components/layout/ContentBox';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
@@ -77,15 +77,7 @@ class InnovationUpdate extends Component {
     return (
       <div className="create-innovation-container">
         <div className="create-innovation-welcome">
-          Please enter the IS dates, team members and innovation mandate
-        </div>
-        <div className="create-innovation-section-container">
-          <FormSectionHeader
-            title='Corporate Partner Summary'
-          />
-          <ContentBox>
-            <CorporatePartnerSummary />
-          </ContentBox>
+          Please enter IS dates, team members and innovation mandate
         </div>
         <div className="create-innovation-section-container">
           <FormSectionHeader

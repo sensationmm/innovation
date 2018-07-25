@@ -28,7 +28,7 @@ const ConceptList = props => {
       <div>For testing: {postIS2 ? 'Post IS2' : 'Pre IS2'}</div>
       <div className="concept-list-items">
       {
-        concepts.map(concept => {
+        concepts && concepts.map(concept => {
           const {
             id,
             name,

@@ -1,28 +1,7 @@
-export const industries = [
-  { value: 'consumer', label: 'Consumer Practice' },
-  { value: 'energy', label: 'Energy' },
-  { value: 'financial', label: 'Financial Institutions' },
-  { value: 'healthcare', label: 'Healthcare' },
-  { value: 'industrial', label: 'Industrial Goods' },
-  { value: 'insurance', label: 'Insurance' },
-  { value: 'public', label: 'Public Sector' },
-  { value: 'tech', label: 'Tech, Media & Telecoms' }
-];
-
 export const innovationTypes = [
-  { value: 'portfolio', label: 'Portfolio Sprint' },
-  { value: 'validation', label: 'Validation Sprint' },
-  { value: 'systems', label: 'Customer Systems' }
-];
-
-export const dvOfficeLocations = [
-  { value: 'manhattan', label: 'Manhattan Beach' },
-  { value: 'newYork', label: 'New York' },
-  { value: 'berlin', label: 'Berlin' },
-  { value: 'london', label: 'London' },
-  { value: 'sydney', label: 'Sydney' },
-  { value: 'shanghai', label: 'Shanghai' },
-  { value: 'tokyo', label: 'Tokyo' }
+  { value: 'portfolio_sprint', label: 'Portfolio Sprint' },
+  { value: 'validation_sprint', label: 'Validation Sprint' },
+  { value: 'customer_systems', label: 'Customer Systems' }
 ];
 
 export const keyDatesOptions = [

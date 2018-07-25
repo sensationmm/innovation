@@ -21,7 +21,6 @@ const userType = 'finance'; // TODO: get this conditionally from  redux store au
 const requiredKeyDates = [ 'KO', 'IS1', 'IS2', 'IS3' ]; // TODO: move to congfig
 
 const InnovationOverview = (props) => {
-  console.log('props', props);
   const { activeInnovation, conceptsById } = props;
   const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
   const activeIncomplete = activeConcepts.filter(concept => concept.status === 'active');

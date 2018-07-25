@@ -72,7 +72,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATIONS_LIST_SUCCESS: {
       const { allInnovations } = action;
-      console.log('allInnovations', allInnovations);
       const allInnovationsList = allInnovations.map(innovation => { return { ...innovation.attributes } })
       // return { ...state, allInnovationsList }
       return state;
@@ -88,16 +87,8 @@ export default (state = initialState, action) => {
     case CREATE_INNOVATION_SUCCESS: {
       const { newPartner, newInnovation } = action;
       const activeInnovation = { ...newInnovation, partner: { ...newPartner }};
-      const newInnovationSummary = {
-        id: 1,
-        sprintName: newInnovation.sprintName,
-        partner: newPartner.name,
-        chargeCode: newPartner.chargeCode,
-        keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
-      }
-      const newInnovationsList = [ ...state.allInnovationsList, newInnovationSummary ]
-
-      return { ...state, activeInnovation, allInnovationsList: newInnovationsList }
+      const allInnovationsList = [ ...state.allInnovationsList, activeInnovation ]
+      return { ...state, activeInnovation, allInnovationsList }
     }
 
     default:

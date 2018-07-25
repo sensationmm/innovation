@@ -5,8 +5,8 @@ import {
 export default (state = {}, action) => {
   switch (action.type) {
     case GET_RESOURCE_DATA_SUCCESS: {
-      const { industries, dvOffices } = action;
-      return { ...state, industries, dvOffices };
+      const { industries, dvOffices, targetIndustries } = action;
+      return { ...state, industries, dvOffices, targetIndustries };
     }
 
     default:

@@ -69,8 +69,9 @@ export const Innovation = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
-    innovationType: attr(),
+    sprintType: attr(),
     sprintName: attr(),
+    duration: attr(),
     dvPartner1: attr(),
     dvPartner2: attr(),
     mandate: attr(),
@@ -78,12 +79,14 @@ export const Innovation = ApplicationRecord.extend({
     openDate: attr(),
     kickedOffAt: attr(),
     colour: attr(),
+    partnerId: attr(),
     dvOfficeId: attr(),
     keyDates: hasMany(),
     roles: hasMany(),
     concepts: hasMany(),
     users: hasMany(),
-    dvOffice: belongsTo()
+    dvOffice: belongsTo(),
+    partner: belongsTo()
   }
 });
 
@@ -183,12 +186,9 @@ export const conceptFinanceScore = ApplicationRecord.extend({
   },
   attrs: {
     id: attr(),
-    overallRank: attr(),
-    comments: attr(),
-    solutionRank: attr(),
-    modelRank: attr(),
-    marketSize: attr(),
-    corporateAdvantage: attr(),
+    key: attr(),
+    value: attr(),
+    comment: attr(),
     conceptId: attr(),
     concept: belongsTo()
   }

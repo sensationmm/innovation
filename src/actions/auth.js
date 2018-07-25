@@ -7,26 +7,32 @@ import {
 
 import { push } from 'connected-react-router';
 
-import { getAppResourceData }from './resources';
-import { getAllInnovationsList }from './innovations';
+import { getAppResourceData } from './resources';
+import { getAllInnovationsList, getActiveInnovationData }from './innovations';
 
 import { User } from '../models';
 
-export const authFromJWT = (tokenPresentAndInDate) => async (dispatch) => {
+export const authFromJWT = (tokenPresentAndInDate, activeInnovationId) => async (dispatch) => {
   if (tokenPresentAndInDate) {
     dispatch({ type: AUTH_FROM_JWT_BEGIN })
     try {
+      const token = localStorage.getItem('inventure-auth');
       const user = (await User.find('me')).data;
       dispatch({ type: AUTH_FROM_JWT_SUCCESS, authedUser: { ...user.attributes } });
       dispatch(getAppResourceData());
       dispatch(getAllInnovationsList());
-      // Redirect to dashboard.
-      dispatch(push('/dashboard'))
+      if (activeInnovationId) {
+        dispatch(getActiveInnovationData(activeInnovationId));
+      } else {
+        // Redirect to dashboard.
+        dispatch(push('/dashboard'));
+      }
     }
     catch (err) {
       console.log(err);
       dispatch({ type: AUTH_FROM_JWT_ERROR });
-      // TODO: Redirect the user  to a login screen.
+      // Redirect to InVenture login. TODO.
+      // dispatch(push('/'))
     }
   } else {
     dispatch({ type: AUTH_FROM_JWT_ERROR });

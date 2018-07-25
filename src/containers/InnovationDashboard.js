@@ -37,6 +37,11 @@ class InnovationDashboard extends Component {
      })
   }
 
+  handleOpenInnovation = (id) => {
+    // this.props.getActiveInnovationData(id)
+    this.props.history.push(`/innovation-overview/${id}`);
+  }
+
   sendInnovationsSummmary = () => {
     console.log('Send innovations summary to ', this.state.emails);
   }
@@ -115,7 +120,7 @@ class InnovationDashboard extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="innovation-dash-view-details-link" onClick={() => getActiveInnovationData(innovation.id)}>
+                  <div className="innovation-dash-view-details-link" onClick={() => this.handleOpenInnovation(innovation.id)}>
                     View Details
                   </div>
                 </div>

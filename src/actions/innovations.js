@@ -16,6 +16,8 @@ import {
   // DELETE_INNOVATION_ERROR
 } from '../config/constants';
 
+import { push } from 'connected-react-router';
+
 // Import JSON API models.
 import { Innovation, Partner } from '../models';
 // import { Role, KeyDate } from '../models';
@@ -25,9 +27,10 @@ export const getAllInnovationsList = () => async dispatch => {
   try {
     // Need the following data for the dashboard page: innovation { name, charge code, keyDates, partnerName }.
     // TODO: with keyDates.
-    const allInnovations = (await Innovation.select([ 'id', 'name', 'chargeCode' ]).all()).data;
-    console.log('allInnovations action', allInnovations);
-    dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, allInnovations: [ ...allInnovations ] });
+    let { data } = await Partner.select([ "name", "description"]).all();
+    // const allInnovations = (await Par.select([ 'id', 'name', 'chargeCode' ]).all()).data;
+    console.log('allInnovations action', data);
+    dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, allInnovations: [ ...data ] });
   }
   catch (err) {
     console.log(err);
@@ -35,14 +38,14 @@ export const getAllInnovationsList = () => async dispatch => {
   }
 }
 
-export const getActiveInnovationData = ventureId => async dispatch => {
+export const getActiveInnovationData = innovationId => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const { data } = await Innovation.includes([
       'key_dates', { roles: 'user' }, 'concepts'
-    ]).find(ventureId); // TODO: auth action is not calling this at the momemnt so as not to overwrite dummy data in redux store.
+    ]).find(innovationId); // TODO: auth action is not calling this at the momemnt so as not to overwrite dummy data in redux store.
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, data });
-    return data;
+    // TODO: Store the now active innovation id in the JWT token.
   }
   catch (err) {
     console.log(err);
@@ -50,32 +53,30 @@ export const getActiveInnovationData = ventureId => async dispatch => {
   }
 }
 
-export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatch => {
+export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispatch, getState) => {
+  console.log('new innovation with', innovationAttrs);
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   try {
-    // 1. Find the industry model selected by the user. Saved in redux store > resources.
-    console.log(partnerAttrs.industry);
-    // 2. Create the new Partner instance from the data, connect it to the industry and then save to API.
     const newPartner = new Partner();
     for ( const key of Object.keys(partnerAttrs) ) {
       newPartner[key] = partnerAttrs[key];
     }
-    newPartner.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id
+    await newPartner.save();
 
-    // await partner.save();
-    console.log('newPartner', newPartner);
-    // 3. Find the DVOffice model selected by the user. Saved in redux store > resources.
-    // TODO: Create a new innovation, attach the new innovation to the partner instance by its id, and to the DV office id, then save.
+
     const newInnovation = new Innovation();
     for ( const key of Object.keys(innovationAttrs) ) {
-      newInnovation[key] = innovationAttrs[key]
+      console.log('key', key);
+      console.log('innovationAttrs[key]', innovationAttrs[key]);
+      newInnovation[key] = innovationAttrs[key];
     }
-    newInnovation.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id.
-    console.log('newInnovation', newInnovation);
-    // newInnovation.partnerId = newPartner.id;
-    // await innovation.save();
 
-    dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation } });
+    newInnovation.partnerId = newPartner.id;
+    console.log('newInnovation about to save', newInnovation);
+    await newInnovation.save();
+    console.log('newInnovation', newInnovation);
+
+    dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation.attributes } });
   }
   catch (err) {
     console.log(err);

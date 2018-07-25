@@ -9,6 +9,8 @@ import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
 
+import { getActiveInnovationData } from '../actions/innovations';
+
 import '../styles/css/innovation-dashboard.css';
 
 const dummyUsers = ['partner1@fake.com', 'partner2@fake.com', 'partner3@fake.com', 'partner4@fake.com', 'partner5@fake.com']
@@ -40,7 +42,7 @@ class InnovationDashboard extends Component {
   }
 
   render() {
-    const { innovations } = this.props;
+    const { innovations, getActiveInnovationData } = this.props;
     const { sendSummaryOpen, emails } = this.state;
     return (
       <div>
@@ -113,9 +115,9 @@ class InnovationDashboard extends Component {
                       </div>
                     </div>
                   </div>
-                  <Link to={`/innovation-overview/${innovation.id}`}>
-                    <div className="innovation-dash-view-details-link">View Details</div>
-                  </Link>
+                  <div className="innovation-dash-view-details-link" onClick={() => getActiveInnovationData(innovation.id)}>
+                    View Details
+                  </div>
                 </div>
               </ContentBox>
             )
@@ -134,4 +136,6 @@ const mapStateToProps = state => ({
   innovations: state.innovations.allInnovationsList
 });
 
-export default connect(mapStateToProps, null)(InnovationDashboard)
+const actions = { getActiveInnovationData };
+
+export default connect(mapStateToProps, actions)(InnovationDashboard)

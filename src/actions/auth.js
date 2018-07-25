@@ -5,7 +5,11 @@ import {
   USER_LOGOUT_SUCCESS
 } from '../config/constants';
 
+import { push } from 'connected-react-router';
+
+import { getAppResourceData }from './resources';
 import { getAllInnovationsList }from './innovations';
+
 import { User } from '../models';
 
 export const authFromJWT = (tokenPresentAndInDate) => async (dispatch) => {
@@ -14,10 +18,10 @@ export const authFromJWT = (tokenPresentAndInDate) => async (dispatch) => {
     try {
       const user = (await User.find('me')).data;
       dispatch({ type: AUTH_FROM_JWT_SUCCESS, authedUser: { ...user.attributes } });
+      dispatch(getAppResourceData());
       dispatch(getAllInnovationsList());
-      // TODO: Only do this if the user has saved an active / default innovation
-      // TODO: Otherwise route to innovation select.
-      // dispatch(getActiveInnovationData());  TODO: Removed to allow use of dummy data in client-1.json - via initial state of reducer.
+      // Redirect to dashboard.
+      dispatch(push('/dashboard'))
     }
     catch (err) {
       console.log(err);

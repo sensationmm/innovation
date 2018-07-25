@@ -45,7 +45,7 @@ export const Partner = ApplicationRecord.extend({
     description: attr(),
     hqCity: attr(),
     hqCountry: attr(),
-    industryId: attr(), // TODO: Is this setup so we receive ids from relationships when sideloading?
+    industryId: attr(),
     innovation: hasOne(),
     industry: belongsTo()
   }
@@ -82,8 +82,8 @@ export const Innovation = ApplicationRecord.extend({
     keyDates: hasMany(),
     roles: hasMany(),
     concepts: hasMany(),
-    users: hasMany()
-    // dvOffice: belongsTo()
+    users: hasMany(),
+    dvOffice: belongsTo()
   }
 });
 

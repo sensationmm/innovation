@@ -130,7 +130,7 @@ class InnovationCreate extends Component {
           <ButtonSubmit
             label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
             onClick={() => this.submitNewInnovation()}
-            disabled={!fieldsAreCompleted}
+            // disabled={!fieldsAreCompleted}
           />
         </div>
       </div>

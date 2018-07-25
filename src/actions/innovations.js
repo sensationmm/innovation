@@ -23,8 +23,11 @@ import { Innovation, Partner } from '../models';
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
   try {
-    const { data } = await Innovation.select([ 'id', 'name', 'logo' ]).all()
-    dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, data });
+    // Need the following data for the dashboard page: innovation { name, charge code, keyDates, partnerName }.
+    // TODO: with keyDates.
+    const allInnovations = (await Innovation.select([ 'id', 'name', 'chargeCode' ]).all()).data;
+    console.log('allInnovations action', allInnovations);
+    dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, allInnovations: [ ...allInnovations ] });
   }
   catch (err) {
     console.log(err);
@@ -50,7 +53,7 @@ export const getActiveInnovationData = ventureId => async dispatch => {
 export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatch => {
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   try {
-    // 1. Find the industry model selected by the user.
+    // 1. Find the industry model selected by the user. Saved in redux store > resources.
     console.log(partnerAttrs.industry);
     // 2. Create the new Partner instance from the data, connect it to the industry and then save to API.
     const newPartner = new Partner();
@@ -61,8 +64,8 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatc
 
     // await partner.save();
     console.log('newPartner', newPartner);
-
-    // TODO: Create a new innovation, attach the new innovation to the partner instance by its id, then save.
+    // 3. Find the DVOffice model selected by the user. Saved in redux store > resources.
+    // TODO: Create a new innovation, attach the new innovation to the partner instance by its id, and to the DV office id, then save.
     const newInnovation = new Innovation();
     for ( const key of Object.keys(innovationAttrs) ) {
       newInnovation[key] = innovationAttrs[key]

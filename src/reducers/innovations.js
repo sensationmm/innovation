@@ -70,16 +70,18 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GET_INNOVATIONS_LIST_SUCCESS: {
+      const { allInnovations } = action;
+      console.log('allInnovations', allInnovations);
+      const allInnovationsList = allInnovations.map(innovation => { return { ...innovation.attributes } })
+      // return { ...state, allInnovationsList }
+      return state;
+    }
+
     case GET_INNOVATION_DATA_SUCCESS: {
       // const keyDates = action.data.keyDates.map(keyDate => ( { ...keyDate.attributes } ));
       // const activeInnovation = { ...action.data.attributes, keyDates };
       // return { ...state, activeInnovation };
-      return state; // TODO: Uncomment above once api to filling redux state.
-    }
-
-    case GET_INNOVATIONS_LIST_SUCCESS: {
-      // const allInnovationsList = action.data.map(innovation => { return { ...innovation.attributes } })
-      // return { ...state, allInnovationsList }
       return state; // TODO: Uncomment above once api to filling redux state.
     }
 

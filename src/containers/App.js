@@ -39,7 +39,7 @@ const App = () => (
         <PrivateRoute exact path="/schedule" component={Schedule} />
         <PrivateRoute exact path="/canvas" component={Canvas} />
         <PrivateRoute exact path="/canvas2" component={CanvasV2} />
-        <PrivateRoute exact path="/concept/:conceptId" component={ConceptV2} />
+        <PrivateRoute exact path="/concept/:conceptId" component={ConceptOverviewEditable} />
         <PrivateRoute exact path="/no-mobile" component={NotMobile} />
         <Route path='/login' component={() => window.location = '/'}/>
 

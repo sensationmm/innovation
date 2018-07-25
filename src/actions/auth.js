@@ -1,7 +1,8 @@
 import {
   AUTH_FROM_JWT_BEGIN,
   AUTH_FROM_JWT_SUCCESS,
-  AUTH_FROM_JWT_ERROR
+  AUTH_FROM_JWT_ERROR,
+  USER_LOGOUT_SUCCESS
 } from '../config/constants';
 
 import { getAllInnovationsList }from './innovations';
@@ -26,4 +27,9 @@ export const authFromJWT = (tokenPresentAndInDate) => async (dispatch) => {
   } else {
     dispatch({ type: AUTH_FROM_JWT_ERROR });
   }
-}
+};
+
+export const userLogout = () => (dispatch) => {
+  localStorage.removeItem('inventure-auth');
+  dispatch({ type: USER_LOGOUT_SUCCESS });
+};

@@ -75,7 +75,7 @@
 
     .content-links {
       font-size: 14px;
-      
+
       ul {
         width: 100%;
         display: flex;
@@ -134,6 +134,10 @@
       &.active {
         top: 0;
         opacity: 1;
+      }
+
+      .content-links {
+        font-size: 16px;
       }
     }
   }

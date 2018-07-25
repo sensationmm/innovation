@@ -20,6 +20,20 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
+.button-nostyle {
+  font-size: inherit;
+  border: 0;
+  background-color: transparent;
+  color: #50e3c2;
+  padding: 0;
+  text-decoration: none;
+}
+
+.button-nostyle:hover {
+  color: #00a256;
+  text-decoration: underline;
+}
+
 @media screen and (max-width: $breakpoint-tablet) {
   main {
     width: calc(100% - 40px);

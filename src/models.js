@@ -5,7 +5,8 @@ const {
   JSORMBase,
   attr,
   belongsTo,
-  hasMany
+  hasMany,
+  hasOne
 } = require('jsorm/dist/jsorm');
 
 const ApplicationRecord = JSORMBase.extend({
@@ -20,22 +21,80 @@ const ApplicationRecord = JSORMBase.extend({
   }
 });
 
+export const Industry = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'industries'
+  },
+  attrs: {
+    id: attr(),
+    createdAt: attr(),
+    name: attr(),
+    partners: hasMany()
+  }
+});
+
+export const Partner = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'partners'
+  },
+  attrs: {
+    id: attr(),
+    createdAt: attr(),
+    chargeCode: attr(),
+    name: attr(),
+    description: attr(),
+    hqCity: attr(),
+    hqCountry: attr(),
+    industryId: attr(), // TODO: Is this setup so we receive ids from relationships when sideloading?
+    innovation: hasOne(),
+    industry: belongsTo()
+  }
+});
+
+export const DvOffice = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'dv_offices'
+  },
+  attrs: {
+    id: attr(),
+    name: attr(),
+    innovations: hasMany()
+  }
+});
+
 export const Innovation = ApplicationRecord.extend({
   static: {
     jsonapiType: 'innovations'
   },
   attrs: {
     id: attr(),
-    name: attr(),
-    colour: attr(),
     createdAt: attr(),
-    updatedAt: attr(),
-    kickedOffAt: attr(),
+    innovationType: attr(),
+    sprintName: attr(),
+    dvPartner1: attr(),
+    dvPartner2: attr(),
+    mandate: attr(),
     logo: attr(),
-    logoName: attr(),
+    openDate: attr(),
+    kickedOffAt: attr(),
+    colour: attr(),
+    dvOfficeId: attr(),
     keyDates: hasMany(),
-    users: hasMany(),
     roles: hasMany(),
+    concepts: hasMany(),
+    users: hasMany()
+    // dvOffice: belongsTo()
+  }
+});
+
+export const TargetIndustry = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'target_industries'
+  },
+  attrs: {
+    id: attr(),
+    createdAt: attr(),
+    name: attr(),
     concepts: hasMany()
   }
 });
@@ -46,15 +105,108 @@ export const Concept = ApplicationRecord.extend({
   },
   attrs: {
     id: attr(),
+    createdAt: attr(),
     name: attr(),
-    strapline: attr(),
+    status: attr(), // killed, incomplete, complete, scored
     description: attr(),
-    opportunityAreas: attr(),
-    archetypes: attr(),
+    logo: attr(),
+    segment: attr(),
+    friction: attr(),
+    marketSize: attr(),
+    targetCustomers: attr(),
+    targetGeography: attr(),
+    solutionDescription: attr(),
+    primaryTechnology: attr(),
+    successFactors: attr(),
+    keyRisks: attr(),
+    businessType: attr(),
+    salesChannel: attr(),
+    revenueModel: attr(),
+    unitEconomics: attr(),
+    corporateAdvantage: attr(),
+    corporateAssets: attr(),
+    incubationCost: attr(),
+    breakEvenCost: attr(),
+    breakEvenYear: attr(),
+    willGMLeave: attr(),
+    gmConviction: attr(),
+    gmComments: attr(),
+    partnerPreferences: attr(),
     innovationId: attr(),
-    innovation: belongsTo()
+    targetIndustryId: attr(),
+    conceptChanges: hasMany(),
+    innovation: belongsTo(),
+    targetIndustry: belongsTo()
   }
-})
+});
+
+export const ConceptChange = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'concept_changes'
+  },
+  attrs: {
+    id: attr(),
+    createdAt: attr(),
+    name: attr(),
+    description: attr(),
+    logo: attr(),
+    segment: attr(),
+    friction: attr(),
+    marketSize: attr(),
+    targetCustomers: attr(),
+    targetGeography: attr(),
+    solutionDescription: attr(),
+    primaryTechnology: attr(),
+    successFactors: attr(),
+    keyRisks: attr(),
+    businessType: attr(),
+    salesModel: attr(),
+    revenueModel: attr(),
+    unitEconomics: attr(),
+    corporateAdvantage: attr(),
+    corporateAssets: attr(),
+    incubationCost: attr(),
+    breakEvenCost: attr(),
+    breakEvenYear: attr(),
+    willGMLeave: attr(),
+    gmConviction: attr(),
+    gmComments: attr(),
+    partnerPreferences: attr(),
+    conceptId: attr(),
+    concept: belongsTo()
+  }
+});
+
+export const conceptFinanceScore = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'concept_finance_scores'
+  },
+  attrs: {
+    id: attr(),
+    overallRank: attr(),
+    comments: attr(),
+    solutionRank: attr(),
+    modelRank: attr(),
+    marketSize: attr(),
+    corporateAdvantage: attr(),
+    conceptId: attr(),
+    concept: belongsTo()
+  }
+});
+
+export const Role = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'roles'
+  },
+  attrs: {
+    name: attr(),
+    email: attr(),
+    rolableId: attr(),
+    rolableType: attr(),
+    rolable: belongsTo(),
+    user: belongsTo()
+  }
+});
 
 export const User = ApplicationRecord.extend({
   static: {
@@ -66,23 +218,10 @@ export const User = ApplicationRecord.extend({
     email: attr(),
     password: attr(),
     currentPassword: attr(),
-    innovation: belongsTo(),
+    innovationId: attr(),
     roles: hasMany(),
-    role: belongsTo()
-  }
-});
-
-export const Role = ApplicationRecord.extend({
-  static: {
-    jsonapiType: 'roles'
-  },
-  attrs: {
-    name: attr(),
-    email: attr(),
-    user: belongsTo(),
-    rolableId: attr(),
-    rolable: belongsTo(),
-    rolableType: attr()
+    role: belongsTo(),
+    innovation: belongsTo()
   }
 });
 
@@ -95,7 +234,7 @@ export const KeyDate = ApplicationRecord.extend({
     name: attr(),
     date: attr(),
     keyDatableId: attr(),
-    keyDatable: belongsTo(),
-    keyDatableType: attr()
+    keyDatableType: attr(),
+    keyDatable: belongsTo()
   }
 });

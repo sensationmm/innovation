@@ -1,0 +1,20 @@
+@import './modules/colors.scss';
+
+.finance-report-container {
+  margin-bottom: 30px;
+}
+
+.finance-report-page-title {
+  text-align: center;
+  padding: 15px;
+  font-size: 20px;
+}
+
+.finance-report-section-container {
+  margin-bottom: 10px;
+}
+
+.finance-report-overview-name {
+  background: $background-grey-light;
+  padding: 15px;
+}

@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../styles/css/button-next.css';
+import '../../styles/css/buttons-and-links.css';
 
 /**
- * ButtonSubmit
+ * KillButton
  *
- * Renders a submit action button
+ * Renders a button to delete / kill some object
  *
  * @param {bool} disabled - control button disable / enable
  * @param {string} label - button text
  * @param {function} onClick - action to fire when button is clicked
  */
 
-const ButtonInnovationNext = props => {
+const KillButton = props => {
   const {
     label,
     onClick,
@@ -21,20 +21,20 @@ const ButtonInnovationNext = props => {
   } = props;
 
   return (
-    <button disabled={disabled} className={disabled ? 'button-innovation-next disabled': 'button-innovation-next'} onClick={onClick}>
+    <button disabled={disabled} className={disabled ? 'kill-button disabled': 'kill-button'} onClick={onClick}>
       {label}
     </button>
   );
 };
 
-ButtonInnovationNext.propTypes = {
+KillButton.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-ButtonInnovationNext.defaultProps = {
+KillButton.defaultProps = {
   label: 'Submit'
 };
 
-export default ButtonInnovationNext;
+export default KillButton;

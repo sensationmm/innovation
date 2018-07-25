@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import InnovationKeyDate from './InnovationKeyDate';
 import AddNewKeyDateForm from './AddNewKeyDateForm';
 
-import '../../styles/css/innovation-add-dates.css';
+import '../../../styles/css/innovation-add-dates.css'
 
 class InnovationAddDates extends Component {
   state = {
@@ -20,10 +20,6 @@ class InnovationAddDates extends Component {
     const { openNewKeyDateForm } = this.state;
     return (
       <div>
-        <div className="innovation-add-dates-header">
-          <div className="innovation-add-dates-header-title">Enter Immersion Session Key Dates</div>
-          <div className="innovation-add-dates-header-subtitle">These are required to create your innovation timeline, you can edit these later if you need to</div>
-        </div>
         <div className="innovation-keydates-container">
           <div className="innovation-keydates">
             {

@@ -1,4 +1,7 @@
+@import './modules/colors.scss';
+
 .concept-list {
+  font-size: 14px;
 
   &-header {
     text-transform: uppercase;
@@ -8,17 +11,63 @@
   }
 
   &-items {
-    max-height: 300px;
-    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 
   &-item {
+    background: $background-grey-light;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
     margin-bottom: 20px;
+    width: 250px;
+    height: 280px;
+    padding: 5px 5px;
+    margin: 10px;
+
+    h3, p, div {
+      padding: 5px;
+    }
+
+    &-item-link {
+      text-decoration: none;
+    }
+
+    &:hover {
+      background: $background-grey-lighter;
+      cursor: pointer;
+    }
 
     &-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
       padding-left: 10px;
+    }
+
+    &-user-actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      text-align: center;
+    }
+
+    &-marked-complete {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: $green;
+    }
+
+    &-marked-incomplete {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: $light-red;
     }
   }
 

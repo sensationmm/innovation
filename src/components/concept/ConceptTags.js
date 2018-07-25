@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { matrixes, archetypes, keyTechs } from '../../config/conceptOptions';
 
-import Dropdown from '../Dropdown';
+import Dropdown from '../formInputs/Dropdown';
 import ConceptMeta from './ConceptMeta';
 
 /**
@@ -35,7 +35,7 @@ const ConceptSummary = props => {
           classes="small"
         />
       )
-    }, 
+    },
     {
       label: 'Key Technologies',
       content: (
@@ -47,7 +47,7 @@ const ConceptSummary = props => {
           classes="small"
         />
       )
-    }, 
+    },
     {
       label: '2x2 Matrix',
       content: (
@@ -59,7 +59,7 @@ const ConceptSummary = props => {
           classes="small"
         />
       )
-    }, 
+    },
     {
       label: 'Archetype',
       content: (

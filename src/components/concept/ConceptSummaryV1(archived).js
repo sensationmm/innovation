@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../styles/css/concept-summary.css';
+import '../../styles/css/concept-summary-V1.css';
 
 /**
  * Concept Summary
@@ -13,7 +13,7 @@ import '../../styles/css/concept-summary.css';
  * @param {string} summary - short summary of the concept
  */
 
-const ConceptSummary = props => {
+const ConceptSummaryV1 = props => {
   const { name, strapline, description } = props;
 
   return (
@@ -25,10 +25,10 @@ const ConceptSummary = props => {
   );
 };
 
-ConceptSummary.propTypes = {
+ConceptSummaryV1.propTypes = {
   name: PropTypes.string,
   strapline: PropTypes.string,
   description: PropTypes.string
 };
 
-export default ConceptSummary;
+export default ConceptSummaryV1;

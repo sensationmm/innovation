@@ -1,0 +1,71 @@
+@import './modules/colors.scss';
+
+.form-submit-button {
+  padding: 8px 10px;
+  min-width: 120px;
+  text-align: center;
+  font-size: 14px;
+  color: $text-off-white;
+  margin-top: 10px;
+  background: $cyan-blue;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $green-offset;
+  }
+
+  &.disabled {
+    background: $background-grey-lighter;
+    cursor: auto;
+  }
+}
+
+.kill-button {
+  padding: 8px 10px;
+  min-width: 120px;
+  text-align: center;
+  font-size: 14px;
+  color: $text-off-white;
+  margin-top: 10px;
+  background: $grey-red;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $light-red;
+  }
+
+  &.disabled {
+    background: $background-grey-lighter;
+    cursor: auto;
+  }
+}
+
+.complete-button {
+  padding: 8px 10px;
+  min-width: 120px;
+  text-align: center;
+  font-size: 14px;
+  color: $text-off-white;
+  margin-top: 10px;
+  background: $cyan-blue;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $cyan-offset;
+  }
+
+  &.disabled {
+    background: $background-grey-lighter;
+    cursor: auto;
+  }
+}
+
+.back-text-link {
+  color: $text-off-white;
+  cursor: pointer;
+}
+
+.back-text-link-label {
+  padding-left: 8px;
+  font-size: 14px;
+}

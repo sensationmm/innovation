@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import '../../styles/css/innovation-add-dates.css';
+import '../../../styles/css/innovation-add-dates.css';
 
 class InnovationKeyDate extends Component {
   state = {

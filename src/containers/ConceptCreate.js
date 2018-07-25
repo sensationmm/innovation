@@ -1,42 +1,70 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ConceptAddTitle from '../components/concept/ConceptAddTitle';
-import ConceptAddDetails from '../components/concept/ConceptAddDetails';
-import ConceptAddAttributes from '../components/concept/ConceptAddAttributes';
+import ConceptBasicDetails from '../components/concept/createForm/ConceptBasicDetails';
+import ConceptMarket from '../components/concept/createForm/ConceptMarket';
+import ConceptSolution from '../components/concept/createForm/ConceptSolution';
+import ConceptBusinessModel from '../components/concept/createForm/ConceptBusinessModel';
+import ConceptCorpAdvantage from '../components/concept/createForm/ConceptCorpAdvantage';
+import ConceptCosts from '../components/concept/createForm/ConceptCosts';
+import ConceptConviction from '../components/concept/createForm/ConceptConviction';
 
-import UserProgressIndicator from '../components/UserProgressIndicator';
-import ButtonNext from '../components/buttons/ButtonNext';
+import FormSectionHeader from '../components/formInputs/FormSectionHeader';
+import ButtonSubmit from '../components/buttons/ButtonSubmit';
+import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-import { createConcept } from '../actions/concepts';
+import { createConcept, editConcept } from '../actions/concepts';
+import  { removeNullValueAttrs } from '../utils/functions';
 
 class ConceptCreate extends Component {
+
   state = {
-    step: 1,
-    conceptName: '',
+    name: '',
+    description: '',
     logo: {},
-    conceptStrapline: '',
-    conceptDescription: '',
-    selectedOpportunityAreas: [],
-    selectedDvMatrixType: null,
-    selectedKeyTechnologies: [],
-    selectedDvArchetypes: []
+    marketSegment: '',
+    marketFriction: '',
+    marketSize: '',
+    targetCustomers: '',
+    targetIndustry: '',
+    targetGeography: '',
+    solutionDescription: '',
+    primaryTechnology: '',
+    successFactors: '',
+    keyRisks: '',
+    businessType: null,
+    salesChannel: null,
+    revenueModel: '',
+    unitEconomics: '',
+    corporateAdvantage: '',
+    leveragedAssets: '',
+    incubationCost: '',
+    breakEvenCost: '',
+    breakEvenYear: '',
+    willGMLeave: null,
+    gmConviction: null,
+    gmComments: '',
+    partnerPreferences: ''
   }
 
-  updateDetails = (key, value) => {
-    this.setState({ [key]: value })
+  updateFormField = (e) => {
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   updateConceptLogo = (logo) => {
     this.setState({ logo });
   }
 
+  // For single select options
+  selectOption = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
   // For multi-select checkboxes. Effectively a toggle on the id being in the array or not.
-  updateAttributeArray = (arrayName, id) => {
+  updateSelectedOptions = (arrayName, id) => {
     const arrayToUpdate = this.state[arrayName];
     const updatedArray = arrayToUpdate.includes(id)
                                       ? arrayToUpdate.filter(optionId => optionId !== id)
@@ -44,133 +72,141 @@ class ConceptCreate extends Component {
     this.setState({ [arrayName]: updatedArray })
   }
 
-  // For single select radio buttons.
-  updateAttributeValue = (key, value) => {
-    this.setState({ [key]: value })
-  }
-
-  submitNewConcept = () => {
+  handleSaveConcept = () => {
     const { createConcept, activeInnovationId } = this.props;
-    // Need to also send all user invites at this stage.
-    console.log('state', this.state);
-    console.log('Call create a new concept action');
-    // TODO: Once concept attributes confirmed only pass that data from state, not entire state.
-    createConcept(this.state, activeInnovationId);
+    const attrsToCreate = removeNullValueAttrs({ ...this.state })
+    console.log('attrsToCreate', attrsToCreate);
+    createConcept(activeInnovationId, attrsToCreate)
   }
 
-  fieldsAreCompleted = () => {
-    const { step } = this.state;
-    if (step === 1) {
-      const { conceptName, logo } = this.state;
-      return conceptName && logo;
-    }
-    if (step === 2) {
-      const { conceptStrapline, conceptDescription } = this.state;
-      return conceptStrapline && conceptDescription;
-    }
-    if (step === 3) {
-      const { selectedOpportunityAreas, selectedDvMatrixType, selectedKeyTechnologies, selectedDvArchetypes } = this.state;
-
-      return selectedOpportunityAreas.length > 0 &&
-             selectedDvMatrixType !== '' &&
-             selectedKeyTechnologies.length > 0 &&
-             selectedDvArchetypes.length > 0;
-    }
+  requiredFieldsAreCompleted = () => {
+    const requiredFields = ['name']; // TODO: Move to config file.
+    return requiredFields
+      .every(attr => (this.state[attr] !== null && this.state[attr] !== '' && this.state[attr] !== {} && this.state[attr] !== undefined));
   }
 
   render() {
-    const {
-      step, conceptName, logo, conceptStrapline, conceptDescription,
-      selectedOpportunityAreas, selectedDvMatrixType, selectedKeyTechnologies, selectedDvArchetypes
-    } = this.state;
-    const fieldsAreCompleted = this.fieldsAreCompleted();
-    const backButton = (
-      <div className="step-back-link">
-        <i className="fas fa-chevron-left"></i>
-        <span className="step-back-link-text" onClick={() => this.setState({ step: step - 1})}>Back</span>
-      </div>
-    );
+    const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     return (
-      <div>
-        <div className="create-concept-page-title">Create Concept</div>
-        <UserProgressIndicator totalSteps={3} activeStep={step} />
-        <div>
-          {
-            step === 1 &&
-            <div>
-              <ConceptAddTitle
-                conceptName={conceptName}
-                updateConceptName={this.updateDetails}
-                conceptLogo={logo}
-                updateConceptLogo={this.updateConceptLogo}
-              />
-              <div className="create-concept-user-actions step-1">
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                    : <ButtonNext disabled={true} label="Next" />
-                }
-              </div>
-            </div>
-          }
-          {
-            step === 2 &&
-            <div>
-              <ConceptAddDetails
-                conceptStrapline={conceptStrapline}
-                conceptDescription={conceptDescription}
-                updateConceptDetails={this.updateDetails}
-              />
-              <div className="create-concept-user-actions">
-                {backButton}
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Next" onClick={() => this.setState({ step: step + 1 })} />
-                    : <ButtonNext disabled={true} label="Enter Details First" />
-                }
-              </div>
-            </div>
-          }
-          {
-            step === 3 &&
-            <div>
-              <ConceptAddAttributes
-                selectedOpportunityAreas={selectedOpportunityAreas}
-                selectedDvMatrixType={selectedDvMatrixType}
-                selectedKeyTechnologies={selectedKeyTechnologies}
-                selectedDvArchetypes={selectedDvArchetypes}
-                updateAttributeArray={this.updateAttributeArray}
-                updateAttributeValue={this.updateAttributeValue}
-              />
-              <div className="create-concept-user-actions">
-                {backButton}
-                {
-                  fieldsAreCompleted
-                    ? <ButtonNext label="Complete Setup" onClick={this.submitNewConcept} />
-                    : <ButtonNext disabled={true} label="Select at least one of each" />
-                }
-              </div>
-            </div>
-          }
+      <div className="create-concept-container">
+        <div className="create-concept-page-title">
+          <span>Create A New Concept</span>
         </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Concept Summary"
+          />
+          <ConceptBasicDetails
+            updateFormField={this.updateFormField}
+            updateConceptLogo={this.updateConceptLogo}
+            name={this.state.name}
+            description={this.state.description}
+            logo={this.state.logo}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Customers and Market"
+          />
+          <ConceptMarket
+            updateFormField={this.updateFormField}
+            customerSegment={this.state.marketSegment}
+            friction={this.state.marketFriction}
+            marketSize={this.state.marketSize}
+            targetCustomers={this.state.targetCustomers}
+            targetIndustry={this.state.targetIndustry}
+            targetGeography={this.state.targetGeography}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Solution Details"
+          />
+          <ConceptSolution
+            updateFormField={this.updateFormField}
+            solutionDescription={this.state.solutionDescription}
+            primaryTechnology={this.state.primaryTechnology}
+            successFactors={this.state.successFactors}
+            keyRisks={this.state.keyRisks}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Business Model"
+          />
+          <ConceptBusinessModel
+            updateFormField={this.updateFormField}
+            selectOption={this.selectOption}
+            businessType={this.state.businessType}
+            salesChannel={this.state.salesChannel}
+            revenueModel={this.state.revenueModel}
+            unitEconomics={this.state.unitEconomics}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Corporate Advantage"
+          />
+          <ConceptCorpAdvantage
+            updateFormField={this.updateFormField}
+            corporateAdvantage={this.state.corporateAdvantage}
+            leveragedAssets={this.state.leveragedAssets}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Cost and Implementation"
+          />
+          <ConceptCosts
+            updateFormField={this.updateFormField}
+            selectOption={this.selectOption}
+            incubationCost={this.state.incubationCost}
+            breakEvenCost={this.state.breakEvenCost}
+            breakEvenYear={this.state.breakEvenYear}
+            willGMLeave={this.state.willGMLeave}
+          />
+        </div>
+        <div className="create-concept-section-container">
+          <FormSectionHeader
+            title="Conviction"
+          />
+          <ConceptConviction
+            updateFormField={this.updateFormField}
+            selectOption={this.selectOption}
+            gmConviction={this.state.gmConviction}
+            gmComments={this.state.GMComments}
+            partnerPreferences={this.state.partnerPreferences}
+          />
+        </div>
+          <div className="create-concept-user-actions">
+            <BackTextLink
+              label="Back"
+              onClick={() => this.props.history.goBack()}
+            />
+            <div className="create-concept-user-actions-button-container">
+              <ButtonSubmit
+                label={requiredFieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
+                onClick={() => this.handleSaveConcept()}
+                disabled={!requiredFieldsAreCompleted}
+              />
+            </div>
+          </div>
       </div>
     )
   }
 }
 
 ConceptCreate.propTypes = {
- createConcept: PropTypes.func,
- activeInnovationId: PropTypes.number
+  history: PropTypes.object,
+  createConcept: PropTypes.func,
+  activeInnovationId: PropTypes.number
 };
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
   activeInnovationId: state.innovations.activeInnovation.id,
+  activeConcept: state.concepts.conceptsById[props.conceptId]
 });
 
+const actions = { createConcept, editConcept };
 
-const mapDispatchToProps = dispatch => ({
-  createConcept: bindActionCreators(createConcept, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConceptCreate);
+export default connect(mapStateToProps, actions)(ConceptCreate);

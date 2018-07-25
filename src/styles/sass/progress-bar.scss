@@ -1,12 +1,12 @@
 @import './modules/colors.scss';
 
 .progress-bar {
-  width: 90%;
+  width: 93%;
   margin: 0 auto;
 
   &-track, &-progress {
     position: absolute;
-    height: 14px;
+    height: 10px;
     top: 3px;
     left: 0;
     border-radius: 10px;
@@ -24,15 +24,15 @@
   }
 
   &-bar {
-    height: 20px;
+    height: 10px;
     z-index: 2;
     margin-bottom: 10px;
   }
 
   &-pip {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     transform: translateX(-50%);
     border-radius: 15px;
     z-index: 3;

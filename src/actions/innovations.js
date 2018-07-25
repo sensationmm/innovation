@@ -8,18 +8,17 @@ import {
   GET_INNOVATIONS_LIST_BEGIN,
   GET_INNOVATIONS_LIST_SUCCESS,
   GET_INNOVATIONS_LIST_ERROR,
-  // UPDATE_INNOVATION_BEGIN,
-  // UPDATE_INNOVATION_SUCCESS,
-  // UPDATE_INNOVATION_ERROR,
+  UPDATE_INNOVATION_BEGIN,
+  UPDATE_INNOVATION_SUCCESS,
+  UPDATE_INNOVATION_ERROR,
   // DELETE_INNOVATION_BEGIN,
   // DELETE_INNOVATION_SUCCESS,
   // DELETE_INNOVATION_ERROR
 } from '../config/constants';
 
 // Import JSON API models.
-import { Innovation, Role, KeyDate } from '../models';
-
-import moment from 'moment';
+import { Innovation, Partner } from '../models';
+// import { Role, KeyDate } from '../models';
 
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
@@ -48,42 +47,47 @@ export const getActiveInnovationData = ventureId => async dispatch => {
   }
 }
 
-export const createInnovation = (innovationData) => async (dispatch) => {
-  const { innovationName, logo, logoDataUri, newTeamMembers, innovationKeyDates } = innovationData;
+export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatch => {
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   try {
-    const newInnovation = new Innovation({
-      name: innovationName,
-      logo: logoDataUri,
-      logoName: logo.name
-    })
-    await newInnovation.save();
-    // If there are users added then create them and add them to the innovation before saving.
-    // innovationData.newTeamMembers[]
-    for (const email of newTeamMembers) { // TODO: Revert back to member of newTeamMembers
-      // const { name, email } = member; // TODO: You will need to pass a name, and email and an access level.
-      const role = new Role({ name: 'admin', email, rolableId: newInnovation.id, rolableType: 'Innovation' });
-      // TODO. Implement access levels setup and final attributes.
-      await role.save();
+    // 1. Find the industry model selected by the user.
+    console.log(partnerAttrs.industry);
+    // 2. Create the new Partner instance from the data, connect it to the industry and then save to API.
+    const newPartner = new Partner();
+    for ( const key of Object.keys(partnerAttrs) ) {
+      newPartner[key] = partnerAttrs[key];
     }
-    for (const innovationKeyDate of innovationKeyDates) {
-      // const { name, email } = member; // TODO: You will need to pass a name, and email and an access level.
-      const { name, date } = innovationKeyDate;
-      const formattedDate = moment(date).format('YYYY-MM-DD');
-      const keyDate = new KeyDate({ name, date: formattedDate, keyDatableId: newInnovation.id, keyDatableType: 'Innovation' });
-      await keyDate.save();
+    newPartner.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id
+
+    // await partner.save();
+    console.log('newPartner', newPartner);
+
+    // TODO: Create a new innovation, attach the new innovation to the partner instance by its id, then save.
+    const newInnovation = new Innovation();
+    for ( const key of Object.keys(innovationAttrs) ) {
+      newInnovation[key] = innovationAttrs[key]
     }
+    newInnovation.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id.
+    console.log('newInnovation', newInnovation);
+    // newInnovation.partnerId = newPartner.id;
+    // await innovation.save();
 
-    dispatch({ type: CREATE_INNOVATION_SUCCESS });
-
-    // TODO: What should happen after you create an innovation. how does this process work in real life?
-    // Does one innovation lead just create all the innovations, add the team, key dates etc.
-    // When you add an innovation do you want to be then taken to an innovation landing screen where you can add concepts.
-    // dispatch(getInnovationList()); Or just add the new innovation directly to redux state to save the extra API call.
-    // dispatch(getActiveInnovationData(newInnovation.id)); -- the new innovation will be empty so is there any need to do this?
+    dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation } });
   }
   catch (err) {
     console.log(err);
     dispatch({ type: CREATE_INNOVATION_ERROR })
+  }
+}
+
+export const editInnovation = (innovationId, newInnovationData) => dispatch => {
+  dispatch({ type: UPDATE_INNOVATION_BEGIN })
+  try {
+    console.log('editInnovation action');
+    dispatch({ type: UPDATE_INNOVATION_SUCCESS })
+  }
+  catch (err) {
+    console.log(err);
+    dispatch({ type: UPDATE_INNOVATION_ERROR })
   }
 }

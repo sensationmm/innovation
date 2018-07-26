@@ -5,8 +5,10 @@ export const innovationTypes = [
 ];
 
 export const keyDatesOptions = [
-  {id: 1, name: 'KO', date: null, type: 'required'},
-  {id: 2, name: 'IS1', date: null, type: 'required'},
-  {id: 3, name: 'IS2', date: null, type: 'required'},
-  {id: 4, name: 'IS3', date: null, type: 'required'}
+  {id: 'ko', name: 'KO', date: null},
+  {id: 'is1', name: 'IS1', date: null},
+  {id: 'is2', name: 'IS2', date: null},
+  {id: 'is3', name: 'IS3', date: null}
 ]
+
+export const requiredKeyDates = [ 'KO', 'IS1', 'IS2', 'IS3' ];

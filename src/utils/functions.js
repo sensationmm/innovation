@@ -23,17 +23,17 @@ export const getIndexByKey = (arr, id, key = 'id') => {
   return index;
 };
 
-// Remove all attributes that have null or falsey values. Mutates in place.
+// Remove all attributes that have null or falsey values. Mutates in place.- pass a copy if you can't mutate..
 export const removeNullValueAttrs = (obj) => {
-  Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === '' || obj[key] === {} || obj[key] === undefined) && delete obj[key]);
+  Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === '' || obj[key] === {} || obj[key] === [] || obj[key] === undefined) && delete obj[key]);
   return obj;
 }
 
-// As above but uses recusion to delete nested attributes that have null or 'falsey' values. Mutates in place.
+// As above but uses recusion to delete nested attributes that have null or 'falsey' values. Mutates in place - pass a copy if you can't mutate.
 export const deepRemoveNullValueAttrs = (obj) => {
   Object.keys(obj).forEach(key => {
     if (obj[key] && typeof obj[key] === 'object') deepRemoveNullValueAttrs(obj[key]);
-    else if (obj[key] === null || obj[key] === '' || obj[key] === {} || obj[key] === undefined) delete obj[key];
+    else if (obj[key] === null || obj[key] === '' || obj[key] === {} || obj[key] === [] || obj[key] === undefined) delete obj[key];
   });
   return obj;
 }

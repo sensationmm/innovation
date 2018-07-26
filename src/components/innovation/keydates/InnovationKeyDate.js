@@ -16,7 +16,7 @@ class InnovationKeyDate extends Component {
     this.setState({ openDatePicker: false });
   }
   render() {
-    const { id, date, name, deleteKeyDate, type } = this.props;
+    const { id, date, name, deleteKeyDate, required } = this.props;
     const { openDatePicker } = this.state;
     return (
       <div className="innovation-keydate">
@@ -25,11 +25,11 @@ class InnovationKeyDate extends Component {
           {(date) ? moment(date).format('DD/MM/YYYY') : 'Enter date'}
         </div>
         {
-          type === 'required' &&
+          required &&
             <div className="innovation-is-required">Required</div>
         }
         {
-          type === 'custom' &&
+          !required &&
             <div className="innovation-delete-keydate" onClick={() => deleteKeyDate(id)}><i className="far fa-trash-alt innovation-delete-keydate-icon"></i></div>
         }
         {
@@ -49,12 +49,15 @@ class InnovationKeyDate extends Component {
 }
 
 InnovationKeyDate.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   editKeyDate: PropTypes.func,
   date: PropTypes.object,
   name: PropTypes.string,
   deleteKeyDate: PropTypes.func,
-  type: PropTypes.string
+  required: PropTypes.bool
 }
 
 export default InnovationKeyDate

@@ -6,6 +6,8 @@ import AddNewKeyDateForm from './AddNewKeyDateForm';
 
 import '../../../styles/css/innovation-add-dates.css'
 
+import { requiredKeyDates } from '../../../config/innovationOptions';
+
 class InnovationAddDates extends Component {
   state = {
     openNewKeyDateForm: false
@@ -23,13 +25,13 @@ class InnovationAddDates extends Component {
         <div className="innovation-keydates-container">
           <div className="innovation-keydates">
             {
-              innovationKeyDates.map(({ id, name, date, type }) => (
+              innovationKeyDates.map(({ id, name, date }) => (
                                           <InnovationKeyDate
                                             key={id}
                                             id={id}
                                             name={name}
                                             date={date}
-                                            type={type}
+                                            required={requiredKeyDates.includes(name)}
                                             editKeyDate={editKeyDate}
                                             deleteKeyDate={deleteKeyDate}
                                           />

@@ -8,19 +8,22 @@ import {
   GET_INNOVATIONS_LIST_BEGIN,
   GET_INNOVATIONS_LIST_SUCCESS,
   GET_INNOVATIONS_LIST_ERROR,
-  UPDATE_INNOVATION_BEGIN,
-  UPDATE_INNOVATION_SUCCESS,
-  UPDATE_INNOVATION_ERROR,
+  EDIT_INNOVATION_BEGIN,
+  EDIT_INNOVATION_SUCCESS,
+  EDIT_INNOVATION_ERROR,
+  EDIT_INNOVATION_KEYDATES_BEGIN,
+  EDIT_INNOVATION_KEYDATES_SUCCESS,
+  EDIT_INNOVATION_KEYDATES_ERROR,
   // DELETE_INNOVATION_BEGIN,
   // DELETE_INNOVATION_SUCCESS,
   // DELETE_INNOVATION_ERROR
 } from '../config/constants';
 
 import { push } from 'connected-react-router';
+import moment from 'moment';
 
 // Import JSON API models.
-import { Innovation, Partner } from '../models';
-// import { Role, KeyDate } from '../models';
+import { Innovation, Partner, KeyDate } from '../models';
 
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
@@ -29,6 +32,7 @@ export const getAllInnovationsList = () => async dispatch => {
     const partnersWithInnovations = (await Partner.includes({ innovation: [ 'key_dates' ]})
                                                   .select([ "name", "charge_code" ])
                                                   .all()).data;
+    console.log('partnersWithInnovations', partnersWithInnovations);
     dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, partnersWithInnovations });
   }
   catch (err) {
@@ -42,7 +46,7 @@ export const getActiveInnovationData = partnerId => async dispatch => {
   try {
     const partner = (await Partner.includes({
       'innovation': [ 'key_dates', 'concepts' ] // TODO: roles: users should be on the partner.
-    }).find(partnerId)).data; // TODO: hardcoded for testing.
+    }).find(partnerId)).data;
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
     // TODO: Store the now active innovation id in the JWT token.
   }
@@ -61,12 +65,10 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
     }
     await newPartner.save();
 
-
     const newInnovation = new Innovation();
     for ( const key of Object.keys(innovationAttrs) ) {
       newInnovation[key] = innovationAttrs[key];
     }
-
     newInnovation.partnerId = newPartner.id;
     await newInnovation.save();
 
@@ -79,13 +81,45 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
 }
 
 export const editInnovation = (innovationId, newInnovationData) => dispatch => {
-  dispatch({ type: UPDATE_INNOVATION_BEGIN })
+  console.log('editInnovation', innovationId, newInnovationData);
+  dispatch({ type: EDIT_INNOVATION_BEGIN })
   try {
     console.log('editInnovation action');
-    dispatch({ type: UPDATE_INNOVATION_SUCCESS })
+    dispatch({ type: EDIT_INNOVATION_SUCCESS })
   }
   catch (err) {
     console.log(err);
-    dispatch({ type: UPDATE_INNOVATION_ERROR })
+    dispatch({ type: EDIT_INNOVATION_ERROR })
+  }
+}
+
+export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) => {
+  console.log('editKeyDates', innovationId, editedKeyDates);
+  dispatch({ type: EDIT_INNOVATION_KEYDATES_BEGIN })
+  try {
+    for ( const keyDate of editedKeyDates ) {
+      if (keyDate.fromDB) {
+        let updatedKeyDate = (await KeyDate.find(keyDate.id)).data
+        updatedKeyDate.name = keyDate.name;
+        updatedKeyDate.date = moment(keyDate.date).format('YYYY-MM-DD');
+        await updatedKeyDate.save();
+      } else {
+        let newKeyDate = new KeyDate({
+          name: keyDate.name,
+          date: moment(keyDate.date).format('YYYY-MM-DD'),
+          keyDatableType: 'Innovation',
+          keyDatableId: innovationId
+        })
+        console.log('newKeyDate to save', newKeyDate);
+        await newKeyDate.save();
+      }
+    }
+    // Get a new fresh list of all the key dates.
+    const updatedInnovationKeyDates = (await KeyDate.where({ key_datable_id: innovationId }).all()).data;
+    console.log('updatedInnovationKeyDates', updatedInnovationKeyDates);
+    dispatch({ type: EDIT_INNOVATION_KEYDATES_SUCCESS, updatedInnovationKeyDates })
+  }
+  catch (err) {
+    dispatch({ type: EDIT_INNOVATION_KEYDATES_ERROR })
   }
 }

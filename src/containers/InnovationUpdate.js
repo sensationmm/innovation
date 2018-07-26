@@ -13,8 +13,11 @@ import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/innovation-create.css';
 
-import { editInnovation } from '../actions/innovations';
+import { editInnovation, editKeyDates } from '../actions/innovations';
 import { keyDatesOptions } from '../config/innovationOptions';
+import { removeNullValueAttrs } from '../utils/functions';
+
+import { requiredKeyDates } from  '../config/innovationOptions';
 
 const curTeamMembers = [
   {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
@@ -23,18 +26,35 @@ const curTeamMembers = [
   {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
   {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
 ];
-const allUsers = ['dv1Personx', 'dv2Persony', 'dv3Personz', 'dv2Personx', 'dv3Personx', 'dv4Person', 'dv5Person', 'dv6Person', ];
+const allUsers = [ 'dv1Personx', 'dv2Persony', 'dv3Personz', 'dv2Personx', 'dv3Personx', 'dv4Person', 'dv5Person', 'dv6Person' ];
 
 class InnovationUpdate extends Component {
   state = {
-    innovationKeyDates: keyDatesOptions,
+    innovationKeyDates: [],
     newTeamMembers: [],
     innovationMandate: ''
   }
 
+  componentDidMount = (props) => {
+    console.log('componentDidMount', this.props);
+    const { keyDates } = this.props;
+    const datesFromDB = keyDates ? keyDates.map(keyDate => ({ ...keyDate, fromDB: true })) : [];
+    const dateNamesInDB = datesFromDB.map(keyDate => keyDate.name);
+    console.log('keyDateNames', dateNamesInDB);
+    // Check keyDates from redux for the rquired dates, add any that are missing to the front of the array.
+    const missingKeyDates = requiredKeyDates.filter(requiredKeyDate => !dateNamesInDB.includes(requiredKeyDate))
+    console.log('missingKeyDates', missingKeyDates);
+    const missingKeyDateObjects = missingKeyDates.map(missingKeyDate => ({ id: missingKeyDate, name: missingKeyDate, date: null }));
+    console.log('missingKeyDateObjects', missingKeyDateObjects);
+    console.log('savedKeyDates', datesFromDB);
+    const requiredAndCustomDates = [ ...missingKeyDateObjects, ...datesFromDB ];
+    console.log('keyDatesOptions', requiredAndCustomDates);
+    this.setState({ innovationKeyDates: requiredAndCustomDates })
+  }
+
   createNewKeyDate = (id, name, date) => {
     const { innovationKeyDates } = this.state;
-    this.setState({ innovationKeyDates:  [ ...innovationKeyDates, { id, name, date, type: 'custom' } ] })
+    this.setState({ innovationKeyDates:  [ ...innovationKeyDates, { id, name, date } ] })
   }
 
   editKeyDate = (keyDateId, key, value) => {
@@ -67,70 +87,94 @@ class InnovationUpdate extends Component {
     this.setState({ [e.target.id]: e.target.value })
   }
 
-  updateInnovation = () => {
-    console.log('updating innovation with', this.state);
+  // Functions that call actions -> the API.
+  updateKeyDates = () => {
+    const { editKeyDates, innovationId } = this.props;
+    const { innovationKeyDates } = this.state;
+    const updatedKeyDates = innovationKeyDates.filter(keyDate => keyDate.date);
+    editKeyDates(innovationId, updatedKeyDates);
   }
 
+  // TODO.
+  // updateTeamMembers = () => {
+  //   const { editInnovation, innovationId } = this.props;
+  //
+  //   inviteTeamMembers(innovationId, attrsToUpdate)
+  // }
+
+  // updateMandate = () => {
+  //   const { editInnovation, innovationId } = this.props;
+  //
+  //   editInnovation(innovationId, attrsToUpdate)
+  // }
+
   render() {
+    const { openEditDates, openEditTeam, openEditMandate } = this.props;
     return (
       <div className="create-innovation-container">
-        <div className="create-innovation-welcome">
-          Please enter IS dates, team members and innovation mandate
-        </div>
-        <div className="create-innovation-section-container">
-          <FormSectionHeader
-            title='Enter Immersion Session Key Dates'
-            subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
-          />
-          <InnovationAddDates
-            innovationKeyDates={this.state.innovationKeyDates}
-            createNewKeyDate={this.createNewKeyDate}
-            editKeyDate={this.editKeyDate}
-            deleteKeyDate={this.deleteKeyDate}
-          />
-        </div>
-        <div className="create-innovation-section-container">
-          <FormSectionHeader
-            title='Your Current Team'
-          />
-          <InnovationTeam
-            teamMembers={curTeamMembers}
-          />
-        </div>
+        {
+          openEditDates &&
+            <div className="create-innovation-section-container">
+              <FormSectionHeader
+                title='Enter Immersion Session Key Dates'
+                subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
+              />
+              <InnovationAddDates
+                innovationKeyDates={this.state.innovationKeyDates}
+                createNewKeyDate={this.createNewKeyDate}
+                editKeyDate={this.editKeyDate}
+                deleteKeyDate={this.deleteKeyDate}
+                requiredKeyDates={requiredKeyDates}
+              />
+            </div>
+        }
+        {
+          openEditTeam &&
+            <div>
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title='Your Current Team'
+                />
+                <InnovationTeam
+                  teamMembers={curTeamMembers}
+                />
+              </div>
 
-        <div className="create-innovation-section-container">
-          <FormSectionHeader
-            title="Add New Team Members"
-            subtitle="Invites will be sent to new team members when you save"
-          />
-          <InnovationAddTeam
-            addNewTeamMember={this.addNewTeamMember}
-            removeNewTeamMember={this.removeNewTeamMember}
-            curTeamMembers={curTeamMembers}
-            newTeamMembers={this.state.newTeamMembers}
-            allVentureViewUsers={allUsers}
-          />
-        </div>
-        <div className="create-innovation-section-container">
-          <FormSectionHeader
-            title="Innovation Mandate"
-            subtitle="What is the focus? Who is the champion? CEO or middle management?"
-          />
-          <FormTextArea
-            id="innovationMandate"
-            placeholder="What is your innovation mandate?"
-            onChange={this.updateFormField}
-            value={this.state.innovationMandate}
-          />
-        </div>
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title="Add New Team Members"
+                  subtitle="Invites will be sent to new team members when you save"
+                />
+                <InnovationAddTeam
+                  addNewTeamMember={this.addNewTeamMember}
+                  removeNewTeamMember={this.removeNewTeamMember}
+                  curTeamMembers={curTeamMembers}
+                  newTeamMembers={this.state.newTeamMembers}
+                  allVentureViewUsers={allUsers}
+                />
+              </div>
+            </div>
+        }
+        {
+          openEditMandate &&
+            <div className="create-innovation-section-container">
+              <FormSectionHeader
+                title="Innovation Mandate"
+                subtitle="What is the focus? Who is the champion? CEO or middle management?"
+              />
+              <FormTextArea
+                id="innovationMandate"
+                placeholder="What is your innovation mandate?"
+                onChange={this.updateFormField}
+                value={this.state.innovationMandate}
+              />
+            </div>
+        }
+
         <div className="create-innovation-user-actions">
-          <BackTextLink
-            label="Back"
-            onClick={() => this.props.history.goBack()}
-          />
           <ButtonSubmit
             label="Save"
-            onClick={() => this.updateInnovation()}
+            onClick={() => this.updateKeyDates()} // TODO. Conditional on which module is open.
           />
         </div>
       </div>
@@ -139,11 +183,24 @@ class InnovationUpdate extends Component {
 }
 
 InnovationUpdate.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  editInnovation: PropTypes.func,
+  editKeyDates: PropTypes.func,
+  openEditDates: PropTypes.bool,
+  openEditTeam: PropTypes.bool,
+  openEditMandate: PropTypes.bool,
+  innovationId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 }
 
-const mapDispatchToProps = dispatch => ({
-  editInnovation: bindActionCreators(editInnovation, dispatch)
+const mapStateToProps = state => ({
+  keyDates: state.innovations.activeInnovation.keyDates,
+  teamMembers: state.innovations.activeInnovation.teamMembers,
+  mandate: state.innovations.activeInnovation.mandate
 });
 
-export default connect(null, mapDispatchToProps)(InnovationUpdate);
+const actions = { editInnovation, editKeyDates };
+
+export default connect(mapStateToProps, actions)(InnovationUpdate);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import InnovationAddDates from '../components/innovation/keydates/InnovationAddDates';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
@@ -38,7 +39,8 @@ class InnovationUpdate extends Component {
   componentDidMount = (props) => {
     console.log('componentDidMount', this.props);
     const { keyDates } = this.props;
-    const datesFromDB = keyDates ? keyDates.map(keyDate => ({ ...keyDate, fromDB: true })) : [];
+    // The date picker component requires dates as moment objects. The fromDB flag determines whether to edit or create when POSTing to the API.
+    const datesFromDB = keyDates ? keyDates.map(keyDate => ({ ...keyDate, date: moment(keyDate.date), fromDB: true }) ) : [];
     const dateNamesInDB = datesFromDB.map(keyDate => keyDate.name);
     console.log('keyDateNames', dateNamesInDB);
     // Check keyDates from redux for the rquired dates, add any that are missing to the front of the array.

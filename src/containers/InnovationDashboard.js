@@ -38,8 +38,7 @@ class InnovationDashboard extends Component {
   }
 
   handleOpenInnovation = (id) => {
-    // this.props.getActiveInnovationData(id)
-    this.props.history.push(`/innovation-overview/${id}`);
+    this.props.getActiveInnovationData(id)
   }
 
   sendInnovationsSummmary = () => {
@@ -47,7 +46,7 @@ class InnovationDashboard extends Component {
   }
 
   render() {
-    const { innovations, getActiveInnovationData } = this.props;
+    const { innovations } = this.props;
     const { sendSummaryOpen, emails } = this.state;
     return (
       <div>

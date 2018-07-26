@@ -45,9 +45,10 @@ export const getActiveInnovationData = partnerId => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const partner = (await Partner.includes({
-      'innovation': [ 'key_dates', 'concepts' ] // TODO: roles: users should be on the partner.
+      'innovation': [ 'key_dates', 'concepts' ]
     }).find(partnerId)).data;
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
+    dispatch(push(`/innovation-overview/${partnerId}`))
     // TODO: Store the now active innovation id in the JWT token.
   }
   catch (err) {
@@ -73,6 +74,9 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
     await newInnovation.save();
 
     dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation.attributes } });
+    // Redirect to the newly created active innovation
+    dispatch(push(`/innovation-overview/${newInnovation.partnerId}`));
+    dispatch(getAllInnovationsList());
   }
   catch (err) {
     console.log(err);

@@ -10,13 +10,7 @@ import App from './containers/App.js';
 import { authFromJWT } from './actions/auth';
 import { checkBreakPoint } from './actions/ui';
 
-const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
-const isTokenInDate = storedToken !== null && storedToken.token !== null && (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;
-if (isTokenInDate) {
-  store.dispatch(authFromJWT(true, storedToken.activeInnovationId)); // Once authed redux state can be populated.
-} else {
-  store.dispatch(authFromJWT(false)); // Token not present or out of date.
-}
+store.dispatch(authFromJWT());
 
 //Detect resize
 window.addEventListener('resize', () => store.dispatch(checkBreakPoint()) );

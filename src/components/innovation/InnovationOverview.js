@@ -27,7 +27,7 @@ class InnovationOverview extends Component {
   }
 
   render() {
-    const { activeInnovation, conceptsById } = this.props;
+    const { activeInnovation, activePartner, conceptsById } = this.props;
     const { openEditDates, openEditTeam, openEditMandate} = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
@@ -36,14 +36,14 @@ class InnovationOverview extends Component {
     const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
     const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
-    const keyDatesSetup = activeInnovation.keyDates && requiredKeyDates.every(reqDate => activeInnovation.keyDates.hasOwnProperty(reqDate));
+    const keyDatesSetup = true; // TODO: Write check to make sure all the required dates are found in keyDates array.
 
     return (
       <div>
         <ContentBox>
-          <h1>Innovation Name</h1>
-          <div>Innovation Type</div>
-          <div>Sprint Duration</div>
+          <h1>{activeInnovation.sprintName}</h1>
+          <div>{activeInnovation.sprintType}</div>
+          <div>Duration: {activeInnovation.duration} weeks</div>
           {
             activeInnovation.mandate
               ? <div>Mandate: {activeInnovation.mandate}</div>
@@ -129,10 +129,10 @@ class InnovationOverview extends Component {
           </ContentBox>
           <ContentBox>
             <CorporatePartnerSummary
-              name="BigShots"
-              industry="Money"
-              city="London"
-              businessDescription="Make money"
+              name={activePartner.name}
+              industry={activePartner.industry}
+              city={activePartner.hqCity}
+              businessDescription={activePartner.description}
             />
           </ContentBox>
 

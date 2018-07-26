@@ -40,12 +40,13 @@ export const Partner = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
-    chargeCode: attr(),
     name: attr(),
     description: attr(),
     hqCity: attr(),
     hqCountry: attr(),
     industryId: attr(),
+    roles: hasMany(),
+    users: hasMany(),
     innovation: hasOne(),
     industry: belongsTo()
   }
@@ -67,24 +68,23 @@ export const Innovation = ApplicationRecord.extend({
     jsonapiType: 'innovations'
   },
   attrs: {
-    id: attr(),
     createdAt: attr(),
-    sprintType: attr(),
-    sprintName: attr(),
+    colour: attr(),
     duration: attr(),
     dvPartner1: attr(),
     dvPartner2: attr(),
-    mandate: attr(),
-    logo: attr(),
-    openDate: attr(),
+    id: attr(),
     kickedOffAt: attr(),
-    colour: attr(),
+    logo: attr(),
+    mandate: attr(),
+    openDate: attr(),
+    sprintName: attr(),
+    sprintType: attr(),
+    chargeCode: attr(),
     partnerId: attr(),
     dvOfficeId: attr(),
     keyDates: hasMany(),
-    roles: hasMany(),
     concepts: hasMany(),
-    users: hasMany(),
     dvOffice: belongsTo(),
     partner: belongsTo()
   }

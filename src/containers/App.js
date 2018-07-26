@@ -5,7 +5,6 @@ import Home from './Home';
 import InnovationOverview from '../components/innovation/InnovationOverview';
 import ConceptOverviewEditable from './ConceptOverviewEditable';
 import InnovationCreate from './InnovationCreate';
-import InnovationUpdate from './InnovationUpdate';
 import ConceptFinanceReport from './ConceptFinanceReport';
 import InnovationDashboard from './InnovationDashboard';
 import ConceptCreate from './ConceptCreate';
@@ -31,8 +30,7 @@ const App = () => (
         <PrivateRoute exact path="/innovation-overview/:innovationId?" component={InnovationOverview} />
         <PrivateRoute exact path="/dashboard" component={InnovationDashboard} />
         <PrivateRoute exact path="/create-innovation" component={InnovationCreate} />
-        <PrivateRoute exact path="/update-innovation" component={InnovationUpdate} />
-        <PrivateRoute exact path="/create-concept" component={ConceptCreate} />
+        <PrivateRoute exact path="/create-concept/:innovationId" component={ConceptCreate} />
         <PrivateRoute exact path="/vft-concept-report/:conceptId" component={ConceptFinanceReport} />
         <PrivateRoute exact path="/grouping" component={Grouping} />
         <PrivateRoute exact path="/tracking" component={Tracking} />

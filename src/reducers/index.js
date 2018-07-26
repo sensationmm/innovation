@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { loader } from './loader';
 import { ui } from './ui';
+import partners from './partners';
 import innovations from './innovations';
 import concepts from './concepts';
 import users from './users';
@@ -13,8 +14,9 @@ export default combineReducers({
   loader,
   ui,
   resources,
-  concepts,
+  partners,
   innovations,
+  concepts,
   users,
   auth
 });

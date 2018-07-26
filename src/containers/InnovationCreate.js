@@ -67,9 +67,9 @@ class InnovationCreate extends Component {
       industryId: partnerIndustry
     }
     const innovationData = {
-      chargeCode: partnerCCode,
       sprintType: innovationType,
       sprintName: innovationName,
+      chargeCode: partnerCCode,
       dvPartner1: dvPartner1,
       dvPartner2: dvPartner2,
       openDate: moment(innovationOpenDate).format('YYYY-MM-DD'),
@@ -132,7 +132,7 @@ class InnovationCreate extends Component {
           <ButtonSubmit
             label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
             onClick={() => this.submitNewInnovation()}
-            disabled={!fieldsAreCompleted}
+            // disabled={!fieldsAreCompleted}
           />
         </div>
       </div>

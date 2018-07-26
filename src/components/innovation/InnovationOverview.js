@@ -23,9 +23,9 @@ const requiredKeyDates = [ 'KO', 'IS1', 'IS2', 'IS3' ]; // TODO: move to congfig
 const InnovationOverview = (props) => {
   const { activeInnovation, conceptsById } = props;
   const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
-  const activeIncomplete = activeConcepts.filter(concept => concept.status === 'active');
-  const activeComplete = activeConcepts.filter(concept => concept.status === 'complete');
-  const activeReviewed = activeConcepts.filter(concept => concept.status === 'reviewed');
+  const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
+  const activeComplete = activeConcepts.filter(concept => concept.status === 'ready');
+  const activeReviewed = activeConcepts.filter(concept => concept.status === 'analysed');
   const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
   const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
@@ -79,7 +79,7 @@ const InnovationOverview = (props) => {
         </Link>
         {
           keyDatesSetup &&
-            <Link className="innovation-overview-add-concept-link" to="/create-concept">
+            <Link className="innovation-overview-add-concept-link" to={`/create-concept/${activeInnovation.id}`}>
               <div>
                 <i className="fas fa-plus fa-2x add-concept-icon"></i>
               </div>
@@ -93,11 +93,11 @@ const InnovationOverview = (props) => {
       </ContentBox>
 
       <ContentBox background={false}>
-        <ConceptList concepts={activeComplete} title='Active & Complete' userType={userType} postIS2={isPostIS2} />
+        <ConceptList concepts={activeComplete} title='Active & Ready' userType={userType} postIS2={isPostIS2} />
       </ContentBox>
 
       <ContentBox background={false}>
-        <ConceptList concepts={activeReviewed} title='Active & Reviewed' userType={userType} postIS2={isPostIS2} />
+        <ConceptList concepts={activeReviewed} title='Active & Analysed' userType={userType} postIS2={isPostIS2} />
       </ContentBox>
 
       <ContentBox background={false}>
@@ -131,18 +131,15 @@ const InnovationOverview = (props) => {
 }
 
 InnovationOverview.propTypes = {
+  activePartner: PropTypes.object,
   activeInnovation: PropTypes.object,
   conceptsById: PropTypes.object
 };
 
 const mapStateToProps = state => ({
+  activePartner: state.partners.activePartner,
   activeInnovation: state.innovations.activeInnovation,
   conceptsById: state.concepts.conceptsById
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-  }, dispatch
-);
-
-export default connect(mapStateToProps, mapDispatchToProps)(InnovationOverview);
+export default connect(mapStateToProps, null)(InnovationOverview);

@@ -21,6 +21,7 @@ export const authFromJWT = (tokenPresentAndInDate, activeInnovationId) => async 
       dispatch({ type: AUTH_FROM_JWT_SUCCESS, authedUser: { ...user.attributes } });
       dispatch(getAppResourceData());
       dispatch(getAllInnovationsList());
+      dispatch(getActiveInnovationData(20));
       if (activeInnovationId) {
         dispatch(getActiveInnovationData(activeInnovationId));
       } else {

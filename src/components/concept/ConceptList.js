@@ -52,9 +52,9 @@ const ConceptList = props => {
                 (!postIS2 && userType === 'teamGM') &&
                   <div className="concept-list-item-user-actions">
                     {
-                      (status === 'active' || status ==='complete')
+                      (status === 'draft' || status ==='ready')
                         ? <KillButton label='Kill' onClick={() => console.log('set concept.status to killed')} />
-                        : <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status to active')} />
+                        : <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status to draft')} />
                     }
                   </div>
               }
@@ -62,22 +62,22 @@ const ConceptList = props => {
                 (postIS2 && userType === 'teamGM') &&
                   <div>
                     {
-                      (status === 'complete') &&
+                      (status === 'ready') &&
                         <div className="concept-list-item-user-actions">
                           <div className="concept-list-item-marked-complete"><i className="far fa-clock"></i>Awaiting VFT Analysis</div>
                         </div>
                     }
                     {
-                      (status === 'active') &&
+                      (status === 'draft') &&
                         <div className="concept-list-item-user-actions">
-                          <CompleteButton label='Mark as Complete' onClick={() => console.log('Set concept.status complete and Notify VFT')} />
+                          <CompleteButton label='Mark as Ready' onClick={() => console.log('Set concept.status ready and Notify VFT')} />
                           <KillButton label='Kill' onClick={() => console.log('set concept.status to killed')} />
                         </div>
                     }
                     {
                       (status === 'killed') &&
                         <div className="concept-list-item-user-actions">
-                          <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status active')} />
+                          <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status draft')} />
                         </div>
                     }
                   </div>
@@ -86,7 +86,7 @@ const ConceptList = props => {
                 (postIS2 && userType === 'finance') &&
                   <div>
                     {
-                      (status === 'complete') &&
+                      (status === 'ready') &&
                         <div className="concept-list-item-user-actions">
                           <Link to={`/vft-concept-report/${id}`}>
                             <CompleteButton label='Complete Analysis Form' />
@@ -94,7 +94,7 @@ const ConceptList = props => {
                         </div>
                     }
                     {
-                      (status === 'active') &&
+                      (status === 'draft') &&
                         <div className="concept-list-item-user-actions">
                           <div className="concept-list-item-marked-incomplete"><i className="far fa-clock"></i>Concept Incomplete</div>
                         </div>
@@ -102,7 +102,7 @@ const ConceptList = props => {
                   </div>
               }
               {
-                status === 'reviewed' &&
+                status === 'analysed' &&
                   <div className="concept-list-item-user-actions">
                     <div className="concept-list-item-marked-complete"><i className="fa fa-check-circle"></i>Finance Review Complete</div>
                   </div>

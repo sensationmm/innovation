@@ -71,17 +71,25 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATIONS_LIST_SUCCESS: {
-      const { allInnovations } = action;
-      const allInnovationsList = allInnovations.map(innovation => { return { ...innovation.attributes } })
-      // return { ...state, allInnovationsList }
-      return state;
+      const { partnersWithInnovations } = action;
+      // Format the innovation and partner details into the shape above.
+      const allInnovationsList = partnersWithInnovations.map(partnerWithInnovation => {
+        return {
+          partnerId: partnerWithInnovation.id,
+          innovationId: partnerWithInnovation.innovation && partnerWithInnovation.innovation.id,
+          sprintName: partnerWithInnovation.innovation && partnerWithInnovation.innovation.sprintName,
+          partnerName: partnerWithInnovation.innovation && partnerWithInnovation.name,
+          chargeCode: partnerWithInnovation.innovation.chargeCode,
+          keyDates: partnerWithInnovation.innovation && partnerWithInnovation.innovation.keyDates.map(keyDate => ({ ...keyDate.attributes }))
+        }
+      })
+      return { ...state, allInnovationsList }
     }
 
     case GET_INNOVATION_DATA_SUCCESS: {
-      // const keyDates = action.data.keyDates.map(keyDate => ( { ...keyDate.attributes } ));
-      // const activeInnovation = { ...action.data.attributes, keyDates };
-      // return { ...state, activeInnovation };
-      return state; // TODO: Uncomment above once api to filling redux state.
+      const { partner } = action;
+      const activeInnovation = { ...partner.innovation.attributes };
+      return { ...state, activeInnovation };
     }
 
     case CREATE_INNOVATION_SUCCESS: {

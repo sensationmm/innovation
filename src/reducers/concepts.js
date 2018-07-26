@@ -202,21 +202,22 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
+      const { partner } = action;
       const conceptsById = {};
-      action.data.concepts.forEach(concept => {
-        conceptsById[concept.id] = { ...concept.attributes };
+      partner.innovation.concepts.forEach(concept => {
+        conceptsById[concept.id] = { ...concept.attributes }
       })
       return { ...state, conceptsById }
     }
-    case GET_CONCEPTS_SUCCESS: { // TODO: Remove if no longer required when all concept data is coming from GET_INNOVATION_DATA_SUCCESS.
-      const conceptsById = {};
-
-      action.concepts.forEach(concept => {
-        conceptsById[concept.id] = concept;
-      });
-
-      return { ...state, conceptsById };
-    }
+    // case GET_CONCEPTS_SUCCESS: { // TODO: Remove if no longer required when all concept data is coming from GET_INNOVATION_DATA_SUCCESS.
+    //   const conceptsById = {};
+    //
+    //   action.concepts.forEach(concept => {
+    //     conceptsById[concept.id] = concept;
+    //   });
+    //
+    //   return { ...state, conceptsById };
+    // }
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;

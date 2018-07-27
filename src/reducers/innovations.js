@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   activeInnovation: {
-    keydates: []
+    keyDates: []
   },
   allInnovationsList: []
 };

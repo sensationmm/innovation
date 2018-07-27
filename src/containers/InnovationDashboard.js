@@ -13,7 +13,6 @@ import { getActiveInnovationData } from '../actions/innovations';
 
 import '../styles/css/innovation-dashboard.css';
 
-const dummyUsers = ['partner1@fake.com', 'partner2@fake.com', 'partner3@fake.com', 'partner4@fake.com', 'partner5@fake.com']
 const userType = 'teamGM'; // get user type from auth.user in redux store.
 
 class InnovationDashboard extends Component {
@@ -38,7 +37,7 @@ class InnovationDashboard extends Component {
   }
 
   handleOpenInnovation = (id) => {
-    this.props.getActiveInnovationData(id)
+    this.props.getActiveInnovationData(id, true);
   }
 
   sendInnovationsSummmary = () => {
@@ -58,24 +57,7 @@ class InnovationDashboard extends Component {
                   title="Send A Summary of All Innovations"
                   subtitle="Enter emails to send summary of current innovations (you'll automatically recieve a copy of the email)."
                 />
-                <InnovationAddTeam
-                  newTeamMembers={emails}
-                  curTeamMembers={[]}
-                  addNewTeamMember={this.addEmail}
-                  removeNewTeamMember={this.removeEmail}
-                  allVentureViewUsers={dummyUsers}
-                />
-                <div className="send-summary-popup-user-actions">
-                  <BackTextLink
-                    label="Cancel"
-                    onClick={() => this.toggleOpenSendSummary()}
-                    textColor='black'
-                  />
-                  <ButtonSubmit
-                    label="Send"
-                    onClick={() => this.sendInnovationsSummmary()}
-                  />
-                </div>
+                <InnovationAddTeam onSave={() => this.sendInnovationsSummmary()} onCancel={this.toggleOpenSendSummary} />
               </div>
             </div>
         }

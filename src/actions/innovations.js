@@ -32,7 +32,6 @@ export const getAllInnovationsList = () => async dispatch => {
     const partnersWithInnovations = (await Partner.includes({ innovation: [ 'key_dates' ]})
                                                   .select([ "name", "charge_code" ])
                                                   .all()).data;
-    console.log('partnersWithInnovations', partnersWithInnovations);
     dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, partnersWithInnovations });
   }
   catch (err) {
@@ -41,15 +40,29 @@ export const getAllInnovationsList = () => async dispatch => {
   }
 }
 
-export const getActiveInnovationData = partnerId => async dispatch => {
+// @param redirectToOverview = boolean.
+export const getActiveInnovationData = (partnerId, redirectToOverview) => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
+  console.log('testing')
+  let users = (await Partner.includes({ roles: 'user' }).find(partnerId)).data;
+  console.log('users', users);
   try {
-    const partner = (await Partner.includes({
-      'innovation': [ 'key_dates', 'concepts' ]
-    }).find(partnerId)).data;
+    const partner = (await Partner.includes([
+      { innovation: [ 'key_dates', 'concepts' ] },
+      { roles: 'user' },
+      'roles'
+    ]).find(partnerId)).data;
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
-    dispatch(push(`/innovation-overview/${partnerId}`))
-    // TODO: Store the now active innovation id in the JWT token.
+
+    // TODO: You may need to clear this attribute on the token (and the activeInnovationData) when the user returns to the dashboard?
+    const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
+    storedToken.activePartnerId = partnerId;
+    const newToken = JSON.stringify(storedToken);
+    localStorage.setItem('inventure-auth', newToken);
+
+    if (redirectToOverview) {
+      dispatch(push(`/innovation-overview/${partnerId}`));
+    }
   }
   catch (err) {
     console.log(err);
@@ -98,15 +111,22 @@ export const editInnovation = (innovationId, newInnovationData) => dispatch => {
 }
 
 export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) => {
-  console.log('editKeyDates', innovationId, editedKeyDates);
   dispatch({ type: EDIT_INNOVATION_KEYDATES_BEGIN })
   try {
     for ( const keyDate of editedKeyDates ) {
       if (keyDate.fromDB) {
-        let updatedKeyDate = (await KeyDate.find(keyDate.id)).data
-        updatedKeyDate.name = keyDate.name;
-        updatedKeyDate.date = moment(keyDate.date).format('YYYY-MM-DD');
-        await updatedKeyDate.save();
+        if (keyDate.hasChanged) {
+          let updatedKeyDate = (await KeyDate.find(keyDate.id)).data
+          updatedKeyDate.name = keyDate.name;
+          updatedKeyDate.date = moment(keyDate.date).format('YYYY-MM-DD');
+          await updatedKeyDate.save();
+        }
+
+        if (keyDate.forDeletion) {
+          let dateToDelete = (await KeyDate.find(keyDate.id)).data
+          await dateToDelete.destroy();
+        }
+
       } else {
         let newKeyDate = new KeyDate({
           name: keyDate.name,
@@ -114,13 +134,12 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
           keyDatableType: 'Innovation',
           keyDatableId: innovationId
         })
-        console.log('newKeyDate to save', newKeyDate);
         await newKeyDate.save();
       }
+
     }
     // Get a new fresh list of all the key dates.
-    const updatedInnovationKeyDates = (await KeyDate.where({ key_datable_id: innovationId }).all()).data;
-    console.log('updatedInnovationKeyDates', updatedInnovationKeyDates);
+    const updatedInnovationKeyDates = (await Innovation.includes('key_dates').find(innovationId)).data;
     dispatch({ type: EDIT_INNOVATION_KEYDATES_SUCCESS, updatedInnovationKeyDates })
   }
   catch (err) {

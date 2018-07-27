@@ -1,5 +1,5 @@
 export const makeArrayFromIndexedObject = (obj) => {
-  return Object.keys(obj).map((k) => obj[k])
+  return (obj && Object.keys(obj).length > 0) ? Object.keys(obj).map((k) => obj[k]) : [];
 }
 
 // returns an array of objects matching specified key/value pair from array
@@ -23,9 +23,9 @@ export const getIndexByKey = (arr, id, key = 'id') => {
   return index;
 };
 
-// Remove all attributes that have null or falsey values. Mutates in place.- pass a copy if you can't mutate..
+// Remove all attributes that have null or falsey values. Mutates in place - pass a copy if you can't mutate..
 export const removeNullValueAttrs = (obj) => {
-  Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === '' || obj[key] === {} || obj[key] === [] || obj[key] === undefined) && delete obj[key]);
+  Object.keys(obj).forEach((key) => (obj[key] === null || obj[key] === '' || Object.keys(obj[key]).length === 0 || obj[key] === [] || obj[key] === undefined) && delete obj[key]);
   return obj;
 }
 
@@ -33,7 +33,7 @@ export const removeNullValueAttrs = (obj) => {
 export const deepRemoveNullValueAttrs = (obj) => {
   Object.keys(obj).forEach(key => {
     if (obj[key] && typeof obj[key] === 'object') deepRemoveNullValueAttrs(obj[key]);
-    else if (obj[key] === null || obj[key] === '' || obj[key] === {} || obj[key] === [] || obj[key] === undefined) delete obj[key];
+    else if (obj[key] === null || obj[key] === '' || Object.keys(obj[key]).length === 0 || obj[key] === [] || obj[key] === undefined) delete obj[key];
   });
   return obj;
 }
@@ -45,7 +45,6 @@ export const validateEmail = (email) => {
 
 export const getDataUri = (url, callback) => {
   var image = new Image();
-
 
   image.onload = function () {
     var canvas = document.createElement('canvas');

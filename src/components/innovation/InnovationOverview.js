@@ -5,19 +5,27 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import InnovationUpdate from '../../containers/InnovationUpdate';
+import InnovationAddDates from './keydates/InnovationAddDates';
+import InnovationAddTeam from './InnovationAddTeam';
 import CorporatePartnerSummary from './CorporatePartnerSummary';
 import InnovationTeam from './InnovationTeam';
 import ProgressBar from '../ProgressBar';
 import ConceptList from '../concept/ConceptList';
+import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
 
 import '../../styles/css/innovation-overview.css';
 
 import { makeArrayFromIndexedObject } from '../../utils/functions';
-import { requiredKeyDates } from  '../../config/innovationOptions';
-const userType = 'finance'; // TODO: get this conditionally from  redux store auth.user
+const userType = 'teamGM'; // TODO: get this conditionally from  redux store auth.user
+const curTeamMembers = [ // TODO: get from partner.users in redux store (also duplicated in InnovationAddTeam)
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
+  {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
+];
 
 class InnovationOverview extends Component {
   state = {
@@ -38,6 +46,13 @@ class InnovationOverview extends Component {
     const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
     const keyDatesSetup = true; // TODO: Write check to make sure all the required dates are found in keyDates array.
 
+    let dates = [];
+    let labels = [];
+    activeInnovation.keyDates && activeInnovation.keyDates.forEach(keydate => {
+      dates.push(keydate.date);
+      labels.push(keydate.name);
+    });
+
     return (
       <div>
         <ContentBox>
@@ -57,11 +72,11 @@ class InnovationOverview extends Component {
         </ContentBox>
 
         {
-          keyDatesSetup &&
+          (activeInnovation.keyDates && keyDatesSetup) &&
             <ContentBox background={false}>
               <ProgressBar
-                dates={Object.keys(activeInnovation.keyDates).map(label => activeInnovation.keyDates[label])}
-                labels={Object.keys(activeInnovation.keyDates)}
+                dates={dates}
+                labels={labels}
               />
               <div className="innovation-overview-edit-icon" onClick={() => this.setState({ openEditDates: !openEditDates })}>Edit Key Dates</div>
             </ContentBox>
@@ -95,8 +110,35 @@ class InnovationOverview extends Component {
         </div>
 
         {
-          (openEditDates || openEditTeam || openEditMandate) &&
-            <InnovationUpdate innovationId={activeInnovation.id} openEditDates={openEditDates} openEditTeam={openEditTeam} openEditMandate={openEditMandate} />
+          openEditDates &&
+            <div className="create-innovation-section-container">
+              <FormSectionHeader
+                title='Enter Immersion Session Key Dates'
+                subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
+              />
+              <InnovationAddDates innovationId={activeInnovation.id} />
+            </div>
+        }
+        {
+          openEditTeam &&
+            <div>
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title='Your Current Team'
+                />
+                <InnovationTeam
+                  teamMembers={curTeamMembers}
+                />
+              </div>
+
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title="Add New Team Members"
+                  subtitle="Invites will be sent to new team members when you save"
+                />
+                <InnovationAddTeam partnerId={activePartner.id} />
+              </div>
+            </div>
         }
 
         <ContentBox background={false}>

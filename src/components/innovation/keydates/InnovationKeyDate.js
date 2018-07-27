@@ -36,9 +36,10 @@ class InnovationKeyDate extends Component {
           openDatePicker &&
             <div className="innovation-date-picker-mask">
               <DatePicker
-                openToDate={date ? date : moment()}
-                selected={date ? date : null}
-                onChange={(newDate) => this.handleEditKeyDate(newDate)}
+                id="date"
+                openToDate={date ? moment(date) : moment()}
+                selected={date ? moment(date) : null}
+                onChange={(date) => this.handleEditKeyDate(date.format('YYYY-MM-DD'))}
                 inline
               />
             </div>
@@ -54,7 +55,7 @@ InnovationKeyDate.propTypes = {
     PropTypes.string
   ]),
   editKeyDate: PropTypes.func,
-  date: PropTypes.object,
+  date: PropTypes.string,
   name: PropTypes.string,
   deleteKeyDate: PropTypes.func,
   required: PropTypes.bool

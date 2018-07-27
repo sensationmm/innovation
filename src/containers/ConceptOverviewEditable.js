@@ -200,7 +200,10 @@ ConceptOverviewEditable.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
   editConcept: PropTypes.func,
-  activeInnovationId: PropTypes.number,
+  activeInnovationId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   activeConcept: PropTypes.object
 };
 

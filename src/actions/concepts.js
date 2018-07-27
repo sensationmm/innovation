@@ -20,7 +20,7 @@ import { Concept } from '../models';
 
 /**
  * @param {int} innovationId - id of the innovation which the concept will belong to
- * @param {object} conceptData - object of key / value pairs to create the new concept with
+ * @param {object} attrsToCreate - object of key / value pairs to create the new concept with
  */
 export const createConcept = (innovationId, attrsToCreate) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
@@ -28,13 +28,17 @@ export const createConcept = (innovationId, attrsToCreate) => async (dispatch) =
   console.log('With', attrsToCreate);
   try {
     const newConcept = new Concept();
+    console.log('fresh new concept', newConcept);
     for ( const key of Object.keys(attrsToCreate) ) {
+      console.log('key', key);
+      console.log('value', attrsToCreate[key]);
       newConcept[key] = attrsToCreate[key];
     }
-    // await newConcept.save();
-    newConcept.status = 'active'; // TODO: remove hard coded value when API is generating IDs.
-    newConcept.id = Math.round(Math.random() * 999); // TODO: remove hard coded value when API is generating IDs.
-    dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept });
+    newConcept.innovationId = innovationId;
+    console.log('newConcept to save', newConcept);
+    await newConcept.save();
+    console.log('saved newConcept', newConcept);
+    dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
   }
   catch (err) {
     console.log(err);
@@ -44,7 +48,7 @@ export const createConcept = (innovationId, attrsToCreate) => async (dispatch) =
 
 /**
  * @param {int} conceptId - id of the concept to be updated
- * @param {object} conceptData - object of key / value pairs to add / overwrite on to the concept
+ * @param {object} newConceptAttrs - object of key / value pairs to add / overwrite on to the concept
  */
 export const editConcept = (conceptId, newConceptAttrs) => async (dispatch) => {
   dispatch({ type: EDIT_CONCEPT_BEGIN });

@@ -18,6 +18,7 @@ import '../styles/css/concept-create.css';
 
 import { createConcept, editConcept } from '../actions/concepts';
 import  { removeNullValueAttrs } from '../utils/functions';
+import { getDataUri } from '../utils/functions';
 
 class ConceptCreate extends Component {
 
@@ -29,7 +30,7 @@ class ConceptCreate extends Component {
     marketFriction: '',
     marketSize: '',
     targetCustomers: '',
-    targetIndustry: '',
+    targetIndustryId: '',
     targetGeography: '',
     solutionDescription: '',
     primaryTechnology: '',
@@ -74,13 +75,23 @@ class ConceptCreate extends Component {
 
   handleSaveConcept = () => {
     const { createConcept, activeInnovationId } = this.props;
-    const attrsToCreate = removeNullValueAttrs({ ...this.state })
-    console.log('attrsToCreate', attrsToCreate);
-    createConcept(activeInnovationId, attrsToCreate)
+    let attrsToCreate = removeNullValueAttrs({ ...this.state })
+    // If there is a logo uploaded, format it ready for saving to the DB.
+    if (attrsToCreate.logo) {
+      getDataUri(attrsToCreate.logo.preview, function(dataUri) {
+        attrsToCreate.logo = {
+          'logo': dataUri,
+          'logoName': attrsToCreate.logo.preview
+        };
+        createConcept(activeInnovationId, attrsToCreate);
+      });
+    } else {
+      createConcept(activeInnovationId, attrsToCreate);
+    }
   }
 
   requiredFieldsAreCompleted = () => {
-    const requiredFields = ['name']; // TODO: Move to config file.
+    const requiredFields = [ 'name', 'targetIndustryId' ]; // TODO: Move to config file.
     return requiredFields
       .every(attr => (this.state[attr] !== null && this.state[attr] !== '' && this.state[attr] !== {} && this.state[attr] !== undefined));
   }
@@ -114,7 +125,7 @@ class ConceptCreate extends Component {
             friction={this.state.marketFriction}
             marketSize={this.state.marketSize}
             targetCustomers={this.state.targetCustomers}
-            targetIndustry={this.state.targetIndustry}
+            targetIndustryId={this.state.targetIndustryId}
             targetGeography={this.state.targetGeography}
           />
         </div>
@@ -199,14 +210,13 @@ class ConceptCreate extends Component {
 ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
-  activeInnovationId: PropTypes.number
+  activeInnovationId: PropTypes.string
 };
 
-const mapStateToProps = (state, props) => ({
-  activeInnovationId: state.innovations.activeInnovation.id,
-  activeConcept: state.concepts.conceptsById[props.conceptId]
+const mapStateToProps = (state) => ({
+  activeInnovationId: state.innovations.activeInnovation.id
 });
 
-const actions = { createConcept, editConcept };
+const actions = { createConcept };
 
 export default connect(mapStateToProps, actions)(ConceptCreate);

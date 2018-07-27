@@ -10,6 +10,7 @@ import { push } from 'connected-react-router';
 
 import { getAppResourceData } from './resources';
 import { getAllInnovationsList, getActiveInnovationData }from './innovations';
+import { getAllUsers } from './users';
 
 import { User } from '../models';
 
@@ -26,9 +27,10 @@ export const authFromJWT = () => async (dispatch) => {
       dispatch({ type: AUTH_FROM_JWT_SUCCESS, authedUser: { ...user.attributes } });
       dispatch(getAppResourceData());
       dispatch(getAllInnovationsList());
+      // TODO: Get all InVenture / DV users here?
+      dispatch(getAllUsers()); // TODO: For testing only.
       if (storedToken.activePartnerId) {
         dispatch(getActiveInnovationData(storedToken.activePartnerId));
-        dispatch(push(`/innovation-overview/${storedToken.activePartnerId}`));
       } else {
         dispatch(push('/dashboard'));
       }

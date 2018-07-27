@@ -35,16 +35,16 @@ const ConceptList = props => {
             logo,
             ident,
             color,
-            strapline,
+            description,
             status
           } = concept;
           return (
             <div className="concept-list-item" key={`concept-${id}`}>
               <Link className="concept-list-item-link" to={`/concept/${id}`}>
                 <div className="concept-list-item-details">
-                  <ConceptAvatar conceptId={id} ident={ident} color={color} logo={logo.preview || logo} showLink={false}/>
+                  <ConceptAvatar conceptId={id} ident={ident || 'TD'} color={color || 'blue'} logo={logo && logo.preview} showLink={false}/>
                   <h3>{name}</h3>
-                  <p>{strapline}</p>
+                  <p>{description}</p>
                   <div>For testing: {status}</div>
                 </div>
               </Link>

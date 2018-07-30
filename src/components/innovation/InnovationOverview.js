@@ -14,10 +14,14 @@ import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
 import BackTextLink from '../buttons/BackTextLink';
+import ButtonSubmit from '../buttons/ButtonSubmit';
+import FormTextInput from '../formInputs/FormTextInput';
 
 import '../../styles/css/innovation-overview.css';
 
 import { makeArrayFromIndexedObject } from '../../utils/functions';
+import { editInnovation } from '../../actions/innovations';
+
 const userType = 'teamGM'; // TODO: get this conditionally from  redux store auth.user
 const curTeamMembers = [ // TODO: get from partner.users in redux store (also duplicated in InnovationAddTeam)
   {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
@@ -31,12 +35,26 @@ class InnovationOverview extends Component {
   state = {
     openEditDates: false,
     openEditTeam: false,
-    openEditMandate: false
+    openEditMandate: false,
+    mandateUpdated: false // TODO: May way to generalise this to be updatedFields as per concept overview if there are to be more inline editable fields on this page.
+  }
+
+  // For a more general version of this see ConceptOverviewEditable
+  handleUpdateMandate = (e) => {
+    const { activeInnovation, editInnovation } = this.props;
+    editInnovation(activeInnovation.id, { [e.target.id]: e.target.value }, false);
+    this.setState({ mandateUpdated: true });
+  }
+
+  mandateUpdateToDB = () => {
+    const { editInnovation, activeInnovation: { id, mandate } } = this.props;
+    editInnovation(id, { mandate }, true);
+    this.setState({ mandateUpdated: false });
   }
 
   render() {
     const { activeInnovation, activePartner, conceptsById } = this.props;
-    const { openEditDates, openEditTeam, openEditMandate} = this.state;
+    const { openEditDates, openEditTeam, mandateUpdated } = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
     const activeComplete = activeConcepts.filter(concept => concept.status === 'ready');
@@ -63,18 +81,24 @@ class InnovationOverview extends Component {
         </div>
         <ContentBox>
           <h1>{activeInnovation.sprintName}</h1>
-          <div>{activeInnovation.sprintType}</div>
+          <div>Innovation Type: {activeInnovation.sprintType}</div>
           <div>Duration: {activeInnovation.duration} weeks</div>
-          {
-            activeInnovation.mandate
-              ? <div>Mandate: {activeInnovation.mandate}</div>
-              : <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditMandate: !openEditMandate })}>
-                  <div>
-                    <i className="fas fa-plus fa-2x add-concept-icon"></i>
-                  </div>
-                  <div>Add Innovation Mandate</div>
-                </div>
-          }
+          <div className="innovation-overview-mandate-input">
+            <FormTextInput
+              id='mandate'
+              placeholder='Innovation Mandate'
+              onChange={this.handleUpdateMandate}
+              value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
+            />
+            {
+              mandateUpdated &&
+                <ButtonSubmit
+                  label="Save"
+                  onClick={() => this.mandateUpdateToDB()}
+                />
+            }
+
+          </div>
         </ContentBox>
 
         {
@@ -84,10 +108,21 @@ class InnovationOverview extends Component {
                 dates={dates}
                 labels={labels}
               />
-              <div className="innovation-overview-edit-icon" onClick={() => this.setState({ openEditDates: !openEditDates })}>Edit Key Dates</div>
+              <div className="innovation-overview-edit-icon" onClick={() => this.setState({ openEditDates: !openEditDates })}>
+                <i className="far fa-edit"></i>
+              </div>
             </ContentBox>
         }
-
+        {
+          openEditDates &&
+            <div className="create-innovation-section-container">
+              <FormSectionHeader
+                title='Enter Immersion Session Key Dates'
+                subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
+              />
+              <InnovationAddDates innovationId={activeInnovation.id} />
+            </div>
+        }
         <div className="innovation-overview-toplinks">
           {
             !keyDatesSetup &&
@@ -114,17 +149,6 @@ class InnovationOverview extends Component {
               </Link>
           }
         </div>
-
-        {
-          openEditDates &&
-            <div className="create-innovation-section-container">
-              <FormSectionHeader
-                title='Enter Immersion Session Key Dates'
-                subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
-              />
-              <InnovationAddDates innovationId={activeInnovation.id} />
-            </div>
-        }
         {
           openEditTeam &&
             <div>
@@ -190,7 +214,7 @@ class InnovationOverview extends Component {
           <ContentBox>
             <CorporatePartnerSummary
               name={activePartner.name}
-              industry={activePartner.industry}
+              industry={activePartner.industryName}
               city={activePartner.hqCity}
               businessDescription={activePartner.description}
             />
@@ -206,7 +230,8 @@ InnovationOverview.propTypes = {
   activePartner: PropTypes.object,
   activeInnovation: PropTypes.object,
   conceptsById: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  editInnovation: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -215,4 +240,6 @@ const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById
 });
 
-export default connect(mapStateToProps, null)(InnovationOverview);
+const actions = { editInnovation };
+
+export default connect(mapStateToProps, actions)(InnovationOverview);

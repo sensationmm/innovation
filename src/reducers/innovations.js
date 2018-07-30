@@ -1,7 +1,9 @@
 import {
   GET_INNOVATIONS_LIST_SUCCESS,
   GET_INNOVATION_DATA_SUCCESS,
-  CREATE_INNOVATION_SUCCESS
+  CREATE_INNOVATION_SUCCESS,
+  EDIT_INNOVATION_SUCCESS,
+  EDIT_INNOVATION_KEYDATES_SUCCESS
 } from '../config/constants';
 
 const initialState = {
@@ -41,6 +43,19 @@ export default (state = initialState, action) => {
       const activeInnovation = { ...newInnovation };
       return { ...state, activeInnovation }
     }
+
+    case EDIT_INNOVATION_SUCCESS: {
+      const { newInnovationAttrs } = action;
+      const activeInnovation = { ...state.activeInnovation, ...newInnovationAttrs };
+      return { ...state, activeInnovation }
+    }
+
+    case EDIT_INNOVATION_KEYDATES_SUCCESS: {
+      const { updatedInnovationKeyDates } = action;
+      const activeInnovation = { ...state.activeInnovation, keyDates: updatedInnovationKeyDates };
+      return { ...state, activeInnovation }
+    }
+
 
     default:
       return state;

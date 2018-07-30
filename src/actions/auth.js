@@ -9,7 +9,7 @@ import jwtDecode from 'jwt-decode';
 import { push } from 'connected-react-router';
 
 import { getAppResourceData } from './resources';
-import { getAllInnovationsList, getActiveInnovationData }from './innovations';
+import { getAllInnovationsList, getActiveInnovationData } from './innovations';
 import { getAllUsers } from './users';
 
 import { User } from '../models';

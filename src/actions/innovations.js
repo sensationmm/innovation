@@ -40,14 +40,14 @@ export const getAllInnovationsList = () => async dispatch => {
   }
 }
 
-// @param redirectToOverview = boolean.
+// @param redirectToOverview = {boolean}.
 export const getActiveInnovationData = (partnerId, redirectToOverview) => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const partner = (await Partner.includes([
       { innovation: [ 'key_dates', { concepts: 'target_industry' } ] },
       { roles: 'user' },
-      'roles'
+      'roles', 'industry'
     ]).find(partnerId)).data;
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
 
@@ -95,17 +95,25 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
   }
 }
 
-export const editInnovation = (innovationId, newInnovationData) => dispatch => {
-  console.log('editInnovation', innovationId, newInnovationData);
+export const editInnovation = (innovationId, newInnovationAttrs, saveToDB) => async dispatch => {
   dispatch({ type: EDIT_INNOVATION_BEGIN })
-  try {
-    console.log('editInnovation action');
-    dispatch({ type: EDIT_INNOVATION_SUCCESS })
+  if (saveToDB) {
+    try {
+      const innovationToUpdate = (await Innovation.find(innovationId)).data;
+      for ( const key of Object.keys(newInnovationAttrs) ) {
+        innovationToUpdate[key] = newInnovationAttrs[key];
+      }
+      await innovationToUpdate.save();
+      dispatch({ type: EDIT_INNOVATION_SUCCESS }) // TODO: Do we need to pass anything here? This branch of action only runs on submit, and changes have already been saved into redux by the other branch of the conditional.
+    }
+    catch (err) {
+      console.log(err);
+      dispatch({ type: EDIT_INNOVATION_ERROR })
+    }
+  } else {
+    dispatch({ type: EDIT_INNOVATION_SUCCESS, innovationId, newInnovationAttrs });
   }
-  catch (err) {
-    console.log(err);
-    dispatch({ type: EDIT_INNOVATION_ERROR })
-  }
+
 }
 
 export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) => {
@@ -137,7 +145,8 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
 
     }
     // Get a new fresh list of all the key dates.
-    const updatedInnovationKeyDates = (await Innovation.includes('key_dates').find(innovationId)).data;
+    const updatedInnovation = (await Innovation.includes('key_dates').find(innovationId)).data;
+    const updatedInnovationKeyDates = updatedInnovation.keyDates.map(keyDate => ({ ...keyDate.attributes }));
     dispatch({ type: EDIT_INNOVATION_KEYDATES_SUCCESS, updatedInnovationKeyDates })
   }
   catch (err) {

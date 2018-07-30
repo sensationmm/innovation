@@ -25,11 +25,42 @@
     }
   }
 
+  &-add-mandate-link {
+    display: flex;
+    align-items: center;
+    min-width: 46%;
+    padding: 5px 1%;
+    margin: 5px 0;
+    background: $background-grey-light;
+    text-decoration: none;
+
+    div {
+      padding: 10px;
+    }
+
+    &:hover {
+      background: $background-grey-lighter;
+      cursor: pointer;
+    }
+
+    &:hover .add-concept-icon {
+      color: $teal;
+    }
+  }
+
+  &-mandate-input {
+    margin: 10px 0 0 0;
+  }
+
   &-toplinks {
     display: flex;
     align-items: center;
     flex: 1 1 auto;
     min-width: 50%;
+  }
+
+  &-edit-icon {
+    cursor: pointer;
   }
 }
 

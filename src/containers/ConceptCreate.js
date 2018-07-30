@@ -73,7 +73,7 @@ class ConceptCreate extends Component {
   }
 
   handleSaveConcept = () => {
-    const { createConcept, activeInnovationId } = this.props;
+    const { createConcept, activeInnovationId, activePartnerId } = this.props;
     const attrsToCreate = removeNullValueAttrs({ ...this.state });
     // If there is a logo uploaded, format it ready for saving to the DB.
     if (attrsToCreate.logo) {
@@ -84,7 +84,7 @@ class ConceptCreate extends Component {
         createConcept(activeInnovationId, attrsToCreate);
       });
     } else {
-      createConcept(activeInnovationId, attrsToCreate);
+      createConcept(activeInnovationId, attrsToCreate, `/innovation-overview/${activePartnerId}`);
     }
   }
 
@@ -209,11 +209,13 @@ class ConceptCreate extends Component {
 ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
-  activeInnovationId: PropTypes.string
+  activeInnovationId: PropTypes.string,
+  activePartnerId: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-  activeInnovationId: state.innovations.activeInnovation.id
+  activeInnovationId: state.innovations.activeInnovation.id,
+  activePartnerId: state.partners.activePartner.id
 });
 
 const actions = { createConcept };

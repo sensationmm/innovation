@@ -25,7 +25,7 @@ import { push } from 'connected-react-router';
  * @param {string|int} partnerId - id of the partner which the concept will belong to
  * @param {string} redirectTo - where to redirect to once the save is complete
  */
-export const createConcept = (innovationId, attrsToCreate, partnerId, redirectTo) => async (dispatch) => {
+export const createConcept = (innovationId, attrsToCreate, redirectTo) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
   try {
     const newConcept = new Concept();
@@ -35,6 +35,7 @@ export const createConcept = (innovationId, attrsToCreate, partnerId, redirectTo
     newConcept.innovationId = innovationId;
     await newConcept.save();
     dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
+    dispatch(push(redirectTo));
   }
   catch (err) {
     console.log(err);

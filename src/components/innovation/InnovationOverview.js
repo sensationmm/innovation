@@ -206,7 +206,7 @@ InnovationOverview.propTypes = {
   activePartner: PropTypes.object,
   activeInnovation: PropTypes.object,
   conceptsById: PropTypes.object,
-  history: PropTypes.func
+  history: PropTypes.object
 };
 
 const mapStateToProps = state => ({

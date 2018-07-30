@@ -1,14 +1,67 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import InnovationKeyDate from './InnovationKeyDate';
 import AddNewKeyDateForm from './AddNewKeyDateForm';
+import ButtonSubmit from '../../buttons/ButtonSubmit';
 
 import '../../../styles/css/innovation-add-dates.css'
 
+import { editKeyDates } from '../../../actions/innovations';
+import { requiredKeyDates } from '../../../config/innovationOptions';
+
 class InnovationAddDates extends Component {
   state = {
+    innovationKeyDates: [],
     openNewKeyDateForm: false
+  }
+
+  componentDidMount = (props) => {
+    const { keyDates } = this.props;
+    // The date picker component requires dates as moment objects. The fromDB flag determines whether to edit or create when POSTing to the API.
+    const datesFromDB = keyDates ? keyDates.map(keyDate => ({ ...keyDate, date: keyDate.date, fromDB: true }) ) : [];
+    const dateNamesInDB = datesFromDB.map(keyDate => keyDate.name);
+    // Check keyDates from redux for the rquired dates, add any that are missing to the front of the array.
+    const missingKeyDates = requiredKeyDates.filter(requiredKeyDate => !dateNamesInDB.includes(requiredKeyDate))
+    const missingKeyDateObjects = missingKeyDates.map(missingKeyDate => ({ id: missingKeyDate, name: missingKeyDate, date: null }));
+    const requiredAndCustomDates = [ ...missingKeyDateObjects, ...datesFromDB ];
+    this.setState({ innovationKeyDates: requiredAndCustomDates })
+  }
+
+  createNewKeyDate = (id, name, date) => {
+    const { innovationKeyDates } = this.state;
+    this.setState({ innovationKeyDates:  [ ...innovationKeyDates, { id, name, date: date.format('YYYY-MM-DD') } ] })
+  }
+
+  editKeyDate = (keyDateId, key, value) => {
+    const { innovationKeyDates } = this.state;
+    const keyDatesCopy = [ ...innovationKeyDates ];
+    const indexToUpdate = keyDatesCopy.findIndex(keyDate => keyDate.id === keyDateId);
+    if (indexToUpdate > -1) {
+      keyDatesCopy[indexToUpdate][key] = value;
+      keyDatesCopy[indexToUpdate]['hasChanged'] = true;
+      this.setState({ innovationKeyDates: keyDatesCopy })
+    }
+  }
+
+  // Add an attribute 'toDelete' to the keydate. This causes it not to display and to run .destroy() in the editKeyDates action
+  deleteKeyDate = (keyDateId) => {
+    const { innovationKeyDates } = this.state;
+    const keyDatesCopy = [ ...innovationKeyDates ];
+    const indexToUpdate = keyDatesCopy.findIndex(keyDate => keyDate.id === keyDateId);
+    if (indexToUpdate > -1) {
+      keyDatesCopy[indexToUpdate]['forDeletion'] = true;
+      this.setState({ innovationKeyDates: keyDatesCopy })
+    }
+  }
+
+  // Function that calls action -> the API.
+  updateKeyDates = () => {
+    const { editKeyDates, innovationId } = this.props;
+    const { innovationKeyDates } = this.state;
+    const updatedKeyDates = innovationKeyDates.filter(keyDate => keyDate.date);
+    editKeyDates(innovationId, updatedKeyDates);
   }
 
   toggleFormOpen = () => {
@@ -16,22 +69,22 @@ class InnovationAddDates extends Component {
   }
 
   render() {
-    const { innovationKeyDates, deleteKeyDate, editKeyDate, createNewKeyDate } = this.props;
-    const { openNewKeyDateForm } = this.state;
+    const { openNewKeyDateForm, innovationKeyDates } = this.state;
     return (
       <div>
         <div className="innovation-keydates-container">
           <div className="innovation-keydates">
             {
-              innovationKeyDates.map(({ id, name, date, type }) => (
+              innovationKeyDates.filter(keyDate => !keyDate.forDeletion)
+                                .map(({ id, name, date }) => (
                                           <InnovationKeyDate
                                             key={id}
                                             id={id}
                                             name={name}
                                             date={date}
-                                            type={type}
-                                            editKeyDate={editKeyDate}
-                                            deleteKeyDate={deleteKeyDate}
+                                            required={requiredKeyDates.includes(name)}
+                                            editKeyDate={this.editKeyDate}
+                                            deleteKeyDate={this.deleteKeyDate}
                                           />
                                         ))
             }
@@ -42,7 +95,7 @@ class InnovationAddDates extends Component {
             ? (
               <div className="innovation-add-keydate-form">
                 <AddNewKeyDateForm
-                  createNewKeyDate={createNewKeyDate}
+                  createNewKeyDate={this.createNewKeyDate}
                   toggleFormOpen={() => this.setState({ openNewKeyDateForm: false })}
                   newId={innovationKeyDates.length + 1}
                   toggleForm={this.toggleForm}
@@ -58,17 +111,29 @@ class InnovationAddDates extends Component {
               </div>
             )
         }
+        <div className="create-innovation-user-actions">
+          <ButtonSubmit
+            label="Save"
+            onClick={() => this.updateKeyDates()} // TODO. Conditional on which module is open.
+          />
+        </div>
       </div>
     )
   }
 }
 
 InnovationAddDates.propTypes = {
-  id: PropTypes.number,
-  innovationKeyDates: PropTypes.array,
-  deleteKeyDate: PropTypes.func,
-  editKeyDate: PropTypes.func,
-  createNewKeyDate: PropTypes.func
+  innovationId: PropTypes.string,
+  editKeyDates: PropTypes.func,
+  keyDates: PropTypes.array
 }
 
-export default InnovationAddDates;
+const mapStateToProps = state => ({
+  keyDates: state.innovations.activeInnovation.keyDates,
+})
+
+// TODO: Not implemented yet in user actions.
+// const actions = { inviteTeamMembers };
+const actions = { editKeyDates };
+
+export default connect(mapStateToProps, actions)(InnovationAddDates);

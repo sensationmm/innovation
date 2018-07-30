@@ -1,33 +1,14 @@
-export const industries = [
-  { value: 'consumer', label: 'Consumer Practice' },
-  { value: 'energy', label: 'Energy' },
-  { value: 'financial', label: 'Financial Institutions' },
-  { value: 'healthcare', label: 'Healthcare' },
-  { value: 'industrial', label: 'Industrial Goods' },
-  { value: 'insurance', label: 'Insurance' },
-  { value: 'public', label: 'Public Sector' },
-  { value: 'tech', label: 'Tech, Media & Telecoms' }
-];
-
 export const innovationTypes = [
-  { value: 'portfolio', label: 'Portfolio Sprint' },
-  { value: 'validation', label: 'Validation Sprint' },
-  { value: 'systems', label: 'Customer Systems' }
-];
-
-export const dvOfficeLocations = [
-  { value: 'manhattan', label: 'Manhattan Beach' },
-  { value: 'newYork', label: 'New York' },
-  { value: 'berlin', label: 'Berlin' },
-  { value: 'london', label: 'London' },
-  { value: 'sydney', label: 'Sydney' },
-  { value: 'shanghai', label: 'Shanghai' },
-  { value: 'tokyo', label: 'Tokyo' }
+  { value: 'portfolio_sprint', label: 'Portfolio Sprint' },
+  { value: 'validation_sprint', label: 'Validation Sprint' },
+  { value: 'customer_systems', label: 'Customer Systems' }
 ];
 
 export const keyDatesOptions = [
-  {id: 1, name: 'KO', date: null, type: 'required'},
-  {id: 2, name: 'IS1', date: null, type: 'required'},
-  {id: 3, name: 'IS2', date: null, type: 'required'},
-  {id: 4, name: 'IS3', date: null, type: 'required'}
+  {id: 'ko', name: 'KO', date: null},
+  {id: 'is1', name: 'IS1', date: null},
+  {id: 'is2', name: 'IS2', date: null},
+  {id: 'is3', name: 'IS3', date: null}
 ]
+
+export const requiredKeyDates = [ 'KO', 'IS1', 'IS2', 'IS3' ];

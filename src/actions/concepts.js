@@ -11,30 +11,30 @@ import {
   EDIT_CONCEPT_BEGIN,
   EDIT_CONCEPT_SUCCESS,
   EDIT_CONCEPT_ERROR,
-  // DELETE_CONCEPT_BEGIN,
-  // DELETE_CONCEPT_SUCCESS,
-  // DELETE_CONCEPT_ERROR
+  DELETE_CONCEPT_BEGIN,
+  DELETE_CONCEPT_SUCCESS,
+  DELETE_CONCEPT_ERROR
 } from '../config/constants';
 
 import { Concept } from '../models';
+import { push } from 'connected-react-router';
 
 /**
- * @param {int} innovationId - id of the innovation which the concept will belong to
- * @param {object} conceptData - object of key / value pairs to create the new concept with
+ * @param {string|int} innovationId - id of the innovation which the concept will belong to
+ * @param {object} attrsToCreate - object of key / value pairs to create the new concept with
+ * @param {string|int} partnerId - id of the partner which the concept will belong to
+ * @param {string} redirectTo - where to redirect to once the save is complete
  */
-export const createConcept = (innovationId, attrsToCreate) => async (dispatch) => {
+export const createConcept = (innovationId, attrsToCreate, partnerId, redirectTo) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
-  console.log('Create concept on', innovationId);
-  console.log('With', attrsToCreate);
   try {
     const newConcept = new Concept();
     for ( const key of Object.keys(attrsToCreate) ) {
       newConcept[key] = attrsToCreate[key];
     }
-    // await newConcept.save();
-    newConcept.status = 'active'; // TODO: remove hard coded value when API is generating IDs.
-    newConcept.id = Math.round(Math.random() * 999); // TODO: remove hard coded value when API is generating IDs.
-    dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept });
+    newConcept.innovationId = innovationId;
+    await newConcept.save();
+    dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
   }
   catch (err) {
     console.log(err);
@@ -44,17 +44,44 @@ export const createConcept = (innovationId, attrsToCreate) => async (dispatch) =
 
 /**
  * @param {int} conceptId - id of the concept to be updated
- * @param {object} conceptData - object of key / value pairs to add / overwrite on to the concept
+ * @param {object} newConceptAttrs - object of key / value pairs to add / overwrite on to the concept
+ * @param {bool} saveToDB - if true then write to DB via API, otherwise write to redux store only.
  */
-export const editConcept = (conceptId, newConceptAttrs) => async (dispatch) => {
+export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (dispatch) => {
   dispatch({ type: EDIT_CONCEPT_BEGIN });
-  console.log('Edit concept', conceptId);
-  console.log('With', newConceptAttrs);
-  try {
+  if (saveToDB) {
+    try {
+      const conceptToUpdate = (await Concept.find(conceptId)).data;
+      for ( const key of Object.keys(newConceptAttrs) ) {
+        conceptToUpdate[key] = newConceptAttrs[key];
+      }
+      await conceptToUpdate.save();
+      dispatch({ type: EDIT_CONCEPT_SUCCESS, conceptId, newConceptAttrs: { ...conceptToUpdate.attributes } });
+    }
+    catch (err) {
+      console.log(err);
+      dispatch({ type: EDIT_CONCEPT_ERROR });
+    }
+  } else {
     dispatch({ type: EDIT_CONCEPT_SUCCESS, conceptId, newConceptAttrs });
   }
-  catch (err) {
-    console.log(err);
-    dispatch({ type: EDIT_CONCEPT_ERROR });
-  }
 }
+
+/**
+ * @param {int} conceptId - id of the concept to be deleted
+ * @param {string} redirectTo - where to go once the concept is deleted
+ */
+ export const deleteConcept = (conceptId, redirectTo) => async dispatch => {
+   dispatch({ type: DELETE_CONCEPT_BEGIN });
+   try {
+     const conceptToDelete = (await Concept.find(conceptId)).data;
+     await conceptToDelete.destroy()
+     // TODO: It may be better to just call the API again here for a fresh list of concepts.
+     // Using something like Concept.where(innovationId).all()
+     dispatch({ type: DELETE_CONCEPT_SUCCESS, conceptId });
+     dispatch(push(redirectTo))
+   }
+   catch (err) {
+     dispatch({ type: DELETE_CONCEPT_ERROR });
+   }
+ }

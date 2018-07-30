@@ -12,7 +12,6 @@ import BackTextLink from '../components/buttons/BackTextLink';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
 import { createInnovation } from '../actions/innovations';
-import { removeNullValueAttrs } from '../utils/functions';
 
 import '../styles/css/innovation-create.css';
 
@@ -55,32 +54,34 @@ class InnovationCreate extends Component {
     const { createInnovation } = this.props;
     const {
       partnerCCode, partnerName, partnerIndustry, partnerCity, partnerCountry, partnerDescription,
-      innovationType, innovationName, dvOffice, dvPartner1, dvPartner2, innovationOpenDate
+      innovationType, innovationName, dvOffice, dvPartner1, dvPartner2, innovationOpenDate, teamGMEmail, innovationDuration
     } = this.state;
-    // Need to pass the two separate data objects to the action. One for the Partner and one for the Innovation.
+    // TODO: It may be better to standardise these field names across the BE / FE models and the form component state.
+    // Reason for prefixing with -partner- and -innovation- was to avoid confusion between the two (e.g. partnerName / innovationName)
     const partnerData = {
       name: partnerName,
       description: partnerDescription,
       hqCity: partnerCity,
       hqCountry: partnerCountry,
-      industry: partnerIndustry
+      industryId: partnerIndustry
     }
     const innovationData = {
-      chargeCode: partnerCCode,
-      innovationType: innovationType,
+      sprintType: innovationType,
       sprintName: innovationName,
+      chargeCode: partnerCCode,
       dvPartner1: dvPartner1,
       dvPartner2: dvPartner2,
       openDate: moment(innovationOpenDate).format('YYYY-MM-DD'),
-      dvOffice: dvOffice
+      dvOfficeId: dvOffice,
+      teamGMEmail: teamGMEmail,
+      duration: innovationDuration
     }
-    const newPartner = removeNullValueAttrs(partnerData);
-    const newInnovation = removeNullValueAttrs(innovationData);
-    createInnovation(newPartner, newInnovation);
+
+    createInnovation(partnerData, innovationData);
   }
 
   fieldsAreCompleted = () => {
-    return Object.values(this.state).every(field => (field !== null && field !== '' && field !== {} && field !== undefined));
+    return Object.values(this.state).every(value => (value !== null && value !== '' && value !== {} && value !== undefined));
   }
 
   render() {
@@ -130,7 +131,7 @@ class InnovationCreate extends Component {
           <ButtonSubmit
             label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
             onClick={() => this.submitNewInnovation()}
-            disabled={!fieldsAreCompleted}
+            // disabled={!fieldsAreCompleted}
           />
         </div>
       </div>

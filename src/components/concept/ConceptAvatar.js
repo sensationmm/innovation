@@ -30,19 +30,19 @@ const ConceptAvatar = props => {
   } = props;
 
   const avatar = (
-    <div 
+    <div
       className={classnames(
-        `concept-avatar ${size}`, 
+        `concept-avatar ${size}`,
         { logo: logo !== '' },
         { filtered: filteredOut }
-      )} 
-      style={{ 
+      )}
+      style={{
         backgroundColor: !logo ? color : '',
         backgroundImage: logo !== '' ? `url(${logo})` : 'none'
       }}
     >
       {!logo && ident}
-    </div> 
+    </div>
   );
 
   if(!showLink) {
@@ -57,7 +57,10 @@ const ConceptAvatar = props => {
 };
 
 ConceptAvatar.propTypes = {
-  conceptId: PropTypes.number.isRequired,
+  conceptId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   logo: PropTypes.string,
   ident: PropTypes.string,
   color: PropTypes.string,

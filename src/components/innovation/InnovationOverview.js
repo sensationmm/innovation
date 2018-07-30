@@ -1,149 +1,218 @@
-import React from 'react';
-// import { push } from 'react-router-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import ContentBox from '../layout/ContentBox';
-import FlexRow from '../layout/FlexRow';
+import InnovationAddDates from './keydates/InnovationAddDates';
+import InnovationAddTeam from './InnovationAddTeam';
 import CorporatePartnerSummary from './CorporatePartnerSummary';
 import InnovationTeam from './InnovationTeam';
 import ProgressBar from '../ProgressBar';
 import ConceptList from '../concept/ConceptList';
+import FormSectionHeader from '../formInputs/FormSectionHeader';
+import ContentBox from '../layout/ContentBox';
+import FlexRow from '../layout/FlexRow';
+import BackTextLink from '../buttons/BackTextLink';
 
 import '../../styles/css/innovation-overview.css';
 
 import { makeArrayFromIndexedObject } from '../../utils/functions';
+const userType = 'teamGM'; // TODO: get this conditionally from  redux store auth.user
+const curTeamMembers = [ // TODO: get from partner.users in redux store (also duplicated in InnovationAddTeam)
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
+  {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
+  {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
+];
 
-const userType = 'finance'; // TODO: get this conditionally from  redux store auth.user
-const requiredKeyDates = [ 'KO', 'IS1', 'IS2', 'IS3' ]; // TODO: move to congfig
+class InnovationOverview extends Component {
+  state = {
+    openEditDates: false,
+    openEditTeam: false,
+    openEditMandate: false
+  }
 
-const InnovationOverview = (props) => {
-  console.log('props', props);
-  const { activeInnovation, conceptsById } = props;
-  const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
-  const activeIncomplete = activeConcepts.filter(concept => concept.status === 'active');
-  const activeComplete = activeConcepts.filter(concept => concept.status === 'complete');
-  const activeReviewed = activeConcepts.filter(concept => concept.status === 'reviewed');
-  const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
+  render() {
+    const { activeInnovation, activePartner, conceptsById } = this.props;
+    const { openEditDates, openEditTeam, openEditMandate} = this.state;
+    const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
+    const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
+    const activeComplete = activeConcepts.filter(concept => concept.status === 'ready');
+    const activeReviewed = activeConcepts.filter(concept => concept.status === 'analysed');
+    const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
-  const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
-  const keyDatesSetup = activeInnovation.keyDates && requiredKeyDates.every(reqDate => activeInnovation.keyDates.hasOwnProperty(reqDate));
-  return (
-    <div>
-      <ContentBox>
-        <h1>Innovation Name</h1>
-        <div>Innovation Type</div>
-        <div>Sprint Duration</div>
+    const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
+    const keyDatesSetup = true; // TODO: Write check to make sure all the required dates are found in keyDates array.
+
+    const dates = [];
+    const labels = [];
+    activeInnovation.keyDates && activeInnovation.keyDates.forEach(keydate => {
+      dates.push(keydate.date);
+      labels.push(keydate.name);
+    });
+
+    return (
+      <div>
+        <div>
+          <BackTextLink
+            label="Back"
+            onClick={() => this.props.history.goBack()}
+          />
+        </div>
+        <ContentBox>
+          <h1>{activeInnovation.sprintName}</h1>
+          <div>{activeInnovation.sprintType}</div>
+          <div>Duration: {activeInnovation.duration} weeks</div>
+          {
+            activeInnovation.mandate
+              ? <div>Mandate: {activeInnovation.mandate}</div>
+              : <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditMandate: !openEditMandate })}>
+                  <div>
+                    <i className="fas fa-plus fa-2x add-concept-icon"></i>
+                  </div>
+                  <div>Add Innovation Mandate</div>
+                </div>
+          }
+        </ContentBox>
+
         {
-          activeInnovation.mandate
-            ? <div>Mandate: {activeInnovation.mandate}</div>
-            : <Link className="innovation-overview-add-concept-link" to="/update-innovation">
+          (activeInnovation.keyDates && keyDatesSetup) &&
+            <ContentBox background={false}>
+              <ProgressBar
+                dates={dates}
+                labels={labels}
+              />
+              <div className="innovation-overview-edit-icon" onClick={() => this.setState({ openEditDates: !openEditDates })}>Edit Key Dates</div>
+            </ContentBox>
+        }
+
+        <div className="innovation-overview-toplinks">
+          {
+            !keyDatesSetup &&
+              <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditDates: !openEditDates })}>
                 <div>
                   <i className="fas fa-plus fa-2x add-concept-icon"></i>
                 </div>
-                <div>Add Innovation Mandate</div>
-              </Link>
-        }
-      </ContentBox>
-
-      {
-        keyDatesSetup &&
-          <ContentBox background={false}>
-            <ProgressBar
-              dates={Object.keys(activeInnovation.keyDates).map(label => activeInnovation.keyDates[label])}
-              labels={Object.keys(activeInnovation.keyDates)}
-            />
-            <Link to={`/update-innovation`}>
-              <div className="innovation-overview-edit-icon">Edit Key Dates</div>
-            </Link>
-          </ContentBox>
-      }
-
-      <div className="innovation-overview-toplinks">
-        {
-          !keyDatesSetup &&
-            <Link className="innovation-overview-add-concept-link" to="/update-innovation">
-              <div>
-                <i className="fas fa-plus fa-2x add-concept-icon"></i>
+                <div>Setup Key Sprint Dates</div>
               </div>
-              <div>Setup Key Sprint Dates</div>
-            </Link>
-        }
-        <Link className="innovation-overview-add-concept-link" to="/update-innovation">
-          <div>
-            <i className="fas fa-plus fa-2x add-concept-icon"></i>
+          }
+          <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditTeam: !openEditTeam })}>
+            <div>
+              <i className="fas fa-plus fa-2x add-concept-icon"></i>
+            </div>
+            <div>Edit Team Members</div>
           </div>
-          <div>Edit Team Members</div>
-        </Link>
+          {
+            keyDatesSetup &&
+              <Link className="innovation-overview-add-concept-link" to={`/create-concept/${activeInnovation.id}`}>
+                <div>
+                  <i className="fas fa-plus fa-2x add-concept-icon"></i>
+                </div>
+                <div>Add Concept</div>
+              </Link>
+          }
+        </div>
+
         {
-          keyDatesSetup &&
-            <Link className="innovation-overview-add-concept-link" to="/create-concept">
-              <div>
-                <i className="fas fa-plus fa-2x add-concept-icon"></i>
-              </div>
-              <div>Add Concept</div>
-            </Link>
+          openEditDates &&
+            <div className="create-innovation-section-container">
+              <FormSectionHeader
+                title='Enter Immersion Session Key Dates'
+                subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
+              />
+              <InnovationAddDates innovationId={activeInnovation.id} />
+            </div>
         }
+        {
+          openEditTeam &&
+            <div>
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title='Your Current Team'
+                />
+                <InnovationTeam
+                  teamMembers={curTeamMembers}
+                />
+              </div>
+
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title="Add New Team Members"
+                  subtitle="Invites will be sent to new team members when you save"
+                />
+                <InnovationAddTeam partnerId={activePartner.id} />
+              </div>
+            </div>
+        }
+
+        {
+          (activeIncomplete && activeIncomplete.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
+
+        {
+          (activeComplete && activeComplete.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={activeComplete} title='Active & Ready' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
+
+        {
+          (activeReviewed && activeReviewed.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={activeReviewed} title='Active & Analysed' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
+
+        {
+          (killedConcepts && killedConcepts.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={killedConcepts} title='Killed Concepts' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
+
+        <FlexRow>
+          <ContentBox>
+            <h3>Team Info</h3>
+            <InnovationTeam
+              teamMembers={[
+                { name: 'Wayne', position: 'GM' },
+                { name: 'Claire', position: 'SD' },
+                { name: 'Ainsley', position: 'VA' },
+                { name: 'Bo Derek', position: 'TM' }
+              ]}
+            />
+          </ContentBox>
+          <ContentBox>
+            <CorporatePartnerSummary
+              name={activePartner.name}
+              industry={activePartner.industry}
+              city={activePartner.hqCity}
+              businessDescription={activePartner.description}
+            />
+          </ContentBox>
+
+        </FlexRow>
       </div>
-
-      <ContentBox background={false}>
-        <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
-      </ContentBox>
-
-      <ContentBox background={false}>
-        <ConceptList concepts={activeComplete} title='Active & Complete' userType={userType} postIS2={isPostIS2} />
-      </ContentBox>
-
-      <ContentBox background={false}>
-        <ConceptList concepts={activeReviewed} title='Active & Reviewed' userType={userType} postIS2={isPostIS2} />
-      </ContentBox>
-
-      <ContentBox background={false}>
-        <ConceptList concepts={killedConcepts} title='Killed Concepts' userType={userType} postIS2={isPostIS2} />
-      </ContentBox>
-
-      <FlexRow>
-        <ContentBox>
-          <h3>Team Info</h3>
-          <InnovationTeam
-            teamMembers={[
-              { name: 'Wayne', position: 'GM' },
-              { name: 'Claire', position: 'SD' },
-              { name: 'Ainsley', position: 'VA' },
-              { name: 'Bo Derek', position: 'TM' }
-            ]}
-          />
-        </ContentBox>
-        <ContentBox>
-          <CorporatePartnerSummary
-            name="BigShots"
-            industry="Money"
-            city="London"
-            businessDescription="Make money"
-          />
-        </ContentBox>
-
-      </FlexRow>
-    </div>
-  );
+    )
+  }
 }
 
 InnovationOverview.propTypes = {
+  activePartner: PropTypes.object,
   activeInnovation: PropTypes.object,
-  conceptsById: PropTypes.object
+  conceptsById: PropTypes.object,
+  history: PropTypes.func
 };
 
 const mapStateToProps = state => ({
+  activePartner: state.partners.activePartner,
   activeInnovation: state.innovations.activeInnovation,
   conceptsById: state.concepts.conceptsById
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-  }, dispatch
-);
-
-export default connect(mapStateToProps, mapDispatchToProps)(InnovationOverview);
+export default connect(mapStateToProps, null)(InnovationOverview);

@@ -13,6 +13,7 @@ import ConceptList from '../concept/ConceptList';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
+import BackTextLink from '../buttons/BackTextLink';
 
 import '../../styles/css/innovation-overview.css';
 
@@ -54,6 +55,12 @@ class InnovationOverview extends Component {
 
     return (
       <div>
+        <div>
+          <BackTextLink
+            label="Back"
+            onClick={() => this.props.history.goBack()}
+          />
+        </div>
         <ContentBox>
           <h1>{activeInnovation.sprintName}</h1>
           <div>{activeInnovation.sprintType}</div>
@@ -140,21 +147,33 @@ class InnovationOverview extends Component {
             </div>
         }
 
-        <ContentBox background={false}>
-          <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
-        </ContentBox>
+        {
+          (activeIncomplete && activeIncomplete.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
 
-        <ContentBox background={false}>
-          <ConceptList concepts={activeComplete} title='Active & Ready' userType={userType} postIS2={isPostIS2} />
-        </ContentBox>
+        {
+          (activeComplete && activeComplete.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={activeComplete} title='Active & Ready' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
 
-        <ContentBox background={false}>
-          <ConceptList concepts={activeReviewed} title='Active & Analysed' userType={userType} postIS2={isPostIS2} />
-        </ContentBox>
+        {
+          (activeReviewed && activeReviewed.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={activeReviewed} title='Active & Analysed' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
 
-        <ContentBox background={false}>
-          <ConceptList concepts={killedConcepts} title='Killed Concepts' userType={userType} postIS2={isPostIS2} />
-        </ContentBox>
+        {
+          (killedConcepts && killedConcepts.length > 0) &&
+            <ContentBox background={false}>
+              <ConceptList concepts={killedConcepts} title='Killed Concepts' userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+        }
 
         <FlexRow>
           <ContentBox>
@@ -186,7 +205,8 @@ class InnovationOverview extends Component {
 InnovationOverview.propTypes = {
   activePartner: PropTypes.object,
   activeInnovation: PropTypes.object,
-  conceptsById: PropTypes.object
+  conceptsById: PropTypes.object,
+  history: PropTypes.func
 };
 
 const mapStateToProps = state => ({

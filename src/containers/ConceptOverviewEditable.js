@@ -17,34 +17,43 @@ import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-import { editConcept } from '../actions/concepts';
+import { editConcept, deleteConcept } from '../actions/concepts';
 
 class ConceptOverviewEditable extends Component {
+  state = {
+    editedFields: []
+  }
 
-  updateDetails = (key, value) => {
-    const { editConcept, activeConcept } = this.props;
-    editConcept(activeConcept.id, { key: value })
+  updateEditedFields = (key) => {
+    const { editedFields } = this.state;
+    if (!editedFields.includes(key)) {
+      this.setState({ editedFields: editedFields.concat(key) });
+    }
   }
 
   updateFormField = (e) => {
     const { editConcept, activeConcept } = this.props;
+    this.updateEditedFields(e.target.id);
     editConcept(activeConcept.id, { [e.target.id]: e.target.value } )
   }
 
   updateConceptLogo = (logo) => {
     const { editConcept, activeConcept } = this.props;
+    this.updateEditedFields('logo');
     editConcept(activeConcept.id, { logo } )
   }
 
   // For single select options
   selectOption = (key, value) => {
     const { editConcept, activeConcept } = this.props;
+    this.updateEditedFields(key);
     editConcept(activeConcept.id, { [key]: value } )
   }
 
   // For multi-select checkboxes. Effectively a toggle on the id being in the array or not.
   updateSelectedOptions = (arrayName, toggleId) => {
     const { editConcept, activeConcept } = this.props;
+    this.updateEditedFields(arrayName);
     const arrayToUpdate = activeConcept[arrayName];
     const updatedArray = arrayToUpdate.includes(toggleId)
                                       ? arrayToUpdate.filter(optionId => optionId !== toggleId)
@@ -52,9 +61,27 @@ class ConceptOverviewEditable extends Component {
     editConcept(activeConcept.id, { [arrayName]: updatedArray })
   }
 
+  saveChangesToDB = () => {
+    const { editConcept, activeConcept } = this.props;
+    const attrsToUpdate = {};
+    this.state.editedFields.forEach(fieldKey => {
+      attrsToUpdate[fieldKey] = activeConcept[fieldKey];
+    })
+    editConcept(activeConcept.id, attrsToUpdate, true);
+  }
+
+  handleDeleteConcept = () => {
+    const { deleteConcept, activeConcept, activePartnerId } = this.props;
+    deleteConcept(activeConcept.id, `/innovation-overview/${activePartnerId}`);
+  }
+
+  // Once complete 'Mark as Ready button is activated.
   allFieldsAreCompleted = () => {
     const { activeConcept } = this.props;
-    return Object.values(activeConcept).every(field => field !== null || field !== '' || field !== {} || field !== undefined);
+    return Object.values(activeConcept).every(field =>
+                field !== null &&
+                field !== '' &&
+                field !== undefined);
   }
 
   render() {
@@ -70,6 +97,23 @@ class ConceptOverviewEditable extends Component {
             label="Back"
             onClick={() => this.props.history.goBack()}
           />
+          <div>
+            <div>Status: {activeConcept.status}</div>
+            <ButtonSubmit
+              label="Mark as Killed"
+              onClick={() => this.selectOption('status', 'killed')}
+            />
+            <ButtonSubmit
+              label="Mark as Draft"
+              onClick={() => this.selectOption('status', 'draft')}
+            />
+            <ButtonSubmit
+              label={allFieldsAreCompleted ? 'Mark as Ready' : 'Fields Incomplete'}
+              onClick={() => this.selectOption('status', 'ready')}
+              disabled={!allFieldsAreCompleted}
+            />
+
+          </div>
         </div>
         <div className="create-concept-page-title">Update Concept</div>
         <div className="create-concept-section-container">
@@ -82,6 +126,7 @@ class ConceptOverviewEditable extends Component {
             name={activeConcept.name}
             description={activeConcept.description}
             logo={activeConcept.logo}
+            existingLogo={true}
           />
         </div>
         {
@@ -113,7 +158,7 @@ class ConceptOverviewEditable extends Component {
             marketFriction={activeConcept.marketFriction}
             marketSize={activeConcept.marketSize}
             targetCustomers={activeConcept.targetCustomers}
-            targetIndustry={activeConcept.targetIndustry}
+            targetIndustryId={activeConcept.targetIndustryId}
             targetGeography={activeConcept.targetGeography}
           />
         </div>
@@ -162,7 +207,7 @@ class ConceptOverviewEditable extends Component {
             incubationCost={activeConcept.incubationCost}
             breakEvenCost={activeConcept.breakEvenCost}
             breakEvenYear={activeConcept.breakEvenYear}
-            willGMLeave={activeConcept.willGMLeave}
+            willGmLeave={activeConcept.willGmLeave}
           />
         </div>
         <div className="create-concept-section-container">
@@ -172,7 +217,7 @@ class ConceptOverviewEditable extends Component {
           <ConceptConviction
             updateFormField={this.updateFormField}
             selectOption={this.selectOption}
-            gmConviction={activeConcept.gmConviction}
+            gmConviction={activeConcept.gmConviction || null} // Can't pass an empty string to RankSelectForm component.
             gmComments={activeConcept.gmComments}
             partnerPreferences={activeConcept.partnerPreferences}
           />
@@ -182,14 +227,14 @@ class ConceptOverviewEditable extends Component {
               label="Back"
               onClick={() => this.props.history.goBack()}
             />
-            {
-              allFieldsAreCompleted &&
-                <ButtonSubmit
-                  label={allFieldsAreCompleted ? 'Mark as Complete' : 'Complete Required Fields'}
-                  onClick={() => console.log('Set concept status to complete')}
-                  disabled={!allFieldsAreCompleted}
-                />
-            }
+            <ButtonSubmit
+              label="Save Changes"
+              onClick={() => this.saveChangesToDB()}
+            />
+            <ButtonSubmit
+              label="Delete Concept"
+              onClick={() => this.handleDeleteConcept()}
+            />
           </div>
       </div>
     )
@@ -200,18 +245,25 @@ ConceptOverviewEditable.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
   editConcept: PropTypes.func,
+  deleteConcept: PropTypes.func,
   activeInnovationId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
   ]),
-  activeConcept: PropTypes.object
+  activePartnerId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  activeConcept: PropTypes.object,
+  existingLogo: PropTypes.bool
 };
 
 const mapStateToProps = (state, props) => ({
   activeInnovationId: state.innovations.activeInnovation.id,
-  activeConcept: state.concepts.conceptsById[props.match.params.conceptId]
+  activePartnerId: state.partners.activePartner.id,
+  activeConcept: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId]) || null
 });
 
-const actions = { editConcept };
+const actions = { editConcept, deleteConcept };
 
 export default connect(mapStateToProps, actions)(ConceptOverviewEditable);

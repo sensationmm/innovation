@@ -44,7 +44,7 @@ class ConceptCreate extends Component {
     incubationCost: '',
     breakEvenCost: '',
     breakEvenYear: '',
-    willGMLeave: null,
+    willGmLeave: null,
     gmConviction: null,
     gmComments: '',
     partnerPreferences: ''
@@ -74,14 +74,13 @@ class ConceptCreate extends Component {
 
   handleSaveConcept = () => {
     const { createConcept, activeInnovationId } = this.props;
-    const attrsToCreate = removeNullValueAttrs({ ...this.state })
+    const attrsToCreate = removeNullValueAttrs({ ...this.state });
     // If there is a logo uploaded, format it ready for saving to the DB.
     if (attrsToCreate.logo) {
-      getDataUri(attrsToCreate.logo.preview, function(dataUri) {
-        attrsToCreate.logo = {
-          'logo': dataUri,
-          'logoName': attrsToCreate.logo.preview
-        };
+      const { logo: { preview }} = this.state;
+      getDataUri(preview, function(dataUri) {
+        attrsToCreate.logo = dataUri;
+        attrsToCreate.logoName = preview;
         createConcept(activeInnovationId, attrsToCreate);
       });
     } else {
@@ -112,6 +111,7 @@ class ConceptCreate extends Component {
             name={this.state.name}
             description={this.state.description}
             logo={this.state.logo}
+            existingLogo={false}
           />
         </div>
         <div className="create-concept-section-container">
@@ -173,7 +173,7 @@ class ConceptCreate extends Component {
             incubationCost={this.state.incubationCost}
             breakEvenCost={this.state.breakEvenCost}
             breakEvenYear={this.state.breakEvenYear}
-            willGMLeave={this.state.willGMLeave}
+            willGmLeave={this.state.willGmLeave}
           />
         </div>
         <div className="create-concept-section-container">

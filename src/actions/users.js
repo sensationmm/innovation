@@ -11,15 +11,13 @@ import {
 } from '../config/constants';
 
 // Import JSON API models.
-import { User, Partner, Role } from '../models';
+import { User, Role } from '../models';
 
 export const getAllUsers = () => async (dispatch) => {
   dispatch({ type: REQUEST_ALL_USERS_BEGIN });
   try {
     const { data } = await User.per(200).all() // TODO: find way to return all results with specified top limit
     const inVentureUsers = data.map(user => ({ ...user.attributes }) )
-    const innUsers = (await await Partner.includes({ roles: 'user' }).find(22)).data;
-    console.log('innUsers', innUsers);
     dispatch({ type: REQUEST_ALL_USERS_SUCCESS, inVentureUsers });
   }
   catch (err) {

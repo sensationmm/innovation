@@ -43,12 +43,9 @@ export const getAllInnovationsList = () => async dispatch => {
 // @param redirectToOverview = boolean.
 export const getActiveInnovationData = (partnerId, redirectToOverview) => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
-  console.log('testing')
-  const users = (await Partner.includes({ roles: 'user' }).find(partnerId)).data;
-  console.log('users', users);
   try {
     const partner = (await Partner.includes([
-      { innovation: [ 'key_dates', 'concepts' ] },
+      { innovation: [ 'key_dates', { concepts: 'target_industry' } ] },
       { roles: 'user' },
       'roles'
     ]).find(partnerId)).data;

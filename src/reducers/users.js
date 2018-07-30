@@ -12,7 +12,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner } = action;
-      console.log('partner roles', partner);
       const activeInnovationUsers = partner.roles.map(({ user }) => { return { ...user.attributes } } );
       return { ...state, activeInnovationUsers }
     }

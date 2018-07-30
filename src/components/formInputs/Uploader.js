@@ -45,11 +45,14 @@ class Uploader extends Component {
   }
 
   render() {
-    const { logo, messageText } = this.props;
+    const { logo, messageText, existingLogo } = this.props;
     const { hover, error } = this.state;
+    const logoUrl = existingLogo
+                      ? logo
+                      : (logo && logo.preview) ? logo.preview : IconUpload
     return (
       <ContentBox>
-        <div className={classnames('logo-upload-container', { 'hover': hover })} style={{backgroundImage:`url(${(logo && logo.preview) ? logo.preview : IconUpload})`}}>
+        <div className={classnames('logo-upload-container', { 'hover': hover })} style={{backgroundImage:`url(${logoUrl})`}}>
           <Dropzone
             onDrop={this.onDrop}
             onDragEnter={this.onDragEnter}
@@ -70,10 +73,14 @@ class Uploader extends Component {
 }
 
 Uploader.propTypes = {
-  logo: PropTypes.object,
+  logo: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string
+  ]),
   showLabel: PropTypes.bool,
   storeLogo: PropTypes.func,
-  messageText: PropTypes.string
+  messageText: PropTypes.string,
+  existingLogo: PropTypes.bool
 };
 
 Uploader.defaultProps = {

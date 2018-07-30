@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 
 import ConceptAvatar from './ConceptAvatar';
 import KillButton from '../buttons/KillButton';
 import CompleteButton from '../buttons/CompleteButton';
+
+import { editConcept } from '../../actions/concepts';
 
 import '../../styles/css/concept-list.css';
 
@@ -20,7 +23,7 @@ import '../../styles/css/concept-list.css';
  */
 
 const ConceptList = props => {
-  const { postIS2, userType, concepts } = props;
+  const { postIS2, userType, concepts, editConcept } = props;
   return (
     <div className="concept-list">
       <div className="concept-list-header">{props.title}</div>
@@ -53,8 +56,8 @@ const ConceptList = props => {
                   <div className="concept-list-item-user-actions">
                     {
                       (status === 'draft' || status ==='ready')
-                        ? <KillButton label='Kill' onClick={() => console.log('set concept.status to killed')} />
-                        : <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status to draft')} />
+                        ? <KillButton label='Kill' onClick={() => editConcept(id, { status: 'killed' }, true)} />
+                        : <CompleteButton label='Re-Activate' onClick={() => editConcept(id, { status: 'draft' }, true)} />
                     }
                   </div>
               }
@@ -70,14 +73,14 @@ const ConceptList = props => {
                     {
                       (status === 'draft') &&
                         <div className="concept-list-item-user-actions">
-                          <CompleteButton label='Mark as Ready' onClick={() => console.log('Set concept.status ready and Notify VFT')} />
-                          <KillButton label='Kill' onClick={() => console.log('set concept.status to killed')} />
+                          <CompleteButton label='Mark as Ready' onClick={() => editConcept(id, { status: 'ready' }, true)} />
+                          <KillButton label='Kill' onClick={() => editConcept(id, { status: 'kill' }, true)} />
                         </div>
                     }
                     {
                       (status === 'killed') &&
                         <div className="concept-list-item-user-actions">
-                          <CompleteButton label='Re-Activate' onClick={() => console.log('Set concept.status draft')} />
+                          <CompleteButton label='Re-Activate' onClick={() => editConcept(id, { status: 'draft' }, true)} />
                         </div>
                     }
                   </div>
@@ -120,7 +123,10 @@ ConceptList.propTypes = {
   concepts: PropTypes.array,
   title: PropTypes.string,
   postIS2: PropTypes.bool,
-  userType: PropTypes.string
+  userType: PropTypes.string,
+  editConcept: PropTypes.func
 };
 
-export default ConceptList;
+const actions = { editConcept };
+
+export default connect(null, actions)(ConceptList);

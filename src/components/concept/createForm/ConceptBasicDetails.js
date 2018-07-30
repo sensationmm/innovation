@@ -8,7 +8,7 @@ import Uploader from '../../formInputs/Uploader.js';
 import '../../../styles/css/concept-create.css';
 
 const ConceptBasicDetails = (props) => {
-  const { name, description, logo, updateFormField, updateConceptLogo } = props;
+  const { name, description, logo, updateFormField, updateConceptLogo, existingLogo } = props;
   return (
     <div>
       <FormTextInput
@@ -29,6 +29,7 @@ const ConceptBasicDetails = (props) => {
           logo={logo}
           storeLogo={updateConceptLogo}
           messageText="Upload Concept Logo"
+          existingLogo={existingLogo}
         />
       </div>
     </div>
@@ -38,9 +39,13 @@ const ConceptBasicDetails = (props) => {
 ConceptBasicDetails.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
-  logo: PropTypes.object,
+  logo: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
   updateFormField: PropTypes.func,
-  updateConceptLogo: PropTypes.func
+  updateConceptLogo: PropTypes.func,
+  existingLogo: PropTypes.bool
 }
 
 export default ConceptBasicDetails;

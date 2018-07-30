@@ -58,7 +58,7 @@ class InnovationAddTeam extends Component {
   render() {
     // TODO: Get curTeamMembers from partner.users in state
     const { newMemberEmail, newTeamMembers } = this.state;
-    const { onSave, onCancel, partnerId, allUsers } = this.props;
+    const { onSave, onCancel, allUsers } = this.props;
     const isValidEmail  = validateEmail(newMemberEmail);
     return (
       <div>
@@ -144,7 +144,9 @@ InnovationAddTeam.propTypes = {
   teamMembers: PropTypes.array,
   allUsers: PropTypes.array,
   onSave: PropTypes.func,
-  onCancel: PropTypes.func
+  onCancel: PropTypes.func,
+  inviteInnovationUsers: PropTypes.func,
+  history: PropTypes.func
 }
 
 const mapStateToProps = state => ({

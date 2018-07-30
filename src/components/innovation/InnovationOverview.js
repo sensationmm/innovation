@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
@@ -46,8 +45,8 @@ class InnovationOverview extends Component {
     const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
     const keyDatesSetup = true; // TODO: Write check to make sure all the required dates are found in keyDates array.
 
-    let dates = [];
-    let labels = [];
+    const dates = [];
+    const labels = [];
     activeInnovation.keyDates && activeInnovation.keyDates.forEach(keydate => {
       dates.push(keydate.date);
       labels.push(keydate.name);

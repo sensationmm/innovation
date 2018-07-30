@@ -16,9 +16,8 @@ import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-import { createConcept, editConcept } from '../actions/concepts';
-import  { removeNullValueAttrs } from '../utils/functions';
-import { getDataUri } from '../utils/functions';
+import { createConcept } from '../actions/concepts';
+import  { removeNullValueAttrs, getDataUri } from '../utils/functions';
 
 class ConceptCreate extends Component {
 
@@ -75,7 +74,7 @@ class ConceptCreate extends Component {
 
   handleSaveConcept = () => {
     const { createConcept, activeInnovationId } = this.props;
-    let attrsToCreate = removeNullValueAttrs({ ...this.state })
+    const attrsToCreate = removeNullValueAttrs({ ...this.state })
     // If there is a logo uploaded, format it ready for saving to the DB.
     if (attrsToCreate.logo) {
       getDataUri(attrsToCreate.logo.preview, function(dataUri) {

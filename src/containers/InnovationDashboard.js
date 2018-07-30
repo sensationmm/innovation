@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import ContentBox from '../components/layout/ContentBox';
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
-import ButtonSubmit from '../components/buttons/ButtonSubmit';
-import BackTextLink from '../components/buttons/BackTextLink';
 
 import { getActiveInnovationData } from '../actions/innovations';
 
@@ -46,7 +44,7 @@ class InnovationDashboard extends Component {
 
   render() {
     const { innovations } = this.props;
-    const { sendSummaryOpen, emails } = this.state;
+    const { sendSummaryOpen } = this.state;
     return (
       <div>
         {
@@ -119,7 +117,8 @@ class InnovationDashboard extends Component {
 }
 
 InnovationDashboard.propTypes = {
-   innovations: PropTypes.array
+   innovations: PropTypes.array,
+   getActiveInnovationData: PropTypes.func
 };
 
 const mapStateToProps = state => ({

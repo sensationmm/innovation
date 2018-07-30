@@ -30,7 +30,7 @@ export const getAllInnovationsList = () => async dispatch => {
   try {
     // Need the following data for the dashboard page: innovation { sprintName, charge code, keyDates, partnerName }.
     const partnersWithInnovations = (await Partner.includes({ innovation: [ 'key_dates' ]})
-                                                  .select([ "name", "charge_code" ])
+                                                  .select([ 'name', 'charge_code' ])
                                                   .all()).data;
     dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, partnersWithInnovations });
   }
@@ -44,7 +44,7 @@ export const getAllInnovationsList = () => async dispatch => {
 export const getActiveInnovationData = (partnerId, redirectToOverview) => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   console.log('testing')
-  let users = (await Partner.includes({ roles: 'user' }).find(partnerId)).data;
+  const users = (await Partner.includes({ roles: 'user' }).find(partnerId)).data;
   console.log('users', users);
   try {
     const partner = (await Partner.includes([
@@ -87,7 +87,8 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
     await newInnovation.save();
 
     dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation.attributes } });
-    // Redirect to the newly created active innovation
+    dispatch(getActiveInnovationData(newPartner.id, true));
+    // Redirect to the newly created active innovation overview
     dispatch(push(`/innovation-overview/${newInnovation.partnerId}`));
     dispatch(getAllInnovationsList());
   }
@@ -116,19 +117,19 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
     for ( const keyDate of editedKeyDates ) {
       if (keyDate.fromDB) {
         if (keyDate.hasChanged) {
-          let updatedKeyDate = (await KeyDate.find(keyDate.id)).data
+          const updatedKeyDate = (await KeyDate.find(keyDate.id)).data
           updatedKeyDate.name = keyDate.name;
           updatedKeyDate.date = moment(keyDate.date).format('YYYY-MM-DD');
           await updatedKeyDate.save();
         }
 
         if (keyDate.forDeletion) {
-          let dateToDelete = (await KeyDate.find(keyDate.id)).data
+          const dateToDelete = (await KeyDate.find(keyDate.id)).data
           await dateToDelete.destroy();
         }
 
       } else {
-        let newKeyDate = new KeyDate({
+        const newKeyDate = new KeyDate({
           name: keyDate.name,
           date: moment(keyDate.date).format('YYYY-MM-DD'),
           keyDatableType: 'Innovation',

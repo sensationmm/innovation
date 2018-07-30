@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import InnovationKeyDate from './InnovationKeyDate';
 import AddNewKeyDateForm from './AddNewKeyDateForm';
 import ButtonSubmit from '../../buttons/ButtonSubmit';
-import BackTextLink from '../../buttons/BackTextLink';
 
 import '../../../styles/css/innovation-add-dates.css'
 
@@ -71,7 +70,6 @@ class InnovationAddDates extends Component {
 
   render() {
     const { openNewKeyDateForm, innovationKeyDates } = this.state;
-    const { innovationId } = this.props;
     return (
       <div>
         <div className="innovation-keydates-container">
@@ -125,7 +123,9 @@ class InnovationAddDates extends Component {
 }
 
 InnovationAddDates.propTypes = {
-  innovationId: PropTypes.string
+  innovationId: PropTypes.string,
+  editKeyDates: PropTypes.func,
+  keyDates: PropTypes.array
 }
 
 const mapStateToProps = state => ({

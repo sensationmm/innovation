@@ -12,7 +12,6 @@ import BackTextLink from '../components/buttons/BackTextLink';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
 import { createInnovation } from '../actions/innovations';
-import { removeNullValueAttrs } from '../utils/functions';
 
 import '../styles/css/innovation-create.css';
 

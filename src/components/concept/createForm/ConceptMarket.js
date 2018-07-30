@@ -19,7 +19,7 @@ const ConceptMarket = (props) => {
 
   // TODO: Move to components/layout as generic label component. Currently gets styles from innovation-create.css.
   const requiredLabel = (<div className="create-innovation-required-label">Required</div>);
-  
+
   return (
     <div>
       <FormTextInput
@@ -73,7 +73,7 @@ ConceptMarket.propTypes = {
   marketFriction: PropTypes.string,
   marketSize: PropTypes.string,
   targetCustomers: PropTypes.string,
-  targetIndustry: PropTypes.string,
+  targetIndustryId: PropTypes.string,
   targetGeography: PropTypes.string,
   selectOption: PropTypes.func,
   updateFormField: PropTypes.func,

@@ -19,10 +19,12 @@ import {
 import { Concept } from '../models';
 
 /**
- * @param {int} innovationId - id of the innovation which the concept will belong to
+ * @param {string|int} innovationId - id of the innovation which the concept will belong to
  * @param {object} attrsToCreate - object of key / value pairs to create the new concept with
+ * @param {string|int} partnerId - id of the partner which the concept will belong to
+ * @param {string} redirectTo - where to redirect to once the save is complete
  */
-export const createConcept = (innovationId, attrsToCreate) => async (dispatch) => {
+export const createConcept = (innovationId, attrsToCreate, partnerId, redirectTo) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
   console.log('Create concept on', innovationId);
   console.log('With', attrsToCreate);

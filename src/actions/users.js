@@ -2,9 +2,9 @@ import {
   REQUEST_ALL_USERS_BEGIN,
   REQUEST_ALL_USERS_SUCCESS,
   REQUEST_ALL_USERS_ERROR,
-  REQUEST_INNOVATION_USERS_BEGIN,
-  REQUEST_INNOVATION_USERS_SUCCESS,
-  REQUEST_INNOVATION_USERS_ERROR,
+    // REQUEST_INNOVATION_USERS_BEGIN,
+    // REQUEST_INNOVATION_USERS_SUCCESS,
+    // REQUEST_INNOVATION_USERS_ERROR,
   INVITE_INNOVATION_USERS_BEGIN,
   INVITE_INNOVATION_USERS_SUCCESS,
   INVITE_INNOVATION_USERS_ERROR
@@ -16,9 +16,9 @@ import { User, Partner, Role } from '../models';
 export const getAllUsers = () => async (dispatch) => {
   dispatch({ type: REQUEST_ALL_USERS_BEGIN });
   try {
-    let { data } = await User.per(200).all() // TODO: find way to return all results with specified top limit
+    const { data } = await User.per(200).all() // TODO: find way to return all results with specified top limit
     const inVentureUsers = data.map(user => ({ ...user.attributes }) )
-    let innUsers = (await await Partner.includes({ roles: "user" }).find(22)).data;
+    const innUsers = (await await Partner.includes({ roles: 'user' }).find(22)).data;
     console.log('innUsers', innUsers);
     dispatch({ type: REQUEST_ALL_USERS_SUCCESS, inVentureUsers });
   }

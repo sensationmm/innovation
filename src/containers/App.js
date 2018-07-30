@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-// import Home from './Home';
+import Home from './Home';
 import InnovationOverview from '../components/innovation/InnovationOverview';
 import ConceptOverviewEditable from './ConceptOverviewEditable';
 import InnovationCreate from './InnovationCreate';
@@ -26,7 +26,7 @@ const App = () => (
     <Header />
     <main>
       <Switch>
-        {/* <PrivateRoute exact path="/" component={Home} /> */}
+        <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/dashboard" component={InnovationDashboard} />
         <PrivateRoute exact path="/innovation-overview/:innovationId?" component={InnovationOverview} />
         <PrivateRoute exact path="/create-innovation" component={InnovationCreate} />

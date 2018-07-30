@@ -1,5 +1,4 @@
 import {
-  GET_CONCEPTS_SUCCESS, // TODO: Remove if no longer required when all concept data is coming from GET_INNOVATION_DATA_SUCCESS.
   GET_INNOVATION_DATA_SUCCESS,
   CREATE_CONCEPT_SUCCESS,
   EDIT_CONCEPT_SUCCESS

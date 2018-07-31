@@ -1,1 +1,53 @@
 @import './modules/colors.scss';
+
+.finance-report-form-container {
+  background: $background-grey-light;
+  margin-bottom: 2px;
+  position: relative;
+  padding: 10px 20px;
+}
+
+.finance-report-form-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.finance-report-form-title {
+  color: $text-off-white;
+  font-size: 14px;
+}
+
+.finance-report-form-label {
+  color: $text-grey-white;
+  font-size: 13px;
+  padding: 5px;
+}
+
+.finance-report-form-button {
+  width: 25px;
+  background: $cyan-blue;
+  padding: 15px;
+  margin: 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  text-align: center;
+  transition: all 0.3s;
+  font-size: 14px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.selected-button {
+    background: $green;
+  }
+}
+
+.finance-report-form-required-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: $light-red;
+}

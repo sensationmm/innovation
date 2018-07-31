@@ -46,7 +46,7 @@ export const getActiveInnovationData = (partnerId) => async dispatch => {
     const partner = (await Partner.includes([
       { innovation: [ 'key_dates', { concepts: 'target_industry' } ] },
       { roles: 'user' },
-      'roles', 'industry'
+      'industry'
     ]).find(partnerId)).data;
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
 

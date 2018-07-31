@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import FinanceReportInput from '../components/formInputs/FinanceReportInput';
-import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
+
+import { financeScoreOptions } from '../config/conceptOptions';
 
 import '../styles/css/concept-finance-report.css'
 
@@ -13,12 +14,16 @@ class ConceptFinanceReport extends Component {
     pvf: { value: null, description: '', comment: '' } // key, value, description, comment are required to save a FinanceScore.
   }
 
-  updateFormField = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
+  stat
+
+  updateOption = (key, index, label) => {
+    const newKeyObj = { ...this.state[key], description: label, value: index };
+    this.setState({ [key]: newKeyObj });
   }
 
-  selectOption = (key, value) => {
-    this.setState({ [key]: value })
+  updateComment = (key, comment) => {
+    const newKeyObj = { ...this.state[key], comment };
+    this.setState({ [key]: newKeyObj });
   }
 
   createConceptFinanceReport = () => {
@@ -32,37 +37,21 @@ class ConceptFinanceReport extends Component {
       <div className="finance-report-container">
         <div className="finance-report-page-title">Concept Finance Report</div>
         <div className="finance-report-section-container">
-          <FinanceReportInput
-            keyToUpdate="pvf"
-            title="PVF"
-            optionSet={[{number: 0, label: '<0.85'}, {number: 1, label: '0.85-1.00'}, {number: 2, label: '1.00+'}]}
-            selectedValue={this.state.pvf}
-            selectOption={this.selectOption}
-            isRequired={true}
-          />
-          {/* <FormSectionHeader
-            title="Concept Overview"
-          />
-          <VFTConceptOverview
-            updateFormField={this.updateFormField}
-            selectOption={this.selectOption}
-            conceptName="Hardcoded Name"
-            conceptRank={this.state.conceptRank}
-            VFComments={this.state.VFComments}
-          />
-        </div>
-        <div className="finance-report-section-container">
-          <FormSectionHeader
-            title="Concept Rankings"
-          />
-          <VFTConceptScores
-            selectOption={this.selectOption}
-            solutionScore={this.state.solutionScore}
-            businessModelScore={this.state.businessModelScore}
-            marketSizeScore={this.state.marketSizeScore}
-            corpAdvantageScore={this.state.corpAdvantageScore}
-          />
-        </div> */}
+          {
+            financeScoreOptions.map(option => (
+              <FinanceReportInput
+                key={`finance-report-input-${option.key}`}
+                keyToUpdate={option.key}
+                title={option.title}
+                labels={option.labels}
+                selectedAttr={this.state[option.key]}
+                updateOption={this.updateOption}
+                updateComment={this.updateComment}
+                isRequired={true}
+              />
+            ))
+          }
+
         <div className="create-innovation-user-actions">
           <BackTextLink
             label="Back"
@@ -74,6 +63,7 @@ class ConceptFinanceReport extends Component {
           />
         </div>
       </div>
+    </div>
     )
   }
 }

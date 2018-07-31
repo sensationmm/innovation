@@ -73,12 +73,13 @@ class InnovationOverview extends Component {
 
     return (
       <div>
-        <div>
+        <ContentBox background={false}>
           <BackTextLink
             label="Back"
             onClick={() => this.props.history.goBack()}
           />
-        </div>
+        </ContentBox>
+
         <ContentBox>
           <h1>{activeInnovation.sprintName}</h1>
           <div>Innovation Type: {activeInnovation.sprintType}</div>
@@ -90,39 +91,44 @@ class InnovationOverview extends Component {
               onChange={this.handleUpdateMandate}
               value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
             />
-            {
-              mandateUpdated &&
-                <ButtonSubmit
-                  label="Save"
-                  onClick={() => this.mandateUpdateToDB()}
-                />
+            {mandateUpdated &&
+              <ButtonSubmit
+                label="Save"
+                onClick={() => this.mandateUpdateToDB()}
+              />
             }
 
           </div>
         </ContentBox>
 
-        {
-          (activeInnovation.keyDates && keyDatesSetup) &&
-            <ContentBox background={false}>
-              <ProgressBar
-                dates={dates}
-                labels={labels}
-              />
-              <div className="innovation-overview-edit-icon" onClick={() => this.setState({ openEditDates: !openEditDates })}>
-                <i className="far fa-edit"></i>
-              </div>
-            </ContentBox>
-        }
-        {
-          openEditDates &&
-            <div className="create-innovation-section-container">
-              <FormSectionHeader
-                title='Enter Immersion Session Key Dates'
-                subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
-              />
-              <InnovationAddDates innovationId={activeInnovation.id} />
+        {(activeInnovation.keyDates.length > 0 && keyDatesSetup)
+          ? <ContentBox background={false}>
+            <ProgressBar
+              dates={dates}
+              labels={labels}
+            />
+            <div className="innovation-overview-edit-icon">
+              <button className="form-submit-button" onClick={() => this.setState({ openEditDates: !openEditDates })}>
+                Edit Key Dates
+              </button>
             </div>
+          </ContentBox>
+
+          : <button className="cta-button" onClick={() => this.setState({ openEditDates: !openEditDates })}>
+            Add Immersion Session Key Dates
+          </button>
         }
+
+        {openEditDates &&
+          <div className="create-innovation-section-container">
+            <FormSectionHeader
+              title='Enter Immersion Session Key Dates'
+              subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
+            />
+            <InnovationAddDates innovationId={activeInnovation.id} />
+          </div>
+        }
+
         <div className="innovation-overview-toplinks">
           {
             !keyDatesSetup &&

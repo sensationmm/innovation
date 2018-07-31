@@ -46,24 +46,47 @@ const initialState = {
   allInnovationsList: [
     {
       id: 1,
-      sprintName: 'Sprint 1',
-      partner: 'Big Company 1',
+      region: 'Europe',
+      createdAt: '2018-03-23',
+      innovationType: 'Portfolio Sprint',
       chargeCode: 'GF65F56',
-      keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+      sprintName: 'Fake Innovation 1',
+      dvPartner1: 'Steven Kentishly-Warren',
+      dvPartner2: 'Bez',
+      mandate: 'Tweet a lot of tweets',
+      startDate: '2018-04-14',
+      kickedOffAt: '2018-06-24',
+      dvOffice: 'London',
+      partner: 'Big Company 1',
+      gm: 'Kevin Reynolds',
+      keyDates: [ { name: 'KO', date: '2018-06-24' }, { name: 'IS1', date: '2018-07-30' }, { name: 'IS2', date: '2018-08-24' }, { name: 'IS3', date: '2018-09-18' } ]
     },
     {
       id: 2,
+      region: 'North America',
       sprintName: 'Sprint 2',
       partner: 'Big Company 2',
       chargeCode: 'GF65D43',
-      keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+      startDate: '2018-06-01',
+      keyDates: [ { name: 'KO', date: '2018-08-26' }, { name: 'IS1', date: '2018-10-12' }, { name: 'IS2', date: '2018-11-01' }, { name: 'IS3', date: '2018-12-12' } ]
     },
     {
       id: 3,
+      region: 'Europe',
+      sprintName: 'Sprint 4',
+      partner: 'Big Company 4',
+      chargeCode: 'GB35F50',
+      startDate: '2018-06-01',
+      keyDates: []
+    },
+    {
+      id: 3,
+      region: 'APAC',
       sprintName: 'Sprint 3',
       partner: 'Big Company 3',
       chargeCode: 'GB35F50',
-      keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+      startDate: '2018-06-01',
+      keyDates: [ { name: 'KO', date: '2018-07-20' }, { name: 'IS1', date: '2018-08-13' }, { name: 'IS2', date: '2018-09-06' }, { name: 'IS3', date: '2018-09-30' } ]
     }
   ]
 };
@@ -91,7 +114,7 @@ export default (state = initialState, action) => {
         sprintName: newInnovation.sprintName,
         partner: newPartner.name,
         chargeCode: newPartner.chargeCode,
-        keyDates: [ { name: 'KO', date: 'YYY-MM-DD' }, { name: 'IS1', date: 'YYY-MM-DD' }, { name: 'IS2', date: 'YYY-MM-DD' }, { name: 'IS3', date: 'YYY-MM-DD' } ]
+        keyDates: [ { name: 'KO', date: '2018-MM-DD' }, { name: 'IS1', date: '2018-MM-DD' }, { name: 'IS2', date: '2018-MM-DD' }, { name: 'IS3', date: '2018-MM-DD' } ]
       }
       const newInnovationsList = [ ...state.allInnovationsList, newInnovationSummary ]
 

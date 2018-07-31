@@ -12,7 +12,9 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner } = action;
-      const activeInnovationUsers = partner.roles.map(({ user }) => { return { ...user.attributes } } );
+      const activeInnovationUsers = partner.roles.map(role => {
+        return role.user ? { ...role.user.attributes } : null
+      } );
       return { ...state, activeInnovationUsers }
     }
 

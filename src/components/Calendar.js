@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 import CalendarItem from './CalendarItem';
 import CalendarGrouping from './CalendarGrouping';
@@ -46,13 +47,21 @@ class Calendar extends Component {
   }
 
   render() {
-
     const month1 = moment().startOf('month');
     const month2 = moment().startOf('month').add(1, 'month');
     const month3 = moment().startOf('month').add(2, 'month');
     const month4 = moment().startOf('month').add(3, 'month');
     const month5 = moment().startOf('month').add(4, 'month');
     const month6 = moment().startOf('month').add(5, 'month');
+
+    if(this.props.innovations.length === 0) {
+      return (
+        <div className="calendar" style={{textAlign: 'center'}}>
+          <p>No Innovations to display</p>
+          <Link to="/dashboard">&lt; Back to Dashboard</Link>
+        </div>
+      )
+    }
 
     const innovations = (this.props.innovations[0].region) ? this.groupInnovations() : this.props.innovations;
 

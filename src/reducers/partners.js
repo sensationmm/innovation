@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner } = action;
-      const activePartner = { ...partner.attributes };
+      const activePartner = { ...partner.attributes, industryId: partner.industry.id, industryName: partner.industry.name };
       return { ...state, activePartner  };
     }
 

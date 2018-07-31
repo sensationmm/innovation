@@ -110,7 +110,7 @@ export const Concept = ApplicationRecord.extend({
     id: attr(),
     createdAt: attr(),
     name: attr(),
-    status: attr(), // killed, incomplete, complete, scored
+    status: attr(), // killed, draft, ready, analysed
     description: attr(),
     logo: attr(),
     logoName: attr(),
@@ -219,10 +219,9 @@ export const User = ApplicationRecord.extend({
     email: attr(),
     password: attr(),
     currentPassword: attr(),
-    innovationId: attr(),
+    partner: belongsTo(),
     roles: hasMany(),
-    role: belongsTo(),
-    innovation: belongsTo()
+    role: belongsTo()
   }
 });
 

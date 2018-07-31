@@ -31,9 +31,7 @@ export const inviteInnovationUsers = (partnerId, emails, roleName) => async (dis
   dispatch({ type: INVITE_INNOVATION_USERS_BEGIN })
   try {
     for ( const email of emails ) {
-      console.log('email', email);
-      const newUser = new Role({ email, name: 'admin', rolableId: 21, rolableType: 'Partner' });
-      console.log('saving new user', newUser);
+      const newUser = new Role({ email, name: 'admin', rolableId: partnerId, rolableType: 'Partner' });
       await newUser.save();
     }
     dispatch({ type: INVITE_INNOVATION_USERS_SUCCESS });

@@ -40,12 +40,13 @@ export const Partner = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
-    chargeCode: attr(),
     name: attr(),
     description: attr(),
     hqCity: attr(),
     hqCountry: attr(),
-    industryId: attr(), // TODO: Is this setup so we receive ids from relationships when sideloading?
+    industryId: attr(),
+    roles: hasMany(),
+    users: hasMany(),
     innovation: hasOne(),
     industry: belongsTo()
   }
@@ -67,23 +68,25 @@ export const Innovation = ApplicationRecord.extend({
     jsonapiType: 'innovations'
   },
   attrs: {
-    id: attr(),
     createdAt: attr(),
-    innovationType: attr(),
-    sprintName: attr(),
+    colour: attr(),
+    duration: attr(),
     dvPartner1: attr(),
     dvPartner2: attr(),
-    mandate: attr(),
-    logo: attr(),
-    openDate: attr(),
+    id: attr(),
     kickedOffAt: attr(),
-    colour: attr(),
+    logo: attr(),
+    mandate: attr(),
+    openDate: attr(),
+    sprintName: attr(),
+    sprintType: attr(),
+    chargeCode: attr(),
+    partnerId: attr(),
     dvOfficeId: attr(),
     keyDates: hasMany(),
-    roles: hasMany(),
     concepts: hasMany(),
-    users: hasMany()
-    // dvOffice: belongsTo()
+    dvOffice: belongsTo(),
+    partner: belongsTo()
   }
 });
 
@@ -107,11 +110,12 @@ export const Concept = ApplicationRecord.extend({
     id: attr(),
     createdAt: attr(),
     name: attr(),
-    status: attr(), // killed, incomplete, complete, scored
+    status: attr(), // killed, draft, ready, analysed
     description: attr(),
     logo: attr(),
-    segment: attr(),
-    friction: attr(),
+    logoName: attr(),
+    marketFriction: attr(),
+    marketSegment: attr(),
     marketSize: attr(),
     targetCustomers: attr(),
     targetGeography: attr(),
@@ -124,11 +128,11 @@ export const Concept = ApplicationRecord.extend({
     revenueModel: attr(),
     unitEconomics: attr(),
     corporateAdvantage: attr(),
-    corporateAssets: attr(),
+    leveragedAssets: attr(),
     incubationCost: attr(),
     breakEvenCost: attr(),
     breakEvenYear: attr(),
-    willGMLeave: attr(),
+    willGmLeave: attr(),
     gmConviction: attr(),
     gmComments: attr(),
     partnerPreferences: attr(),
@@ -183,12 +187,9 @@ export const conceptFinanceScore = ApplicationRecord.extend({
   },
   attrs: {
     id: attr(),
-    overallRank: attr(),
-    comments: attr(),
-    solutionRank: attr(),
-    modelRank: attr(),
-    marketSize: attr(),
-    corporateAdvantage: attr(),
+    key: attr(),
+    value: attr(),
+    comment: attr(),
     conceptId: attr(),
     concept: belongsTo()
   }
@@ -218,10 +219,9 @@ export const User = ApplicationRecord.extend({
     email: attr(),
     password: attr(),
     currentPassword: attr(),
-    innovationId: attr(),
+    partner: belongsTo(),
     roles: hasMany(),
-    role: belongsTo(),
-    innovation: belongsTo()
+    role: belongsTo()
   }
 });
 

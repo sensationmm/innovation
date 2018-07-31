@@ -8,23 +8,31 @@ import {
   GET_INNOVATIONS_LIST_BEGIN,
   GET_INNOVATIONS_LIST_SUCCESS,
   GET_INNOVATIONS_LIST_ERROR,
-  UPDATE_INNOVATION_BEGIN,
-  UPDATE_INNOVATION_SUCCESS,
-  UPDATE_INNOVATION_ERROR,
+  EDIT_INNOVATION_BEGIN,
+  EDIT_INNOVATION_SUCCESS,
+  EDIT_INNOVATION_ERROR,
+  EDIT_INNOVATION_KEYDATES_BEGIN,
+  EDIT_INNOVATION_KEYDATES_SUCCESS,
+  EDIT_INNOVATION_KEYDATES_ERROR,
   // DELETE_INNOVATION_BEGIN,
   // DELETE_INNOVATION_SUCCESS,
   // DELETE_INNOVATION_ERROR
 } from '../config/constants';
 
+import { push } from 'connected-react-router';
+import moment from 'moment';
+
 // Import JSON API models.
-import { Innovation, Partner } from '../models';
-// import { Role, KeyDate } from '../models';
+import { Innovation, Partner, KeyDate } from '../models';
 
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
   try {
-    const { data } = await Innovation.select([ 'id', 'name', 'logo' ]).all()
-    dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, data });
+    // Need the following data for the dashboard page: innovation { sprintName, charge code, keyDates, partnerName }.
+    const partnersWithInnovations = (await Partner.includes({ innovation: [ 'key_dates' ]})
+                                                  .select([ 'name', 'charge_code' ])
+                                                  .all()).data;
+    dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, partnersWithInnovations });
   }
   catch (err) {
     console.log(err);
@@ -32,14 +40,26 @@ export const getAllInnovationsList = () => async dispatch => {
   }
 }
 
-export const getActiveInnovationData = ventureId => async dispatch => {
+// @param redirectToOverview = {boolean}.
+export const getActiveInnovationData = (partnerId, redirectToOverview) => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
-    const { data } = await Innovation.includes([
-      'key_dates', { roles: 'user' }, 'concepts'
-    ]).find(ventureId); // TODO: auth action is not calling this at the momemnt so as not to overwrite dummy data in redux store.
-    dispatch({ type: GET_INNOVATION_DATA_SUCCESS, data });
-    return data;
+    const partner = (await Partner.includes([
+      { innovation: [ 'key_dates', { concepts: 'target_industry' } ] },
+      { roles: 'user' },
+      'roles', 'industry'
+    ]).find(partnerId)).data;
+    dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
+
+    // TODO: You may need to clear this attribute on the token (and the activeInnovationData) when the user returns to the dashboard?
+    const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
+    storedToken.activePartnerId = partnerId;
+    const newToken = JSON.stringify(storedToken);
+    localStorage.setItem('inventure-auth', newToken);
+
+    if (redirectToOverview) {
+      dispatch(push(`/innovation-overview/${partnerId}`));
+    }
   }
   catch (err) {
     console.log(err);
@@ -47,32 +67,27 @@ export const getActiveInnovationData = ventureId => async dispatch => {
   }
 }
 
-export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatch => {
+export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispatch, getState) => {
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   try {
-    // 1. Find the industry model selected by the user.
-    console.log(partnerAttrs.industry);
-    // 2. Create the new Partner instance from the data, connect it to the industry and then save to API.
     const newPartner = new Partner();
     for ( const key of Object.keys(partnerAttrs) ) {
       newPartner[key] = partnerAttrs[key];
     }
-    newPartner.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id
+    await newPartner.save();
 
-    // await partner.save();
-    console.log('newPartner', newPartner);
-
-    // TODO: Create a new innovation, attach the new innovation to the partner instance by its id, then save.
     const newInnovation = new Innovation();
     for ( const key of Object.keys(innovationAttrs) ) {
-      newInnovation[key] = innovationAttrs[key]
+      newInnovation[key] = innovationAttrs[key];
     }
-    newInnovation.id = Math.round(Math.random() * 999); // TODO: remove hard coded value once API generates id.
-    console.log('newInnovation', newInnovation);
-    // newInnovation.partnerId = newPartner.id;
-    // await innovation.save();
+    newInnovation.partnerId = newPartner.id;
+    await newInnovation.save();
 
-    dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation } });
+    dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation.attributes } });
+    dispatch(getActiveInnovationData(newPartner.id, true));
+    // Redirect to the newly created active innovation overview
+    dispatch(push(`/innovation-overview/${newInnovation.partnerId}`));
+    dispatch(getAllInnovationsList());
   }
   catch (err) {
     console.log(err);
@@ -80,14 +95,61 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async dispatc
   }
 }
 
-export const editInnovation = (innovationId, newInnovationData) => dispatch => {
-  dispatch({ type: UPDATE_INNOVATION_BEGIN })
+export const editInnovation = (innovationId, newInnovationAttrs, saveToDB) => async dispatch => {
+  dispatch({ type: EDIT_INNOVATION_BEGIN })
+  if (saveToDB) {
+    try {
+      const innovationToUpdate = (await Innovation.find(innovationId)).data;
+      for ( const key of Object.keys(newInnovationAttrs) ) {
+        innovationToUpdate[key] = newInnovationAttrs[key];
+      }
+      await innovationToUpdate.save();
+      dispatch({ type: EDIT_INNOVATION_SUCCESS }) // TODO: Do we need to pass anything here? This branch of action only runs on submit, and changes have already been saved into redux by the other branch of the conditional.
+    }
+    catch (err) {
+      console.log(err);
+      dispatch({ type: EDIT_INNOVATION_ERROR })
+    }
+  } else {
+    dispatch({ type: EDIT_INNOVATION_SUCCESS, innovationId, newInnovationAttrs });
+  }
+
+}
+
+export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) => {
+  dispatch({ type: EDIT_INNOVATION_KEYDATES_BEGIN })
   try {
-    console.log('editInnovation action');
-    dispatch({ type: UPDATE_INNOVATION_SUCCESS })
+    for ( const keyDate of editedKeyDates ) {
+      if (keyDate.fromDB) {
+        if (keyDate.hasChanged) {
+          const updatedKeyDate = (await KeyDate.find(keyDate.id)).data
+          updatedKeyDate.name = keyDate.name;
+          updatedKeyDate.date = moment(keyDate.date).format('YYYY-MM-DD');
+          await updatedKeyDate.save();
+        }
+
+        if (keyDate.forDeletion) {
+          const dateToDelete = (await KeyDate.find(keyDate.id)).data
+          await dateToDelete.destroy();
+        }
+
+      } else {
+        const newKeyDate = new KeyDate({
+          name: keyDate.name,
+          date: moment(keyDate.date).format('YYYY-MM-DD'),
+          keyDatableType: 'Innovation',
+          keyDatableId: innovationId
+        })
+        await newKeyDate.save();
+      }
+
+    }
+    // Get a new fresh list of all the key dates.
+    const updatedInnovation = (await Innovation.includes('key_dates').find(innovationId)).data;
+    const updatedInnovationKeyDates = updatedInnovation.keyDates.map(keyDate => ({ ...keyDate.attributes }));
+    dispatch({ type: EDIT_INNOVATION_KEYDATES_SUCCESS, updatedInnovationKeyDates })
   }
   catch (err) {
-    console.log(err);
-    dispatch({ type: UPDATE_INNOVATION_ERROR })
+    dispatch({ type: EDIT_INNOVATION_KEYDATES_ERROR })
   }
 }

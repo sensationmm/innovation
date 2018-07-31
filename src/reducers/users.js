@@ -1,5 +1,6 @@
 import {
-  GET_INNOVATION_DATA_SUCCESS
+  GET_INNOVATION_DATA_SUCCESS,
+  REQUEST_ALL_USERS_SUCCESS
 } from '../config/constants';
 
 const initialState = {
@@ -10,8 +11,14 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
-      const activeInnovationUsers = action.data.roles.map(({ user }) => { return { ...user.attributes } } );
+      const { partner } = action;
+      const activeInnovationUsers = partner.roles.map(({ user }) => { return { ...user.attributes } } );
       return { ...state, activeInnovationUsers }
+    }
+
+    case REQUEST_ALL_USERS_SUCCESS: {
+      const { inVentureUsers } = action;
+      return { ...state, inVentureUsers };
     }
 
     default:

@@ -6,12 +6,11 @@ import PropTypes from 'prop-types';
 import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import ContentBox from '../components/layout/ContentBox';
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
-import ButtonSubmit from '../components/buttons/ButtonSubmit';
-import BackTextLink from '../components/buttons/BackTextLink';
+
+import { getActiveInnovationData } from '../actions/innovations';
 
 import '../styles/css/innovation-dashboard.css';
 
-const dummyUsers = ['partner1@fake.com', 'partner2@fake.com', 'partner3@fake.com', 'partner4@fake.com', 'partner5@fake.com']
 const userType = 'teamGM'; // get user type from auth.user in redux store.
 
 class InnovationDashboard extends Component {
@@ -35,13 +34,17 @@ class InnovationDashboard extends Component {
      })
   }
 
+  handleOpenInnovation = (id) => {
+    this.props.getActiveInnovationData(id, true);
+  }
+
   sendInnovationsSummmary = () => {
     console.log('Send innovations summary to ', this.state.emails);
   }
 
   render() {
     const { innovations } = this.props;
-    const { sendSummaryOpen, emails } = this.state;
+    const { sendSummaryOpen } = this.state;
     return (
       <div>
         {
@@ -52,24 +55,7 @@ class InnovationDashboard extends Component {
                   title="Send A Summary of All Innovations"
                   subtitle="Enter emails to send summary of current innovations (you'll automatically recieve a copy of the email)."
                 />
-                <InnovationAddTeam
-                  newTeamMembers={emails}
-                  curTeamMembers={[]}
-                  addNewTeamMember={this.addEmail}
-                  removeNewTeamMember={this.removeEmail}
-                  allVentureViewUsers={dummyUsers}
-                />
-                <div className="send-summary-popup-user-actions">
-                  <BackTextLink
-                    label="Cancel"
-                    onClick={() => this.toggleOpenSendSummary()}
-                    textColor='black'
-                  />
-                  <ButtonSubmit
-                    label="Send"
-                    onClick={() => this.sendInnovationsSummmary()}
-                  />
-                </div>
+                <InnovationAddTeam onSave={() => this.sendInnovationsSummmary()} onCancel={this.toggleOpenSendSummary} />
               </div>
             </div>
         }
@@ -83,7 +69,7 @@ class InnovationDashboard extends Component {
             <div>Create a new Innovation</div>
           </Link>
           {
-            (userType === 'teamGM' || userType === 'teamMember') &&
+            (innovations.length > 0 && (userType === 'teamGM' || userType === 'teamMember')) &&
               <div className="innovation-dash-send-summary-container" onClick={() => this.toggleOpenSendSummary()}>
                 <div><i className="fas fa-envelope fa-2x send-summary-icon"></i></div>
                 <div>Send Innovations Summary</div>
@@ -91,7 +77,7 @@ class InnovationDashboard extends Component {
           }
         </div>
         {
-          innovations.map(innovation => {
+          innovations && innovations.map(innovation => {
             return (
               <ContentBox key={`dashboard-${innovation.sprintName}`}>
                 <div className="innovation-dash-innovation-container">
@@ -100,22 +86,26 @@ class InnovationDashboard extends Component {
                       {innovation.sprintName}
                     </div>
                     <div className="innovation-dash-text-field">
-                      {innovation.partner}
+                      {innovation.partnerName}
                     </div>
                     <div className="innovation-dash-text-field subtitle">
                       {innovation.chargeCode}
                     </div>
                     <div className="innovation-dash-text-field">
                       <div className="innovation-dash-key-dates">
-                        {innovation.keyDates.map(keyDate => (
-                          <div key={`keyDates-${keyDate.name}`}>{keyDate.name}: {keyDate.date}</div>
-                        ))}
+                        {
+                          (innovation.keyDates && innovation.keyDates.length > 0)
+                            ? innovation.keyDates.map(keyDate => (
+                                <div key={`keyDates-${keyDate.name}`}>{keyDate.name}: {keyDate.date}</div>
+                              ))
+                            : <div>Key Dates Not Yet Added - Add key dates button?</div>
+                          }
                       </div>
                     </div>
                   </div>
-                  <Link to={`/innovation-overview/${innovation.id}`}>
-                    <div className="innovation-dash-view-details-link">View Details</div>
-                  </Link>
+                  <div className="innovation-dash-view-details-link" onClick={() => this.handleOpenInnovation(innovation.partnerId)}>
+                    View Details
+                  </div>
                 </div>
               </ContentBox>
             )
@@ -127,11 +117,14 @@ class InnovationDashboard extends Component {
 }
 
 InnovationDashboard.propTypes = {
-   innovations: PropTypes.array
+   innovations: PropTypes.array,
+   getActiveInnovationData: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  innovations: state.innovations.allInnovationsList
+  innovations: state.innovations.allInnovationsList.filter(innovation => innovation.chargeCode) // TODO: remove once DB is cleared of test data.
 });
 
-export default connect(mapStateToProps, null)(InnovationDashboard)
+const actions = { getActiveInnovationData };
+
+export default connect(mapStateToProps, actions)(InnovationDashboard)

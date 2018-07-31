@@ -32,7 +32,7 @@ const Dropdown = (props) => {
       <select id={id} value={value} onChange={onChange} style={elStyle}>
         {
           placeholder &&
-            <option value="" disabled hidden>{placeholder}</option>
+            <option value="">{placeholder}</option>
         }
         {options.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
       </select>

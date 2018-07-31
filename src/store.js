@@ -12,13 +12,14 @@ const initialState = {};
 const enhancers = [];
 const middleware = [thunk, routerMiddleware(history)];
 
-if (process.env.NODE_ENV === 'development') {
-  const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
+const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 
+if (process.env.NODE_ENV !== 'production') {
   if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension());
+      enhancers.push(devToolsExtension());
   }
 }
+
 
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 

@@ -16,8 +16,8 @@ import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-import { createConcept, editConcept } from '../actions/concepts';
-import  { removeNullValueAttrs } from '../utils/functions';
+import { createConcept } from '../actions/concepts';
+import  { removeNullValueAttrs, getDataUri } from '../utils/functions';
 
 class ConceptCreate extends Component {
 
@@ -29,7 +29,7 @@ class ConceptCreate extends Component {
     marketFriction: '',
     marketSize: '',
     targetCustomers: '',
-    targetIndustry: '',
+    targetIndustryId: '',
     targetGeography: '',
     solutionDescription: '',
     primaryTechnology: '',
@@ -44,7 +44,7 @@ class ConceptCreate extends Component {
     incubationCost: '',
     breakEvenCost: '',
     breakEvenYear: '',
-    willGMLeave: null,
+    willGmLeave: null,
     gmConviction: null,
     gmComments: '',
     partnerPreferences: ''
@@ -73,14 +73,23 @@ class ConceptCreate extends Component {
   }
 
   handleSaveConcept = () => {
-    const { createConcept, activeInnovationId } = this.props;
-    const attrsToCreate = removeNullValueAttrs({ ...this.state })
-    console.log('attrsToCreate', attrsToCreate);
-    createConcept(activeInnovationId, attrsToCreate)
+    const { createConcept, activeInnovationId, activePartnerId } = this.props;
+    const attrsToCreate = removeNullValueAttrs({ ...this.state });
+    // If there is a logo uploaded, format it ready for saving to the DB.
+    if (attrsToCreate.logo) {
+      const { logo: { preview }} = this.state;
+      getDataUri(preview, function(dataUri) {
+        attrsToCreate.logo = dataUri;
+        attrsToCreate.logoName = preview;
+        createConcept(activeInnovationId, attrsToCreate);
+      });
+    } else {
+      createConcept(activeInnovationId, attrsToCreate, `/innovation-overview/${activePartnerId}`);
+    }
   }
 
   requiredFieldsAreCompleted = () => {
-    const requiredFields = ['name']; // TODO: Move to config file.
+    const requiredFields = [ 'name', 'targetIndustryId' ]; // TODO: Move to config file.
     return requiredFields
       .every(attr => (this.state[attr] !== null && this.state[attr] !== '' && this.state[attr] !== {} && this.state[attr] !== undefined));
   }
@@ -102,6 +111,7 @@ class ConceptCreate extends Component {
             name={this.state.name}
             description={this.state.description}
             logo={this.state.logo}
+            existingLogo={false}
           />
         </div>
         <div className="create-concept-section-container">
@@ -114,7 +124,7 @@ class ConceptCreate extends Component {
             friction={this.state.marketFriction}
             marketSize={this.state.marketSize}
             targetCustomers={this.state.targetCustomers}
-            targetIndustry={this.state.targetIndustry}
+            targetIndustryId={this.state.targetIndustryId}
             targetGeography={this.state.targetGeography}
           />
         </div>
@@ -163,7 +173,7 @@ class ConceptCreate extends Component {
             incubationCost={this.state.incubationCost}
             breakEvenCost={this.state.breakEvenCost}
             breakEvenYear={this.state.breakEvenYear}
-            willGMLeave={this.state.willGMLeave}
+            willGmLeave={this.state.willGmLeave}
           />
         </div>
         <div className="create-concept-section-container">
@@ -199,14 +209,15 @@ class ConceptCreate extends Component {
 ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
-  activeInnovationId: PropTypes.number
+  activeInnovationId: PropTypes.string,
+  activePartnerId: PropTypes.string
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state) => ({
   activeInnovationId: state.innovations.activeInnovation.id,
-  activeConcept: state.concepts.conceptsById[props.conceptId]
+  activePartnerId: state.partners.activePartner.id
 });
 
-const actions = { createConcept, editConcept };
+const actions = { createConcept };
 
 export default connect(mapStateToProps, actions)(ConceptCreate);

@@ -7,7 +7,7 @@ import SingleSelectBtnForm from '../../formInputs/SingleSelectBtnForm';
 import '../../../styles/css/concept-create.css';
 
 const ConceptCosts = (props) => {
-  const { incubationCost, breakEvenCost, breakEvenYear, willGMLeave, selectOption, updateFormField } = props;
+  const { incubationCost, breakEvenCost, breakEvenYear, willGmLeave, selectOption, updateFormField } = props;
   return (
     <div>
       <FormTextInput
@@ -31,9 +31,9 @@ const ConceptCosts = (props) => {
       <SingleSelectBtnForm
         label="Would you (GM) leave DV?"
         options={[{value: 'yes', label: 'Yes'}, {value: 'no', label: 'No'}]}
-        selectedValue={willGMLeave}
+        selectedValue={willGmLeave}
         selectOption={selectOption}
-        keyToUpdate='willGMLeave'
+        keyToUpdate='willGmLeave'
         title='Would you (GM) leave DV?'
       />
     </div>
@@ -44,7 +44,7 @@ ConceptCosts.propTypes = {
   incubationCost: PropTypes.string,
   breakEvenCost: PropTypes.string,
   breakEvenYear: PropTypes.string,
-  willGMLeave: PropTypes.string,
+  willGmLeave: PropTypes.string,
   selectOption: PropTypes.func,
   updateFormField: PropTypes.func
 }

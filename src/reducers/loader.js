@@ -1,5 +1,4 @@
 import {
-  GET_PORTFOLIO_BEGIN,
   GET_CONCEPTS_BEGIN,
   GET_CONCEPTS_SUCCESS,
   GET_CONCEPTS_ERROR
@@ -11,7 +10,6 @@ const initialState = {
 
 export const loader = (state = initialState, action) => {
   switch (action.type) {
-    case GET_PORTFOLIO_BEGIN:
     case GET_CONCEPTS_BEGIN:
       return {
         ...initialState,

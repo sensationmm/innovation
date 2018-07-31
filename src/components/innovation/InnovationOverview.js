@@ -16,6 +16,7 @@ import FlexRow from '../layout/FlexRow';
 import BackTextLink from '../buttons/BackTextLink';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import FormTextInput from '../formInputs/FormTextInput';
+import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
 
@@ -120,13 +121,13 @@ class InnovationOverview extends Component {
         }
 
         {openEditDates &&
-          <div className="create-innovation-section-container">
+          <Modal>
             <FormSectionHeader
               title='Enter Immersion Session Key Dates'
               subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
             />
-            <InnovationAddDates innovationId={activeInnovation.id} />
-          </div>
+            <InnovationAddDates innovationId={activeInnovation.id} callback={() => this.setState({ openEditDates: false })} />
+          </Modal>
         }
 
         <div className="innovation-overview-toplinks">

@@ -38,3 +38,9 @@ export const salesChannels = [
   { value: 'b2c', label: 'B2C' },
   { value: 'b2b2c', label: 'B2B2C' }
 ];
+
+export const financeScoreOptions = [
+  { title: 'PVF', key: 'pvf', labels: ['<0.85', '0.85-1.00', '1.00+'] },
+  { title: 'Pre-Money Valuation', key: 'preMoneyValuation', labels: ['>$10million', '$5-$10million', '$10million+'] },
+  { title: 'Corporate Advantage', key: 'corporateAdvantage', labels: ['Unclear', 'Standard', 'Exceptional'] }
+]

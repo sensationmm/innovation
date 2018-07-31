@@ -22,7 +22,7 @@ import '../../styles/css/innovation-overview.css';
 import { makeArrayFromIndexedObject, getByKey } from '../../utils/functions';
 import { editInnovation, getActiveInnovationData } from '../../actions/innovations';
 
-const userType = 'teamGM'; // TODO: get this conditionally from  redux store auth.user
+const userType = 'finance'; // TODO: get this conditionally from  redux store auth.user
 const curTeamMembers = [ // TODO: get from partner.users in redux store (also duplicated in InnovationAddTeam)
   {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
   {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
@@ -131,9 +131,9 @@ class InnovationOverview extends Component {
               title='IS Dates'
               subtitle='Estimates are fine!'
             />
-            <InnovationAddDates 
-              innovationId={activeInnovation.id} 
-              innovationOpenDate={activeInnovation.openDate} 
+            <InnovationAddDates
+              innovationId={activeInnovation.id}
+              innovationOpenDate={activeInnovation.openDate}
               callback={() => this.setState({ openEditDates: false })}
             />
           </Modal>

@@ -181,16 +181,15 @@ export const ConceptChange = ApplicationRecord.extend({
   }
 });
 
-export const conceptFinanceScore = ApplicationRecord.extend({
+export const FinanceScore = ApplicationRecord.extend({
   static: {
-    jsonapiType: 'concept_finance_scores'
+    jsonapiType: 'finance_scores'
   },
   attrs: {
     id: attr(),
     key: attr(),
     value: attr(),
     comment: attr(),
-    conceptId: attr(),
     concept: belongsTo()
   }
 });

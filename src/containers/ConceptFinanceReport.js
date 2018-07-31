@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import VFTConceptOverview from '../components/concept/VFTScores/VFTConceptOverview';
-import VFTConceptScores from '../components/concept/VFTScores/VFTConceptScores';
+import FinanceReportInput from '../components/formInputs/FinanceReportInput';
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
@@ -11,12 +10,7 @@ import '../styles/css/concept-finance-report.css'
 
 class ConceptFinanceReport extends Component {
   state = {
-    conceptRank: null,
-    VFComments: '',
-    solutionScore: null,
-    businessModelScore: null,
-    marketSizeScore: null,
-    corpAdvantageScore: null
+    pvf: { value: null, description: '', comment: '' } // key, value, description, comment are required to save a FinanceScore.
   }
 
   updateFormField = (e) => {
@@ -29,7 +23,7 @@ class ConceptFinanceReport extends Component {
 
   createConceptFinanceReport = () => {
     const { match: { params: { conceptId } } } = this.props;
-    console.log('create finance on concept', conceptId);
+    console.log('create finance report on concept', conceptId);
     console.log('create finance report with', this.state);
   }
 
@@ -38,7 +32,15 @@ class ConceptFinanceReport extends Component {
       <div className="finance-report-container">
         <div className="finance-report-page-title">Concept Finance Report</div>
         <div className="finance-report-section-container">
-          <FormSectionHeader
+          <FinanceReportInput
+            keyToUpdate="pvf"
+            title="PVF"
+            optionSet={[{number: 0, label: '<0.85'}, {number: 1, label: '0.85-1.00'}, {number: 2, label: '1.00+'}]}
+            selectedValue={this.state.pvf}
+            selectOption={this.selectOption}
+            isRequired={true}
+          />
+          {/* <FormSectionHeader
             title="Concept Overview"
           />
           <VFTConceptOverview
@@ -60,7 +62,7 @@ class ConceptFinanceReport extends Component {
             marketSizeScore={this.state.marketSizeScore}
             corpAdvantageScore={this.state.corpAdvantageScore}
           />
-        </div>
+        </div> */}
         <div className="create-innovation-user-actions">
           <BackTextLink
             label="Back"

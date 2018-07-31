@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import FinanceReportInput from '../components/formInputs/FinanceReportInput';
@@ -14,7 +15,36 @@ class ConceptFinanceReport extends Component {
     pvf: { value: null, description: '', comment: '' } // key, value, description, comment are required to save a FinanceScore.
   }
 
-  stat
+  // // TODO: Populate state from 'financeScoreOptions'.
+  // componentDidMount = () => {
+  //   const { conceptFinanceReport } = this.props;
+  //   // Create state object from the config file financeScoreOptions.
+  //   const derivedState = {};
+  //   financeScoreOptions.forEach(option => {
+  //     derivedState[option.key] = {
+  //       value: null,
+  //       description: '',
+  //       comment: ''
+  //     }
+  //   }
+  //   // Then, if it exists, populate it with data from redux: concept > financeReport
+  // }
+
+  componentDidMount = () => {
+    const { conceptFinanceReport } = this.props;
+    const derivedState = {};
+    // TODO: if conceptFinanceReport then fill the following object with values from it.
+    // TODO: Then use state to control the form inputs
+    // TODO: Then use state to submit the form.
+    financeScoreOptions.forEach(option => {
+      derivedState[option.key] = {
+        value: null,
+        description: '',
+        comment: ''
+      }
+    })
+    this.setState({ ...derivedState });
+  }
 
   updateOption = (key, index, label) => {
     const newKeyObj = { ...this.state[key], description: label, value: index };
@@ -33,6 +63,7 @@ class ConceptFinanceReport extends Component {
   }
 
   render() {
+    console.log('state', this.state);
     return (
       <div className="finance-report-container">
         <div className="finance-report-page-title">Concept Finance Report</div>
@@ -44,7 +75,7 @@ class ConceptFinanceReport extends Component {
                 keyToUpdate={option.key}
                 title={option.title}
                 labels={option.labels}
-                selectedAttr={this.state[option.key]}
+                attrName={option.key}
                 updateOption={this.updateOption}
                 updateComment={this.updateComment}
                 isRequired={true}
@@ -70,7 +101,14 @@ class ConceptFinanceReport extends Component {
 
 ConceptFinanceReport.propTypes = {
   history: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  conceptFinanceReport: PropTypes.objects
 };
 
-export default ConceptFinanceReport;
+const mapStateToProps = (state, props) => ({
+  conceptFinanceReport: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId].financeReport) || null
+});
+
+const actions = {};
+
+export default connect(mapStateToProps, actions)(ConceptFinanceReport);

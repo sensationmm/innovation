@@ -7,11 +7,11 @@ import FormTextInput from './FormTextInput';
 import '../../styles/css/concept-finance-report-input.css'
 
 const FinanceReportInput = (props) => {
-  const { keyToUpdate, title, labels, selectedAttr, updateOption, updateComment, isRequired } = props;
+  const { keyToUpdate, title, labels, attrName, updateOption, updateComment, isRequired } = props;
   return (
     <div className="finance-report-form-container">
       {
-        isRequired && !selectedAttr.value &&
+        isRequired && !attrName.value &&
           <div className="finance-report-form-required-label">Required</div>
       }
       <div className="finance-report-form-title">{title}</div>
@@ -20,7 +20,7 @@ const FinanceReportInput = (props) => {
           labels.map((label, index) => (
             <div key={`selectbutton-${label}`}>
               <div
-                className={classnames('finance-report-form-button', { 'selected-button': selectedAttr.value === index })}
+                className={classnames('finance-report-form-button', { 'selected-button': attrName.value === index })}
                 onClick={() => updateOption(keyToUpdate, index, label)}
               >
                 {index}
@@ -36,7 +36,7 @@ const FinanceReportInput = (props) => {
         id={keyToUpdate}
         placeholder={`${title} - comment`}
         onChange={(e) => updateComment(keyToUpdate, e.target.value)}
-        value={selectedAttr.comment}
+        value={attrName.comment}
         isRequired={true}
       />
     </div>
@@ -47,7 +47,7 @@ FinanceReportInput.propTypes = {
   keyToUpdate: PropTypes.string,
   title: PropTypes.string,
   labels: PropTypes.array,
-  selectedAttr: PropTypes.object,
+  attrName: PropTypes.object,
   updateOption: PropTypes.func,
   isRequired: PropTypes.bool,
   updateComment: PropTypes.func

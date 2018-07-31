@@ -41,6 +41,6 @@ export const salesChannels = [
 
 export const financeScoreOptions = [
   { title: 'PVF', key: 'pvf', labels: ['<0.85', '0.85-1.00', '1.00+'] },
-  { title: 'Pre-Money Valuation', key: 'preMoneyValuation', labels: ['>$10million', '$5-$10million', '$10million+'] },
+  { title: 'Pre-Money Valuation', key: 'preMoneyValuation', labels: ['>$10m', '$5-$10m', '$10m+'] },
   { title: 'Corporate Advantage', key: 'corporateAdvantage', labels: ['Unclear', 'Standard', 'Exceptional'] }
 ]

@@ -58,10 +58,11 @@ class InnovationAddDates extends Component {
 
   // Function that calls action -> the API.
   updateKeyDates = () => {
-    const { editKeyDates, innovationId } = this.props;
+    const { editKeyDates, innovationId, callback } = this.props;
     const { innovationKeyDates } = this.state;
     const updatedKeyDates = innovationKeyDates.filter(keyDate => keyDate.date);
     editKeyDates(innovationId, updatedKeyDates);
+    callback();
   }
 
   toggleFormOpen = () => {
@@ -75,18 +76,19 @@ class InnovationAddDates extends Component {
         <div className="innovation-keydates-container">
           <div className="innovation-keydates">
             {
-              innovationKeyDates.filter(keyDate => !keyDate.forDeletion)
-                                .map(({ id, name, date }) => (
-                                          <InnovationKeyDate
-                                            key={id}
-                                            id={id}
-                                            name={name}
-                                            date={date}
-                                            required={requiredKeyDates.includes(name)}
-                                            editKeyDate={this.editKeyDate}
-                                            deleteKeyDate={this.deleteKeyDate}
-                                          />
-                                        ))
+              innovationKeyDates
+                .filter(keyDate => !keyDate.forDeletion)
+                .map(({ id, name, date }) => (
+                  <InnovationKeyDate
+                    key={id}
+                    id={id}
+                    name={name}
+                    date={date}
+                    required={requiredKeyDates.includes(name)}
+                    editKeyDate={this.editKeyDate}
+                    deleteKeyDate={this.deleteKeyDate}
+                  />
+                ))
             }
           </div>
         </div>
@@ -125,6 +127,7 @@ class InnovationAddDates extends Component {
 InnovationAddDates.propTypes = {
   innovationId: PropTypes.string,
   editKeyDates: PropTypes.func,
+  callback: PropTypes.func,
   keyDates: PropTypes.array
 }
 

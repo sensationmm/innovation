@@ -12,7 +12,7 @@ import Grouping from './Grouping';
 import Tracking from './Tracking';
 import Canvas from './Canvas';
 import CanvasV2 from './CanvasV2';
-import Schedule from './Schedule';
+import InnovationCalendar from './InnovationCalendar';
 import Header from '../components/Header';
 import NotMobile from '../components/NotMobile';
 import NotFound from '../components/NotFound';
@@ -34,7 +34,7 @@ const App = () => (
         <PrivateRoute exact path="/vft-concept-report/:conceptId" component={ConceptFinanceReport} />
         <PrivateRoute exact path="/grouping" component={Grouping} />
         <PrivateRoute exact path="/tracking" component={Tracking} />
-        <PrivateRoute exact path="/schedule" component={Schedule} />
+        <PrivateRoute exact path="/innovation-calendar" component={InnovationCalendar} />
         <PrivateRoute exact path="/canvas" component={Canvas} />
         <PrivateRoute exact path="/canvas2" component={CanvasV2} />
         <PrivateRoute exact path="/concept/:conceptId" component={ConceptOverviewEditable} />

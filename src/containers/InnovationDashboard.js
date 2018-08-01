@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -54,8 +54,12 @@ class InnovationDashboard extends Component {
             </div>
         }
         <div className="innovation-dash-header">
-          <div>DV Location / Team Name</div>
-          <div>Your Innovations</div>
+          <div>Current Innovations</div>
+
+          <div className="innovation-dash-view">
+            <NavLink to="/dashboard" activeClassName="active"><i className="fas fa-list-ul"></i></NavLink>
+            <NavLink to="/innovation-calendar" activeClassName="active"><i className="fas fa-calendar-alt"></i></NavLink>
+          </div>
         </div>
         <div className="innovation-dash-toplinks">
           <Link className="innovation-dash-add-innovation-link" to='/create-innovation'>
@@ -73,7 +77,7 @@ class InnovationDashboard extends Component {
         {
           innovations && innovations.map(innovation => {
             return (
-              <ContentBox key={`dashboard-${innovation.sprintName}`}>
+              <ContentBox key={`dashboard-${innovation.innovationId}`}>
                 <div className="innovation-dash-innovation-container">
                   <div className="innovation-dash-summary">
                     <div className="innovation-dash-text-field">

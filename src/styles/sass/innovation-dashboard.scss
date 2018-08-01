@@ -31,8 +31,24 @@
   text-align: center;
   font-size: 22px;
   padding: 0 0 10px 0;
-  margin: 0 5px;
   border-bottom: 1px solid $background-grey-offwhite;
+  margin-bottom: 20px;
+}
+
+.innovation-dash-view {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+
+  > a {
+    margin-left: 20px;
+
+    &.active {
+      color: $green;
+    }
+  }
 }
 
 .innovation-dash-toplinks {

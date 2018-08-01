@@ -25,6 +25,7 @@ export default (state = initialState, action) => {
           sprintName: partnerWithInnovation.innovation && partnerWithInnovation.innovation.sprintName,
           partnerName: partnerWithInnovation.innovation && partnerWithInnovation.name,
           chargeCode: partnerWithInnovation.innovation.chargeCode,
+          openDate: partnerWithInnovation.innovation.openDate,
           keyDates: partnerWithInnovation.innovation && partnerWithInnovation.innovation.keyDates.map(keyDate => ({ ...keyDate.attributes }))
         }
       })

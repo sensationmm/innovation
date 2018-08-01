@@ -8,8 +8,8 @@ import InnovationAddPartner from '../components/innovation/InnovationAddPartner'
 import InnovationAddDetails from '../components/innovation/InnovationAddDetails';
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 
-import BackTextLink from '../components/buttons/BackTextLink';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
+import ButtonCancel from '../components/buttons/ButtonCancel';
 
 import { createInnovation } from '../actions/innovations';
 
@@ -124,14 +124,14 @@ class InnovationCreate extends Component {
           />
         </div>
         <div className="create-innovation-user-actions">
-          <BackTextLink
-            label="Back"
-            onClick={() => this.props.history.goBack()}
-          />
           <ButtonSubmit
             label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
             onClick={() => this.submitNewInnovation()}
             // disabled={!fieldsAreCompleted}
+          />
+
+          <ButtonCancel
+            onClick={() => this.props.history.goBack()}
           />
         </div>
       </div>

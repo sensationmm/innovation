@@ -5,9 +5,9 @@
   &-add-concept-link {
     display: flex;
     align-items: center;
-    min-width: 46%;
-    padding: 15px 2%;
-    margin: 15px 0;
+    padding: 15px 20px;
+    width: 0;
+    flex-grow: 1;
     background: $background-grey-light;
     text-decoration: none;
 
@@ -54,13 +54,16 @@
 
   &-toplinks {
     display: flex;
+    width: 100%;
+    justify-content: center;
     align-items: center;
     flex: 1 1 auto;
     min-width: 50%;
+    background: $background-grey-light;
+    margin: 15px 0;
   }
 
   &-edit-icon {
-    cursor: pointer;
     text-align: center;
   }
 }

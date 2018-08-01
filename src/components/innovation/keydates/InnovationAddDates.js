@@ -72,6 +72,15 @@ class InnovationAddDates extends Component {
 
   render() {
     const { openNewKeyDateForm, innovationKeyDates } = this.state;
+
+    let allEntered = true;
+
+    innovationKeyDates.forEach(date => {
+      if(date.date === null) {
+        allEntered = false;
+      }
+    });
+
     return (
       <div>
         <div className="innovation-keydates-container">
@@ -116,6 +125,7 @@ class InnovationAddDates extends Component {
         }
         <div className="create-innovation-user-actions">
           <ButtonSubmit
+            disabled={!allEntered}
             label="Save"
             onClick={() => this.updateKeyDates()} // TODO. Conditional on which module is open.
           />

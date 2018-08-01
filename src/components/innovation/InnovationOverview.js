@@ -13,7 +13,6 @@ import ConceptList from '../concept/ConceptList';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
-import BackTextLink from '../buttons/BackTextLink';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import FormTextInput from '../formInputs/FormTextInput';
 import Modal from '../layout/Modal';
@@ -21,7 +20,7 @@ import Modal from '../layout/Modal';
 import '../../styles/css/innovation-overview.css';
 
 import { makeArrayFromIndexedObject, getByKey } from '../../utils/functions';
-import { editInnovation } from '../../actions/innovations';
+import { editInnovation, getActiveInnovationData } from '../../actions/innovations';
 
 const userType = 'teamGM'; // TODO: get this conditionally from  redux store auth.user
 const curTeamMembers = [ // TODO: get from partner.users in redux store (also duplicated in InnovationAddTeam)
@@ -38,6 +37,12 @@ class InnovationOverview extends Component {
     openEditTeam: false,
     openEditMandate: false,
     mandateUpdated: false // TODO: May way to generalise this to be updatedFields as per concept overview if there are to be more inline editable fields on this page.
+  }
+
+  componentDidMount() {
+    const { match: { params: { innovationId } } } = this.props;
+
+    this.props.getActiveInnovationData(innovationId);
   }
 
   // For a more general version of this see ConceptOverviewEditable
@@ -62,7 +67,7 @@ class InnovationOverview extends Component {
     const activeReviewed = activeConcepts.filter(concept => concept.status === 'analysed');
     const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
-    const is2Date = getByKey(activeInnovation.keyDates, 'IS2', 'name');
+    const is2Date = activeInnovation.keyDates ? getByKey(activeInnovation.keyDates, 'IS2', 'name') : [];
     const isPostIS2 = is2Date ? activeInnovation.keyDates && moment().isAfter(moment(is2Date[0].date)) : false;
     const keyDatesSetup = activeInnovation.keyDates && activeInnovation.keyDates.length > 0;
 
@@ -76,10 +81,7 @@ class InnovationOverview extends Component {
     return (
       <div>
         <ContentBox background={false}>
-          <BackTextLink
-            label="Back"
-            onClick={() => this.props.history.goBack()}
-          />
+          <Link to="/dashboard">&lt; Back to Dashboard</Link>
         </ContentBox>
 
         <ContentBox>
@@ -228,7 +230,9 @@ InnovationOverview.propTypes = {
   activeInnovation: PropTypes.object,
   conceptsById: PropTypes.object,
   history: PropTypes.object,
-  editInnovation: PropTypes.func
+  editInnovation: PropTypes.func,
+  getActiveInnovationData: PropTypes.func,
+  match: PropTypes.object
 };
 
 const mapStateToProps = state => ({
@@ -237,6 +241,6 @@ const mapStateToProps = state => ({
   conceptsById: state.concepts.conceptsById
 });
 
-const actions = { editInnovation };
+const actions = { editInnovation, getActiveInnovationData };
 
 export default connect(mapStateToProps, actions)(InnovationOverview);

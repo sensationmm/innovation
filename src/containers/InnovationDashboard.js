@@ -73,7 +73,7 @@ class InnovationDashboard extends Component {
         {
           innovations && innovations.map(innovation => {
             return (
-              <ContentBox key={`dashboard-${innovation.sprintName}`}>
+              <ContentBox key={`dashboard-${innovation.innovationId}`}>
                 <div className="innovation-dash-innovation-container">
                   <div className="innovation-dash-summary">
                     <div className="innovation-dash-text-field">

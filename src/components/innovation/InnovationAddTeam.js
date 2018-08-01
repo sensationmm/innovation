@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import ButtonSubmit from '../buttons/ButtonSubmit';
-import BackTextLink from '../buttons/BackTextLink';
+import ButtonCancel from '../buttons/ButtonCancel';
 
 import { inviteInnovationUsers } from '../../actions/users';
 import { validateEmail } from '../../utils/functions';
@@ -124,14 +124,12 @@ class InnovationAddTeam extends Component {
             </div>
         }
         <div className="create-innovation-user-actions">
-          <BackTextLink
-            label="Cancel"
-            onClick={onCancel ? () => onCancel() : () => this.props.history.goBack()}
-            textColor='black'
-          />
           <ButtonSubmit
             label="Save"
             onClick={onSave ? () => onSave() : () => this.saveNewTeamMembers()}
+          />
+          <ButtonCancel
+            onClick={onCancel}
           />
         </div>
       </div>

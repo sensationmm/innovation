@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import InnovationKeyDate from './InnovationKeyDate';
 import AddNewKeyDateForm from './AddNewKeyDateForm';
 import ButtonSubmit from '../../buttons/ButtonSubmit';
+import ButtonCancel from '../../buttons/ButtonCancel';
 
 import '../../../styles/css/innovation-add-dates.css'
 
@@ -117,6 +118,10 @@ class InnovationAddDates extends Component {
           <ButtonSubmit
             label="Save"
             onClick={() => this.updateKeyDates()} // TODO. Conditional on which module is open.
+          />
+
+          <ButtonCancel
+            onClick={this.props.callback}
           />
         </div>
       </div>

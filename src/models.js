@@ -138,6 +138,7 @@ export const Concept = ApplicationRecord.extend({
     partnerPreferences: attr(),
     innovationId: attr(),
     targetIndustryId: attr(),
+    financeScores: hasMany(), // Each finance score is a single entry of { key, value, description }
     conceptChanges: hasMany(),
     innovation: belongsTo(),
     targetIndustry: belongsTo()
@@ -152,10 +153,12 @@ export const ConceptChange = ApplicationRecord.extend({
     id: attr(),
     createdAt: attr(),
     name: attr(),
+    status: attr(), // killed, draft, ready, analysed
     description: attr(),
     logo: attr(),
-    segment: attr(),
-    friction: attr(),
+    logoName: attr(),
+    marketFriction: attr(),
+    marketSegment: attr(),
     marketSize: attr(),
     targetCustomers: attr(),
     targetGeography: attr(),
@@ -164,18 +167,20 @@ export const ConceptChange = ApplicationRecord.extend({
     successFactors: attr(),
     keyRisks: attr(),
     businessType: attr(),
-    salesModel: attr(),
+    salesChannel: attr(),
     revenueModel: attr(),
     unitEconomics: attr(),
     corporateAdvantage: attr(),
-    corporateAssets: attr(),
+    leveragedAssets: attr(),
     incubationCost: attr(),
     breakEvenCost: attr(),
     breakEvenYear: attr(),
-    willGMLeave: attr(),
+    willGmLeave: attr(),
     gmConviction: attr(),
     gmComments: attr(),
     partnerPreferences: attr(),
+    innovationId: attr(),
+    targetIndustryId: attr(),
     conceptId: attr(),
     concept: belongsTo()
   }
@@ -189,7 +194,9 @@ export const FinanceScore = ApplicationRecord.extend({
     id: attr(),
     key: attr(),
     value: attr(),
+    description: attr(),
     comment: attr(),
+    conceptId: attr(),
     concept: belongsTo()
   }
 });

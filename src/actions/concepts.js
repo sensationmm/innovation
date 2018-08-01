@@ -2,12 +2,6 @@ import {
   CREATE_CONCEPT_BEGIN,
   CREATE_CONCEPT_SUCCESS,
   CREATE_CONCEPT_ERROR,
-  // GET_CONCEPT_BEGIN,
-  // GET_CONCEPT_SUCCESS,
-  // GET_CONCEPT_ERROR,
-  // GET_CONCEPTS_BEGIN,
-  // GET_CONCEPTS_SUCCESS,
-  // GET_CONCEPTS_ERROR,
   EDIT_CONCEPT_BEGIN,
   EDIT_CONCEPT_SUCCESS,
   EDIT_CONCEPT_ERROR,
@@ -22,7 +16,6 @@ import { push } from 'connected-react-router';
 /**
  * @param {string|int} innovationId - id of the innovation which the concept will belong to
  * @param {object} attrsToCreate - object of key / value pairs to create the new concept with
- * @param {string|int} partnerId - id of the partner which the concept will belong to
  * @param {string} redirectTo - where to redirect to once the save is complete
  */
 export const createConcept = (innovationId, attrsToCreate, redirectTo) => async (dispatch) => {

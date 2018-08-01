@@ -81,7 +81,7 @@ class ConceptOverviewEditable extends Component {
     editConcept(activeConcept.id, { [arrayName]: updatedArray })
   }
 
-  saveChangesToDB = () => {
+  saveChangesToDb = () => {
     const { editConcept, activeConcept } = this.props;
     const attrsToUpdate = {};
     this.state.editedFields.forEach(fieldKey => {
@@ -252,7 +252,7 @@ class ConceptOverviewEditable extends Component {
             />
             <ButtonSubmit
               label="Save Changes"
-              onClick={() => this.saveChangesToDB()}
+              onClick={() => this.saveChangesToDb()}
             />
             <ButtonSubmit
               label="Delete Concept"

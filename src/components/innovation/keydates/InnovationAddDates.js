@@ -18,6 +18,7 @@ class InnovationAddDates extends Component {
     openNewKeyDateForm: false
   }
 
+  // TODO: See if this would be better in static getDerivedStateFromProps.
   componentDidMount = () => {
     const { keyDates } = this.props;
     // The date picker component requires dates as moment objects. The fromDB flag determines whether to edit or create when POSTing to the API.

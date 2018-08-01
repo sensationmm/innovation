@@ -6,10 +6,9 @@ import {
 } from '../config/constants';
 
 import jwtDecode from 'jwt-decode';
-import { push } from 'connected-react-router';
 
 import { getAppResourceData } from './resources';
-import { getAllInnovationsList, getActiveInnovationData } from './innovations';
+import { getAllInnovationsList } from './innovations';
 import { getAllUsers } from './users';
 
 import { User } from '../models';
@@ -29,11 +28,13 @@ export const authFromJWT = () => async (dispatch) => {
       dispatch(getAllInnovationsList());
       // TODO: Get all InVenture / DV users here?
       dispatch(getAllUsers()); // TODO: For testing only.
-      if (storedToken.activePartnerId) {
-        dispatch(getActiveInnovationData(storedToken.activePartnerId));
-      } else {
-        dispatch(push('/dashboard'));
-      }
+
+      // No reason to do this here?? should be done when you land on an innovation
+      // if (storedToken.activePartnerId) {
+      //   dispatch(getActiveInnovationData(storedToken.activePartnerId));
+      // } else {
+      //   dispatch(push('/dashboard'));
+      // }
     }
     catch (err) {
       console.log(err);

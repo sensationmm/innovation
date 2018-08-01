@@ -7,8 +7,6 @@ import InnovationAddTeam from '../components/innovation/InnovationAddTeam';
 import ContentBox from '../components/layout/ContentBox';
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 
-import { getActiveInnovationData } from '../actions/innovations';
-
 import '../styles/css/innovation-dashboard.css';
 
 const userType = 'teamGM'; // get user type from auth.user in redux store.
@@ -32,10 +30,6 @@ class InnovationDashboard extends Component {
       sendSummaryOpen: !this.state.sendSummaryOpen,
       emails: []
      })
-  }
-
-  handleOpenInnovation = (id) => {
-    this.props.getActiveInnovationData(id, true);
   }
 
   sendInnovationsSummmary = () => {
@@ -103,9 +97,9 @@ class InnovationDashboard extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="innovation-dash-view-details-link" onClick={() => this.handleOpenInnovation(innovation.partnerId)}>
+                  <Link className="innovation-dash-view-details-link" to={`/innovation-overview/${innovation.partnerId}`}>
                     View Details
-                  </div>
+                  </Link>
                 </div>
               </ContentBox>
             )
@@ -125,6 +119,4 @@ const mapStateToProps = state => ({
   innovations: state.innovations.allInnovationsList.filter(innovation => innovation.chargeCode) // TODO: remove once DB is cleared of test data.
 });
 
-const actions = { getActiveInnovationData };
-
-export default connect(mapStateToProps, actions)(InnovationDashboard)
+export default connect(mapStateToProps, null)(InnovationDashboard)

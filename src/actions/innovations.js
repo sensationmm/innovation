@@ -41,7 +41,7 @@ export const getAllInnovationsList = () => async dispatch => {
 }
 
 // @param redirectToOverview = {boolean}.
-export const getActiveInnovationData = (partnerId, redirectToOverview) => async dispatch => {
+export const getActiveInnovationData = (partnerId) => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const partner = (await Partner.includes([
@@ -56,10 +56,6 @@ export const getActiveInnovationData = (partnerId, redirectToOverview) => async 
     storedToken.activePartnerId = partnerId;
     const newToken = JSON.stringify(storedToken);
     localStorage.setItem('inventure-auth', newToken);
-
-    if (redirectToOverview) {
-      dispatch(push(`/innovation-overview/${partnerId}`));
-    }
   }
   catch (err) {
     console.log(err);
@@ -84,7 +80,7 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
     await newInnovation.save();
 
     dispatch({ type: CREATE_INNOVATION_SUCCESS, newPartner: { ...newPartner.attributes }, newInnovation: { ...newInnovation.attributes } });
-    dispatch(getActiveInnovationData(newPartner.id, true));
+    dispatch(getActiveInnovationData(newPartner.id));
     // Redirect to the newly created active innovation overview
     dispatch(push(`/innovation-overview/${newInnovation.partnerId}`));
     dispatch(getAllInnovationsList());

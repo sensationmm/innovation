@@ -20,7 +20,7 @@ import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
 
-import { makeArrayFromIndexedObject } from '../../utils/functions';
+import { makeArrayFromIndexedObject, getByKey } from '../../utils/functions';
 import { editInnovation } from '../../actions/innovations';
 
 const userType = 'teamGM'; // TODO: get this conditionally from  redux store auth.user
@@ -62,7 +62,8 @@ class InnovationOverview extends Component {
     const activeReviewed = activeConcepts.filter(concept => concept.status === 'analysed');
     const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
-    const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
+    const is2Date = getByKey(activeInnovation.keyDates, 'IS2', 'name');
+    const isPostIS2 = is2Date ? activeInnovation.keyDates && moment().isAfter(moment(is2Date[0].date)) : false;
     const keyDatesSetup = activeInnovation.keyDates && activeInnovation.keyDates.length > 0;
 
     const dates = [];

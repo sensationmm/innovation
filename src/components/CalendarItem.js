@@ -51,7 +51,7 @@ class CalendarItem extends Component {
     const { showDetails } = this.state;
 
     const { 
-      id,
+      partnerId,
       sprintName, 
       partner, 
       chargeCode, 
@@ -60,16 +60,16 @@ class CalendarItem extends Component {
       dvPartner2,
       gm,
       keyDates, 
-      startDate 
+      openDate 
     } = innovation;
 
     const splits = [];
-    splits.push(calculateScale(startDate));
+    splits.push(calculateScale(openDate));
 
     return (
       <div className="calendar-item">
         <div className="calendar-item-header">
-          <Link to={`/concept/${id}`}>{sprintName}</Link>
+          <Link to={`/innovation-overview/${partnerId}`}>{sprintName}</Link>
           <div className={classnames('calendar-item-details', { active: showDetails })}>
             <ul>
             {partner && <li>{partner}</li>}
@@ -77,10 +77,10 @@ class CalendarItem extends Component {
             {dvOffice && <li>Office: {dvOffice}</li>}
             {dvPartner1 && <li>Partners: {dvPartner1} / {dvPartner2}</li>}
             {gm && <li>GM: {gm}</li>}
-            {keyDates.length > 0 && <li>KO: {moment(keyDates[0].date).format('DD MMMM YYYY')}</li>}
-            {keyDates.length > 0 && <li>IS1: {moment(keyDates[1].date).format('DD MMMM YYYY')}</li>}
-            {keyDates.length > 0 && <li>IS2: {moment(keyDates[2].date).format('DD MMMM YYYY')}</li>}
-            {keyDates.length > 0 && <li>IS3: {moment(keyDates[3].date).format('DD MMMM YYYY')}</li>}
+            {keyDates[0] && <li>KO: {moment(keyDates[0].date).format('DD MMMM YYYY')}</li>}
+            {keyDates[1] && <li>IS1: {moment(keyDates[1].date).format('DD MMMM YYYY')}</li>}
+            {keyDates[2] && <li>IS2: {moment(keyDates[2].date).format('DD MMMM YYYY')}</li>}
+            {keyDates[3] && <li>IS3: {moment(keyDates[3].date).format('DD MMMM YYYY')}</li>}
             </ul>
           </div>
           <div className={classnames('calendar-item-details-trigger', { active: showDetails })} onClick={this.toggleDetails}>

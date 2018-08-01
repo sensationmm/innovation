@@ -129,7 +129,11 @@ class InnovationOverview extends Component {
               title='IS Dates'
               subtitle='Estimates are fine!'
             />
-            <InnovationAddDates innovationId={activeInnovation.id} callback={() => this.setState({ openEditDates: false })} />
+            <InnovationAddDates 
+              innovationId={activeInnovation.id} 
+              innovationOpenDate={activeInnovation.openDate} 
+              callback={() => this.setState({ openEditDates: false })}
+            />
           </Modal>
         }
 

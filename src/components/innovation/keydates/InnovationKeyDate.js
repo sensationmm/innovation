@@ -16,7 +16,7 @@ class InnovationKeyDate extends Component {
     this.setState({ openDatePicker: false });
   }
   render() {
-    const { id, date, name, deleteKeyDate, required } = this.props;
+    const { id, date, name, deleteKeyDate, required, innovationOpenDate } = this.props;
     const { openDatePicker } = this.state;
     return (
       <div className="innovation-keydate">
@@ -37,10 +37,11 @@ class InnovationKeyDate extends Component {
             <div className="innovation-date-picker-mask">
               <DatePicker
                 id="date"
-                openToDate={date ? moment(date) : moment()}
+                openToDate={date ? moment(date) : moment(innovationOpenDate)}
                 selected={date ? moment(date) : null}
                 onChange={(date) => this.handleEditKeyDate(date.format('YYYY-MM-DD'))}
                 inline
+                minDate={innovationOpenDate}
               />
             </div>
         }
@@ -58,7 +59,8 @@ InnovationKeyDate.propTypes = {
   date: PropTypes.string,
   name: PropTypes.string,
   deleteKeyDate: PropTypes.func,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  innovationOpenDate: PropTypes.string
 }
 
 export default InnovationKeyDate

@@ -72,6 +72,7 @@ class InnovationAddDates extends Component {
 
   render() {
     const { openNewKeyDateForm, innovationKeyDates } = this.state;
+    const { innovationOpenDate } = this.props;
 
     let allEntered = true;
 
@@ -97,6 +98,7 @@ class InnovationAddDates extends Component {
                     required={requiredKeyDates.includes(name)}
                     editKeyDate={this.editKeyDate}
                     deleteKeyDate={this.deleteKeyDate}
+                    innovationOpenDate={innovationOpenDate}
                   />
                 ))
             }
@@ -143,7 +145,8 @@ InnovationAddDates.propTypes = {
   innovationId: PropTypes.string,
   editKeyDates: PropTypes.func,
   callback: PropTypes.func,
-  keyDates: PropTypes.array
+  keyDates: PropTypes.array,
+  innovationOpenDate: PropTypes.string
 }
 
 const mapStateToProps = state => ({

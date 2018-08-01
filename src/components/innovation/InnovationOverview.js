@@ -63,7 +63,7 @@ class InnovationOverview extends Component {
     const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
     const isPostIS2 = activeInnovation.keyDates && moment().isAfter(moment(activeInnovation.keyDates.IS2));
-    const keyDatesSetup = true; // TODO: Write check to make sure all the required dates are found in keyDates array.
+    const keyDatesSetup = activeInnovation.keyDates && activeInnovation.keyDates.length > 0;
 
     const dates = [];
     const labels = [];
@@ -92,17 +92,17 @@ class InnovationOverview extends Component {
               onChange={this.handleUpdateMandate}
               value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
             />
+
             {mandateUpdated &&
               <ButtonSubmit
                 label="Save"
                 onClick={() => this.mandateUpdateToDB()}
               />
             }
-
           </div>
         </ContentBox>
 
-        {(activeInnovation.keyDates.length > 0 && keyDatesSetup)
+        {(activeInnovation.keyDates && activeInnovation.keyDates.length >= 4 && keyDatesSetup)
           ? <ContentBox background={false}>
             <ProgressBar
               dates={dates}
@@ -123,23 +123,14 @@ class InnovationOverview extends Component {
         {openEditDates &&
           <Modal>
             <FormSectionHeader
-              title='Enter Immersion Session Key Dates'
-              subtitle='These are required to create your innovation timeline, you can edit these later if you need to'
+              title='IS Dates'
+              subtitle='Estimates are fine!'
             />
             <InnovationAddDates innovationId={activeInnovation.id} callback={() => this.setState({ openEditDates: false })} />
           </Modal>
         }
 
         <div className="innovation-overview-toplinks">
-          {
-            !keyDatesSetup &&
-              <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditDates: !openEditDates })}>
-                <div>
-                  <i className="fas fa-plus fa-2x add-concept-icon"></i>
-                </div>
-                <div>Setup Key Sprint Dates</div>
-              </div>
-          }
           <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditTeam: !openEditTeam })}>
             <div>
               <i className="fas fa-plus fa-2x add-concept-icon"></i>

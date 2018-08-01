@@ -20,6 +20,26 @@
   }
 }
 
+.form-cancel-button {
+  padding: 8px 10px;
+  min-width: 120px;
+  text-align: center;
+  font-size: 14px;
+  color: $text-off-white;
+  margin-top: 10px;
+  transition: all 0.3s;
+  background: transparent;
+
+  &:hover {
+    color: $green-offset;
+  }
+
+  &.disabled {
+    background: $background-grey-lighter;
+    cursor: auto;
+  }
+}
+
 .kill-button {
   padding: 8px 10px;
   min-width: 120px;

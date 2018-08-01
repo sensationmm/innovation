@@ -146,43 +146,41 @@ class InnovationOverview extends Component {
             </div>
             <div>Edit Team Members</div>
           </div>
-          {
-            keyDatesSetup &&
-              <Link className="innovation-overview-add-concept-link" to={`/create-concept/${activeInnovation.id}`}>
-                <div>
-                  <i className="fas fa-plus fa-2x add-concept-icon"></i>
-                </div>
-                <div>Add Concept</div>
-              </Link>
+          {keyDatesSetup &&
+            <Link className="innovation-overview-add-concept-link" to={`/create-concept/${activeInnovation.id}`}>
+              <div>
+                <i className="fas fa-plus fa-2x add-concept-icon"></i>
+              </div>
+              <div>Add Concept</div>
+            </Link>
           }
         </div>
-        {
-          openEditTeam &&
-            <div>
-              <div className="create-innovation-section-container">
-                <FormSectionHeader
-                  title='Your Current Team'
-                />
-                <InnovationTeam
-                  teamMembers={curTeamMembers}
-                />
-              </div>
 
-              <div className="create-innovation-section-container">
-                <FormSectionHeader
-                  title="Add New Team Members"
-                  subtitle="Invites will be sent to new team members when you save"
-                />
-                <InnovationAddTeam partnerId={activePartner.id} />
-              </div>
+        {openEditTeam &&
+          <Modal>
+            <div className="create-innovation-section-container">
+              <FormSectionHeader
+                title='Your Current Team'
+              />
+              <InnovationTeam
+                teamMembers={curTeamMembers}
+              />
             </div>
+
+            <div className="create-innovation-section-container">
+              <FormSectionHeader
+                title="Add New Team Members"
+                subtitle="Invites will be sent to new team members when you save"
+              />
+              <InnovationAddTeam partnerId={activePartner.id} />
+            </div>
+          </Modal>
         }
 
-        {
-          (activeIncomplete && activeIncomplete.length > 0) &&
-            <ContentBox background={false}>
-              <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
-            </ContentBox>
+        {(activeIncomplete && activeIncomplete.length > 0) &&
+          <ContentBox background={false}>
+            <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
+          </ContentBox>
         }
 
         {

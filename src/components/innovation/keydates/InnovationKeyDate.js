@@ -41,7 +41,7 @@ class InnovationKeyDate extends Component {
                 selected={date ? moment(date) : null}
                 onChange={(date) => this.handleEditKeyDate(date.format('YYYY-MM-DD'))}
                 inline
-                minDate={innovationOpenDate}
+                minDate={moment(innovationOpenDate)}
               />
             </div>
         }

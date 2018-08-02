@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-import moment from 'moment';
+// import moment from 'moment';
 
 import InnovationAddDates from './keydates/InnovationAddDates';
 import InnovationAddTeam from './InnovationAddTeam';
@@ -19,10 +19,12 @@ import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
 
-import { makeArrayFromIndexedObject, getByKey } from '../../utils/functions';
+import { makeArrayFromIndexedObject } from '../../utils/functions';
+// import { getByKey } from '../../utils/functions';
 import { editInnovation, getActiveInnovationData } from '../../actions/innovations';
 
-const userType = 'finance'; // TODO: get this conditionally from  redux store auth.user
+import { innovationTypeLabels } from '../../config/innovationOptions';
+
 const curTeamMembers = [ // TODO: get from partner.users in redux store (also duplicated in InnovationAddTeam)
   {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
   {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
@@ -33,6 +35,7 @@ const curTeamMembers = [ // TODO: get from partner.users in redux store (also du
 
 class InnovationOverview extends Component {
   state = {
+    userType: 'teamGM',
     openEditDates: false,
     openEditTeam: false,
     openEditMandate: false,
@@ -69,8 +72,8 @@ class InnovationOverview extends Component {
     const activeReviewed = activeConcepts.filter(concept => concept.status === 'analysed');
     const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
-    const is2Date = activeInnovation.keyDates ? getByKey(activeInnovation.keyDates, 'IS2', 'name') : [];
-    const isPostIS2 = is2Date ? activeInnovation.keyDates && moment().isAfter(moment(is2Date[0].date)) : false;
+    // const is2Date = activeInnovation.keyDates ? getByKey(activeInnovation.keyDates, 'IS2', 'name') : [];
+    // const isPostIS2 = is2Date ? activeInnovation.keyDates && moment().isAfter(moment(is2Date[0].date)) : false;
     const keyDatesSetup = activeInnovation.keyDates && activeInnovation.keyDates.length > 0;
 
     const dates = [];
@@ -80,15 +83,27 @@ class InnovationOverview extends Component {
       labels.push(keydate.name);
     });
 
+    // TODO: testing only.
+    const { userType } = this.state;
+    const isPostIS2 = true;
+
     return (
       <div>
         <ContentBox background={false}>
           <Link to="/dashboard">&lt; Back to Dashboard</Link>
         </ContentBox>
+        <ContentBox background={false}>
+          <div>Testing:</div>
+          <ButtonSubmit
+            label="Change User Type"
+            onClick={() => this.setState({ userType: userType === 'teamGM' ? 'finance' : 'teamGM'})}
+          />
+          <div>{this.state.userType}</div>
+        </ContentBox>
 
         <ContentBox>
           <h1>{activeInnovation.sprintName}</h1>
-          <div>Innovation Type: {activeInnovation.sprintType}</div>
+          <div>Innovation Type: {innovationTypeLabels[activeInnovation.sprintType]}</div>
           <div>Duration: {activeInnovation.duration} weeks</div>
           <div className="innovation-overview-mandate-input">
             <FormTextInput
@@ -172,7 +187,9 @@ class InnovationOverview extends Component {
                 title="Add New Team Members"
                 subtitle="Invites will be sent to new team members when you save"
               />
-              <InnovationAddTeam partnerId={activePartner.id} />
+              <InnovationAddTeam
+                partnerId={activePartner.id}
+                onCancel={() => this.setState({ openEditTeam: false })} />
             </div>
           </Modal>
         }

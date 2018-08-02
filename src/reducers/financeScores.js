@@ -62,7 +62,7 @@ export default (state = {}, action) => {
       updatedFinanceScores.forEach(updatedScore => {
         updatedScoresObject[updatedScore.key] = updatedScore;
       })
-      console.log('updatedScoresObject', updatedScoresObject);
+
       return {
         ...state,
         scoresByConceptId: { ...state.scoresByConceptId, [conceptId]: updatedScoresObject }

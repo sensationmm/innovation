@@ -4,6 +4,12 @@ export const innovationTypes = [
   { value: 'customer_systems', label: 'Customer Systems' }
 ];
 
+export const innovationTypeLabels = {
+  'portfolio_sprint': 'Portfolio Sprint',
+  'validation_sprint': 'Validation Sprint',
+  'customer_systems': 'Customer Systems'
+};
+
 export const keyDatesOptions = [
   {id: 'ko', name: 'KO', date: null},
   {id: 'is1', name: 'IS1', date: null},

@@ -8,7 +8,7 @@ import {
 import jwtDecode from 'jwt-decode';
 
 import { getAppResourceData } from './resources';
-import { getAllInnovationsList } from './innovations';
+import { getAllInnovationsList, getActiveInnovationData } from './innovations';
 import { getAllUsers } from './users';
 
 import { User } from '../models';
@@ -29,12 +29,9 @@ export const authFromJWT = () => async (dispatch) => {
       // TODO: Get all InVenture / DV users here?
       dispatch(getAllUsers()); // TODO: For testing only.
 
-      // No reason to do this here?? should be done when you land on an innovation
-      // if (storedToken.activePartnerId) {
-      //   dispatch(getActiveInnovationData(storedToken.activePartnerId));
-      // } else {
-      //   dispatch(push('/dashboard'));
-      // }
+      if (storedToken.activePartnerId) {
+        dispatch(getActiveInnovationData(storedToken.activePartnerId));
+      }
     }
     catch (err) {
       console.log(err);

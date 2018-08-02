@@ -277,7 +277,7 @@ ConceptOverviewEditable.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]),
-  conceptsById: PropTypes.array,
+  conceptsById: PropTypes.object,
   activeConcept: PropTypes.object,
   existingLogo: PropTypes.bool,
   getActiveInnovationData: PropTypes.func

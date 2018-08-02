@@ -19,7 +19,7 @@ export const updateConceptFinanceScore = (conceptId, key, attrsToUpdate) => asyn
  * @param {int} conceptId - id of the concept owning the finance score
  * @param {array[{}} financeScores - array of finance score objects to be saved { id, key, value, description, comment }
  */
-export const saveConceptFinanceScore = (conceptId, financeScores) => async dispatch => {
+export const saveConceptFinanceScore = (conceptId, financeScores, redirectTo) => async dispatch => {
   dispatch({ type: SAVE_CONCEPT_FINANCE_SCORE_BEGIN });
 
   try {
@@ -54,7 +54,7 @@ export const saveConceptFinanceScore = (conceptId, financeScores) => async dispa
     const updatedFinanceScores = updatedConcept.financeScores.map(score => ({ ...score.attributes, fromDb: true }));
     dispatch({ type: SAVE_CONCEPT_FINANCE_SCORE_SUCCESS, conceptId, updatedFinanceScores });
     dispatch(editConcept(conceptId, { status: 'analysed' }))
-    dispatch(push(`/innovation-overview/${conceptId}`));
+    dispatch(push(redirectTo));
 
   }
   catch (err) {

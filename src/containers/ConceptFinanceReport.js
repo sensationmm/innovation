@@ -38,13 +38,13 @@ class ConceptFinanceReport extends Component {
   }
 
   saveChangesToDb = (conceptId) => {
-    const { saveConceptFinanceScore, scoresByConceptId } = this.props;
+    const { saveConceptFinanceScore, scoresByConceptId, activePartnerId } = this.props;
     const { editedScores } = this.state;
 
     const arrayOfFinanceScores = makeArrayFromIndexedObject(scoresByConceptId[conceptId]);
     const changedFinanceScores = arrayOfFinanceScores.filter(score => editedScores.includes(score.key))
 
-    saveConceptFinanceScore(conceptId, changedFinanceScores);
+    saveConceptFinanceScore(conceptId, changedFinanceScores, `/innovation-overview/${activePartnerId}`);
     this.setState({ editedScores: [] });
   }
 
@@ -124,10 +124,15 @@ ConceptFinanceReport.propTypes = {
   scoresByConceptId: PropTypes.object,
   updateConceptFinanceScore: PropTypes.func,
   saveConceptFinanceScore: PropTypes.func,
-  conceptName: PropTypes.string
+  conceptName: PropTypes.string,
+  activePartnerId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 };
 
 const mapStateToProps = (state, props) => ({
+  activePartnerId: state.partners.activePartner.id,
   scoresByConceptId: state.financeScores.scoresByConceptId,
   conceptName: state.concepts.conceptsById[props.match.params.conceptId] && state.concepts.conceptsById[props.match.params.conceptId].name
 });

@@ -14,6 +14,7 @@ import VFTScoresDisplay from '../components/concept/VFTScores/VFTScoresDisplay';
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
+import ButtonDelete from '../components/buttons/ButtonDelete';
 
 import '../styles/css/concept-create.css';
 
@@ -254,9 +255,9 @@ class ConceptOverviewEditable extends Component {
               label="Save Changes"
               onClick={() => this.saveChangesToDB()}
             />
-            <ButtonSubmit
+            <ButtonDelete
               label="Delete Concept"
-              onClick={() => this.handleDeleteConcept()}
+              onDelete={() => this.handleDeleteConcept()}
             />
           </div>
       </div>

@@ -40,6 +40,14 @@ const ProgressBar = props => {
   const todayScale = calculateScale(moment().format('YYYY-MM-DD'));
   const killedAtScale = (killMark) ? calculateScale(moment(killMark).format('YYYY-MM-DD')) : null;
 
+  let maxScale = todayScale;
+  if(killMark) {
+    maxScale = killedAtScale;
+  }
+  if(maxScale > 100) {
+    maxScale = 100;
+  }
+
   return (
     <div className="progress-bar">
 
@@ -50,10 +58,12 @@ const ProgressBar = props => {
           <div className="progress-bar-pip-popup">Concept killed<br />{ moment(killMark).format('DD-MM-YY') }</div>
           </div>
         }
-        <div className={classnames('progress-bar-pip', {killed: killMark})} style={{ left: `${todayScale}%` }}>
-          <div className="progress-bar-pip-popup">Today<br />{ moment().format('DD-MM-YY') }</div>
-        </div>
-        <div className="progress-bar-progress" style={{ width: `${(killMark) ? killedAtScale : todayScale}%` }} />
+        {todayScale < 100 &&
+          <div className={classnames('progress-bar-pip', {killed: killMark})} style={{ left: `${todayScale}%` }}>
+            <div className="progress-bar-pip-popup">Today<br />{ moment().format('DD-MM-YY') }</div>
+          </div>
+        }
+        <div className="progress-bar-progress" style={{ width: `${maxScale}%` }} />
         <div className="progress-bar-track" />
       </div>
 

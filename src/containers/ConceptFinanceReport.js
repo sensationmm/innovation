@@ -7,6 +7,7 @@ import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
 
 import { updateConceptFinanceScore, saveConceptFinanceScore } from '../actions/financeScores';
+import { getActiveInnovationData } from '../actions/innovations';
 import { makeArrayFromIndexedObject } from '../utils/functions';
 
 import { financeScoreOptions } from '../config/conceptOptions';
@@ -16,6 +17,23 @@ import '../styles/css/concept-finance-report.css'
 class ConceptFinanceReport extends Component {
   state = {
     editedScores: [] // Array of finance score keys relating to finance score objects which have been changed.
+  }
+
+  componentDidMount() {
+    this.checkConceptInnovation();
+  }
+
+  componentDidUpdate() {
+    this.checkConceptInnovation();
+  }
+
+  checkConceptInnovation = () => {
+    const { conceptsById, getActiveInnovationData } = this.props;
+
+    if(!conceptsById || (Object.keys(conceptsById).length === 0 && conceptsById.constructor === Object)) {
+      const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
+      getActiveInnovationData(storedToken.activePartnerId);
+    }
   }
 
   updateEditedScores = (key) => {
@@ -128,15 +146,18 @@ ConceptFinanceReport.propTypes = {
   activePartnerId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
-  ])
+  ]),
+  conceptsById: PropTypes.object,
+  getActiveInnovationData: PropTypes.func
 };
 
 const mapStateToProps = (state, props) => ({
   activePartnerId: state.partners.activePartner.id,
   scoresByConceptId: state.financeScores.scoresByConceptId,
+  conceptsById: state.concepts.conceptsById,
   conceptName: state.concepts.conceptsById[props.match.params.conceptId] && state.concepts.conceptsById[props.match.params.conceptId].name
 });
 
-const actions = { updateConceptFinanceScore, saveConceptFinanceScore };
+const actions = { updateConceptFinanceScore, saveConceptFinanceScore, getActiveInnovationData };
 
 export default connect(mapStateToProps, actions)(ConceptFinanceReport);

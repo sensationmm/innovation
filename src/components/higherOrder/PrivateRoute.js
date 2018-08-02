@@ -3,11 +3,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ component: Component, ...rest, isAuthed }) => {
+import Loader from '../Loader';
+
+const PrivateRoute = ({ component: Component, ...rest, isAuthed, isLoading }) => {
   return (
     <Route {...rest} render={(props) => (
-      isAuthed === 'authing'
-        ? <div></div>
+      isAuthed === 'authing' || isLoading
+        ? <Loader />
         : isAuthed === true
           ? <Component {...props} />
           : <Redirect to='/login' />
@@ -19,13 +21,14 @@ PrivateRoute.propTypes = {
   component: PropTypes.func,
   isAuthed: PropTypes.oneOfType([
     PropTypes.string, PropTypes.bool
-  ])
-
+  ]),
+  isLoading: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
-    isAuthed: state.auth.isAuthed
+    isAuthed: state.auth.isAuthed,
+    isLoading: state.loader.isLoading
   }
 };
 

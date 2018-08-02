@@ -43,6 +43,9 @@ class InnovationKeyDate extends Component {
                 inline
                 minDate={moment(innovationOpenDate)}
               />
+              <div className="innovation-date-picker-close" onClick={() => this.setState({ openDatePicker: false })}>
+                <i className="fas fa-times"></i>
+              </div>
             </div>
         }
       </div>

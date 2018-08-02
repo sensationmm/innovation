@@ -28,7 +28,7 @@ const App = () => (
         <Redirect exact from='/' to='/dashboard' />
 
         <PrivateRoute exact path="/dashboard" component={InnovationDashboard} />
-        <PrivateRoute exact path="/innovation-overview/:innovationId?" component={InnovationOverview} />
+        <PrivateRoute exact path="/innovation-overview/:partnerId?" component={InnovationOverview} />
         <PrivateRoute exact path="/create-innovation" component={InnovationCreate} />
         <PrivateRoute exact path="/create-concept/:innovationId" component={ConceptCreate} />
         <PrivateRoute exact path="/vft-concept-report/:conceptId" component={ConceptFinanceReport} />

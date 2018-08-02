@@ -74,7 +74,7 @@ const ConceptList = props => {
                       (status === 'draft') &&
                         <div className="concept-list-item-user-actions">
                           <CompleteButton label='Mark as Ready' onClick={() => editConcept(id, { status: 'ready' }, true)} />
-                          <KillButton label='Kill' onClick={() => editConcept(id, { status: 'kill' }, true)} />
+                          <KillButton label='Kill' onClick={() => editConcept(id, { status: 'killed' }, true)} />
                         </div>
                     }
                     {

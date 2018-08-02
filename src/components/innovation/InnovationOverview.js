@@ -43,10 +43,10 @@ class InnovationOverview extends Component {
   }
 
   componentDidMount() {
-    const { activeInnovation, getActiveInnovationData, match: { params: { innovationId } } } = this.props;
+    const { activeInnovation, getActiveInnovationData, match: { params: { partnerId } } } = this.props;
 
-    if(innovationId !== activeInnovation.partnerId) {
-      getActiveInnovationData(innovationId);
+    if(partnerId !== activeInnovation.partnerId) {
+      getActiveInnovationData(partnerId);
     }
   }
 

@@ -11,14 +11,6 @@ import { validateEmail } from '../../utils/functions';
 
 import '../../styles/css/innovation-add-team.css';
 
-const curTeamMembers = [
-  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
-  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
-  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
-  {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
-  {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
-];
-
 class InnovationAddTeam extends Component {
   state = {
     newMemberEmail: '',
@@ -56,9 +48,8 @@ class InnovationAddTeam extends Component {
 
   // onSave is optional save button overwrite. Same with onCancel.
   render() {
-    // TODO: Get curTeamMembers from partner.users in state
     const { newMemberEmail, newTeamMembers } = this.state;
-    const { onSave, onCancel, allUsers } = this.props;
+    const { onSave, onCancel, allInventureUsers, curTeamMembers } = this.props;
     const isValidEmail  = validateEmail(newMemberEmail);
     return (
       <div>
@@ -92,13 +83,13 @@ class InnovationAddTeam extends Component {
           }
         </div>
         {
-          allUsers &&
+          allInventureUsers &&
             <div className={classnames('innovation-all-users-list', { 'hidden': newMemberEmail.length < 3 })}>
               {
-                allUsers && allUsers.length > 0 &&
-                        allUsers.filter(({ email }) =>
-                                  !newTeamMembers.includes(email) &&
-                                  !curTeamMembers.includes(email) &&
+                allInventureUsers && allInventureUsers.length > 0 &&
+                        allInventureUsers.filter(({ email }) =>
+                                  !newTeamMembers.map(member => member.email).includes(email) &&
+                                  !curTeamMembers.map(member => member.email).includes(email) &&
                                   email.toLowerCase().indexOf(newMemberEmail.toLowerCase()) >= 0
                                 )
                         .map(availableUser => {
@@ -113,13 +104,6 @@ class InnovationAddTeam extends Component {
                             </div>
                           )
                         })
-              }
-              {
-                allUsers && !allUsers.length > 0 &&
-                  <div className="all-users-list-empty">
-                    <p>No existing users to show</p>
-                    <p>Enter a full email address to invite a new user</p>
-                  </div>
               }
             </div>
         }
@@ -140,8 +124,8 @@ class InnovationAddTeam extends Component {
 
 InnovationAddTeam.propTypes = {
   partnerId: PropTypes.string,
-  teamMembers: PropTypes.array,
-  allUsers: PropTypes.array,
+  curTeamMembers: PropTypes.array,
+  allInventureUsers: PropTypes.array,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inviteInnovationUsers: PropTypes.func,
@@ -149,8 +133,8 @@ InnovationAddTeam.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  teamMembers: state.users.activeInnovationUsers,
-  allUsers: state.users.inVentureUsers
+  curTeamMembers: state.users.activeInnovationUsers,
+  allInventureUsers: state.users.inVentureUsers
 });
 
 const actions = { inviteInnovationUsers };

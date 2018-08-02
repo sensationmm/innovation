@@ -35,13 +35,13 @@ class ConceptOverviewEditable extends Component {
   }
 
   checkConceptInnovation = () => {
-    const { activeConcept, conceptsById } = this.props;
+    const { activeConcept, conceptsById, getActiveInnovationData, history } = this.props;
 
-    if(!conceptsById) {
+    if(!conceptsById || (Object.keys(conceptsById).length === 0 && conceptsById.constructor === Object)) {
       const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
-      this.props.getActiveInnovationData(storedToken.activePartnerId);
+      getActiveInnovationData(storedToken.activePartnerId);
     } else if(!activeConcept) {
-      this.props.history.push('/dashboard');
+      history.push('/dashboard');
     }
   }
 

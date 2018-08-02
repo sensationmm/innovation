@@ -28,13 +28,6 @@ export const authFromJWT = () => async (dispatch) => {
       dispatch(getAllInnovationsList());
       // TODO: Get all InVenture / DV users here?
       dispatch(getAllUsers()); // TODO: For testing only.
-
-      // No reason to do this here?? should be done when you land on an innovation
-      // if (storedToken.activePartnerId) {
-      //   dispatch(getActiveInnovationData(storedToken.activePartnerId));
-      // } else {
-      //   dispatch(push('/dashboard'));
-      // }
     }
     catch (err) {
       console.log(err);

@@ -7,15 +7,19 @@ import {
 
 import { removeItemByKey } from '../utils/functions';
 
-export default (state = {}, action) => {
+const initialState = {
+  conceptsById: {}
+}
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner } = action;
       const conceptsById = {};
         const innovationId = partner.innovation.id;
       partner.innovation.concepts.forEach(concept => {
-        // Convert 'null' values which come from the API into empty strings for acceptance by controlled text input fields.
         const formattedConceptAttrs = {};
+
         Object.keys(concept.attributes).forEach(key => {
           formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
         })

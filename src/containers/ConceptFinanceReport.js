@@ -1,84 +1,137 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import VFTConceptOverview from '../components/concept/VFTScores/VFTConceptOverview';
-import VFTConceptScores from '../components/concept/VFTScores/VFTConceptScores';
-import FormSectionHeader from '../components/formInputs/FormSectionHeader';
+import FinanceReportInput from '../components/formInputs/FinanceReportInput';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import BackTextLink from '../components/buttons/BackTextLink';
+
+import { updateConceptFinanceScore, saveConceptFinanceScore } from '../actions/financeScores';
+import { makeArrayFromIndexedObject } from '../utils/functions';
+
+import { financeScoreOptions } from '../config/conceptOptions';
 
 import '../styles/css/concept-finance-report.css'
 
 class ConceptFinanceReport extends Component {
   state = {
-    conceptRank: null,
-    VFComments: '',
-    solutionScore: null,
-    businessModelScore: null,
-    marketSizeScore: null,
-    corpAdvantageScore: null
+    editedScores: [] // Array of finance score keys relating to finance score objects which have been changed.
   }
 
-  updateFormField = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
+  updateEditedScores = (key) => {
+    const { editedScores } = this.state;
+    if (!editedScores.includes(key)) {
+      this.setState({ editedScores: editedScores.concat(key) });
+    }
   }
 
-  selectOption = (key, value) => {
-    this.setState({ [key]: value })
+  updateOption = (key, value, description, conceptId) => {
+    const { updateConceptFinanceScore } = this.props;
+    this.updateEditedScores(key);
+    updateConceptFinanceScore(conceptId, key, { value, description })
   }
 
-  createConceptFinanceReport = () => {
-    const { match: { params: { conceptId } } } = this.props;
-    console.log('create finance on concept', conceptId);
-    console.log('create finance report with', this.state);
+  updateComment = (key, comment, conceptId) => {
+    const { updateConceptFinanceScore } = this.props;
+    this.updateEditedScores(key);
+    updateConceptFinanceScore(conceptId, key, { comment })
+  }
+
+  saveChangesToDb = (conceptId) => {
+    const { saveConceptFinanceScore, scoresByConceptId } = this.props;
+    const { editedScores } = this.state;
+
+    const arrayOfFinanceScores = makeArrayFromIndexedObject(scoresByConceptId[conceptId]);
+    const changedFinanceScores = arrayOfFinanceScores.filter(score => editedScores.includes(score.key))
+
+    saveConceptFinanceScore(conceptId, changedFinanceScores);
+    this.setState({ editedScores: [] });
+  }
+
+  allFieldsAreComplete = (financeScoresByKey) => {
+    return Object.keys(financeScoresByKey).every(key => {
+      return Object.entries(financeScoresByKey[key]).every(([ attrKey, attrValue ]) =>
+        (attrValue !== null &&
+        attrValue !== undefined &&
+        attrValue !== '') ||
+        attrKey === 'id' // id will always be null until some data is saved to the DB.
+      )
+    })
   }
 
   render() {
+    const { scoresByConceptId, conceptName } = this.props;
+    if (!scoresByConceptId) { return null }
+    const { match: { params: { conceptId } } } = this.props;
+
+    const financeScoresByKey = scoresByConceptId[conceptId];
+    const allFieldsAreComplete = this.allFieldsAreComplete(financeScoresByKey);
+
     return (
       <div className="finance-report-container">
-        <div className="finance-report-page-title">Concept Finance Report</div>
+        <div className="finance-report-page-title">Concept Finance Report for: {conceptName}</div>
         <div className="finance-report-section-container">
-          <FormSectionHeader
-            title="Concept Overview"
-          />
-          <VFTConceptOverview
-            updateFormField={this.updateFormField}
-            selectOption={this.selectOption}
-            conceptName="Hardcoded Name"
-            conceptRank={this.state.conceptRank}
-            VFComments={this.state.VFComments}
-          />
-        </div>
-        <div className="finance-report-section-container">
-          <FormSectionHeader
-            title="Concept Rankings"
-          />
-          <VFTConceptScores
-            selectOption={this.selectOption}
-            solutionScore={this.state.solutionScore}
-            businessModelScore={this.state.businessModelScore}
-            marketSizeScore={this.state.marketSizeScore}
-            corpAdvantageScore={this.state.corpAdvantageScore}
-          />
-        </div>
+          {
+            Object.keys(financeScoresByKey).map(key => {
+              const optionsObj = financeScoreOptions[key];
+              const inputObj = financeScoresByKey[key];
+              return (
+                <FinanceReportInput
+                  key={`finance-report-input-${key}`}
+                  keyToUpdate={key}
+                  title={optionsObj.title}
+                  labels={optionsObj.labels}
+                  selectedVaue={inputObj.value}
+                  commentText={inputObj.comment}
+                  updateOption={this.updateOption}
+                  updateComment={this.updateComment}
+                  conceptId={conceptId}
+                  isRequired={true}
+                />
+              )
+            })
+          }
+
         <div className="create-innovation-user-actions">
           <BackTextLink
             label="Back"
             onClick={() => this.props.history.goBack()}
           />
-          <ButtonSubmit
-            label="Save"
-            onClick={() => this.createConceptFinanceReport()}
-          />
+          {
+            !allFieldsAreComplete &&
+              <div>Please complete all required fields</div>
+          }
+          {
+            (allFieldsAreComplete && this.state.editedScores.length > 0) &&
+              (
+                <ButtonSubmit
+                  label='Save'
+                  onClick={() => this.saveChangesToDb(conceptId)}
+                  disabled={!allFieldsAreComplete}
+                />
+              )
+          }
         </div>
       </div>
+    </div>
     )
   }
 }
 
 ConceptFinanceReport.propTypes = {
   history: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  scoresByConceptId: PropTypes.object,
+  updateConceptFinanceScore: PropTypes.func,
+  saveConceptFinanceScore: PropTypes.func,
+  conceptName: PropTypes.string
 };
 
-export default ConceptFinanceReport;
+const mapStateToProps = (state, props) => ({
+  scoresByConceptId: state.financeScores.scoresByConceptId,
+  conceptName: state.concepts.conceptsById[props.match.params.conceptId] && state.concepts.conceptsById[props.match.params.conceptId].name
+});
+
+const actions = { updateConceptFinanceScore, saveConceptFinanceScore };
+
+export default connect(mapStateToProps, actions)(ConceptFinanceReport);

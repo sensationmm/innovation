@@ -74,7 +74,7 @@ const ConceptList = props => {
                       (status === 'draft') &&
                         <div className="concept-list-item-user-actions">
                           <CompleteButton label='Mark as Ready' onClick={() => editConcept(id, { status: 'ready' }, true)} />
-                          <KillButton label='Kill' onClick={() => editConcept(id, { status: 'kill' }, true)} />
+                          <KillButton label='Kill' onClick={() => editConcept(id, { status: 'killed' }, true)} />
                         </div>
                     }
                     {
@@ -99,7 +99,7 @@ const ConceptList = props => {
                     {
                       (status === 'draft') &&
                         <div className="concept-list-item-user-actions">
-                          <div className="concept-list-item-marked-incomplete"><i className="far fa-clock"></i>Concept Incomplete</div>
+                          <div className="concept-list-item-marked-incomplete"><i className="far fa-clock"></i>Not Ready for Analysis</div>
                         </div>
                     }
                   </div>
@@ -107,7 +107,7 @@ const ConceptList = props => {
               {
                 status === 'analysed' &&
                   <div className="concept-list-item-user-actions">
-                    <div className="concept-list-item-marked-complete"><i className="fa fa-check-circle"></i>Finance Review Complete</div>
+                    <div className="concept-list-item-marked-complete"><i className="fa fa-check-circle"></i>Finance Analysis Complete</div>
                   </div>
               }
             </div>

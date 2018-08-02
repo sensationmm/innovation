@@ -82,7 +82,7 @@ class ConceptOverviewEditable extends Component {
     editConcept(activeConcept.id, { [arrayName]: updatedArray })
   }
 
-  saveChangesToDB = () => {
+  saveChangesToDb = () => {
     const { editConcept, activeConcept } = this.props;
     const attrsToUpdate = {};
     this.state.editedFields.forEach(fieldKey => {
@@ -111,9 +111,7 @@ class ConceptOverviewEditable extends Component {
     if (!activeConcept) {
       return null;
     }
-
-    const allFieldsAreCompleted = this.allFieldsAreCompleted();
-
+    // const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (
       <div className="create-concept-container">
         <div className="create-concept-user-actions">
@@ -132,9 +130,9 @@ class ConceptOverviewEditable extends Component {
               onClick={() => this.selectOption('status', 'draft')}
             />
             <ButtonSubmit
-              label={allFieldsAreCompleted ? 'Mark as Ready' : 'Fields Incomplete'}
+              label="Mark as Ready"
               onClick={() => this.selectOption('status', 'ready')}
-              disabled={!allFieldsAreCompleted}
+              // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
             />
 
           </div>
@@ -253,7 +251,7 @@ class ConceptOverviewEditable extends Component {
             />
             <ButtonSubmit
               label="Save Changes"
-              onClick={() => this.saveChangesToDB()}
+              onClick={() => this.saveChangesToDb()}
             />
             <ButtonDelete
               label="Delete Concept"

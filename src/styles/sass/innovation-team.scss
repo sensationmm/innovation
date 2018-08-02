@@ -7,6 +7,8 @@
     justify-content: space-between;
     padding: 5px;
     flex-wrap: wrap;
+    max-height: 350px;
+    overflow: auto;
   }
 
   &-member {

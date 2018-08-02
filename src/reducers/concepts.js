@@ -12,6 +12,7 @@ export default (state = {}, action) => {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner } = action;
       const conceptsById = {};
+        const innovationId = partner.innovation.id;
       partner.innovation.concepts.forEach(concept => {
         // Convert 'null' values which come from the API into empty strings for acceptance by controlled text input fields.
         const formattedConceptAttrs = {};
@@ -19,7 +20,7 @@ export default (state = {}, action) => {
           formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
         })
         formattedConceptAttrs.targetIndustryId = concept.targetIndustry.id;
-        conceptsById[concept.id] = formattedConceptAttrs;
+        conceptsById[concept.id] = { ...formattedConceptAttrs, innovationId };
       })
       return { ...state, conceptsById }
     }

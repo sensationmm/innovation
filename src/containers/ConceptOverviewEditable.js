@@ -18,10 +18,30 @@ import BackTextLink from '../components/buttons/BackTextLink';
 import '../styles/css/concept-create.css';
 
 import { editConcept, deleteConcept } from '../actions/concepts';
+import { getActiveInnovationData } from '../actions/innovations';
 
 class ConceptOverviewEditable extends Component {
   state = {
     editedFields: []
+  }
+
+  componentDidMount() {
+    this.checkConceptInnovation();
+  }
+
+  componentDidUpdate() {
+    this.checkConceptInnovation();
+  }
+
+  checkConceptInnovation = () => {
+    const { activeConcept, conceptsById } = this.props;
+
+    if(!conceptsById) {
+      const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
+      this.props.getActiveInnovationData(storedToken.activePartnerId);
+    } else if(!activeConcept) {
+      this.props.history.push('/dashboard');
+    }
   }
 
   updateEditedFields = (key) => {
@@ -86,10 +106,13 @@ class ConceptOverviewEditable extends Component {
 
   render() {
     const { activeConcept } = this.props;
+
     if (!activeConcept) {
       return null;
     }
+
     const allFieldsAreCompleted = this.allFieldsAreCompleted();
+
     return (
       <div className="create-concept-container">
         <div className="create-concept-user-actions">
@@ -254,16 +277,19 @@ ConceptOverviewEditable.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]),
+  conceptsById: PropTypes.array,
   activeConcept: PropTypes.object,
-  existingLogo: PropTypes.bool
+  existingLogo: PropTypes.bool,
+  getActiveInnovationData: PropTypes.func
 };
 
 const mapStateToProps = (state, props) => ({
   activeInnovationId: state.innovations.activeInnovation.id,
   activePartnerId: state.partners.activePartner.id,
+  conceptsById: state.concepts.conceptsById,
   activeConcept: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId]) || null
 });
 
-const actions = { editConcept, deleteConcept };
+const actions = { editConcept, deleteConcept, getActiveInnovationData };
 
 export default connect(mapStateToProps, actions)(ConceptOverviewEditable);

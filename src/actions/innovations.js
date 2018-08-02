@@ -40,7 +40,6 @@ export const getAllInnovationsList = () => async dispatch => {
   }
 }
 
-// @param redirectToOverview = {boolean}.
 export const getActiveInnovationData = (partnerId) => async dispatch => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {

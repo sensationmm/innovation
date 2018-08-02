@@ -35,7 +35,8 @@ export default (state = initialState, action) => {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner } = action;
       const keyDates = partner.innovation.keyDates.map(keyDate => keyDate.attributes);
-      const activeInnovation = { ...partner.innovation.attributes, keyDates };
+      const partnerId = partner.id;
+      const activeInnovation = { ...partner.innovation.attributes, keyDates, partnerId };
       return { ...state, activeInnovation };
     }
 

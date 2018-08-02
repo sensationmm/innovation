@@ -86,11 +86,11 @@ const InnovationAddDetails = (props) => {
           </div>
           {
             datePickerOpen &&
-              <div className="innovation-date-picker-mask" onClick={toggleDatePicker}>
+              <div className="innovation-date-picker-mask">
               <DatePicker
                 openToDate={innovationOpenDate ? innovationOpenDate : moment()}
                 selected={innovationOpenDate ? innovationOpenDate : null}
-                onChange={(newDate => updateDateField(newDate))}
+                onChange={(newDate => { updateDateField(newDate); toggleDatePicker(); } )}
                 inline
               />
               </div>

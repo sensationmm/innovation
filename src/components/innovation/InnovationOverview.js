@@ -24,14 +24,6 @@ import { editInnovation, getActiveInnovationData } from '../../actions/innovatio
 
 import { innovationTypeLabels } from '../../config/innovationOptions';
 
-const curTeamMembers = [ // TODO: get from partner.users in redux store (also duplicated in InnovationAddTeam)
-  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
-  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
-  {name: 'Warren', position: 'DV Partner'}, {name: 'Aileen', position: 'DV Partner'},
-  {name: 'Stavros', position: 'GM'}, {name: 'Barry', position: 'VA'},
-  {name: 'Clem', position: 'SD'}, {name: 'Geraldine', position: 'Engineer'}
-];
-
 class InnovationOverview extends Component {
   state = {
     userType: 'teamGM',
@@ -63,7 +55,7 @@ class InnovationOverview extends Component {
   }
 
   render() {
-    const { activeInnovation, activePartner, conceptsById } = this.props;
+    const { activeInnovation, activePartner, conceptsById, teamMembers } = this.props;
     const { openEditDates, openEditTeam, mandateUpdated } = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
@@ -176,7 +168,7 @@ class InnovationOverview extends Component {
                 title='Your Current Team'
               />
               <InnovationTeam
-                teamMembers={curTeamMembers}
+                teamMembers={teamMembers}
               />
             </div>
 
@@ -186,6 +178,7 @@ class InnovationOverview extends Component {
                 subtitle="Invites will be sent to new team members when you save"
               />
               <InnovationAddTeam
+                curTeamMembers={teamMembers}
                 partnerId={activePartner.id}
                 onCancel={() => this.setState({ openEditTeam: false })} />
             </div>
@@ -223,12 +216,7 @@ class InnovationOverview extends Component {
           <ContentBox>
             <h3>Team Info</h3>
             <InnovationTeam
-              teamMembers={[
-                { name: 'Wayne', position: 'GM' },
-                { name: 'Claire', position: 'SD' },
-                { name: 'Ainsley', position: 'VA' },
-                { name: 'Bo Derek', position: 'TM' }
-              ]}
+              teamMembers={teamMembers}
             />
           </ContentBox>
           <ContentBox>
@@ -253,13 +241,15 @@ InnovationOverview.propTypes = {
   history: PropTypes.object,
   editInnovation: PropTypes.func,
   getActiveInnovationData: PropTypes.func,
-  match: PropTypes.object
+  match: PropTypes.object,
+  teamMembers: PropTypes.array
 };
 
 const mapStateToProps = state => ({
   activePartner: state.partners.activePartner,
   activeInnovation: state.innovations.activeInnovation,
-  conceptsById: state.concepts.conceptsById
+  conceptsById: state.concepts.conceptsById,
+  teamMembers: state.users.activeInnovationUsers
 });
 
 const actions = { editInnovation, getActiveInnovationData };

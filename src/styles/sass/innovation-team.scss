@@ -1,14 +1,25 @@
 @import './modules/colors.scss';
 
-.innovation-team-container-display {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px;
-  flex-wrap: wrap;
-}
+.innovation-team {
 
-.innovation-team-member {
-  text-align: center;
-  padding: 0 20px 20px 20px;
-  flex-wrap: wrap;
+  &-container-display {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    flex-wrap: wrap;
+  }
+
+  &-member {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    width: 100%;
+  }
+
+  &-user-pending {
+    color: #656e74;
+    line-height: 20px;
+    font-size: 14px;
+  }
+
 }

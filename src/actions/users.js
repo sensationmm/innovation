@@ -2,16 +2,19 @@ import {
   REQUEST_ALL_USERS_BEGIN,
   REQUEST_ALL_USERS_SUCCESS,
   REQUEST_ALL_USERS_ERROR,
-    // REQUEST_INNOVATION_USERS_BEGIN,
-    // REQUEST_INNOVATION_USERS_SUCCESS,
-    // REQUEST_INNOVATION_USERS_ERROR,
+  REQUEST_INNOVATION_USERS_BEGIN,
+  REQUEST_INNOVATION_USERS_SUCCESS,
+  REQUEST_INNOVATION_USERS_ERROR,
   INVITE_INNOVATION_USERS_BEGIN,
   INVITE_INNOVATION_USERS_SUCCESS,
-  INVITE_INNOVATION_USERS_ERROR
+  INVITE_INNOVATION_USERS_ERROR,
+  USER_SET_ROLE_BEGIN,
+  USER_SET_ROLE_SUCCESS,
+  USER_SET_ROLE_ERROR
 } from '../config/constants';
 
 // Import JSON API models.
-import { User, Role } from '../models';
+import { User, Role, Partner } from '../models';
 
 export const getAllUsers = () => async (dispatch) => {
   dispatch({ type: REQUEST_ALL_USERS_BEGIN });
@@ -26,18 +29,60 @@ export const getAllUsers = () => async (dispatch) => {
   }
 }
 
+// NB: On the front end the term 'innovation' is used to describe an entire 'project' which includes the partner data.
+// NB: On the back end partner owns innovation and also owns the roles and users.
+export const getActiveInnovationUsers = (partnerId) => async dispatch => {
+  dispatch({ type: REQUEST_INNOVATION_USERS_BEGIN });
+  try {
+    const partner = (await Partner.includes({ roles: 'user' }).find(partnerId)).data
+
+    const activeInnovationUsers = partner.roles.map(role => ({
+      roleId: role.id,
+      roleName: role.name,
+      id: role.user.id,
+      name: role.user.name,
+      email: role.user.email
+    }))
+
+    dispatch({ type: REQUEST_INNOVATION_USERS_SUCCESS, activeInnovationUsers });
+  }
+  catch (err) {
+    console.log(err);
+    dispatch({ type: REQUEST_INNOVATION_USERS_ERROR });
+  }
+}
+
 // Emails is an array of email addresses.
 export const inviteInnovationUsers = (partnerId, emails, roleName) => async (dispatch) => {
-  dispatch({ type: INVITE_INNOVATION_USERS_BEGIN })
+  dispatch({ type: INVITE_INNOVATION_USERS_BEGIN });
   try {
     for ( const email of emails ) {
-      const newUser = new Role({ email, name: 'admin', rolableId: partnerId, rolableType: 'Partner' });
-      await newUser.save();
+      const newRole = new Role({ email: email, name: roleName, rolableId: partnerId, rolableType: 'Partner' });
+      await newRole.save();
     }
     dispatch({ type: INVITE_INNOVATION_USERS_SUCCESS });
+    dispatch(getActiveInnovationUsers(partnerId))
   }
   catch (err) {
     console.log(err);
     dispatch({ type: INVITE_INNOVATION_USERS_ERROR });
   }
 }
+
+export const userSetRole = (roleId, newRoleName) => async (dispatch, getState) => {
+  dispatch({ type: USER_SET_ROLE_BEGIN });
+
+  try {
+    const role = (await Role.find(roleId)).data
+    role.name = newRoleName;
+    await role.save();
+
+    dispatch({ type: USER_SET_ROLE_SUCCESS });
+
+    const { partners: {activePartner: {id} } } = getState();
+    dispatch(getActiveInnovationUsers(id));
+  } catch (err) {
+    dispatch({ type: USER_SET_ROLE_ERROR });
+    console.log(err);
+  }
+};

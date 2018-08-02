@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-// import moment from 'moment';
+import moment from 'moment';
 
 import InnovationAddDates from './keydates/InnovationAddDates';
 import InnovationAddTeam from './InnovationAddTeam';
@@ -19,8 +19,7 @@ import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
 
-import { makeArrayFromIndexedObject } from '../../utils/functions';
-// import { getByKey } from '../../utils/functions';
+import { makeArrayFromIndexedObject, getByKey } from '../../utils/functions';
 import { editInnovation, getActiveInnovationData } from '../../actions/innovations';
 
 import { innovationTypeLabels } from '../../config/innovationOptions';
@@ -72,8 +71,8 @@ class InnovationOverview extends Component {
     const activeReviewed = activeConcepts.filter(concept => concept.status === 'analysed');
     const killedConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status === 'killed');
 
-    // const is2Date = activeInnovation.keyDates ? getByKey(activeInnovation.keyDates, 'IS2', 'name') : [];
-    // const isPostIS2 = is2Date ? activeInnovation.keyDates && moment().isAfter(moment(is2Date[0].date)) : false;
+    const is2Date = activeInnovation.keyDates ? getByKey(activeInnovation.keyDates, 'IS2', 'name') : [];
+    const isPostIS2 = is2Date ? activeInnovation.keyDates && moment().isAfter(moment(is2Date[0].date)) : false;
     const keyDatesSetup = activeInnovation.keyDates && activeInnovation.keyDates.length > 0;
 
     const dates = [];
@@ -85,7 +84,6 @@ class InnovationOverview extends Component {
 
     // TODO: testing only.
     const { userType } = this.state;
-    const isPostIS2 = true;
 
     return (
       <div>

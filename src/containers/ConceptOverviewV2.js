@@ -2,12 +2,16 @@ import React , { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ConceptOverviewEditable from './ConceptOverviewEditable';
-import ConceptOverviewRead from './ConceptOverviewRead';
+import ConceptOverviewEditable from '../components/concept/ConceptOverviewEditable';
+import ConceptOverviewRead from '../components/concept/ConceptOverviewRead';
 
 import { getActiveInnovationData } from '../actions/innovations';
 
 class ConceptOverviewV2 extends Component {
+  state = {
+    userType: 'finance' // TODO: For testing only
+  }
+
   componentDidMount() {
     this.checkConceptInnovation();
   }
@@ -28,22 +32,31 @@ class ConceptOverviewV2 extends Component {
   }
 
   render() {
-    const { activeInnovationId, activePartnerId, conceptsById, activeConcept, authedUser } = this.props;
+    const { activeConcept } = this.props;
+    if (!activeConcept) { return null };
+    const { activeInnovationId, activePartnerId, conceptsById, authedUser } = this.props;
+    const { userType } = this.state; // TODO: For testing only
     return (
       <div>
-        <div>{authedUser.roleName}</div>
-        <ConceptOverviewEditable
-          activeInnovationId={activeInnovationId}
-          activePartnerId={activePartnerId}
-          conceptsById={conceptsById}
-          activeConcept={activeConcept}
-        />
-        <ConceptOverviewRead
-          activeInnovationId={activeInnovationId}
-          activePartnerId={activePartnerId}
-          conceptsById={conceptsById}
-          activeConcept={activeConcept}
-        />
+        {/* <div>{authedUser.roleName}</div> */}
+        <div onClick={() => this.setState({ userType: userType === 'finance' ? 'member' : 'finance' })}>Change User Type</div>
+        <div>User Type: {userType}</div>
+        {
+          userType === 'finance'
+            ? (
+              <ConceptOverviewRead
+                activeConcept={activeConcept}
+              />
+            )
+            : (
+              <ConceptOverviewEditable
+                activeInnovationId={activeInnovationId}
+                activePartnerId={activePartnerId}
+                conceptsById={conceptsById}
+                activeConcept={activeConcept}
+              />
+            )
+        }
       </div>
     )
   }

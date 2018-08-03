@@ -2,8 +2,6 @@
 @import './modules/breakpoints.scss';
 
 .concept-meta {
-  display: flex;
-  justify-content: space-between;
 
   &-label {
     flex-basis: 20%;
@@ -11,6 +9,8 @@
     display: flex;
     align-items: center;
     padding-right: 20px;
+    margin: 20px 0;
+    border-bottom: 1px solid $text-off-white;
   }
 
   &-stats {
@@ -22,7 +22,7 @@
   }
 
   &-stat {
-    width: calc(50% - 40px);
+    width: calc(80% - 40px);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,15 +39,16 @@
     }
 
     &-label {
-      padding-right: 10px;
+      padding-right: 50px;
       color: $text-offset;
+      width: 20%
     }
 
     &-content {
       display: flex;
       justify-content: center;
       text-align: center;
-      min-width: 40%;
+      width: 70%;
       white-space: normal;
     }
   }
@@ -119,5 +120,5 @@
 }
 
 @media screen and (max-width: $breakpoint-tablet) {
-  
+
 }

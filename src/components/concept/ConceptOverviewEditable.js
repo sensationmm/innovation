@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ConceptBasicDetails from '../components/concept/createForm/ConceptBasicDetails';
-import ConceptMarket from '../components/concept/createForm/ConceptMarket';
-import ConceptSolution from '../components/concept/createForm/ConceptSolution';
-import ConceptBusinessModel from '../components/concept/createForm/ConceptBusinessModel';
-import ConceptCorpAdvantage from '../components/concept/createForm/ConceptCorpAdvantage';
-import ConceptCosts from '../components/concept/createForm/ConceptCosts';
-import ConceptConviction from '../components/concept/createForm/ConceptConviction';
-import VFTScoresDisplay from '../components/concept/VFTScores/VFTScoresDisplay';
+import ConceptBasicDetails from './createForm/ConceptBasicDetails';
+import ConceptMarket from './createForm/ConceptMarket';
+import ConceptSolution from './createForm/ConceptSolution';
+import ConceptBusinessModel from './createForm/ConceptBusinessModel';
+import ConceptCorpAdvantage from './createForm/ConceptCorpAdvantage';
+import ConceptCosts from './createForm/ConceptCosts';
+import ConceptConviction from './createForm/ConceptConviction';
+import VFTScoresDisplay from './VFTScores/VFTScoresDisplay';
 
-import FormSectionHeader from '../components/formInputs/FormSectionHeader';
-import ButtonSubmit from '../components/buttons/ButtonSubmit';
-import BackTextLink from '../components/buttons/BackTextLink';
-import ButtonDelete from '../components/buttons/ButtonDelete';
+import FormSectionHeader from '../formInputs/FormSectionHeader';
+import ButtonSubmit from '../buttons/ButtonSubmit';
+import BackTextLink from '../buttons/BackTextLink';
+import ButtonDelete from '../buttons/ButtonDelete';
 
-import '../styles/css/concept-create.css';
+import '../../styles/css/concept-create.css';
 
-import { editConcept, deleteConcept } from '../actions/concepts';
+import { editConcept, deleteConcept } from '../../actions/concepts';
 
 class ConceptOverviewEditable extends Component {
   state = {

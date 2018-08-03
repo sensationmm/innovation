@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import '../styles/css/calendar.css';
+import '../../styles/css/calendar.css';
 
 class CalendarGrouping extends Component {
 

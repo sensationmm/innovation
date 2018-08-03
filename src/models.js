@@ -244,3 +244,13 @@ export const KeyDate = ApplicationRecord.extend({
     keyDatable: belongsTo()
   }
 });
+
+export const InnovationReport = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'innovation_reports'
+  },
+  attrs: {
+    id: attr(),
+    name: attr()
+  }
+});

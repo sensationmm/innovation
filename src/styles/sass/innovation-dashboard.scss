@@ -58,6 +58,14 @@
   min-width: 50%;
 }
 
+.innovation-dash-calendar-report-button {
+  position: absolute;
+  top: -10px;
+  left: 0px;
+  cursor: pointer;
+  z-index: 1;
+}
+
 .innovation-dash-add-innovation-link {
   display: flex;
   align-items: center;

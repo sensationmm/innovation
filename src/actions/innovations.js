@@ -14,6 +14,9 @@ import {
   EDIT_INNOVATION_KEYDATES_BEGIN,
   EDIT_INNOVATION_KEYDATES_SUCCESS,
   EDIT_INNOVATION_KEYDATES_ERROR,
+  REQUEST_INNOVATION_REPORT_EMAIL_BEGIN,
+  REQUEST_INNOVATION_REPORT_EMAIL_SUCCESS,
+  REQUEST_INNOVATION_REPORT_EMAIL_ERROR,
   // DELETE_INNOVATION_BEGIN,
   // DELETE_INNOVATION_SUCCESS,
   // DELETE_INNOVATION_ERROR
@@ -22,8 +25,10 @@ import {
 import { push } from 'connected-react-router';
 import moment from 'moment';
 
+import { displayMessage } from './ui';
+
 // Import JSON API models.
-import { Innovation, Partner, KeyDate } from '../models';
+import { Innovation, Partner, KeyDate, InnovationReport } from '../models';
 
 export const getAllInnovationsList = () => async dispatch => {
   dispatch({ type: GET_INNOVATIONS_LIST_BEGIN })
@@ -147,5 +152,19 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
   }
   catch (err) {
     dispatch({ type: EDIT_INNOVATION_KEYDATES_ERROR })
+  }
+}
+
+export const requestInnovationReport = (name) => async dispatch => {
+  dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_BEGIN });
+  console.log(name);
+  try {
+    const report = new InnovationReport({ name });
+    await report.save();
+    dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_SUCCESS });
+    dispatch(displayMessage(`Innovation ${name} report email requested.`))
+  }
+  catch (err) {
+    dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_ERROR });
   }
 }

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import CalendarItem from './CalendarItem';
 import CalendarGrouping from './CalendarGrouping';
 
-import '../styles/css/calendar.css';
+import '../../styles/css/calendar.css';
 
 class Calendar extends Component {
 
@@ -67,7 +67,7 @@ class Calendar extends Component {
 
     return (
       <div className="calendar">
-        {innovations[0].label 
+        {innovations[0].label
 
           ? (
               innovations.map((grouping, index) => {
@@ -88,10 +88,10 @@ class Calendar extends Component {
         }
 
         <div className="calendar-guides">
-          <div className="calendar-dates" 
-            style={{ 
-              width: `${ this.calculateScale(month6) - this.calculateScale(month1) }%`, 
-              left: `${ this.calculateScale(month1) }%` 
+          <div className="calendar-dates"
+            style={{
+              width: `${ this.calculateScale(month6) - this.calculateScale(month1) }%`,
+              left: `${ this.calculateScale(month1) }%`
             }}
           >
             <div>{ month1.format('MMM YY') }</div>

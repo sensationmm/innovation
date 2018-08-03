@@ -1,4 +1,8 @@
-import { CHECK_BREAKPOINT } from '../config/constants';
+import {
+  CHECK_BREAKPOINT,
+  SET_ALERT_MESSAGE,
+  DISMISS_ALERT_MESSAGE
+} from '../config/constants';
 
 function checkBreakPoint() {
   const app = document.getElementById('app');
@@ -46,7 +50,16 @@ export const ui = (state = defaultState, action) => {
         breakpoint: newUI.breakpoint
       });
     }
-    
+
+    case SET_ALERT_MESSAGE: {
+      const { message } = action;
+      return { ...state, message }
+    }
+
+    case DISMISS_ALERT_MESSAGE: {
+      return { ...state, message: null }
+    }
+
     default:
       return state;
   }

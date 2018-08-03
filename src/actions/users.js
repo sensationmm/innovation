@@ -31,18 +31,20 @@ export const getAllUsers = () => async (dispatch) => {
 
 // NB: On the front end the term 'innovation' is used to describe an entire 'project' which includes the partner data.
 // NB: On the back end partner owns innovation and also owns the roles and users.
-export const getActiveInnovationUsers = (partnerId) => async dispatch => {
+export const getActiveInnovationUsers = (partnerId) => async (dispatch) => {
   dispatch({ type: REQUEST_INNOVATION_USERS_BEGIN });
   try {
     const partner = (await Partner.includes({ roles: 'user' }).find(partnerId)).data
 
-    const activeInnovationUsers = partner.roles.map(role => ({
-      roleId: role.id,
-      roleName: role.name,
-      id: role.user.id,
-      name: role.user.name,
-      email: role.user.email
-    }))
+    const activeInnovationUsers = partner.roles.map(role => {
+      return {
+        roleId: role.id,
+        roleName: role.name,
+        id: role.user.id,
+        name: role.user.name,
+        email: role.user.email
+      }
+    })
 
     dispatch({ type: REQUEST_INNOVATION_USERS_SUCCESS, activeInnovationUsers });
   }

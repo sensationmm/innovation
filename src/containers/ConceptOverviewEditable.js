@@ -19,30 +19,10 @@ import ButtonDelete from '../components/buttons/ButtonDelete';
 import '../styles/css/concept-create.css';
 
 import { editConcept, deleteConcept } from '../actions/concepts';
-import { getActiveInnovationData } from '../actions/innovations';
 
 class ConceptOverviewEditable extends Component {
   state = {
     editedFields: []
-  }
-
-  componentDidMount() {
-    this.checkConceptInnovation();
-  }
-
-  componentDidUpdate() {
-    this.checkConceptInnovation();
-  }
-
-  checkConceptInnovation = () => {
-    const { activeConcept, conceptsById, getActiveInnovationData, history } = this.props;
-
-    if(!conceptsById || (Object.keys(conceptsById).length === 0 && conceptsById.constructor === Object)) {
-      const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
-      getActiveInnovationData(storedToken.activePartnerId);
-    } else if(!activeConcept) {
-      history.push('/dashboard');
-    }
   }
 
   updateEditedFields = (key) => {
@@ -278,17 +258,9 @@ ConceptOverviewEditable.propTypes = {
   ]),
   conceptsById: PropTypes.object,
   activeConcept: PropTypes.object,
-  existingLogo: PropTypes.bool,
   getActiveInnovationData: PropTypes.func
 };
 
-const mapStateToProps = (state, props) => ({
-  activeInnovationId: state.innovations.activeInnovation.id,
-  activePartnerId: state.partners.activePartner.id,
-  conceptsById: state.concepts.conceptsById,
-  activeConcept: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId]) || null
-});
+const actions = { editConcept, deleteConcept };
 
-const actions = { editConcept, deleteConcept, getActiveInnovationData };
-
-export default connect(mapStateToProps, actions)(ConceptOverviewEditable);
+export default connect(null, actions)(ConceptOverviewEditable);

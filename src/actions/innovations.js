@@ -162,7 +162,7 @@ export const requestInnovationReport = (name) => async dispatch => {
     const report = new InnovationReport({ name });
     await report.save();
     dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_SUCCESS });
-    dispatch(displayMessage(`Innovation ${name} report email requested.`))
+    dispatch(displayMessage(`Innovation ${name} email report sent.`))
   }
   catch (err) {
     dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_ERROR });

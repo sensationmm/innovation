@@ -17,7 +17,7 @@ export const displayMessage = (message) => dispatch => {
 
   setTimeout(() => {
     dispatch(dismissMessage())
-  }, 2000);
+  }, 3000);
 }
 
 export const dismissMessage = () => dispatch => {

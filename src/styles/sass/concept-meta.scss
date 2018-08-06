@@ -2,47 +2,47 @@
 @import './modules/breakpoints.scss';
 
 .concept-meta {
+  &-label {
+    font-size: 18px;
+    display: flex;
+    padding-bottom: 10px;
+    margin: 20px 0;
+    border-bottom: 1px solid $text-off-white;
+  }
+
+  &-stats {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    padding: 12px;
+
     &-label {
-      font-size: 18px;
-      display: flex;
-      padding-bottom: 10px;
-      margin: 20px 0;
-      border-bottom: 1px solid $text-off-white;
+      width: 20%;
+      color: $text-offset;
     }
-
-    &-stats {
-      display: flex;
-      flex-direction: column;
+    &-content {
+      width: 80%;
+      text-align: center;
     }
-
-    &-stat {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      padding: 12px;
-
-      &-label {
-        width: 20%;
-        color: $text-offset;
-      }
-      &-content {
-        width: 80%;
-        text-align: center;
-      }
-      &-score {
-        width: 20%;
-        text-align: center;
-      }
-      &-description {
-        width: 20%;
-        text-align: center;
-      }
-      &-comment {
-        width: 40%;
-        text-align: center;
-      }
+    &-score {
+      width: 20%;
+      text-align: center;
     }
+    &-description {
+      width: 20%;
+      text-align: center;
+    }
+    &-comment {
+      width: 40%;
+      text-align: center;
+    }
+  }
 }
 
 // .concept-meta {

@@ -9,10 +9,6 @@ import BackTextLink from '../components/buttons/BackTextLink';
 import { getActiveInnovationData } from '../actions/innovations';
 
 class ConceptOverviewV2 extends Component {
-  state = {
-    userType: 'finance' // TODO: For testing only
-  }
-
   componentDidMount() {
     this.checkConceptInnovation();
   }
@@ -34,18 +30,14 @@ class ConceptOverviewV2 extends Component {
 
   render() {
     const { activeConcept } = this.props;
-    if (!activeConcept) { return null };
-    const { activeInnovationId, activePartnerId, conceptsById, authedUser } = this.props;
-    const { userType } = this.state; // TODO: For testing only
+    if (!activeConcept) { return null }
+    const { activeInnovationId, activePartnerId, conceptsById, userType } = this.props;
     return (
       <div>
         <BackTextLink
           label="Back"
           onClick={() => this.props.history.goBack()}
         />
-        {/* <div>{authedUser.roleName}</div> */}
-        <div style={{ padding: '10px', border: '1px solid white', width: '200px', cursor: 'pointer' }} onClick={() => this.setState({ userType: userType === 'finance' ? 'member' : 'finance' })}>Change User Type</div>
-        <div>User Type: {userType}</div>
         {
           userType === 'finance'
             ? (
@@ -79,7 +71,7 @@ ConceptOverviewV2.propTypes = {
   ]),
   conceptsById: PropTypes.object,
   activeConcept: PropTypes.object,
-  authedUser: PropTypes.object,
+  userType: PropTypes.string,
   getActiveInnovationData: PropTypes.func
 };
 
@@ -88,7 +80,7 @@ const mapStateToProps = (state, props) => ({
   activePartnerId: state.partners.activePartner.id,
   conceptsById: state.concepts.conceptsById,
   activeConcept: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId]) || null,
-  authedUser: state.auth.authedUser
+  userType: state.auth.authedUser.roleName
 });
 
 const actions = { getActiveInnovationData };

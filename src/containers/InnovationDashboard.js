@@ -9,8 +9,6 @@ import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 
 import '../styles/css/innovation-dashboard.css';
 
-const userType = 'teamGM'; // get user type from auth.user in redux store.
-
 class InnovationDashboard extends Component {
   state = {
     sendSummaryOpen: false,
@@ -37,7 +35,7 @@ class InnovationDashboard extends Component {
   }
 
   render() {
-    const { innovations } = this.props;
+    const { innovations, userType } = this.props;
     const { sendSummaryOpen } = this.state;
     return (
       <div>
@@ -67,7 +65,7 @@ class InnovationDashboard extends Component {
             <div>Create a new Innovation</div>
           </Link>
           {
-            (innovations.length > 0 && (userType === 'teamGM' || userType === 'teamMember')) &&
+            (innovations.length > 0 && (userType === 'admin' || userType === 'member')) &&
               <div className="innovation-dash-send-summary-container" onClick={() => this.toggleOpenSendSummary()}>
                 <div><i className="fas fa-envelope fa-2x send-summary-icon"></i></div>
                 <div>Send Innovations Summary</div>
@@ -116,11 +114,13 @@ class InnovationDashboard extends Component {
 
 InnovationDashboard.propTypes = {
    innovations: PropTypes.array,
-   getActiveInnovationData: PropTypes.func
+   getActiveInnovationData: PropTypes.func,
+   userType: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-  innovations: state.innovations.allInnovationsList.filter(innovation => innovation.chargeCode) // TODO: remove once DB is cleared of test data.
+  innovations: state.innovations.allInnovationsList.filter(innovation => innovation.chargeCode), // TODO: remove once DB is cleared of test data.
+  userType: state.auth.authedUser.roleName
 });
 
 export default connect(mapStateToProps, null)(InnovationDashboard)

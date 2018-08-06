@@ -16,8 +16,8 @@
 @include animation-mixin(slide-1, -50px, 0);
 
 .inventure-alert-temp-popup {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  top: 80px;
   left: 20px;
   animation: slide-1 0.5s;
   transition: all 3s;
@@ -27,6 +27,7 @@
   width: 180px;
   padding: 20px;
   text-align: center;
+  z-index: 5;
 
   &-text {
     color: $text-off-white;

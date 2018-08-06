@@ -17,8 +17,8 @@ const ConceptOverviewRead = (props) => {
   const targetIndustryName = targetIndustry && targetIndustry.name;
   return (
     <div>
-      <div>Concept Status (Testing): {activeConcept.status}</div>
       <div className="concept-overview-page-header">
+        <div className="concept-overview-page-status">Status: {activeConcept.status}</div>
         <div className="concept-overview-page-title">Concept Overview: {activeConcept.name}</div>
         {
           (activeConcept.status === 'ready' || activeConcept.status === 'analysed') &&
@@ -56,7 +56,8 @@ const ConceptOverviewRead = (props) => {
 ConceptOverviewRead.propTypes = {
   history: PropTypes.object,
   activeConcept: PropTypes.object,
-  conceptAnalysis: PropTypes.object
+  conceptAnalysis: PropTypes.object,
+  targetIndustry: PropTypes.object
 };
 
 const mapStateToProps = (state, props) => ({

@@ -72,7 +72,8 @@ class ConceptFinanceReport extends Component {
         (attrValue !== null &&
         attrValue !== undefined &&
         attrValue !== '') ||
-        attrKey === 'id' // id will always be null until some data is saved to the DB.
+        attrKey === 'id' || // id will always be null until some data is saved to the DB.
+        attrKey === 'comment' // Comments are no required.
       )
     })
   }

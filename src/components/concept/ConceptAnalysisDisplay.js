@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 import '../../styles/css/concept-meta.css';
+
+import { analysisDisplayColours } from '../../config/conceptOptions';
 
 /**
  * ConceptAnalysisDisplay
@@ -16,7 +17,6 @@ import '../../styles/css/concept-meta.css';
 
 const ConceptAnalysisDisplay = props => {
   const { label, stats, summary } = props;
-  console.log('props', props);
   return (
     <div className="concept-meta">
       <div className="concept-meta-label">{label}</div>
@@ -29,8 +29,13 @@ const ConceptAnalysisDisplay = props => {
           <div key={`stat-${count}`} className="concept-meta-stat">
             <div className="concept-meta-stat-label">{stat.label}</div>
             <div className="concept-meta-stat-score">{stat.score}</div>
-            <div className="concept-meta-stat-description">{stat.description}</div>
-            <div className="concept-meta-stat-comment">{stat.comment}</div>
+            <div
+              className="concept-meta-stat-description"
+              style={{ color: analysisDisplayColours[stat.score] }}
+              >
+                {stat.description}
+            </div>
+            <div className="concept-meta-stat-comment">{(stat.comment.length === 0 || !stat.comment) ? 'No comment' : stat.comment}</div>
           </div>
         ))
       }

@@ -16,6 +16,8 @@ import {
 // Import JSON API models.
 import { User, Role, Partner } from '../models';
 
+import { displayMessage } from './ui';
+
 export const getAllUsers = () => async (dispatch) => {
   dispatch({ type: REQUEST_ALL_USERS_BEGIN });
   try {
@@ -45,7 +47,6 @@ export const getActiveInnovationUsers = (partnerId) => async (dispatch) => {
         email: role.user.email
       }
     })
-
     dispatch({ type: REQUEST_INNOVATION_USERS_SUCCESS, activeInnovationUsers });
   }
   catch (err) {
@@ -64,6 +65,7 @@ export const inviteInnovationUsers = (partnerId, emails, roleName) => async (dis
     }
     dispatch({ type: INVITE_INNOVATION_USERS_SUCCESS });
     dispatch(getActiveInnovationUsers(partnerId))
+    dispatch(displayMessage('User invite(s) sent'));
   }
   catch (err) {
     console.log(err);
@@ -83,6 +85,8 @@ export const userSetRole = (roleId, newRoleName) => async (dispatch, getState) =
 
     const { partners: {activePartner: {id} } } = getState();
     dispatch(getActiveInnovationUsers(id));
+    dispatch(displayMessage('User access updated'));
+
   } catch (err) {
     dispatch({ type: USER_SET_ROLE_ERROR });
     console.log(err);

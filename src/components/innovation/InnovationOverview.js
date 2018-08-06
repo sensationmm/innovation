@@ -30,7 +30,7 @@ class InnovationOverview extends Component {
     openEditDates: false,
     openEditTeam: false,
     openEditMandate: false,
-    mandateUpdated: false // TODO: May way to generalise this to be updatedFields as per concept overview if there are to be more inline editable fields on this page.
+    mandateUpdated: false
   }
 
   componentDidMount() {
@@ -82,15 +82,6 @@ class InnovationOverview extends Component {
         <ContentBox background={false}>
           <Link to="/dashboard">&lt; Back to Dashboard</Link>
         </ContentBox>
-        <ContentBox background={false}>
-          <div>Testing:</div>
-          <ButtonSubmit
-            label="Change User Type"
-            onClick={() => this.setState({ userType: userType === 'teamGM' ? 'finance' : 'teamGM'})}
-          />
-          <div>{this.state.userType}</div>
-        </ContentBox>
-
         <ContentBox>
           <h1>{activeInnovation.sprintName}</h1>
           <div>Innovation Type: {innovationTypeLabels[activeInnovation.sprintType]}</div>
@@ -187,28 +178,28 @@ class InnovationOverview extends Component {
 
         {(activeIncomplete && activeIncomplete.length > 0) &&
           <ContentBox background={false}>
-            <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
+            <ConceptList concepts={activeIncomplete} title='Draft' userType={userType} postIS2={isPostIS2} />
           </ContentBox>
         }
 
         {
           (activeComplete && activeComplete.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={activeComplete} title='Active & Ready' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeComplete} title='Ready' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 
         {
           (activeReviewed && activeReviewed.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={activeReviewed} title='Active & Analysed' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeReviewed} title='Analysed' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 
         {
           (killedConcepts && killedConcepts.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={killedConcepts} title='Killed Concepts' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={killedConcepts} title='Killed' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 

@@ -27,8 +27,6 @@ const ConceptList = props => {
   return (
     <div className="concept-list">
       <div className="concept-list-header">{props.title}</div>
-      <div>For testing: {userType}</div>
-      <div>For testing: {postIS2 ? 'Post IS2' : 'Pre IS2'}</div>
       <div className="concept-list-items">
       {
         concepts && concepts.map(concept => {
@@ -48,11 +46,10 @@ const ConceptList = props => {
                   <ConceptAvatar conceptId={id} ident={ident || 'TD'} color={color || 'blue'} logo={logo} showLink={false}/>
                   <h3>{name}</h3>
                   <p>{description}</p>
-                  <div>For testing: {status}</div>
                 </div>
               </Link>
               {
-                (!postIS2 && userType === 'teamGM') &&
+                (!postIS2 && (userType === 'admin' || userType === 'member')) &&
                   <div className="concept-list-item-user-actions">
                     {
                       (status === 'draft' || status ==='ready')
@@ -62,7 +59,7 @@ const ConceptList = props => {
                   </div>
               }
               {
-                (postIS2 && userType === 'teamGM') &&
+                (postIS2 && (userType === 'admin' || userType === 'member')) &&
                   <div>
                     {
                       (status === 'ready') &&

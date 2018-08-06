@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
+import Config from '../../config';
 
 import '../../styles/css/concept-avatar.css';
 
@@ -38,7 +39,7 @@ const ConceptAvatar = props => {
       )}
       style={{
         backgroundColor: !logo ? color : '',
-        backgroundImage: logo !== '' ? `url(${logo})` : 'none'
+        backgroundImage: logo !== '' ? `url(${Config.apiDomain}${logo})` : 'none'
       }}
     >
       {!logo && ident}

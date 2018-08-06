@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import classnames from 'classnames';
+import Config from '../../config';
 
 import ContentBox from '../layout/ContentBox';
 
@@ -52,7 +53,10 @@ class Uploader extends Component {
                       : (logo && logo.preview) ? logo.preview : IconUpload
     return (
       <ContentBox>
-        <div className={classnames('logo-upload-container', { 'hover': hover })} style={{backgroundImage:`url(${logoUrl})`}}>
+        <div 
+          className={classnames('logo-upload-container', { 'hover': hover })} 
+          style={{backgroundImage:`url(${Config.apiDomain}${logoUrl})`}}
+        >
           <Dropzone
             onDrop={this.onDrop}
             onDragEnter={this.onDragEnter}

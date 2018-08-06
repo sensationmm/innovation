@@ -95,29 +95,22 @@ class ConceptOverviewEditable extends Component {
     return (
       <div className="create-concept-container">
         <div className="create-concept-user-actions">
-          <BackTextLink
-            label="Back"
-            onClick={() => this.props.history.goBack()}
+          <div>Current Concept Status: {activeConcept.status}</div>
+          <ButtonSubmit
+            label="Mark as Killed"
+            onClick={() => this.selectOption('status', 'killed')}
           />
-          <div>
-            <div>Status: {activeConcept.status}</div>
-            <ButtonSubmit
-              label="Mark as Killed"
-              onClick={() => this.selectOption('status', 'killed')}
-            />
-            <ButtonSubmit
-              label="Mark as Draft"
-              onClick={() => this.selectOption('status', 'draft')}
-            />
-            <ButtonSubmit
-              label="Mark as Ready"
-              onClick={() => this.selectOption('status', 'ready')}
-              // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
-            />
-
-          </div>
+          <ButtonSubmit
+            label="Mark as Draft"
+            onClick={() => this.selectOption('status', 'draft')}
+          />
+          <ButtonSubmit
+            label="Mark as Ready"
+            onClick={() => this.selectOption('status', 'ready')}
+            // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
+          />
         </div>
-        <div className="create-concept-page-title">Update Concept</div>
+        <div className="create-concept-page-title">Update Concept: {activeConcept.name}</div>
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Concept Summary"

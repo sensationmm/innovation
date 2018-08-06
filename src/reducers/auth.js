@@ -22,14 +22,18 @@ export default (state = initialState, action) => {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner, authedUser } = action;
       const authedRole = partner.roles.find(role => role.user.email === authedUser.email);
-      const updatedAuthedUser = {
-        roleId: authedRole.id,
-        roleName: authedRole.name,
-        id: authedRole.user.id,
-        name: authedRole.user.name,
-        email: authedRole.user.email
+      if (authedRole) {
+        const updatedAuthedUser = {
+          roleId: authedRole.id,
+          roleName: authedRole.name,
+          id: authedRole.user.id,
+          name: authedRole.user.name,
+          email: authedRole.user.email
+        }
+        return { ...state, authedUser: { ...updatedAuthedUser } }
+      } else {
+        return { ...state }
       }
-      return { ...state, authedUser: { ...updatedAuthedUser } }
     }
 
     default:

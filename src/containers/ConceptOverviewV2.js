@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ConceptOverviewEditable from '../components/concept/ConceptOverviewEditable';
 import ConceptOverviewRead from '../components/concept/ConceptOverviewRead';
+import BackTextLink from '../components/buttons/BackTextLink';
 
 import { getActiveInnovationData } from '../actions/innovations';
 
@@ -38,8 +39,12 @@ class ConceptOverviewV2 extends Component {
     const { userType } = this.state; // TODO: For testing only
     return (
       <div>
+        <BackTextLink
+          label="Back"
+          onClick={() => this.props.history.goBack()}
+        />
         {/* <div>{authedUser.roleName}</div> */}
-        <div onClick={() => this.setState({ userType: userType === 'finance' ? 'member' : 'finance' })}>Change User Type</div>
+        <div style={{ padding: '10px', border: '1px solid white', width: '200px', cursor: 'pointer' }} onClick={() => this.setState({ userType: userType === 'finance' ? 'member' : 'finance' })}>Change User Type</div>
         <div>User Type: {userType}</div>
         {
           userType === 'finance'

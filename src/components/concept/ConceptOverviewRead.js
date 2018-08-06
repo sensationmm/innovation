@@ -13,15 +13,23 @@ import { conceptFieldGroups } from '../../config/conceptOptions';
 import '../../styles/css/concept-overview-read.css';
 
 const ConceptOverviewRead = (props) => {
-  const { activeConcept, conceptAnalysis } = props;
+  const { activeConcept, conceptAnalysis, targetIndustry } = props;
+  const targetIndustryName = targetIndustry && targetIndustry.name;
   return (
     <div>
-      <div>Name: {activeConcept.name}</div>
-      <div>Status: {activeConcept.status}</div>
-      {
-        activeConcept.status === 'ready' &&
-          <Link to={`/vft-concept-report/${activeConcept.id}`}>Complete Analysis Form</Link>
-      }
+      <div>Concept Status (Testing): {activeConcept.status}</div>
+      <div className="concept-overview-page-header">
+        <div className="concept-overview-page-title">Concept Overview: {activeConcept.name}</div>
+        {
+          (activeConcept.status === 'ready' || activeConcept.status === 'analysed') &&
+            <div className="concept-overview-page-edit-report-btn">
+              <Link
+                to={`/vft-concept-report/${activeConcept.id}`}>{activeConcept.status === 'ready' ? 'Complete Analysis Report' : 'Edit Analysis Report'}
+              </Link>
+            </div>
+        }
+      </div>
+
       {
         activeConcept.status === 'analysed' &&
           <ConceptAnalysis conceptAnalysis={conceptAnalysis} />
@@ -34,7 +42,7 @@ const ConceptOverviewRead = (props) => {
               label={fieldGroup.displayAs}
               stats={fieldGroup.contents.map(item => ({
                   label: item.label,
-                  content: activeConcept[item.value]
+                  content: item.value === 'targetIndustry' ? targetIndustryName : activeConcept[item.value]
                 }
               ))}
             />
@@ -52,7 +60,8 @@ ConceptOverviewRead.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  financeAnalysis: state.financeScores.financeScoresByConceptId[props.activeConcept.id]
+  conceptAnalysis: state.financeScores.scoresByConceptId[props.activeConcept.id],
+  targetIndustry: state.resources.targetIndustries.find(targetIndustry => targetIndustry.id === props.activeConcept.targetIndustryId)
 })
 
-export default ConceptOverviewRead;
+export default connect(mapStateToProps, null)(ConceptOverviewRead);

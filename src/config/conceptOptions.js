@@ -9,9 +9,9 @@ export const conceptFieldGroups = [
       { value: 'marketSegment', label: 'Customer Segment' },
       { value: 'marketFriction', label: 'Frictions' },
       { value: 'marketSize', label: 'Market Size' },
+      { value: 'targetIndustry', label: 'Target Industry' },
       { value: 'targetCustomers', label: 'Target Customers' },
       { value: 'targetGeography', label: 'Target Geography' }
-      // Target Industry you will need to get separately via concept.targetIndustryId as it is a model
     ]
   },{
     key: 'solution',

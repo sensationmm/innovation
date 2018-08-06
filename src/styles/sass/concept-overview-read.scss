@@ -1,1 +1,18 @@
 @import './modules/colors.scss';
+
+.concept-overview-page {
+  &-header {
+    position: relative;
+    text-align: center;
+  }
+  &-page-title {
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+  }
+  &-edit-report-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+  }
+}

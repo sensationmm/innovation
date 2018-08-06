@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-import '../styles/css/calendar.css';
+import '../../styles/css/calendar.css';
 
 class CalendarItem extends Component {
 
@@ -37,11 +37,11 @@ class CalendarItem extends Component {
       }
     });
 
-    return { 
+    return {
       left: `${splits[0]}%`,
       width: `${splits[splits.length - 1] - splits[0]}%`,
-      backgroundColor: 'ffffff', 
-      backgroundImage: `linear-gradient(90deg, ${splitStyle.join(',')})` 
+      backgroundColor: 'ffffff',
+      backgroundImage: `linear-gradient(90deg, ${splitStyle.join(',')})`
     };
   }
 
@@ -50,17 +50,17 @@ class CalendarItem extends Component {
     const { innovation, calculateScale } = this.props;
     const { showDetails } = this.state;
 
-    const { 
+    const {
       partnerId,
-      sprintName, 
-      partner, 
-      chargeCode, 
+      sprintName,
+      partner,
+      chargeCode,
       dvOffice,
       dvPartner1,
       dvPartner2,
       gm,
-      keyDates, 
-      openDate 
+      keyDates,
+      openDate
     } = innovation;
 
     const splits = [];
@@ -87,7 +87,7 @@ class CalendarItem extends Component {
             <i className="fas fa-angle-down"></i>
           </div>
         </div>
-        
+
         <div className="calendar-item-schedule">
           {
             keyDates.map((date, count) => {

@@ -12,6 +12,7 @@ import Tracking from './Tracking';
 import Canvas from './Canvas';
 import CanvasV2 from './CanvasV2';
 import InnovationCalendar from './InnovationCalendar';
+import AlertPopup from '../components/layout/AlertPopup';
 import Header from '../components/Header';
 import NotMobile from '../components/NotMobile';
 import NotFound from '../components/NotFound';
@@ -44,6 +45,7 @@ const App = () => (
         <PrivateRoute component={NotFound} />
       </Switch>
     </main>
+    <AlertPopup />
   </div>
 );
 

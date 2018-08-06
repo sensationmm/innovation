@@ -16,6 +16,8 @@ import {
 // Import JSON API models.
 import { User, Role, Partner } from '../models';
 
+import { displayMessage } from './ui';
+
 export const getAllUsers = () => async (dispatch) => {
   dispatch({ type: REQUEST_ALL_USERS_BEGIN });
   try {
@@ -31,19 +33,20 @@ export const getAllUsers = () => async (dispatch) => {
 
 // NB: On the front end the term 'innovation' is used to describe an entire 'project' which includes the partner data.
 // NB: On the back end partner owns innovation and also owns the roles and users.
-export const getActiveInnovationUsers = (partnerId) => async dispatch => {
+export const getActiveInnovationUsers = (partnerId) => async (dispatch) => {
   dispatch({ type: REQUEST_INNOVATION_USERS_BEGIN });
   try {
     const partner = (await Partner.includes({ roles: 'user' }).find(partnerId)).data
 
-    const activeInnovationUsers = partner.roles.map(role => ({
-      roleId: role.id,
-      roleName: role.name,
-      id: role.user.id,
-      name: role.user.name,
-      email: role.user.email
-    }))
-
+    const activeInnovationUsers = partner.roles.map(role => {
+      return {
+        roleId: role.id,
+        roleName: role.name,
+        id: role.user.id,
+        name: role.user.name,
+        email: role.user.email
+      }
+    })
     dispatch({ type: REQUEST_INNOVATION_USERS_SUCCESS, activeInnovationUsers });
   }
   catch (err) {
@@ -62,6 +65,7 @@ export const inviteInnovationUsers = (partnerId, emails, roleName) => async (dis
     }
     dispatch({ type: INVITE_INNOVATION_USERS_SUCCESS });
     dispatch(getActiveInnovationUsers(partnerId))
+    dispatch(displayMessage('User invite(s) sent'));
   }
   catch (err) {
     console.log(err);
@@ -81,6 +85,8 @@ export const userSetRole = (roleId, newRoleName) => async (dispatch, getState) =
 
     const { partners: {activePartner: {id} } } = getState();
     dispatch(getActiveInnovationUsers(id));
+    dispatch(displayMessage('User access updated'));
+
   } catch (err) {
     dispatch({ type: USER_SET_ROLE_ERROR });
     console.log(err);

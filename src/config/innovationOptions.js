@@ -1,3 +1,10 @@
+export const userTypes = [
+  { value: 'finance', label: 'Finance' }, 
+  { value: 'admin', label: 'Admin' },
+  { value: 'member', label: 'Member' },
+  { value: 'read', label: 'Read' }
+]
+
 export const innovationTypes = [
   { value: 'portfolio_sprint', label: 'Portfolio Sprint' },
   { value: 'validation_sprint', label: 'Validation Sprint' },

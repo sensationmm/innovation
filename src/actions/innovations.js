@@ -45,7 +45,7 @@ export const getAllInnovationsList = () => async dispatch => {
   }
 }
 
-export const getActiveInnovationData = (partnerId) => async dispatch => {
+export const getActiveInnovationData = (partnerId) => async (dispatch, getState) => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const partner = (await Partner.includes([
@@ -54,7 +54,9 @@ export const getActiveInnovationData = (partnerId) => async dispatch => {
       'industry'
     ]).find(partnerId)).data;
 
-    dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
+    // Pass authedUser so you can update it with the correct role for the newly active innovation. auth reducer will use.
+    const authedUser = getState().auth.authedUser;
+    dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner, authedUser });
 
     // TODO: You may need to clear this attribute on the token (and the activeInnovationData) when the user returns to the dashboard?
     const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));

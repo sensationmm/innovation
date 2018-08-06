@@ -1,0 +1,31 @@
+@import './modules/colors.scss';
+
+.concept-overview-page {
+  &-header {
+    position: relative;
+    text-align: center;
+  }
+  &-status {
+    position: absolute;
+    top: 32%;
+    left: 5px;
+  }
+  &-title {
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+  }
+  &-edit-report-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border: 1px solid $text-off-white;
+    padding: 10px;
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover {
+      background: $background-grey-lighter;
+    }
+  }
+}

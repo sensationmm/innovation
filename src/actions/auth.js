@@ -26,14 +26,11 @@ export const authFromJWT = () => async (dispatch) => {
       dispatch({ type: AUTH_FROM_JWT_SUCCESS, authedUser: { ...user.attributes } });
       dispatch(getAppResourceData());
       dispatch(getAllInnovationsList());
-      // TODO: Get all InVenture / DV users here?
-      dispatch(getAllUsers()); // TODO: For testing only.
+      dispatch(getAllUsers());
     }
     catch (err) {
       console.log(err);
       dispatch({ type: AUTH_FROM_JWT_ERROR });
-      // Redirect to InVenture login. TODO.
-      // dispatch(push('/'))
     }
   }
 };

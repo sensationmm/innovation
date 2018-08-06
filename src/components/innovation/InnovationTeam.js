@@ -8,6 +8,8 @@ import '../../styles/css/innovation-team.css';
 
 import { userSetRole } from '../../actions/users';
 
+import { userTypes } from '../../config/innovationOptions';
+
 class InnovationTeam extends Component {
 
   handleChangeRole = (e) => {
@@ -34,7 +36,7 @@ class InnovationTeam extends Component {
               <Dropdown
                 id={teamMember.roleId}
                 value={teamMember.roleName}
-                options={[ { value: 'admin', label: 'Admin' }, { value: 'member', label: 'Member' }, { value: 'read', label: 'Read' }]}
+                options={userTypes}
                 onChange={this.handleChangeRole}
                 classes="small dark"
               />

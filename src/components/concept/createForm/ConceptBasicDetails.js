@@ -28,7 +28,7 @@ const ConceptBasicDetails = (props) => {
         <Uploader
           logo={logo}
           storeLogo={updateConceptLogo}
-          messageText="Upload Concept Logo"
+          messageText={existingLogo ? 'Replace Concept Logo' : 'Upload Concept Logo'}
           existingLogo={existingLogo}
         />
       </div>

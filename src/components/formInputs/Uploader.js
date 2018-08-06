@@ -48,14 +48,14 @@ class Uploader extends Component {
   render() {
     const { logo, messageText, existingLogo } = this.props;
     const { hover, error } = this.state;
-    const logoUrl = existingLogo
-                      ? logo
+    const logoUrl = existingLogo && !logo.preview
+                      ? `${Config.apiDomain}${logo}`
                       : (logo && logo.preview) ? logo.preview : IconUpload
     return (
       <ContentBox>
         <div 
           className={classnames('logo-upload-container', { 'hover': hover })} 
-          style={{backgroundImage:`url(${Config.apiDomain}${logoUrl})`}}
+          style={{backgroundImage:`url(${logoUrl})`}}
         >
           <Dropzone
             onDrop={this.onDrop}

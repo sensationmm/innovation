@@ -16,15 +16,21 @@ export default (state = initialState, action) => {
     case GET_INNOVATION_DATA_SUCCESS: {
       const { partner } = action;
       const conceptsById = {};
-        const innovationId = partner.innovation.id;
+      const innovationId = partner.innovation.id;
+
+      console.log(partner.innovation.concepts);
+      
       partner.innovation.concepts.forEach(concept => {
         const formattedConceptAttrs = {};
 
         Object.keys(concept.attributes).forEach(key => {
           formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
         })
+
+        const canvases = concept.canvases_attachments;
+
         formattedConceptAttrs.targetIndustryId = concept.targetIndustry.id;
-        conceptsById[concept.id] = { ...formattedConceptAttrs, innovationId };
+        conceptsById[concept.id] = { ...formattedConceptAttrs, innovationId, canvases };
       })
       return { ...state, conceptsById }
     }

@@ -8,7 +8,7 @@ import ConceptAnalysis from './ConceptAnalysis';
 import ContentBox from '../layout/ContentBox';
 import ConceptMeta from './ConceptMeta.js';
 
-import { conceptFieldGroups } from '../../config/conceptOptions';
+import { conceptFieldGroups, conceptStatusLabels } from '../../config/conceptOptions';
 
 import '../../styles/css/concept-overview-read.css';
 
@@ -18,7 +18,7 @@ const ConceptOverviewRead = (props) => {
   return (
     <div>
       <div className="concept-overview-page-header">
-        <div className="concept-overview-page-status">Status: {activeConcept.status}</div>
+        <div className="concept-overview-page-status">Status: {conceptStatusLabels[activeConcept.status]}</div>
         <div className="concept-overview-page-title">Concept Overview: {activeConcept.name}</div>
         {
           (activeConcept.status === 'ready' || activeConcept.status === 'analysed') &&

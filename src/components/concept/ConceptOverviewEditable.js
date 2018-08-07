@@ -19,6 +19,8 @@ import '../../styles/css/concept-create.css';
 
 import { editConcept, deleteConcept } from '../../actions/concepts';
 
+import { conceptStatusLabels } from '../../config/conceptOptions';
+
 class ConceptOverviewEditable extends Component {
   state = {
     editedFields: []
@@ -76,13 +78,13 @@ class ConceptOverviewEditable extends Component {
   }
 
   // Once complete 'Mark as Ready button is activated.
-  allFieldsAreCompleted = () => {
-    const { activeConcept } = this.props;
-    return Object.values(activeConcept).every(field =>
-                field !== null &&
-                field !== '' &&
-                field !== undefined);
-  }
+  // allFieldsAreCompleted = () => {
+  //   const { activeConcept } = this.props;
+  //   return Object.values(activeConcept).every(field =>
+  //               field !== null &&
+  //               field !== '' &&
+  //               field !== undefined);
+  // }
 
   render() {
     const { activeConcept } = this.props;
@@ -93,9 +95,9 @@ class ConceptOverviewEditable extends Component {
     // const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (
       <div className="create-concept-container">
-        <div className="create-concept-page-title">Update Concept: {activeConcept.name}</div>
+        <div className="create-concept-page-title">Concept Overview: {activeConcept.name}</div>
         <div className="create-concept-user-actions">
-          <div>Status: {activeConcept.status}</div>
+          <div>Status: {conceptStatusLabels[activeConcept.status]}</div>
           <div>
             <ButtonSubmit
               label="Mark as Killed"

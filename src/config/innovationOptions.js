@@ -1,8 +1,8 @@
 export const userTypes = [
-  { value: 'finance', label: 'Finance' }, 
-  { value: 'admin', label: 'Admin' },
+  { value: 'finance', label: 'Finance' },
+  { value: 'admin', label: 'Team GM' },
   { value: 'member', label: 'Member' },
-  { value: 'read', label: 'Read' }
+  { value: 'read', label: 'Partner' }
 ]
 
 export const innovationTypes = [

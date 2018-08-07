@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Loader from '../Loader';
 
 const PrivateRoute = ({ component: Component, ...rest, isAuthed, isLoading }) => {
+  window.scrollTo(0, 0);
   return (
     <Route {...rest} render={(props) => (
       isAuthed === 'authing' || isLoading

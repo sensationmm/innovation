@@ -9,7 +9,6 @@ import ConceptBusinessModel from './createForm/ConceptBusinessModel';
 import ConceptCorpAdvantage from './createForm/ConceptCorpAdvantage';
 import ConceptCosts from './createForm/ConceptCosts';
 import ConceptConviction from './createForm/ConceptConviction';
-import VFTScoresDisplay from './VFTScores/VFTScoresDisplay';
 
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ButtonSubmit from '../buttons/ButtonSubmit';
@@ -19,6 +18,8 @@ import ButtonDelete from '../buttons/ButtonDelete';
 import '../../styles/css/concept-create.css';
 
 import { editConcept, deleteConcept } from '../../actions/concepts';
+
+import { conceptStatusLabels } from '../../config/conceptOptions';
 
 class ConceptOverviewEditable extends Component {
   state = {
@@ -77,13 +78,13 @@ class ConceptOverviewEditable extends Component {
   }
 
   // Once complete 'Mark as Ready button is activated.
-  allFieldsAreCompleted = () => {
-    const { activeConcept } = this.props;
-    return Object.values(activeConcept).every(field =>
-                field !== null &&
-                field !== '' &&
-                field !== undefined);
-  }
+  // allFieldsAreCompleted = () => {
+  //   const { activeConcept } = this.props;
+  //   return Object.values(activeConcept).every(field =>
+  //               field !== null &&
+  //               field !== '' &&
+  //               field !== undefined);
+  // }
 
   render() {
     const { activeConcept } = this.props;
@@ -94,9 +95,9 @@ class ConceptOverviewEditable extends Component {
     // const allFieldsAreCompleted = this.allFieldsAreCompleted();
     return (
       <div className="create-concept-container">
-        <div className="create-concept-page-title">Update Concept: {activeConcept.name}</div>
+        <div className="create-concept-page-title">Concept Overview: {activeConcept.name}</div>
         <div className="create-concept-user-actions">
-          <div>Status: {activeConcept.status}</div>
+          <div>Status: {conceptStatusLabels[activeConcept.status]}</div>
           <div>
             <ButtonSubmit
               label="Mark as Killed"
@@ -126,25 +127,6 @@ class ConceptOverviewEditable extends Component {
             existingLogo={true}
           />
         </div>
-        {
-          activeConcept.status === 'reviewed' &&
-            <div className="create-concept-section-container">
-              <FormSectionHeader
-                title="VFT Scores"
-              />
-              <VFTScoresDisplay
-                stats={[
-                  { label: 'VFTConceptScore', content: activeConcept.VFTConceptScore },
-                  { label: 'VFTComments', content: activeConcept.VFTComments },
-                  { label: 'VFTSolutionScore', content: activeConcept.VFTSolutionScore },
-                  { label: 'VFTModelScore', content: activeConcept.VFTModelScore },
-                  { label: 'VFTMarketScore', content: activeConcept.VFTMarketScore },
-                ]}
-                isStats
-                stacked
-              />
-            </div>
-        }
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Customers and Market"

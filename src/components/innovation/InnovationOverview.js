@@ -14,7 +14,7 @@ import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
 import ButtonSubmit from '../buttons/ButtonSubmit';
-import FormTextInput from '../formInputs/FormTextInput';
+import FormTextArea from '../formInputs/FormTextArea';
 import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
@@ -26,7 +26,6 @@ import { innovationTypeLabels } from '../../config/innovationOptions';
 
 class InnovationOverview extends Component {
   state = {
-    userType: 'teamGM',
     openEditDates: false,
     openEditTeam: false,
     openEditMandate: false,
@@ -55,7 +54,7 @@ class InnovationOverview extends Component {
   }
 
   render() {
-    const { activeInnovation, activePartner, conceptsById, teamMembers } = this.props;
+    const { activeInnovation, activePartner, conceptsById, teamMembers, authedUser } = this.props;
     const { openEditDates, openEditTeam, mandateUpdated } = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
@@ -74,8 +73,7 @@ class InnovationOverview extends Component {
       labels.push(keydate.name);
     });
 
-    // TODO: testing only.
-    const { userType } = this.state;
+    const userType = authedUser.roleName;
 
     return (
       <div>
@@ -87,11 +85,12 @@ class InnovationOverview extends Component {
           <div>Innovation Type: {innovationTypeLabels[activeInnovation.sprintType]}</div>
           <div>Duration: {activeInnovation.duration} weeks</div>
           <div className="innovation-overview-mandate-input">
-            <FormTextInput
+            <FormTextArea
               id='mandate'
               placeholder='Innovation Mandate'
               onChange={this.handleUpdateMandate}
               value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
+              labelLeftAlign={true}
             />
 
             {mandateUpdated &&
@@ -178,21 +177,21 @@ class InnovationOverview extends Component {
 
         {(activeIncomplete && activeIncomplete.length > 0) &&
           <ContentBox background={false}>
-            <ConceptList concepts={activeIncomplete} title='Draft' userType={userType} postIS2={isPostIS2} />
+            <ConceptList concepts={activeIncomplete} title='Active' userType={userType} postIS2={isPostIS2} />
           </ContentBox>
         }
 
         {
           (activeComplete && activeComplete.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={activeComplete} title='Ready' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeComplete} title='Ready for Analysis' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 
         {
           (activeReviewed && activeReviewed.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={activeReviewed} title='Analysed' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeReviewed} title='Analysed by VFT' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 
@@ -233,14 +232,16 @@ InnovationOverview.propTypes = {
   editInnovation: PropTypes.func,
   getActiveInnovationData: PropTypes.func,
   match: PropTypes.object,
-  teamMembers: PropTypes.array
+  teamMembers: PropTypes.array,
+  authedUser: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   activePartner: state.partners.activePartner,
   activeInnovation: state.innovations.activeInnovation,
   conceptsById: state.concepts.conceptsById,
-  teamMembers: state.users.activeInnovationUsers
+  teamMembers: state.users.activeInnovationUsers,
+  authedUser: state.auth.authedUser
 });
 
 const actions = { editInnovation, getActiveInnovationData };

@@ -109,6 +109,13 @@ export const financeScoreOptions = {
   'competitiveLandscape': { title: 'Competitive landscape', key: 'competitiveLandscape', labels: ['Fierce', '-', 'Opportunity'] }
 }
 
+export const conceptStatusLabels = {
+  'killed': 'Killed',
+  'draft': 'Active',
+  'ready': 'Ready for Analysis',
+  'analysed': 'Analysed'
+}
+
 export const analysisDisplayColours = {
   0: '#e03c31',
   1: '#ffa900',

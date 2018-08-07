@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import BackTextLink from './buttons/BackTextLink';
 
 /**
  * Not Found
@@ -7,7 +10,19 @@ import React from 'react';
  */
 
 const NotFound = props => (
-  <div><h1 style={{ textAlign: 'center' }}>Page Not Found</h1></div>
+  <div>
+    <h1 style={{ textAlign: 'center' }}>Page Not Found</h1>
+    <div>
+      <BackTextLink
+        label="Your Dashboard"
+        onClick={() => props.history.push('/dashboard')}
+      />
+    </div>
+  </div>
 );
+
+NotFound.propTypes = {
+  history: PropTypes.object
+};
 
 export default NotFound;

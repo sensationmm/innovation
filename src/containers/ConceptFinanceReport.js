@@ -28,11 +28,13 @@ class ConceptFinanceReport extends Component {
   }
 
   checkConceptInnovation = () => {
-    const { conceptsById, getActiveInnovationData } = this.props;
+    const { conceptsById, getActiveInnovationData, activeConcept, history } = this.props;
 
     if(!conceptsById || (Object.keys(conceptsById).length === 0 && conceptsById.constructor === Object)) {
       const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
       getActiveInnovationData(storedToken.activePartnerId);
+    } else if(!activeConcept) {
+      history.push('/page-not-found');
     }
   }
 
@@ -79,9 +81,13 @@ class ConceptFinanceReport extends Component {
   }
 
   render() {
-    const { scoresByConceptId, conceptName } = this.props;
+    const { scoresByConceptId, activeConcept } = this.props;
     if (!scoresByConceptId) { return null }
+
     const { match: { params: { conceptId } } } = this.props;
+    if (!scoresByConceptId[conceptId] || !activeConcept) { return null; }
+
+    const conceptName = activeConcept.name;
 
     const financeScoresByKey = scoresByConceptId[conceptId];
     const allFieldsAreComplete = this.allFieldsAreComplete(financeScoresByKey);
@@ -143,7 +149,7 @@ ConceptFinanceReport.propTypes = {
   scoresByConceptId: PropTypes.object,
   updateConceptFinanceScore: PropTypes.func,
   saveConceptFinanceScore: PropTypes.func,
-  conceptName: PropTypes.string,
+  activeConcept: PropTypes.object,
   activePartnerId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
@@ -156,7 +162,7 @@ const mapStateToProps = (state, props) => ({
   activePartnerId: state.partners.activePartner.id,
   scoresByConceptId: state.financeScores.scoresByConceptId,
   conceptsById: state.concepts.conceptsById,
-  conceptName: state.concepts.conceptsById[props.match.params.conceptId] && state.concepts.conceptsById[props.match.params.conceptId].name
+  activeConcept: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId])
 });
 
 const actions = { updateConceptFinanceScore, saveConceptFinanceScore, getActiveInnovationData };

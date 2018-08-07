@@ -24,7 +24,7 @@ class ConceptOverviewV2 extends Component {
       const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
       getActiveInnovationData(storedToken.activePartnerId);
     } else if(!activeConcept) {
-      history.push('/dashboard');
+      history.push('/page-not-found');
     }
   }
 

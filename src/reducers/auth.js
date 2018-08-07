@@ -20,9 +20,10 @@ export default (state = initialState, action) => {
     }
 
     case GET_INNOVATION_DATA_SUCCESS: {
-      const { partner, authedUser } = action;
-      const authedRole = partner.roles.find(role => role.user.email === authedUser.email);
+      const { partner } = action;
+      const authedRole = partner.roles.find(role => role.user.email === state.authedUser.email);
       if (authedRole) {
+        // Update the authedUser object with the correct role for the active innovation.
         const updatedAuthedUser = {
           roleId: authedRole.id,
           roleName: authedRole.name,

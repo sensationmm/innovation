@@ -18,7 +18,7 @@ class InnovationTeam extends Component {
   }
 
   render() {
-    const { teamMembers } = this.props;
+    const { teamMembers, readOnly } = this.props;
     return (
       <div>
         <div className="innovation-team-container-display">
@@ -33,13 +33,19 @@ class InnovationTeam extends Component {
                 }
                 <div>{teamMember.email}</div>
               </div>
-              <Dropdown
-                id={teamMember.roleId}
-                value={teamMember.roleName}
-                options={userTypes}
-                onChange={this.handleChangeRole}
-                classes="small dark"
-              />
+              {
+                !readOnly
+                  ? (
+                    <Dropdown
+                      id={teamMember.roleId}
+                      value={teamMember.roleName}
+                      options={userTypes}
+                      onChange={this.handleChangeRole}
+                      classes="small dark"
+                    />
+                  )
+                  : <div className="innovation-team-read-only">{userTypes.find(userType => userType.value === teamMember.roleName).label}</div>
+              }
             </div>
           ))
         }
@@ -51,9 +57,14 @@ class InnovationTeam extends Component {
 
 InnovationTeam.propTypes = {
   teamMembers: PropTypes.array,
-  userSetRole: PropTypes.func
+  userSetRole: PropTypes.func,
+  readOnly: PropTypes.bool
 }
+
+const mapStateToProps = (state, props) => ({
+  readOnly: state.auth.authedUser.roleName !== 'admin'
+});
 
 const actions = { userSetRole };
 
-export default connect(null, actions)(InnovationTeam);
+export default connect(mapStateToProps, actions)(InnovationTeam);

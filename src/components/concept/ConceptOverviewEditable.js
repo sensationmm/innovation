@@ -9,7 +9,6 @@ import ConceptBusinessModel from './createForm/ConceptBusinessModel';
 import ConceptCorpAdvantage from './createForm/ConceptCorpAdvantage';
 import ConceptCosts from './createForm/ConceptCosts';
 import ConceptConviction from './createForm/ConceptConviction';
-import VFTScoresDisplay from './VFTScores/VFTScoresDisplay';
 
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ButtonSubmit from '../buttons/ButtonSubmit';
@@ -126,25 +125,6 @@ class ConceptOverviewEditable extends Component {
             existingLogo={true}
           />
         </div>
-        {
-          activeConcept.status === 'reviewed' &&
-            <div className="create-concept-section-container">
-              <FormSectionHeader
-                title="VFT Scores"
-              />
-              <VFTScoresDisplay
-                stats={[
-                  { label: 'VFTConceptScore', content: activeConcept.VFTConceptScore },
-                  { label: 'VFTComments', content: activeConcept.VFTComments },
-                  { label: 'VFTSolutionScore', content: activeConcept.VFTSolutionScore },
-                  { label: 'VFTModelScore', content: activeConcept.VFTModelScore },
-                  { label: 'VFTMarketScore', content: activeConcept.VFTMarketScore },
-                ]}
-                isStats
-                stacked
-              />
-            </div>
-        }
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Customers and Market"

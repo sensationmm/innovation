@@ -9,6 +9,7 @@
   margin-top: 10px;
   background: $cyan-blue;
   transition: all 0.3s;
+  box-sizing: border-box;
 
   &:hover {
     background: $green-offset;

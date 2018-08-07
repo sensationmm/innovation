@@ -34,7 +34,10 @@ import {
   DELETE_CONCEPT_ERROR,
   INVITE_INNOVATION_USERS_BEGIN,
   INVITE_INNOVATION_USERS_SUCCESS,
-  INVITE_INNOVATION_USERS_ERROR
+  INVITE_INNOVATION_USERS_ERROR,
+  SAVE_CONCEPT_FINANCE_SCORE_BEGIN,
+  SAVE_CONCEPT_FINANCE_SCORE_SUCCESS,
+  SAVE_CONCEPT_FINANCE_SCORE_ERROR
 } from '../config/constants';
 
 const initialState = {
@@ -55,6 +58,7 @@ export const loader = (state = initialState, action) => {
     case EDIT_CONCEPT_BEGIN:
     case DELETE_CONCEPT_BEGIN:
     case INVITE_INNOVATION_USERS_BEGIN:
+    case SAVE_CONCEPT_FINANCE_SCORE_BEGIN:
       return {
         ...initialState,
         isLoading: true,
@@ -84,6 +88,8 @@ export const loader = (state = initialState, action) => {
     case DELETE_CONCEPT_ERROR:
     case INVITE_INNOVATION_USERS_SUCCESS:
     case INVITE_INNOVATION_USERS_ERROR:
+    case SAVE_CONCEPT_FINANCE_SCORE_SUCCESS:
+    case SAVE_CONCEPT_FINANCE_SCORE_ERROR:
       return initialState;
 
     default:

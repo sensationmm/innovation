@@ -22,11 +22,10 @@ const ConceptOverviewRead = (props) => {
         <div className="concept-overview-page-title">Concept Overview: {activeConcept.name}</div>
         {
           (activeConcept.status === 'ready' || activeConcept.status === 'analysed') &&
-            <div className="concept-overview-page-edit-report-btn">
-              <Link
-                to={`/vft-concept-report/${activeConcept.id}`}>{activeConcept.status === 'ready' ? 'Complete Analysis Report' : 'Edit Analysis Report'}
-              </Link>
-            </div>
+            <Link
+              className="concept-overview-page-edit-report-btn"
+              to={`/vft-concept-report/${activeConcept.id}`}>{activeConcept.status === 'ready' ? 'Complete Analysis Report' : 'Edit Analysis Report'}
+            </Link>
         }
       </div>
 

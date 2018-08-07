@@ -18,13 +18,19 @@
     width: 250px;
     height: 280px;
     padding: 5px 5px;
-    margin: 10px; }
+    margin: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+    .concept-list-item-link {
+      height: 100%;
+      width: 100%; }
     .concept-list-item h3, .concept-list-item p, .concept-list-item div {
       padding: 5px; }
     .concept-list-item-item-link {
       text-decoration: none; }
     .concept-list-item:hover {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.24);
       background: #3b4348;
+      opacity: 0.85;
       cursor: pointer; }
     .concept-list-item-details {
       display: flex;
@@ -38,15 +44,20 @@
       flex-direction: column;
       justify-content: end;
       text-align: center; }
+    .concept-list-item-marked-awaiting {
+      color: #ffa900;
+      display: flex;
+      justify-content: space-around;
+      align-items: center; }
     .concept-list-item-marked-complete {
+      color: #00bfb7;
       display: flex;
       justify-content: space-around;
-      align-items: center;
-      color: #50E3C2; }
+      align-items: center; }
     .concept-list-item-marked-incomplete {
+      color: #e03c31;
       display: flex;
       justify-content: space-around;
-      align-items: center;
-      color: #c32929; }
+      align-items: center; }
   .concept-list h3 {
     margin: 0; }

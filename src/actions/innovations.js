@@ -37,6 +37,7 @@ export const getAllInnovationsList = () => async dispatch => {
     const partnersWithInnovations = (await Partner.includes({ innovation: [ 'key_dates' ]})
                                                   .select([ 'name', 'charge_code' ])
                                                   .all()).data;
+    console.log('partnersWithInnovations', partnersWithInnovations);
     dispatch({ type: GET_INNOVATIONS_LIST_SUCCESS, partnersWithInnovations });
   }
   catch (err) {

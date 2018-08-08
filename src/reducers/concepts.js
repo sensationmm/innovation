@@ -21,28 +21,25 @@ export default (state = initialState, action) => {
       const partnerId = partner.id;
 
       partner.innovation.concepts.forEach(concept => {
-        const formattedConceptAttrs = {};
+        const formattedConcept = {};
 
-          Object.keys(concept.attributes).forEach(key => {
-            formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
-          })
-          formattedConceptAttrs.targetIndustryId = concept.targetIndustry.id;
-          conceptsById[concept.id] = { ...formattedConceptAttrs, innovationId };
+        Object.keys(concept.attributes).forEach(key => {
+          formattedConcept[key] = concept.attributes[key] === null ? '' : concept.attributes[key]; // Setting null attributes to '' so not to have an issue passing them to text inputs.
         })
-
+        formattedConcept.targetIndustryId = concept.targetIndustry.id;
         const canvases = concept.canvasesAttachments.map(canvas => canvas.url);
-
-        formattedConceptAttrs.targetIndustryId = concept.targetIndustry.id;
-        conceptsById[concept.id] = { ...formattedConceptAttrs, partnerId, innovationId, canvases };
+        conceptsById[concept.id] = { ...formattedConcept, innovationId, partnerId, canvases };
       })
+
       return { ...state, conceptsById }
     }
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;
+      console.log('newConcept', newConcept);
       const formattedNewConcept = {};
-      Object.keys(newConcept.attributes).forEach(key => {
-        formattedNewConcept[key] = newConcept.attributes[key] === null ? '' : newConcept.attributes[key];
+      Object.keys(newConcept).forEach(key => {
+        formattedNewConcept[key] = newConcept[key] === null ? '' : newConcept[key];
       })
 
       const conceptsById = { ...state.conceptsById, [newConcept.id]: formattedNewConcept }

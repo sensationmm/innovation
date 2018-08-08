@@ -83,7 +83,8 @@ class ConceptCreate extends Component {
   }
 
   handleSaveConcept = (redirectUrl) => {
-    const { createConcept, activeInnovationId } = this.props;
+    const { createConcept, match: { params: innovationId } } = this.props;
+    console.log('save concept innovationId', innovationId);
     const attrsToCreate = removeNullValueAttrs({ ...this.state });
     // If there is a logo uploaded, format it ready for saving to the DB.
     if (attrsToCreate.logo) {
@@ -91,11 +92,11 @@ class ConceptCreate extends Component {
       getDataUri(preview, function(dataUri) {
         attrsToCreate.logo = dataUri;
         attrsToCreate.logoName = preview;
-        createConcept(activeInnovationId, attrsToCreate);
+        createConcept(innovationId, attrsToCreate);
       });
     } else {
       console.log('redirectUrl', redirectUrl);
-      createConcept(activeInnovationId, attrsToCreate, redirectUrl);
+      createConcept(innovationId, attrsToCreate, redirectUrl);
     }
   }
 
@@ -106,11 +107,13 @@ class ConceptCreate extends Component {
   }
 
   render() {
-    const { activePartnerId } = this.props;
+    if (!this.props.innovation) { return null; }
+    console.log('props', this.props);
+    const { innovation: { partnerId } } = this.props;
     const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     return (
       <div className="create-concept-container">
-        <Link to={activePartnerId ? `/innovation-overview/${activePartnerId}` : '/dashboard'}>
+        <Link to={partnerId ? `/innovation-overview/${partnerId}` : '/dashboard'}>
           <span>
             <i className="fas fa-chevron-left"></i>
             <span> Back to Innovation Overview</span>
@@ -209,7 +212,7 @@ class ConceptCreate extends Component {
           />
         </div>
           <div className="create-concept-user-actions">
-            <Link to={activePartnerId ? `/innovation-overview/${activePartnerId}` : '/dashboard'}>
+            <Link to={partnerId ? `/innovation-overview/${partnerId}` : '/dashboard'}>
               <span>
                 <i className="fas fa-chevron-left"></i>
                 <span> Back to Innovation Overview</span>
@@ -222,7 +225,7 @@ class ConceptCreate extends Component {
                     <div>
                       <ButtonSubmit
                         label="Save"
-                        onClick={() => this.handleSaveConcept(`/innovation-overview/${activePartnerId}`)}
+                        onClick={() => this.handleSaveConcept(`/innovation-overview/${partnerId}`)}
                         disabled={!requiredFieldsAreCompleted}
                       />
                       <ButtonSubmit
@@ -250,9 +253,8 @@ ConceptCreate.propTypes = {
   addCanvas: PropTypes.func
 };
 
-const mapStateToProps = (state) => ({
-  activeInnovationId: state.innovations.activeInnovation.id,
-  activePartnerId: state.innovations.activeInnovation.partnerId
+const mapStateToProps = (state, props) => ({
+  innovation: state.innovations.allInnovationsList && state.innovations.allInnovationsList.find(innovation => innovation.innovationId === props.match.params.innovationId)
 });
 
 const actions = { createConcept, addCanvas };

@@ -203,10 +203,10 @@ class ConceptOverviewEditable extends Component {
         </div>
           <div className="create-concept-user-actions">
             <Link to={`/innovation-overview/${activePartnerId}`}>
-              <div>
+              <span>
                 <i className="fas fa-chevron-left"></i>
                 <span> Back to Innovation Overview</span>
-              </div>
+              </span>
             </Link>
             <div className="create-concept-user-actions-button-container">
               <ButtonSubmit

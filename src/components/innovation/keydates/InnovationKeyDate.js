@@ -38,6 +38,7 @@ class InnovationKeyDate extends Component {
                 onChange={(date) => this.handleEditKeyDate(date.format('YYYY-MM-DD'))}
                 inline
                 minDate={moment(innovationOpenDate)}
+                fixedHeight
               />
               <div className="innovation-date-picker-close" onClick={() => this.setState({ openDatePicker: false })}>
                 <i className="fas fa-times"></i>

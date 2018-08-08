@@ -16,7 +16,7 @@ import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
-import { createConcept } from '../actions/concepts';
+import { createConcept, addCanvas } from '../actions/concepts';
 import  { removeNullValueAttrs, getDataUri } from '../utils/functions';
 
 class ConceptCreate extends Component {
@@ -47,7 +47,9 @@ class ConceptCreate extends Component {
     willGmLeave: null,
     gmConviction: null,
     gmComments: '',
-    partnerPreferences: ''
+    partnerPreferences: '',
+    canvases: [],
+    canvasObjects: []
   }
 
   updateFormField = (e) => {
@@ -56,6 +58,14 @@ class ConceptCreate extends Component {
 
   updateConceptLogo = (logo) => {
     this.setState({ logo });
+  }
+
+  addCanvas = (attachments) => {
+    this.setState({
+      ...this.state,
+      canvases: attachments.map(attachment => attachment.preview),
+      canvasObjects: attachments
+    });
   }
 
   // For single select options
@@ -113,6 +123,8 @@ class ConceptCreate extends Component {
             description={this.state.description}
             logo={this.state.logo}
             existingLogo={false}
+            canvases={this.state.canvases}
+            addCanvas={this.addCanvas}
           />
         </div>
         <div className="create-concept-section-container">
@@ -226,7 +238,8 @@ ConceptCreate.propTypes = {
   createConcept: PropTypes.func,
   activeInnovationId: PropTypes.string,
   activePartnerId: PropTypes.string,
-  match: PropTypes.object
+  match: PropTypes.object,
+  addCanvas: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -234,6 +247,6 @@ const mapStateToProps = (state) => ({
   activePartnerId: state.partners.activePartner.id
 });
 
-const actions = { createConcept };
+const actions = { createConcept, addCanvas };
 
 export default connect(mapStateToProps, actions)(ConceptCreate);

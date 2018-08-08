@@ -69,8 +69,10 @@ export default (state = initialState, action) => {
 
       const updatedConcept = { ...state.conceptsById[conceptId] };
 
-      for(const preview of addPreviews) {
-        updatedConcept.canvases.push(preview);
+      if(updatedConcept.canvases) {
+        for(const preview of addPreviews) {
+          updatedConcept.canvases.push(preview);
+        }
       }
 
       return {

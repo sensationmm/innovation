@@ -1,10 +1,12 @@
 @import './modules/colors.scss';
+@import './modules/breakpoints.scss';
 
 .inventure-form-textinput {
   background: $background-grey-light;
   margin-bottom: 2px;
   position: relative;
   box-sizing: border-box;
+  display: flex;
 
   input[type=text], textarea {
     box-sizing: border-box;
@@ -54,7 +56,24 @@
 
 .inventure-form-textinput-placeholder {
   color: $text-off-white;
-  position: absolute;
+  width: 200px;
   top: 5px;
   left: 12px;
+}
+
+.inventure-form-content {
+  width: calc(100% - 200px);
+  padding: 20px;
+}
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .inventure-form {
+    &-textinput {
+      display: block;
+    }
+
+    &-textinput-placeholder, &-content {
+      width: calc(100% - 40px);
+    }
+  }
 }

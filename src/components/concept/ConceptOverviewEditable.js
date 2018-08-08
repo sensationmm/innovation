@@ -17,13 +17,15 @@ import ButtonDelete from '../buttons/ButtonDelete';
 
 import '../../styles/css/concept-create.css';
 
-import { editConcept, deleteConcept } from '../../actions/concepts';
+import { editConcept, deleteConcept, addCanvas } from '../../actions/concepts';
+import  { getDataUri } from '../../utils/functions';
 
 import { conceptStatusLabels } from '../../config/conceptOptions';
 
 class ConceptOverviewEditable extends Component {
   state = {
-    editedFields: []
+    editedFields: [],
+    logo: {}
   }
 
   updateEditedFields = (key) => {
@@ -42,7 +44,14 @@ class ConceptOverviewEditable extends Component {
   updateConceptLogo = (logo) => {
     const { editConcept, activeConcept } = this.props;
     this.updateEditedFields('logo');
+    this.setState({ logo: { preview: logo.preview} })
     editConcept(activeConcept.id, { logo } )
+  }
+
+  addCanvas = (attachments) => {
+    const { activeConcept, addCanvas } = this.props;
+
+    addCanvas(activeConcept.id, attachments, activeConcept.partnerId);
   }
 
   // For single select options
@@ -66,11 +75,24 @@ class ConceptOverviewEditable extends Component {
   saveChangesToDb = () => {
     const { editConcept, activeConcept } = this.props;
     const attrsToUpdate = {};
+
     this.state.editedFields.forEach(fieldKey => {
       attrsToUpdate[fieldKey] = activeConcept[fieldKey];
     })
-    editConcept(activeConcept.id, attrsToUpdate, true);
+    // If there is a logo uploaded, format it ready for saving to the DB.
+    if (attrsToUpdate.logo) {
+      const { logo: { preview }} = this.state;
+      getDataUri(preview, function(dataUri) {
+        attrsToUpdate.logo = dataUri;
+        attrsToUpdate.logoName = preview;
+
+        editConcept(activeConcept.id, attrsToUpdate, true);
+      });
+    } else {
+      editConcept(activeConcept.id, attrsToUpdate, true);
+    }
   }
+
 
   handleDeleteConcept = () => {
     const { deleteConcept, activeConcept, activePartnerId } = this.props;
@@ -125,6 +147,8 @@ class ConceptOverviewEditable extends Component {
             description={activeConcept.description}
             logo={activeConcept.logo}
             existingLogo={true}
+            canvases={activeConcept.canvases}
+            addCanvas={this.addCanvas}
           />
         </div>
         <div className="create-concept-section-container">
@@ -201,24 +225,25 @@ class ConceptOverviewEditable extends Component {
             partnerPreferences={activeConcept.partnerPreferences}
           />
         </div>
-          <div className="create-concept-user-actions">
-            <Link to={`/innovation-overview/${activePartnerId}`}>
-              <span>
-                <i className="fas fa-chevron-left"></i>
-                <span> Back to Innovation Overview</span>
-              </span>
-            </Link>
-            <div className="create-concept-user-actions-button-container">
-              <ButtonSubmit
-                label="Save Changes"
-                onClick={() => this.saveChangesToDb()}
-              />
-              <ButtonDelete
-                label="Delete Concept"
-                onDelete={() => this.handleDeleteConcept()}
-              />
-            </div>
+
+        <div className="create-concept-user-actions">
+          <Link to={`/innovation-overview/${activePartnerId}`}>
+            <span>
+              <i className="fas fa-chevron-left"></i>
+              <span> Back to Innovation Overview</span>
+            </span>
+          </Link>
+          <div className="create-concept-user-actions-button-container">
+            <ButtonSubmit
+              label="Save Changes"
+              onClick={() => this.saveChangesToDb()}
+            />
+            <ButtonDelete
+              label="Delete Concept"
+              onDelete={() => this.handleDeleteConcept()}
+            />
           </div>
+        </div>
       </div>
     )
   }
@@ -239,9 +264,10 @@ ConceptOverviewEditable.propTypes = {
   ]),
   conceptsById: PropTypes.object,
   activeConcept: PropTypes.object,
-  getActiveInnovationData: PropTypes.func
+  existingLogo: PropTypes.bool,
+  addCanvas: PropTypes.func
 };
 
-const actions = { editConcept, deleteConcept };
+const actions = { editConcept, deleteConcept, addCanvas };
 
 export default connect(null, actions)(ConceptOverviewEditable);

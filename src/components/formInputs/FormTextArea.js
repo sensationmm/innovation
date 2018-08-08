@@ -14,13 +14,15 @@ const FormTextArea = (props) => {
       <div className="inventure-form-textinput-placeholder" style={{ left: labelLeftAlign ? '0px' : '12px' }}>
         {placeholder}
       </div>
-      <textarea
-        type="text"
-        id={id}
-        placeholder={placeholder}
-        onChange={onChange}
-        value={value}
-      />
+      <div className="inventure-form-content">
+        <textarea
+          type="text"
+          id={id}
+          placeholder={placeholder}
+          onChange={onChange}
+          value={value}
+        />
+      </div>
     </div>
   )
 }

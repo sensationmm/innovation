@@ -141,7 +141,23 @@ export const Concept = ApplicationRecord.extend({
     financeScores: hasMany(), // Each finance score is a single entry of { key, value, description }
     conceptChanges: hasMany(),
     innovation: belongsTo(),
-    targetIndustry: belongsTo()
+    targetIndustry: belongsTo(),
+    canvasesAttachments: hasMany()
+  }
+});
+
+export const Attachment = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'attachments'
+  },
+  attrs: {
+    data: attr(),
+    filename: attr(),
+    url: attr(),
+    name: attr(),
+    recordId: attr(),
+    recordType: attr(),
+    record: belongsTo()
   }
 });
 

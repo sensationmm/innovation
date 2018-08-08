@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import FormTextInput from '../../formInputs/FormTextInput.js';
 import FormTextArea from '../../formInputs/FormTextArea';
 import Uploader from '../../formInputs/Uploader.js';
+import FormRow from '../../layout/FormRow.js';
 
 import '../../../styles/css/concept-create.css';
 
 const ConceptBasicDetails = (props) => {
-  const { name, description, logo, updateFormField, updateConceptLogo, existingLogo } = props;
+  const { name, description, logo, updateFormField, updateConceptLogo, existingLogo, canvases, addCanvas } = props;
+
   return (
     <div>
       <FormTextInput
@@ -18,20 +20,34 @@ const ConceptBasicDetails = (props) => {
         value={name}
         isRequired={true}
       />
+
       <FormTextArea
         id="description"
         placeholder="Concept description"
         onChange={updateFormField}
         value={description}
       />
-      <div className="concept-add-title-logo">
+
+      <FormRow label="Concept Logo">
         <Uploader
           logo={logo}
           storeLogo={updateConceptLogo}
-          messageText={existingLogo ? 'Replace Concept Logo' : 'Upload Concept Logo'}
+          messageText={existingLogo ? 'Replace' : 'Upload'}
           existingLogo={existingLogo}
+          multiple={false}
         />
-      </div>
+      </FormRow>
+
+      <FormRow label="Idea Canvases">
+        <Uploader
+          logo={canvases}
+          storeLogo={addCanvas}
+          messageText="Upload"
+          existingLogo={existingLogo}
+          multiple={true}
+          viewable={true}
+        />
+      </FormRow>
     </div>
   )
 }
@@ -43,8 +59,10 @@ ConceptBasicDetails.propTypes = {
     PropTypes.string,
     PropTypes.object
   ]),
+  canvases: PropTypes.array,
   updateFormField: PropTypes.func,
   updateConceptLogo: PropTypes.func,
+  addCanvas: PropTypes.func,
   existingLogo: PropTypes.bool
 }
 

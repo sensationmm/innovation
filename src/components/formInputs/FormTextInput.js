@@ -20,13 +20,16 @@ const FormTextInput = (props) => {
       <div className="inventure-form-textinput-placeholder">
         {placeholder}
       </div>
-      <input
-        type="text"
-        id={id}
-        placeholder={placeholder}
-        onChange={onChange}
-        value={value}
-      />
+
+      <div className="inventure-form-content">
+        <input
+          type="text"
+          id={id}
+          placeholder={placeholder}
+          onChange={onChange}
+          value={value}
+        />
+      </div>
     </div>
   )
 }

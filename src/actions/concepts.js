@@ -25,6 +25,7 @@ import  { getDataUri } from '../utils/functions';
  */
 export const createConcept = (innovationId, attrsToCreate, redirectTo) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
+
   try {
     const newConcept = new Concept();
     for ( const key of Object.keys(attrsToCreate) ) {
@@ -32,6 +33,12 @@ export const createConcept = (innovationId, attrsToCreate, redirectTo) => async 
     }
     newConcept.innovationId = innovationId;
     await newConcept.save();
+
+    //upload canvases
+    if(attrsToCreate.canvases) {
+      dispatch(addCanvas(newConcept.attributes.id, attrsToCreate.canvasObjects));
+    }
+
     dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
     dispatch(push(redirectTo));
   }
@@ -85,7 +92,7 @@ export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (disp
    }
  }
 
- export const addCanvas = (conceptId, attachments, partnerId) => async dispatch => {
+ export const addCanvas = (conceptId, attachments) => async dispatch => {
 
   dispatch({ type: ADD_CONCEPT_CANVAS_BEGIN });
 

@@ -45,6 +45,7 @@ class ConceptOverviewV2 extends Component {
             ? (
               <ConceptOverviewRead
                 activeConcept={activeConcept}
+                activePartnerId={activePartnerId}
               />
             )
             : (

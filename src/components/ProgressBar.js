@@ -58,7 +58,7 @@ const ProgressBar = props => {
           <div className="progress-bar-pip-popup">Concept killed<br />{ moment(killMark).format('DD-MM-YY') }</div>
           </div>
         }
-        {todayScale < 100 &&
+        {todayScale < 100 && todayScale > 0 &&
           <div className={classnames('progress-bar-pip', {killed: killMark})} style={{ left: `${todayScale}%` }}>
             <div className="progress-bar-pip-popup">Today<br />{ moment().format('DD-MM-YY') }</div>
           </div>

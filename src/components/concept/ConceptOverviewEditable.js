@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,7 +13,6 @@ import ConceptConviction from './createForm/ConceptConviction';
 
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ButtonSubmit from '../buttons/ButtonSubmit';
-import BackTextLink from '../buttons/BackTextLink';
 import ButtonDelete from '../buttons/ButtonDelete';
 
 import '../../styles/css/concept-create.css';
@@ -87,12 +87,12 @@ class ConceptOverviewEditable extends Component {
   // }
 
   render() {
-    const { activeConcept } = this.props;
+    const { activeConcept, activePartnerId } = this.props;
 
     if (!activeConcept) {
       return null;
     }
-    // const allFieldsAreCompleted = this.allFieldsAreCompleted();
+    // const allFieldsAreCompleted = this.allFieldsAreCompleted(); TODO: If not needed then remove.
     return (
       <div className="create-concept-container">
         <div className="create-concept-page-title">Concept Overview: {activeConcept.name}</div>
@@ -202,18 +202,22 @@ class ConceptOverviewEditable extends Component {
           />
         </div>
           <div className="create-concept-user-actions">
-            <BackTextLink
-              label="Back"
-              onClick={() => this.props.history.goBack()}
-            />
-            <ButtonSubmit
-              label="Save Changes"
-              onClick={() => this.saveChangesToDb()}
-            />
-            <ButtonDelete
-              label="Delete Concept"
-              onDelete={() => this.handleDeleteConcept()}
-            />
+            <Link to={`/innovation-overview/${activePartnerId}`}>
+              <div>
+                <i className="fas fa-chevron-left"></i>
+                <span> Back to Innovation Overview</span>
+              </div>
+            </Link>
+            <div className="create-concept-user-actions-button-container">
+              <ButtonSubmit
+                label="Save Changes"
+                onClick={() => this.saveChangesToDb()}
+              />
+              <ButtonDelete
+                label="Delete Concept"
+                onDelete={() => this.handleDeleteConcept()}
+              />
+            </div>
           </div>
       </div>
     )

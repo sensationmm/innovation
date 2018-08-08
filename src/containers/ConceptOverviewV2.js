@@ -1,10 +1,10 @@
 import React , { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ConceptOverviewEditable from '../components/concept/ConceptOverviewEditable';
 import ConceptOverviewRead from '../components/concept/ConceptOverviewRead';
-import BackTextLink from '../components/buttons/BackTextLink';
 
 import { getActiveInnovationData } from '../actions/innovations';
 
@@ -34,10 +34,12 @@ class ConceptOverviewV2 extends Component {
     const { activeInnovationId, activePartnerId, conceptsById, userType } = this.props;
     return (
       <div>
-        <BackTextLink
-          label="Back"
-          onClick={() => this.props.history.goBack()}
-        />
+        <Link to={`/innovation-overview/${activePartnerId}`}>
+          <div>
+            <i className="fas fa-chevron-left"></i>
+            <span> Back to Innovation Overview</span>
+          </div>
+        </Link>
         {
           userType === 'finance'
             ? (

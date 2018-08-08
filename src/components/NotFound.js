@@ -12,7 +12,7 @@ import BackTextLink from './buttons/BackTextLink';
 const NotFound = props => (
   <div>
     <h1 style={{ textAlign: 'center' }}>Page Not Found</h1>
-    <div>
+    <div style={{ textAlign: 'center' }}>
       <BackTextLink
         label="Your Dashboard"
         onClick={() => props.history.push('/dashboard')}

@@ -55,7 +55,7 @@ const InnovationAddPartner = (props) => {
         />
         <FormTextInput
           id="partnerCountry"
-          placeholder="Corporate Partners country"
+          placeholder="Corporate Partner's country"
           onChange={updateFormField}
           value={partnerCountry}
           isRequired={true}

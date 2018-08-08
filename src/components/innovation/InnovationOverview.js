@@ -28,7 +28,7 @@ class InnovationOverview extends Component {
   state = {
     openEditDates: false,
     openEditTeam: false,
-    openEditMandate: false,
+    openAddMandate: false,
     mandateUpdated: false
   }
 
@@ -55,7 +55,7 @@ class InnovationOverview extends Component {
 
   render() {
     const { activeInnovation, activePartner, conceptsById, teamMembers, authedUser } = this.props;
-    const { openEditDates, openEditTeam, mandateUpdated } = this.state;
+    const { openEditDates, openEditTeam, mandateUpdated, openAddMandate } = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
     const activeComplete = activeConcepts.filter(concept => concept.status === 'ready');
@@ -85,20 +85,34 @@ class InnovationOverview extends Component {
           <div>Innovation Type: {innovationTypeLabels[activeInnovation.sprintType]}</div>
           <div>Duration: {activeInnovation.duration} weeks</div>
           <div className="innovation-overview-mandate-input">
-            <FormTextArea
-              id='mandate'
-              placeholder='Innovation Mandate'
-              onChange={this.handleUpdateMandate}
-              value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
-              labelLeftAlign={true}
-            />
-
-            {mandateUpdated &&
-              <ButtonSubmit
-                label="Save"
-                onClick={() => this.mandateUpdateToDB()}
-              />
+            {
+              (activeInnovation.mandate || openAddMandate)
+                ? (
+                  <div>
+                    <FormTextArea
+                      id='mandate'
+                      placeholder='Innovation Mandate'
+                      onChange={this.handleUpdateMandate}
+                      value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
+                      labelLeftAlign={true}
+                    />
+                    {
+                      mandateUpdated &&
+                        <ButtonSubmit
+                          label="Save"
+                          onClick={() => this.mandateUpdateToDB()}
+                        />
+                    }
+                  </div>
+                )
+                : <div onClick={() => this.setState({ openAddMandate: true })} className="innovation-overview-add-mandate-link">
+                    <div>
+                      <i className="fas fa-plus fa-2x add-concept-icon"></i>
+                    </div>
+                    <div>Please add innovation mandate</div>
+                  </div>
             }
+
           </div>
         </ContentBox>
 

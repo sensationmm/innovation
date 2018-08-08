@@ -13,7 +13,7 @@ import { conceptFieldGroups, conceptStatusLabels } from '../../config/conceptOpt
 import '../../styles/css/concept-overview-read.css';
 
 const ConceptOverviewRead = (props) => {
-  const { activeConcept, conceptAnalysis, targetIndustry } = props;
+  const { activeConcept, conceptAnalysis, targetIndustry, activePartnerId } = props;
   const targetIndustryName = targetIndustry && targetIndustry.name;
   return (
     <div>
@@ -48,6 +48,12 @@ const ConceptOverviewRead = (props) => {
           ))
         }
       </ContentBox>
+      <Link to={`/innovation-overview/${activePartnerId}`}>
+        <span>
+          <i className="fas fa-chevron-left"></i>
+          <span> Back to Innovation Overview</span>
+        </span>
+      </Link>
     </div>
   )
 }
@@ -56,7 +62,11 @@ ConceptOverviewRead.propTypes = {
   history: PropTypes.object,
   activeConcept: PropTypes.object,
   conceptAnalysis: PropTypes.object,
-  targetIndustry: PropTypes.object
+  targetIndustry: PropTypes.object,
+  activePartnerId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 };
 
 const mapStateToProps = (state, props) => ({

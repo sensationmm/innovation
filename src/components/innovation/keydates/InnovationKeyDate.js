@@ -25,10 +25,6 @@ class InnovationKeyDate extends Component {
           {(date) ? moment(date).format('DD/MM/YYYY') : 'Enter date'}
         </div>
         {
-          required &&
-            <div className="innovation-is-required">Required</div>
-        }
-        {
           !required &&
             <div className="innovation-delete-keydate" onClick={() => deleteKeyDate(id)}><i className="far fa-trash-alt innovation-delete-keydate-icon"></i></div>
         }

@@ -67,13 +67,16 @@ class AddNewKeyDateForm extends Component {
           {
             openDatePicker &&
             <div>
-              <div className="innovation-date-picker-mask" onClick={() => this.setState({ openDatePicker: false })}>
-              <DatePicker
-                openToDate={newCustomDate ? newCustomDate : moment()}
-                selected={newCustomDate ? newCustomDate : null}
-                onChange={(e) => this.onChange('newCustomDate', e)}
-                inline
-              />
+              <div className="innovation-date-picker-mask">
+                <DatePicker
+                  openToDate={newCustomDate ? newCustomDate : moment()}
+                  selected={newCustomDate ? newCustomDate : null}
+                  onChange={(e) => this.onChange('newCustomDate', e)}
+                  inline
+                />
+                <div className="innovation-date-picker-close" onClick={() => this.setState({ openDatePicker: false })}>
+                  <i className="fas fa-times"></i>
+                </div>
               </div>
             </div>
           }

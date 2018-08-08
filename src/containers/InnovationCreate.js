@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -9,7 +10,6 @@ import InnovationAddDetails from '../components/innovation/InnovationAddDetails'
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
-import ButtonCancel from '../components/buttons/ButtonCancel';
 
 import { createInnovation } from '../actions/innovations';
 
@@ -88,6 +88,12 @@ class InnovationCreate extends Component {
     const fieldsAreCompleted = this.fieldsAreCompleted();
     return (
       <div className="create-innovation-container">
+        <Link to="/dashboard">
+          <span>
+            <i className="fas fa-chevron-left"></i>
+            <span> Back to Dashboard</span>
+          </span>
+        </Link>
         <div className="create-innovation-page-title">Create A New Innovation</div>
         <div className="create-innovation-section-container">
           <FormSectionHeader
@@ -124,15 +130,27 @@ class InnovationCreate extends Component {
           />
         </div>
         <div className="create-innovation-user-actions">
-          <ButtonSubmit
-            label={fieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
-            onClick={() => this.submitNewInnovation()}
-            // disabled={!fieldsAreCompleted}
-          />
+          <Link to="/dashboard">
+            <span>
+              <i className="fas fa-chevron-left"></i>
+              <span> Back to Dashboard</span>
+            </span>
+          </Link>
+          {
+            fieldsAreCompleted
+              ? (
+                <ButtonSubmit
+                  label="Save"
+                  onClick={() => this.submitNewInnovation()}
+                />
+              )
+              : (
+                <div>Please complete all required fields</div>
+              )
+          }
 
-          <ButtonCancel
-            onClick={() => this.props.history.goBack()}
-          />
+
+
         </div>
       </div>
     )

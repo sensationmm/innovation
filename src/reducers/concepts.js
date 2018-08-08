@@ -19,12 +19,15 @@ export default (state = initialState, action) => {
       const conceptsById = {};
       const innovationId = partner.innovation.id;
       const partnerId = partner.id;
-      
+
       partner.innovation.concepts.forEach(concept => {
         const formattedConceptAttrs = {};
 
-        Object.keys(concept.attributes).forEach(key => {
-          formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
+          Object.keys(concept.attributes).forEach(key => {
+            formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
+          })
+          formattedConceptAttrs.targetIndustryId = concept.targetIndustry.id;
+          conceptsById[concept.id] = { ...formattedConceptAttrs, innovationId };
         })
 
         const canvases = concept.canvasesAttachments.map(canvas => canvas.url);
@@ -37,7 +40,12 @@ export default (state = initialState, action) => {
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;
-      const conceptsById = { ...state.conceptsById, [newConcept.id]: newConcept }
+      const formattedNewConcept = {};
+      Object.keys(newConcept.attributes).forEach(key => {
+        formattedNewConcept[key] = newConcept.attributes[key] === null ? '' : newConcept.attributes[key];
+      })
+
+      const conceptsById = { ...state.conceptsById, [newConcept.id]: formattedNewConcept }
       return { ...state, conceptsById }
     }
 

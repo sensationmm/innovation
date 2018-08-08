@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,7 +13,6 @@ import ConceptConviction from '../components/concept/createForm/ConceptConvictio
 
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
-import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
@@ -94,6 +94,7 @@ class ConceptCreate extends Component {
         createConcept(activeInnovationId, attrsToCreate);
       });
     } else {
+      console.log('redirectUrl', redirectUrl);
       createConcept(activeInnovationId, attrsToCreate, redirectUrl);
     }
   }
@@ -109,6 +110,12 @@ class ConceptCreate extends Component {
     const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     return (
       <div className="create-concept-container">
+        <Link to={activePartnerId ? `/innovation-overview/${activePartnerId}` : '/dashboard'}>
+          <span>
+            <i className="fas fa-chevron-left"></i>
+            <span> Back to Innovation Overview</span>
+          </span>
+        </Link>
         <div className="create-concept-page-title">
           <span>Create A New Concept</span>
         </div>
@@ -202,10 +209,12 @@ class ConceptCreate extends Component {
           />
         </div>
           <div className="create-concept-user-actions">
-            <BackTextLink
-              label="Back"
-              onClick={() => this.props.history.goBack()}
-            />
+            <Link to={activePartnerId ? `/innovation-overview/${activePartnerId}` : '/dashboard'}>
+              <span>
+                <i className="fas fa-chevron-left"></i>
+                <span> Back to Innovation Overview</span>
+              </span>
+            </Link>
             <div className="create-concept-user-actions-button-container">
               {
                 requiredFieldsAreCompleted
@@ -225,7 +234,6 @@ class ConceptCreate extends Component {
                   )
                   : <div>Please complete required fields</div>
               }
-
             </div>
           </div>
       </div>
@@ -244,7 +252,7 @@ ConceptCreate.propTypes = {
 
 const mapStateToProps = (state) => ({
   activeInnovationId: state.innovations.activeInnovation.id,
-  activePartnerId: state.partners.activePartner.id
+  activePartnerId: state.innovations.activeInnovation.partnerId
 });
 
 const actions = { createConcept, addCanvas };

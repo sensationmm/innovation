@@ -15,12 +15,16 @@ const InnovationCalendar = (props) => {
   return (
     <div className="tracking">
       <div className="innovation-dash-header">
-        <div className="innovation-dash-calendar-report-button">
-          <ButtonSubmit
-            onClick={() => props.requestInnovationReport('calendar')}
-            label="Request Report Email"
-          />
-        </div>
+        {
+          innovations && innovations.length > 0 &&
+            <div className="innovation-dash-calendar-report-button">
+              <ButtonSubmit
+                onClick={() => props.requestInnovationReport('calendar')}
+                label="Request Report Email"
+              />
+            </div>
+        }
+
         <div>Innovation Calendar</div>
         <div className="innovation-dash-view">
           <NavLink to="/dashboard" activeClassName="active"><i className="fas fa-list-ul"></i></NavLink>

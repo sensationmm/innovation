@@ -14,13 +14,15 @@ const FormTextArea = (props) => {
       <div className="inventure-form-textinput-placeholder">
         {placeholder}
       </div>
-      <textarea
-        type="text"
-        id={id}
-        placeholder={placeholder}
-        onChange={onChange}
-        value={value}
-      />
+      <div className="inventure-form-content">
+        <textarea
+          type="text"
+          id={id}
+          placeholder={placeholder}
+          onChange={onChange}
+          value={value}
+        />
+      </div>
     </div>
   )
 }

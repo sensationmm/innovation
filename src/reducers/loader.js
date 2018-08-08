@@ -34,11 +34,15 @@ import {
   DELETE_CONCEPT_ERROR,
   INVITE_INNOVATION_USERS_BEGIN,
   INVITE_INNOVATION_USERS_SUCCESS,
-  INVITE_INNOVATION_USERS_ERROR
+  INVITE_INNOVATION_USERS_ERROR,
+  ADD_CONCEPT_CANVAS_BEGIN,
+  ADD_CONCEPT_CANVAS_SUCCESS,
+  ADD_CONCEPT_CANVAS_ERROR
 } from '../config/constants';
 
 const initialState = {
-  isLoading: false
+  isLoading: false,
+  isLoadingCanvas: false
 };
 
 export const loader = (state = initialState, action) => {
@@ -59,6 +63,12 @@ export const loader = (state = initialState, action) => {
         ...initialState,
         isLoading: true,
       };
+
+    case ADD_CONCEPT_CANVAS_BEGIN:
+      return {
+        ...initialState,
+        isLoadingCanvas: true
+      }
 
     case GET_CONCEPTS_SUCCESS:
     case GET_CONCEPTS_ERROR:
@@ -84,6 +94,8 @@ export const loader = (state = initialState, action) => {
     case DELETE_CONCEPT_ERROR:
     case INVITE_INNOVATION_USERS_SUCCESS:
     case INVITE_INNOVATION_USERS_ERROR:
+    case ADD_CONCEPT_CANVAS_SUCCESS:
+    case ADD_CONCEPT_CANVAS_ERROR:
       return initialState;
 
     default:

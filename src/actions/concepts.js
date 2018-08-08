@@ -16,6 +16,8 @@ import {
 import { Concept, Attachment } from '../models';
 import { push } from 'connected-react-router';
 
+import  { getDataUri } from '../utils/functions';
+
 /**
  * @param {string|int} innovationId - id of the innovation which the concept will belong to
  * @param {object} attrsToCreate - object of key / value pairs to create the new concept with
@@ -83,28 +85,32 @@ export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (disp
    }
  }
 
- export const addCanvas = (conceptId, attachments) => async dispatch => {
-  console.log('addCanvas',conceptId, attachments);
+ export const addCanvas = (conceptId, attachments, partnerId) => async dispatch => {
+
   dispatch({ type: ADD_CONCEPT_CANVAS_BEGIN });
 
   try {
+    const addPreviews = [];
     for ( const attachment of attachments ) {
 
       const newCanvas = new Attachment();
 
-      newCanvas.data = attachment.preview;
-      newCanvas.filename = attachment.name;
-      newCanvas.name = 'canvases';
-      newCanvas.recordId = conceptId;
-      newCanvas.recordType = 'Concept';
+      const preview = attachment.preview;
 
-      console.log(newCanvas);
-      await newCanvas.save();
+      await getDataUri(preview, async function(dataUri) {
+        newCanvas.data = dataUri;
+        newCanvas.filename = preview;
+        newCanvas.name = 'canvases';
+        newCanvas.recordId = conceptId;
+        newCanvas.recordType = 'Concept';
 
+
+        addPreviews.push(preview);
+
+        await newCanvas.save();
+        dispatch({ type: ADD_CONCEPT_CANVAS_SUCCESS, addPreviews, conceptId });
+      });
     }
-
-    dispatch({ type: ADD_CONCEPT_CANVAS_SUCCESS });
-
   } catch (err) {
     console.log(err);
     dispatch({ type: ADD_CONCEPT_CANVAS_ERROR });

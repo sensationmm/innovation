@@ -142,7 +142,22 @@ export const Concept = ApplicationRecord.extend({
     conceptChanges: hasMany(),
     innovation: belongsTo(),
     targetIndustry: belongsTo(),
-    canvases_attachments: hasMany()
+    canvasesAttachments: hasMany()
+  }
+});
+
+export const Attachment = ApplicationRecord.extend({
+  static: {
+    jsonapiType: 'attachments'
+  },
+  attrs: {
+    data: attr(),
+    filename: attr(),
+    url: attr(),
+    name: attr(),
+    recordId: attr(),
+    recordType: attr(),
+    record: belongsTo()
   }
 });
 
@@ -243,20 +258,6 @@ export const KeyDate = ApplicationRecord.extend({
     keyDatableId: attr(),
     keyDatableType: attr(),
     keyDatable: belongsTo()
-  }
-});
-
-export const Attachment = ApplicationRecord.extend({
-  static: {
-    jsonapiType: 'attachments'
-  },
-  attrs: {
-    data: attr(),
-    filename: attr(),
-    name: attr(),
-    recordId: attr(),
-    recordType: attr(),
-    record: belongsTo()
   }
 });
 

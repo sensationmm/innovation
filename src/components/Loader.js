@@ -1,30 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import classnames from 'classnames';
 
 import '../styles/css/loader.css';
 
 const Loader = (props) => {
-  if (!props.isLoading) {
-    return false;
-  }
-
-  return (
-    <div className="loader">
-      <div className="lds-ripple">
-        <div />
-        <div />
-      </div>
-    </div>
-  );
+	return (
+		<div className={classnames('loader', { mini: props.mini })}>
+			<div className="lds-ripple">
+				<div />
+				<div />
+			</div>
+		</div>
+	);
 };
-
-const mapStateToProps = state => ({
-  isLoading: state.loader.isLoading,
-});
 
 Loader.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-};
+	mini: PropTypes.bool
+}
 
-export default connect(mapStateToProps)(Loader);
+Loader.defaultProps = {
+	mini: false
+}
+
+export default Loader;

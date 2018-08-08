@@ -2,7 +2,8 @@ import {
   GET_INNOVATION_DATA_SUCCESS,
   CREATE_CONCEPT_SUCCESS,
   EDIT_CONCEPT_SUCCESS,
-  DELETE_CONCEPT_SUCCESS
+  DELETE_CONCEPT_SUCCESS,
+  ADD_CONCEPT_CANVAS_SUCCESS
 } from '../config/constants';
 
 import { removeItemByKey } from '../utils/functions';
@@ -17,8 +18,7 @@ export default (state = initialState, action) => {
       const { partner } = action;
       const conceptsById = {};
       const innovationId = partner.innovation.id;
-
-      console.log(partner.innovation.concepts);
+      const partnerId = partner.id;
       
       partner.innovation.concepts.forEach(concept => {
         const formattedConceptAttrs = {};
@@ -27,10 +27,10 @@ export default (state = initialState, action) => {
           formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
         })
 
-        const canvases = concept.canvases_attachments;
+        const canvases = concept.canvasesAttachments.map(canvas => canvas.url);
 
         formattedConceptAttrs.targetIndustryId = concept.targetIndustry.id;
-        conceptsById[concept.id] = { ...formattedConceptAttrs, innovationId, canvases };
+        conceptsById[concept.id] = { ...formattedConceptAttrs, partnerId, innovationId, canvases };
       })
       return { ...state, conceptsById }
     }
@@ -61,6 +61,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         conceptsById
+      }
+    }
+
+    case ADD_CONCEPT_CANVAS_SUCCESS: {
+      const { addPreviews, conceptId } = action;
+
+      const updatedConcept = { ...state.conceptsById[conceptId] };
+
+      for(const preview of addPreviews) {
+        updatedConcept.canvases.push(preview);
+      }
+
+      return {
+        ...state,
+        conceptsById: { ...state.conceptsById, [conceptId]: updatedConcept }
       }
     }
 

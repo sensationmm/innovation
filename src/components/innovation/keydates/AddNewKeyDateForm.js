@@ -73,6 +73,7 @@ class AddNewKeyDateForm extends Component {
                   selected={newCustomDate ? newCustomDate : null}
                   onChange={(e) => this.onChange('newCustomDate', e)}
                   inline
+                  fixedHeight
                 />
                 <div className="innovation-date-picker-close" onClick={() => this.setState({ openDatePicker: false })}>
                   <i className="fas fa-times"></i>

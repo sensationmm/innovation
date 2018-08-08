@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import InnovationOverview from '../components/innovation/InnovationOverview';
-import ConceptOverviewEditable from './ConceptOverviewEditable';
+import ConceptOverviewV2 from './ConceptOverviewV2';
 import InnovationCreate from './InnovationCreate';
 import ConceptFinanceReport from './ConceptFinanceReport';
 import InnovationDashboard from './InnovationDashboard';
@@ -38,7 +38,7 @@ const App = () => (
         <PrivateRoute exact path="/innovation-calendar" component={InnovationCalendar} />
         <PrivateRoute exact path="/canvas" component={Canvas} />
         <PrivateRoute exact path="/canvas2" component={CanvasV2} />
-        <PrivateRoute exact path="/concept/:conceptId" component={ConceptOverviewEditable} />
+        <PrivateRoute exact path="/concept/:conceptId" component={ConceptOverviewV2} />
         <PrivateRoute exact path="/no-mobile" component={NotMobile} />
         <Route path='/login' component={() => window.location = '/'}/>
 

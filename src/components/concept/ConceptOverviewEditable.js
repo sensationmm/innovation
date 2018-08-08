@@ -1,50 +1,31 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ConceptBasicDetails from '../components/concept/createForm/ConceptBasicDetails';
-import ConceptMarket from '../components/concept/createForm/ConceptMarket';
-import ConceptSolution from '../components/concept/createForm/ConceptSolution';
-import ConceptBusinessModel from '../components/concept/createForm/ConceptBusinessModel';
-import ConceptCorpAdvantage from '../components/concept/createForm/ConceptCorpAdvantage';
-import ConceptCosts from '../components/concept/createForm/ConceptCosts';
-import ConceptConviction from '../components/concept/createForm/ConceptConviction';
-import VFTScoresDisplay from '../components/concept/VFTScores/VFTScoresDisplay';
+import ConceptBasicDetails from './createForm/ConceptBasicDetails';
+import ConceptMarket from './createForm/ConceptMarket';
+import ConceptSolution from './createForm/ConceptSolution';
+import ConceptBusinessModel from './createForm/ConceptBusinessModel';
+import ConceptCorpAdvantage from './createForm/ConceptCorpAdvantage';
+import ConceptCosts from './createForm/ConceptCosts';
+import ConceptConviction from './createForm/ConceptConviction';
 
-import FormSectionHeader from '../components/formInputs/FormSectionHeader';
-import ButtonSubmit from '../components/buttons/ButtonSubmit';
-import BackTextLink from '../components/buttons/BackTextLink';
-import ButtonDelete from '../components/buttons/ButtonDelete';
+import FormSectionHeader from '../formInputs/FormSectionHeader';
+import ButtonSubmit from '../buttons/ButtonSubmit';
+import ButtonDelete from '../buttons/ButtonDelete';
 
-import '../styles/css/concept-create.css';
+import '../../styles/css/concept-create.css';
 
-import { editConcept, deleteConcept, addCanvas } from '../actions/concepts';
-import { getActiveInnovationData } from '../actions/innovations';
-import  { getDataUri } from '../utils/functions';
+import { editConcept, deleteConcept, addCanvas } from '../../actions/concepts';
+import  { getDataUri } from '../../utils/functions';
+
+import { conceptStatusLabels } from '../../config/conceptOptions';
 
 class ConceptOverviewEditable extends Component {
   state = {
     editedFields: [],
     logo: {}
-  }
-
-  componentDidMount() {
-    this.checkConceptInnovation();
-  }
-
-  componentDidUpdate() {
-    this.checkConceptInnovation();
-  }
-
-  checkConceptInnovation = () => {
-    const { activeConcept, conceptsById, getActiveInnovationData, history } = this.props;
-
-    if(!conceptsById || (Object.keys(conceptsById).length === 0 && conceptsById.constructor === Object)) {
-      const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
-      getActiveInnovationData(storedToken.activePartnerId);
-    } else if(!activeConcept) {
-      history.push('/dashboard');
-    }
   }
 
   updateEditedFields = (key) => {
@@ -119,30 +100,27 @@ class ConceptOverviewEditable extends Component {
   }
 
   // Once complete 'Mark as Ready button is activated.
-  allFieldsAreCompleted = () => {
-    const { activeConcept } = this.props;
-    return Object.values(activeConcept).every(field =>
-                field !== null &&
-                field !== '' &&
-                field !== undefined);
-  }
+  // allFieldsAreCompleted = () => {
+  //   const { activeConcept } = this.props;
+  //   return Object.values(activeConcept).every(field =>
+  //               field !== null &&
+  //               field !== '' &&
+  //               field !== undefined);
+  // }
 
   render() {
-    const { activeConcept } = this.props;
+    const { activeConcept, activePartnerId } = this.props;
 
     if (!activeConcept) {
       return null;
     }
-    // const allFieldsAreCompleted = this.allFieldsAreCompleted();
+    // const allFieldsAreCompleted = this.allFieldsAreCompleted(); TODO: If not needed then remove.
     return (
       <div className="create-concept-container">
+        <div className="create-concept-page-title">Concept Overview: {activeConcept.name}</div>
         <div className="create-concept-user-actions">
-          <BackTextLink
-            label="Back"
-            onClick={() => this.props.history.goBack()}
-          />
+          <div>Status: {conceptStatusLabels[activeConcept.status]}</div>
           <div>
-            <div>Status: {activeConcept.status}</div>
             <ButtonSubmit
               label="Mark as Killed"
               onClick={() => this.selectOption('status', 'killed')}
@@ -156,10 +134,8 @@ class ConceptOverviewEditable extends Component {
               onClick={() => this.selectOption('status', 'ready')}
               // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
             />
-
           </div>
         </div>
-        <div className="create-concept-page-title">Update Concept</div>
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Concept Summary"
@@ -175,25 +151,6 @@ class ConceptOverviewEditable extends Component {
             addCanvas={this.addCanvas}
           />
         </div>
-        {
-          activeConcept.status === 'reviewed' &&
-            <div className="create-concept-section-container">
-              <FormSectionHeader
-                title="VFT Scores"
-              />
-              <VFTScoresDisplay
-                stats={[
-                  { label: 'VFTConceptScore', content: activeConcept.VFTConceptScore },
-                  { label: 'VFTComments', content: activeConcept.VFTComments },
-                  { label: 'VFTSolutionScore', content: activeConcept.VFTSolutionScore },
-                  { label: 'VFTModelScore', content: activeConcept.VFTModelScore },
-                  { label: 'VFTMarketScore', content: activeConcept.VFTMarketScore },
-                ]}
-                isStats
-                stacked
-              />
-            </div>
-        }
         <div className="create-concept-section-container">
           <FormSectionHeader
             title="Customers and Market"
@@ -270,18 +227,22 @@ class ConceptOverviewEditable extends Component {
         </div>
 
         <div className="create-concept-user-actions">
-          <BackTextLink
-            label="Back"
-            onClick={() => this.props.history.goBack()}
-          />
-          <ButtonSubmit
-            label="Save Changes"
-            onClick={() => this.saveChangesToDb()}
-          />
-          <ButtonDelete
-            label="Delete Concept"
-            onDelete={() => this.handleDeleteConcept()}
-          />
+          <Link to={`/innovation-overview/${activePartnerId}`}>
+            <span>
+              <i className="fas fa-chevron-left"></i>
+              <span> Back to Innovation Overview</span>
+            </span>
+          </Link>
+          <div className="create-concept-user-actions-button-container">
+            <ButtonSubmit
+              label="Save Changes"
+              onClick={() => this.saveChangesToDb()}
+            />
+            <ButtonDelete
+              label="Delete Concept"
+              onDelete={() => this.handleDeleteConcept()}
+            />
+          </div>
         </div>
       </div>
     )
@@ -304,18 +265,9 @@ ConceptOverviewEditable.propTypes = {
   conceptsById: PropTypes.object,
   activeConcept: PropTypes.object,
   existingLogo: PropTypes.bool,
-  getActiveInnovationData: PropTypes.func,
   addCanvas: PropTypes.func
 };
 
-const mapStateToProps = (state, props) => ({
-  activeInnovationId: state.innovations.activeInnovation.id,
-  activePartnerId: state.partners.activePartner.id,
-  conceptsById: state.concepts.conceptsById,
-  activeConcept: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId]) || null,
-  numCanvases: (state.concepts.conceptsById && state.concepts.conceptsById[props.match.params.conceptId] && state.concepts.conceptsById[props.match.params.conceptId].canvases.length) || null
-});
+const actions = { editConcept, deleteConcept, addCanvas };
 
-const actions = { editConcept, deleteConcept, getActiveInnovationData, addCanvas };
-
-export default connect(mapStateToProps, actions)(ConceptOverviewEditable);
+export default connect(null, actions)(ConceptOverviewEditable);

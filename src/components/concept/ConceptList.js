@@ -24,11 +24,10 @@ import '../../styles/css/concept-list.css';
 
 const ConceptList = props => {
   const { postIS2, userType, concepts, editConcept } = props;
+
   return (
     <div className="concept-list">
       <div className="concept-list-header">{props.title}</div>
-      <div>For testing: {userType}</div>
-      <div>For testing: {postIS2 ? 'Post IS2' : 'Pre IS2'}</div>
       <div className="concept-list-items">
       {
         concepts && concepts.map(concept => {
@@ -45,14 +44,13 @@ const ConceptList = props => {
             <div className="concept-list-item" key={`concept-${id}`}>
               <Link className="concept-list-item-link" to={`/concept/${id}`}>
                 <div className="concept-list-item-details">
-                  <ConceptAvatar conceptId={id} ident={ident || 'TD'} color={color || 'blue'} logo={logo} showLink={false}/>
+                  <ConceptAvatar conceptId={id} ident={ident || 'TD'} color={color || 'darkblue'} logo={logo} showLink={false}/>
                   <h3>{name}</h3>
                   <p>{description}</p>
-                  <div>For testing: {status}</div>
                 </div>
               </Link>
               {
-                (!postIS2 && userType === 'teamGM') &&
+                (!postIS2 && (userType === 'admin' || userType === 'member')) &&
                   <div className="concept-list-item-user-actions">
                     {
                       (status === 'draft' || status ==='ready')
@@ -62,12 +60,12 @@ const ConceptList = props => {
                   </div>
               }
               {
-                (postIS2 && userType === 'teamGM') &&
+                (postIS2 && (userType === 'admin' || userType === 'member')) &&
                   <div>
                     {
                       (status === 'ready') &&
                         <div className="concept-list-item-user-actions">
-                          <div className="concept-list-item-marked-complete"><i className="far fa-clock"></i>Awaiting VFT Analysis</div>
+                          <div className="concept-list-item-marked-awaiting"><i className="far fa-clock"></i>Awaiting VFT Analysis</div>
                         </div>
                     }
                     {

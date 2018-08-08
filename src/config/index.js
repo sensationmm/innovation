@@ -13,7 +13,7 @@ if (url.match(/http:\/\/localhost/)) {
   // staging or review apps
   env = 'staging';
   Config = devConfig;
-} else if (url.match(/inventu.re/)) {
+} else if (url.match(/inventu.re/) || url.match(/prod/)) {
   // production
   env = 'production';
   Config = prodConfig;

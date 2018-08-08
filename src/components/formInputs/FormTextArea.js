@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import '../../styles/css/form-text-input.css'
 
 const FormTextArea = (props) => {
-  const { id, placeholder, onChange, value, isRequired } = props;
+  const { id, placeholder, onChange, value, isRequired, labelLeftAlign } = props;
   return (
     <div className="inventure-form-textinput">
       {
         isRequired && !value &&
           <div className="inventure-form-textinput-required-label">Required</div>
       }
-      <div className="inventure-form-textinput-placeholder">
+      <div className="inventure-form-textinput-placeholder" style={{ left: labelLeftAlign ? '0px' : '12px' }}>
         {placeholder}
       </div>
       <div className="inventure-form-content">
@@ -32,7 +32,8 @@ FormTextArea.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
-  isRequired: PropTypes.bool
+  isRequired: PropTypes.bool,
+  labelLeftAlign: PropTypes.bool
 }
 
 export default FormTextArea

@@ -14,7 +14,7 @@ import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
 import ButtonSubmit from '../buttons/ButtonSubmit';
-import FormTextInput from '../formInputs/FormTextInput';
+import FormTextArea from '../formInputs/FormTextArea';
 import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
@@ -26,11 +26,10 @@ import { innovationTypeLabels } from '../../config/innovationOptions';
 
 class InnovationOverview extends Component {
   state = {
-    userType: 'teamGM',
     openEditDates: false,
     openEditTeam: false,
-    openEditMandate: false,
-    mandateUpdated: false // TODO: May way to generalise this to be updatedFields as per concept overview if there are to be more inline editable fields on this page.
+    openAddMandate: false,
+    mandateUpdated: false
   }
 
   componentDidMount() {
@@ -55,8 +54,8 @@ class InnovationOverview extends Component {
   }
 
   render() {
-    const { activeInnovation, activePartner, conceptsById, teamMembers } = this.props;
-    const { openEditDates, openEditTeam, mandateUpdated } = this.state;
+    const { activeInnovation, activePartner, conceptsById, teamMembers, authedUser } = this.props;
+    const { openEditDates, openEditTeam, mandateUpdated, openAddMandate } = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
     const activeComplete = activeConcepts.filter(concept => concept.status === 'ready');
@@ -74,41 +73,46 @@ class InnovationOverview extends Component {
       labels.push(keydate.name);
     });
 
-    // TODO: testing only.
-    const { userType } = this.state;
+    const userType = authedUser.roleName;
 
     return (
       <div>
         <ContentBox background={false}>
           <Link to="/dashboard">&lt; Back to Dashboard</Link>
         </ContentBox>
-        <ContentBox background={false}>
-          <div>Testing:</div>
-          <ButtonSubmit
-            label="Change User Type"
-            onClick={() => this.setState({ userType: userType === 'teamGM' ? 'finance' : 'teamGM'})}
-          />
-          <div>{this.state.userType}</div>
-        </ContentBox>
-
         <ContentBox>
           <h1>{activeInnovation.sprintName}</h1>
           <div>Innovation Type: {innovationTypeLabels[activeInnovation.sprintType]}</div>
           <div>Duration: {activeInnovation.duration} weeks</div>
           <div className="innovation-overview-mandate-input">
-            <FormTextInput
-              id='mandate'
-              placeholder='Innovation Mandate'
-              onChange={this.handleUpdateMandate}
-              value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
-            />
-
-            {mandateUpdated &&
-              <ButtonSubmit
-                label="Save"
-                onClick={() => this.mandateUpdateToDB()}
-              />
+            {
+              (activeInnovation.mandate || openAddMandate)
+                ? (
+                  <div>
+                    <FormTextArea
+                      id='mandate'
+                      placeholder='Innovation Mandate'
+                      onChange={this.handleUpdateMandate}
+                      value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
+                      labelLeftAlign={true}
+                    />
+                    {
+                      mandateUpdated &&
+                        <ButtonSubmit
+                          label="Save"
+                          onClick={() => this.mandateUpdateToDB()}
+                        />
+                    }
+                  </div>
+                )
+                : <div onClick={() => this.setState({ openAddMandate: true })} className="innovation-overview-add-mandate-link">
+                    <div>
+                      <i className="fas fa-plus fa-2x add-concept-icon"></i>
+                    </div>
+                    <div>Please add innovation mandate</div>
+                  </div>
             }
+
           </div>
         </ContentBox>
 
@@ -187,28 +191,28 @@ class InnovationOverview extends Component {
 
         {(activeIncomplete && activeIncomplete.length > 0) &&
           <ContentBox background={false}>
-            <ConceptList concepts={activeIncomplete} title='Active & Incomplete' userType={userType} postIS2={isPostIS2} />
+            <ConceptList concepts={activeIncomplete} title='Active' userType={userType} postIS2={isPostIS2} />
           </ContentBox>
         }
 
         {
           (activeComplete && activeComplete.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={activeComplete} title='Active & Ready' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeComplete} title='Ready for Analysis' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 
         {
           (activeReviewed && activeReviewed.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={activeReviewed} title='Active & Analysed' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeReviewed} title='Analysed by VFT' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 
         {
           (killedConcepts && killedConcepts.length > 0) &&
             <ContentBox background={false}>
-              <ConceptList concepts={killedConcepts} title='Killed Concepts' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={killedConcepts} title='Killed' userType={userType} postIS2={isPostIS2} />
             </ContentBox>
         }
 
@@ -242,14 +246,16 @@ InnovationOverview.propTypes = {
   editInnovation: PropTypes.func,
   getActiveInnovationData: PropTypes.func,
   match: PropTypes.object,
-  teamMembers: PropTypes.array
+  teamMembers: PropTypes.array,
+  authedUser: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   activePartner: state.partners.activePartner,
   activeInnovation: state.innovations.activeInnovation,
   conceptsById: state.concepts.conceptsById,
-  teamMembers: state.users.activeInnovationUsers
+  teamMembers: state.users.activeInnovationUsers,
+  authedUser: state.auth.authedUser
 });
 
 const actions = { editInnovation, getActiveInnovationData };

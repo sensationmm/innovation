@@ -72,8 +72,8 @@ class ConceptCreate extends Component {
     this.setState({ [arrayName]: updatedArray })
   }
 
-  handleSaveConcept = () => {
-    const { createConcept, activeInnovationId, activePartnerId } = this.props;
+  handleSaveConcept = (redirectUrl) => {
+    const { createConcept, activeInnovationId } = this.props;
     const attrsToCreate = removeNullValueAttrs({ ...this.state });
     // If there is a logo uploaded, format it ready for saving to the DB.
     if (attrsToCreate.logo) {
@@ -84,7 +84,7 @@ class ConceptCreate extends Component {
         createConcept(activeInnovationId, attrsToCreate);
       });
     } else {
-      createConcept(activeInnovationId, attrsToCreate, `/innovation-overview/${activePartnerId}`);
+      createConcept(activeInnovationId, attrsToCreate, redirectUrl);
     }
   }
 
@@ -95,6 +95,7 @@ class ConceptCreate extends Component {
   }
 
   render() {
+    const { activePartnerId } = this.props;
     const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     return (
       <div className="create-concept-container">
@@ -194,11 +195,25 @@ class ConceptCreate extends Component {
               onClick={() => this.props.history.goBack()}
             />
             <div className="create-concept-user-actions-button-container">
-              <ButtonSubmit
-                label={requiredFieldsAreCompleted ? 'Save' : 'Complete Required Fields'}
-                onClick={() => this.handleSaveConcept()}
-                disabled={!requiredFieldsAreCompleted}
-              />
+              {
+                requiredFieldsAreCompleted
+                  ? (
+                    <div>
+                      <ButtonSubmit
+                        label="Save"
+                        onClick={() => this.handleSaveConcept(`/innovation-overview/${activePartnerId}`)}
+                        disabled={!requiredFieldsAreCompleted}
+                      />
+                      <ButtonSubmit
+                        label="Save and add another"
+                        onClick={() => this.handleSaveConcept(this.props.match.url)}
+                        disabled={!requiredFieldsAreCompleted}
+                      />
+                    </div>
+                  )
+                  : <div>Please complete required fields</div>
+              }
+
             </div>
           </div>
       </div>
@@ -210,7 +225,8 @@ ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
   activeInnovationId: PropTypes.string,
-  activePartnerId: PropTypes.string
+  activePartnerId: PropTypes.string,
+  match: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

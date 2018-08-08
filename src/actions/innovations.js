@@ -45,7 +45,7 @@ export const getAllInnovationsList = () => async dispatch => {
   }
 }
 
-export const getActiveInnovationData = (partnerId) => async dispatch => {
+export const getActiveInnovationData = (partnerId) => async (dispatch, getState) => {
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const partner = (await Partner.includes([

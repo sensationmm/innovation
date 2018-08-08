@@ -37,7 +37,7 @@ const FinanceReportInput = (props) => {
         placeholder="Comment"
         onChange={(e) => updateComment(keyToUpdate, e.target.value, conceptId)}
         value={commentText}
-        isRequired={true}
+        isRequired={false}
       />
     </div>
   )

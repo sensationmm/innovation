@@ -6,9 +6,10 @@
   text-align: center;
   font-size: 14px;
   color: $text-off-white;
-  margin-top: 10px;
+  margin: 8px 3px 3px 3px;
   background: $cyan-blue;
   transition: all 0.3s;
+  box-sizing: border-box;
 
   &:hover {
     background: $green-offset;
@@ -26,7 +27,7 @@
   text-align: center;
   font-size: 14px;
   color: $text-off-white;
-  margin-top: 10px;
+  margin: 8px 3px 3px 3px;
   transition: all 0.3s;
   background: transparent;
 
@@ -46,8 +47,8 @@
   text-align: center;
   font-size: 14px;
   color: $text-off-white;
-  margin-top: 10px;
-  background: $grey-red;
+  margin: 8px 3px 3px 3px;
+  background: $tomato;
   transition: all 0.3s;
 
   &:hover {
@@ -66,12 +67,12 @@
   text-align: center;
   font-size: 14px;
   color: $text-off-white;
-  margin-top: 10px;
-  background: $cyan-blue;
+  margin: 8px 3px 3px 3px;
+  background: $ocean;
   transition: all 0.3s;
 
   &:hover {
-    background: $cyan-offset;
+    background: $teal;
   }
 
   &.disabled {
@@ -111,12 +112,12 @@
   text-align: center;
   font-size: 14px;
   color: $text-off-white;
-  margin-top: 10px;
-  background: $cyan-blue;
+  margin: 8px 3px 3px 3px;
+  background: $tomato;
   transition: all 0.3s;
 
   &:hover {
-    background: $green-offset;
+    background: $light-red;
   }
 
   &.confirm {

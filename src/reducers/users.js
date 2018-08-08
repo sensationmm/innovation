@@ -15,18 +15,18 @@ export default (state = initialState, action) => {
       const { partner } = action;
       const activeInnovationUsers = partner.roles.map(role => {
         return role.user ? { ...role.user.attributes, roleId: role.id, roleName: role.name } : null
-      } );
+      });
       return { ...state, activeInnovationUsers }
-    }
-
-    case REQUEST_ALL_USERS_SUCCESS: {
-      const { inVentureUsers } = action;
-      return { ...state, inVentureUsers };
     }
 
     case REQUEST_INNOVATION_USERS_SUCCESS: {
       const { activeInnovationUsers } = action;
       return { ...state, activeInnovationUsers };
+    }
+
+    case REQUEST_ALL_USERS_SUCCESS: {
+      const { inVentureUsers } = action;
+      return { ...state, inVentureUsers };
     }
 
     default:

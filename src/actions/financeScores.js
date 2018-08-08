@@ -6,7 +6,6 @@ import {
 } from '../config/constants';
 
 import { Concept, FinanceScore } from '../models';
-import { editConcept } from './concepts'
 import { push } from 'connected-react-router';
 
 // UPDATE is to redux only - SAVE is to the Db.
@@ -23,10 +22,8 @@ export const saveConceptFinanceScore = (conceptId, financeScores, redirectTo) =>
   dispatch({ type: SAVE_CONCEPT_FINANCE_SCORE_BEGIN });
 
   try {
+    // TODO: Needs optimising - possibly be better to open up GET /finance_scores endpoint on BE.
     const conceptToUpdate = (await Concept.includes('finance_scores').find(conceptId)).data;
-    // TODO: Check if this is correct user procedure re.status changes.
-    conceptToUpdate.status = 'analysed';
-    await conceptToUpdate.save()
 
     for ( const financeScore of financeScores ) {
       if (financeScore.fromDb) {
@@ -53,7 +50,6 @@ export const saveConceptFinanceScore = (conceptId, financeScores, redirectTo) =>
     const updatedConcept = (await Concept.includes('finance_scores').find(conceptId)).data;
     const updatedFinanceScores = updatedConcept.financeScores.map(score => ({ ...score.attributes, fromDb: true }));
     dispatch({ type: SAVE_CONCEPT_FINANCE_SCORE_SUCCESS, conceptId, updatedFinanceScores });
-    dispatch(editConcept(conceptId, { status: 'analysed' }))
     dispatch(push(redirectTo));
 
   }

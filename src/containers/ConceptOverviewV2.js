@@ -35,10 +35,10 @@ class ConceptOverviewV2 extends Component {
     return (
       <div>
         <Link to={`/innovation-overview/${activePartnerId}`}>
-          <div>
+          <span>
             <i className="fas fa-chevron-left"></i>
             <span> Back to Innovation Overview</span>
-          </div>
+          </span>
         </Link>
         {
           userType === 'finance'

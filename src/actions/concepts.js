@@ -16,6 +16,7 @@ import {
 import { Concept, Attachment } from '../models';
 import { push } from 'connected-react-router';
 
+import { displayMessage } from './ui';
 import  { getDataUri } from '../utils/functions';
 
 /**
@@ -41,6 +42,7 @@ export const createConcept = (innovationId, attrsToCreate, redirectTo) => async 
 
     dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
     dispatch(push(redirectTo));
+    dispatch(displayMessage('New Concept created'));
   }
   catch (err) {
     console.log(err);

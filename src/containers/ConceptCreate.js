@@ -83,8 +83,8 @@ class ConceptCreate extends Component {
   }
 
   handleSaveConcept = (redirectUrl) => {
-    const { createConcept, match: { params: innovationId } } = this.props;
-    console.log('save concept innovationId', innovationId);
+    const { createConcept } = this.props;
+    const innovationIdFromUrl = this.props.match.params.innovationId;
     const attrsToCreate = removeNullValueAttrs({ ...this.state });
     // If there is a logo uploaded, format it ready for saving to the DB.
     if (attrsToCreate.logo) {
@@ -92,11 +92,10 @@ class ConceptCreate extends Component {
       getDataUri(preview, function(dataUri) {
         attrsToCreate.logo = dataUri;
         attrsToCreate.logoName = preview;
-        createConcept(innovationId, attrsToCreate);
+        createConcept(innovationIdFromUrl, attrsToCreate);
       });
     } else {
-      console.log('redirectUrl', redirectUrl);
-      createConcept(innovationId, attrsToCreate, redirectUrl);
+      createConcept(innovationIdFromUrl, attrsToCreate, redirectUrl);
     }
   }
 
@@ -108,7 +107,6 @@ class ConceptCreate extends Component {
 
   render() {
     if (!this.props.innovation) { return null; }
-    console.log('props', this.props);
     const { innovation: { partnerId } } = this.props;
     const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     return (
@@ -247,8 +245,7 @@ class ConceptCreate extends Component {
 ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
-  activeInnovationId: PropTypes.string,
-  activePartnerId: PropTypes.string,
+  innovation: PropTypes.object,
   match: PropTypes.object,
   addCanvas: PropTypes.func
 };

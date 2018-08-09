@@ -36,7 +36,6 @@ export default (state = initialState, action) => {
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;
-      console.log('newConcept', newConcept);
       const formattedNewConcept = {};
       Object.keys(newConcept).forEach(key => {
         formattedNewConcept[key] = newConcept[key] === null ? '' : newConcept[key];

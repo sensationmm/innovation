@@ -52,7 +52,7 @@ class Uploader extends Component {
   render() {
     const { logo, messageText, existingLogo, multiple, viewable, isLoadingCanvas } = this.props;
     const { hover, error } = this.state;
-    const logoUrl = existingLogo && !logo.preview
+    const logoUrl = existingLogo && (logo && !logo.preview)
       ? `${Config.apiDomain}${logo}`
       : (logo && logo.preview) ? logo.preview : IconUpload;
 

@@ -6,6 +6,8 @@ import {
   EDIT_INNOVATION_KEYDATES_SUCCESS
 } from '../config/constants';
 
+import { getIndexByKey } from '../utils/functions';
+
 const initialState = {
   activeInnovation: {
     keyDates: []
@@ -49,13 +51,37 @@ export default (state = initialState, action) => {
     case EDIT_INNOVATION_SUCCESS: {
       const { newInnovationAttrs } = action;
       const activeInnovation = { ...state.activeInnovation, ...newInnovationAttrs };
-      return { ...state, activeInnovation }
+
+      const innovationInList = getIndexByKey(state.allInnovationsList, activeInnovation.id, 'innovationId');
+
+      const allInnovationsList = state.allInnovationsList;
+      allInnovationsList[innovationInList] = {
+        ...state.allInnovationsList[innovationInList],
+        sprintName: activeInnovation.sprintName,
+        chargeCode: activeInnovation.chargeCode,
+        keyDates: activeInnovation.keyDates
+      };
+
+      return { 
+        ...state, 
+        activeInnovation,
+        allInnovationsList
+      }
     }
 
     case EDIT_INNOVATION_KEYDATES_SUCCESS: {
       const { updatedInnovationKeyDates } = action;
       const activeInnovation = { ...state.activeInnovation, keyDates: updatedInnovationKeyDates };
-      return { ...state, activeInnovation }
+
+      const innovationInList = getIndexByKey(state.allInnovationsList, activeInnovation.id, 'innovationId');
+
+      const allInnovationsList = state.allInnovationsList;
+      allInnovationsList[innovationInList] = {
+        ...state.allInnovationsList[innovationInList],
+        keyDates: activeInnovation.keyDates
+      };
+
+      return { ...state, activeInnovation, allInnovationsList }
     }
 
 

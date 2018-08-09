@@ -49,7 +49,7 @@ export const saveConceptFinanceScore = (conceptId, financeScores, redirectTo) =>
     // Get a new fresh list of all the finance scores.
     const updatedConcept = (await Concept.includes('finance_scores').find(conceptId)).data;
     const updatedFinanceScores = updatedConcept.financeScores.map(score => ({ ...score.attributes, fromDb: true }));
-    dispatch({ type: SAVE_CONCEPT_FINANCE_SCORE_SUCCESS, conceptId, updatedFinanceScores });
+    dispatch({ type: SAVE_CONCEPT_FINANCE_SCORE_SUCCESS, conceptId, updatedFinanceScores }); // Also use conceptId to set concept status to analysed.
     dispatch(push(redirectTo));
 
   }

@@ -99,14 +99,14 @@ export const salesChannels = [
   { value: 'b2b2c', label: 'B2B2C' }
 ];
 
-// This mirrors the shape of this data in redux and is used to build default object on getActiveInnovationData action.
+// This mirrors the shape of this data in redux and is used to build default financeScoreByConceptId object on getActiveInnovationData action.
 export const financeScoreOptions = {
   'pvf': { title: 'PVF', key: 'pvf', labels: ['<0.85', '0.85-1.00', '1.00+'] },
   'ask': { title: 'Ask', key: 'ask', labels: ['>$2m', '-', '<$2m'] },
   'preMoneyValuation': { title: 'Pre-Money Valuation', key: 'preMoneyValuation', labels: ['>$10m', '$5-$10m', '$10m+'] },
   'setUpForSuccess': { title: 'Set up for success', key: 'setUpForSuccess', labels: ['<12 months', '12-15 months', '16-18 months'] },
   'corporateAdvantage': { title: 'Corporate advantage', key: 'corporateAdvantage', labels: ['Unclear', 'Standard', 'Exceptional'] },
-  'competitiveLandscape': { title: 'Competitive landscape', key: 'competitiveLandscape', labels: ['Fierce', '-', 'Opportunity'] }
+  'competitiveLandscape': { title: 'Competitive landscape', key: 'competitiveLandscape', labels: ['Fierce', 'Average', 'Opportunity'] }
 }
 
 export const conceptStatusLabels = {

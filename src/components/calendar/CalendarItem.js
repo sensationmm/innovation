@@ -23,25 +23,27 @@ class CalendarItem extends Component {
   }
 
   renderTrack = (splits) => {
-    const splitStyle = [];
+    const splitStyle = ['transparent 0%',`transparent ${splits[0]}%`];
 
     splits.forEach((split, count) => {
       if(count > 0 && count < splits.length - 1) {
         splitStyle.push(`rgba(80,227,194, ${count * 0.25}) ${split}%`);
-        splitStyle.push(`rgba(80,227,194, ${(count+1) * 0.25}) ${splits[count+1]}%`);
+        splitStyle.push(`rgba(80,227,194, ${count * 0.25}) ${splits[count+1]}%`);
       } else if(count === splits.length - 1) {
         splitStyle.push(`rgba(80,227,194, ${count * 0.25}) ${split}%`);
+        // splitStyle.push(`rgba(80,227,194, ${count * 0.25}) ${splits[count+1]}%`);
       } else {
         splitStyle.push(`#656E74 ${split}%`);
-        splitStyle.push(`#656E74 ${splits[count + 1]}%`);
+        splitStyle.push(`#656E74 ${splits[count+1]}%`);
+        // splitStyle.push(`#656E74 ${splits[count + 1]}%`);
       }
     });
 
     return {
       left: `${splits[0]}%`,
       width: `${splits[splits.length - 1] - splits[0]}%`,
-      backgroundColor: 'ffffff',
-      backgroundImage: `linear-gradient(90deg, ${splitStyle.join(',')})`
+      backgroundColor: 'ffffff'//,
+      // backgroundImage: `linear-gradient(90deg, ${splitStyle.join(',')})`
     };
   }
 

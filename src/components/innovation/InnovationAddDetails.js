@@ -7,6 +7,7 @@ import moment from 'moment';
 import Dropdown from '../formInputs/Dropdown.js';
 import SingleSelectBtnForm from '../formInputs/SingleSelectBtnForm';
 import FormTextInput from '../formInputs/FormTextInput';
+import TextInputFilterSelect from '../formInputs/TextInputFilterSelect';
 
 import '../../styles/css/innovation-create.css';
 
@@ -18,7 +19,8 @@ const InnovationAddDetails = (props) => {
   } else {
     const {
       innovationName, dvOffice, dvPartner1, dvPartner2, teamGMEmail, innovationOpenDate, innovationDuration,
-      toggleDatePicker, datePickerOpen, innovationType, updateFormField, selectOption, updateDateField, dvOffices
+      toggleDatePicker, datePickerOpen, innovationType, updateFormField, selectOption, updateDateField, dvOffices,
+      inVentureUserEmails
     } = props;
 
     const formattedOfficeOptions = dvOffices.map(dvOffice => ({ value: dvOffice.id, label: dvOffice.name }) )
@@ -67,11 +69,13 @@ const InnovationAddDetails = (props) => {
           value={dvPartner2}
           isRequired={true}
         />
-        <FormTextInput
+        <TextInputFilterSelect
           id="teamGMEmail"
-          placeholder="Team GM Email"
+          placeholder="Start typing an email address..."
           onChange={updateFormField}
           value={teamGMEmail}
+          title="Team GM email"
+          selectableList={inVentureUserEmails}
           isRequired={true}
           emailValidation={true}
         />
@@ -123,11 +127,13 @@ InnovationAddDetails.propTypes = {
   teamGMEmail: PropTypes.string,
   updateFormField: PropTypes.func,
   selectOption: PropTypes.func,
-  updateDateField: PropTypes.func
+  updateDateField: PropTypes.func,
+  inVentureUserEmails: PropTypes.array
 }
 
 const mapStateToProps = state => ({
-  dvOffices: state.resources.dvOffices
+  dvOffices: state.resources.dvOffices,
+  inVentureUserEmails: state.users.inVentureUsers ? state.users.inVentureUsers.map(user => user.email) : []
 });
 
 export default connect(mapStateToProps, null)(InnovationAddDetails);

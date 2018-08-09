@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import { userLogout } from '../actions/auth';
 
-import NavMain from './NavMain';
+// import NavMain from './NavMain';
 
 import Logo from '../images/logo-inventure.svg';
 import '../styles/css/header.css';
@@ -69,7 +69,7 @@ class Header extends Component {
 
         <div className="header-nav-toggle" onClick={this.toggleNav}><i className="fas fa-bars"></i></div>
 
-        <NavMain />
+        {/*<NavMain />*/}
       </header>
     )
   }

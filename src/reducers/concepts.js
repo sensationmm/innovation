@@ -3,7 +3,8 @@ import {
   CREATE_CONCEPT_SUCCESS,
   EDIT_CONCEPT_SUCCESS,
   DELETE_CONCEPT_SUCCESS,
-  ADD_CONCEPT_CANVAS_SUCCESS
+  ADD_CONCEPT_CANVAS_SUCCESS,
+  SAVE_CONCEPT_FINANCE_SCORE_SUCCESS
 } from '../config/constants';
 
 import { removeItemByKey } from '../utils/functions';
@@ -65,6 +66,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         conceptsById
+      }
+    }
+
+    case SAVE_CONCEPT_FINANCE_SCORE_SUCCESS: {
+      const { conceptId } = action;
+      const updatedConcept = { ...state.conceptsById[conceptId], status: 'analysed' };
+      return {
+        ...state,
+        conceptsById: { ...state.conceptsById, [conceptId]: updatedConcept }
       }
     }
 

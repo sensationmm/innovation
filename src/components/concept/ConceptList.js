@@ -44,7 +44,7 @@ const ConceptList = props => {
             <div className="concept-list-item" key={`concept-${id}`}>
               <Link className="concept-list-item-link" to={`/concept/${id}`}>
                 <div className="concept-list-item-details">
-                  <ConceptAvatar conceptId={id} ident={ident || 'TD'} color={color || 'darkblue'} logo={logo} showLink={false}/>
+                  <ConceptAvatar conceptId={id} ident={ident || 'IN'} color={color || 'darkblue'} logo={logo} showLink={false}/>
                   <h3>{name}</h3>
                   <p>{description}</p>
                 </div>

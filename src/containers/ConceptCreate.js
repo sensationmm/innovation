@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,7 +13,6 @@ import ConceptConviction from '../components/concept/createForm/ConceptConvictio
 
 import FormSectionHeader from '../components/formInputs/FormSectionHeader';
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
-import BackTextLink from '../components/buttons/BackTextLink';
 
 import '../styles/css/concept-create.css';
 
@@ -83,7 +83,8 @@ class ConceptCreate extends Component {
   }
 
   handleSaveConcept = (redirectUrl) => {
-    const { createConcept, activeInnovationId } = this.props;
+    const { createConcept } = this.props;
+    const innovationIdFromUrl = this.props.match.params.innovationId;
     const attrsToCreate = removeNullValueAttrs({ ...this.state });
     // If there is a logo uploaded, format it ready for saving to the DB.
     if (attrsToCreate.logo) {
@@ -91,10 +92,10 @@ class ConceptCreate extends Component {
       getDataUri(preview, function(dataUri) {
         attrsToCreate.logo = dataUri;
         attrsToCreate.logoName = preview;
-        createConcept(activeInnovationId, attrsToCreate);
+        createConcept(innovationIdFromUrl, attrsToCreate);
       });
     } else {
-      createConcept(activeInnovationId, attrsToCreate, redirectUrl);
+      createConcept(innovationIdFromUrl, attrsToCreate, redirectUrl);
     }
   }
 
@@ -105,10 +106,17 @@ class ConceptCreate extends Component {
   }
 
   render() {
-    const { activePartnerId } = this.props;
+    if (!this.props.innovation) { return null; }
+    const { innovation: { partnerId } } = this.props;
     const requiredFieldsAreCompleted = this.requiredFieldsAreCompleted();
     return (
       <div className="create-concept-container">
+        <Link to={partnerId ? `/innovation-overview/${partnerId}` : '/dashboard'}>
+          <span>
+            <i className="fas fa-chevron-left"></i>
+            <span> Back to Innovation Overview</span>
+          </span>
+        </Link>
         <div className="create-concept-page-title">
           <span>Create A New Concept</span>
         </div>
@@ -202,10 +210,12 @@ class ConceptCreate extends Component {
           />
         </div>
           <div className="create-concept-user-actions">
-            <BackTextLink
-              label="Back"
-              onClick={() => this.props.history.goBack()}
-            />
+            <Link to={partnerId ? `/innovation-overview/${partnerId}` : '/dashboard'}>
+              <span>
+                <i className="fas fa-chevron-left"></i>
+                <span> Back to Innovation Overview</span>
+              </span>
+            </Link>
             <div className="create-concept-user-actions-button-container">
               {
                 requiredFieldsAreCompleted
@@ -213,7 +223,7 @@ class ConceptCreate extends Component {
                     <div>
                       <ButtonSubmit
                         label="Save"
-                        onClick={() => this.handleSaveConcept(`/innovation-overview/${activePartnerId}`)}
+                        onClick={() => this.handleSaveConcept(`/innovation-overview/${partnerId}`)}
                         disabled={!requiredFieldsAreCompleted}
                       />
                       <ButtonSubmit
@@ -225,7 +235,6 @@ class ConceptCreate extends Component {
                   )
                   : <div>Please complete required fields</div>
               }
-
             </div>
           </div>
       </div>
@@ -236,15 +245,13 @@ class ConceptCreate extends Component {
 ConceptCreate.propTypes = {
   history: PropTypes.object,
   createConcept: PropTypes.func,
-  activeInnovationId: PropTypes.string,
-  activePartnerId: PropTypes.string,
+  innovation: PropTypes.object,
   match: PropTypes.object,
   addCanvas: PropTypes.func
 };
 
-const mapStateToProps = (state) => ({
-  activeInnovationId: state.innovations.activeInnovation.id,
-  activePartnerId: state.partners.activePartner.id
+const mapStateToProps = (state, props) => ({
+  innovation: state.innovations.allInnovationsList && state.innovations.allInnovationsList.find(innovation => innovation.innovationId === props.match.params.innovationId)
 });
 
 const actions = { createConcept, addCanvas };

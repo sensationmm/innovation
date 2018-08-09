@@ -18,7 +18,7 @@ class InnovationTeam extends Component {
   }
 
   render() {
-    const { teamMembers, readOnly } = this.props;
+    const { teamMembers, readOnly, authedUserEmail } = this.props;
     return (
       <div>
         <div className="innovation-team-container-display">
@@ -34,7 +34,7 @@ class InnovationTeam extends Component {
                 <div>{teamMember.email}</div>
               </div>
               {
-                !readOnly
+                (!readOnly && authedUserEmail !== teamMember.email)
                   ? (
                     <Dropdown
                       id={teamMember.roleId}
@@ -58,11 +58,13 @@ class InnovationTeam extends Component {
 InnovationTeam.propTypes = {
   teamMembers: PropTypes.array,
   userSetRole: PropTypes.func,
-  readOnly: PropTypes.bool
+  readOnly: PropTypes.bool,
+  authedUserEmail: PropTypes.string
 }
 
 const mapStateToProps = (state, props) => ({
-  readOnly: state.auth.authedUser.roleName !== 'admin'
+  readOnly: state.auth.authedUser.roleName !== 'admin',
+  authedUserEmail: state.auth.authedUser.email
 });
 
 const actions = { userSetRole };

@@ -7,6 +7,7 @@ import {
 
 import { Concept, FinanceScore } from '../models';
 import { push } from 'connected-react-router';
+import { displayMessage } from './ui';
 
 // UPDATE is to redux only - SAVE is to the Db.
 export const updateConceptFinanceScore = (conceptId, key, attrsToUpdate) => async dispatch => {
@@ -51,7 +52,7 @@ export const saveConceptFinanceScore = (conceptId, financeScores, redirectTo) =>
     const updatedFinanceScores = updatedConcept.financeScores.map(score => ({ ...score.attributes, fromDb: true }));
     dispatch({ type: SAVE_CONCEPT_FINANCE_SCORE_SUCCESS, conceptId, updatedFinanceScores }); // Also use conceptId to set concept status to analysed.
     dispatch(push(redirectTo));
-
+    dispatch(displayMessage('Concept finance analysis saved'));
   }
   catch (err) {
     console.log(err);

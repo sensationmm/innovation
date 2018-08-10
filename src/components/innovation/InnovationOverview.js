@@ -149,12 +149,6 @@ class InnovationOverview extends Component {
         }
 
         <div className="innovation-overview-toplinks">
-          <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditTeam: !openEditTeam })}>
-            <div>
-              <i className="fas fa-plus fa-2x add-concept-icon"></i>
-            </div>
-            <div>Edit Team Members</div>
-          </div>
           {keyDatesSetup &&
             <Link className="innovation-overview-add-concept-link" to={`/create-concept/${activeInnovation.id}`}>
               <div>
@@ -165,28 +159,27 @@ class InnovationOverview extends Component {
           }
         </div>
 
-        {openEditTeam &&
-          <Modal>
-            <div className="create-innovation-section-container">
-              <FormSectionHeader
-                title='Your Current Team'
-              />
-              <InnovationTeam
-                teamMembers={teamMembers}
-              />
-            </div>
+        {
+          openEditTeam &&
+            <Modal>
+              <div className="create-innovation-section-container">
+                <InnovationTeam
+                  teamMembers={teamMembers}
+                  minimal={true}
+                />
+              </div>
 
-            <div className="create-innovation-section-container">
-              <FormSectionHeader
-                title="Add New Team Members"
-                subtitle="Invites will be sent to new team members when you save"
-              />
-              <InnovationAddTeam
-                curTeamMembers={teamMembers}
-                partnerId={activePartner.id}
-                onCancel={() => this.setState({ openEditTeam: false })} />
-            </div>
-          </Modal>
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title="Add New Team Members"
+                  subtitle="Invites will be sent to all new team members when you click send"
+                />
+                <InnovationAddTeam
+                  curTeamMembers={teamMembers}
+                  partnerId={activePartner.id}
+                  onCancel={() => this.setState({ openEditTeam: false })} />
+              </div>
+            </Modal>
         }
 
         {(activeIncomplete && activeIncomplete.length > 0) &&
@@ -218,7 +211,13 @@ class InnovationOverview extends Component {
 
         <FlexRow>
           <ContentBox>
-            <h3>Team Info</h3>
+            <h3 className="innovation-overview-edit-team-title">Team Members</h3>
+            <div className="innovation-overview-edit-team-link" onClick={() => this.setState({ openEditTeam: !openEditTeam })}>
+              <div className="innovation-overview-edit-team-label">Edit Team</div>
+              <div>
+                <i className="far fa-edit innovation-overview-edit-team-icon"></i>
+              </div>
+            </div>
             <InnovationTeam
               teamMembers={teamMembers}
             />

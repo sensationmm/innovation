@@ -1,4 +1,11 @@
 @import './modules/colors.scss';
+@import './modules/animations.scss';
+
+@include fade-in-mixin(fade-in);
+
+.buttons-links-fade-in {
+  animation: fade-in 0.3s;
+}
 
 .form-submit-button {
   padding: 8px 10px;
@@ -127,5 +134,35 @@
   &.cancel {
     flex-grow: 1;
     margin-left: 10px;
+  }
+}
+
+.delete-icon-confirm {
+  transition: all 0.3s;
+  &-container {
+  }
+  &-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+  }
+  &-icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &-delete {
+    padding: 2px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &-cancel {
+    padding: 2px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

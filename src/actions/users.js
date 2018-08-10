@@ -10,7 +10,10 @@ import {
   INVITE_INNOVATION_USERS_ERROR,
   USER_SET_ROLE_BEGIN,
   USER_SET_ROLE_SUCCESS,
-  USER_SET_ROLE_ERROR
+  USER_SET_ROLE_ERROR,
+  USER_REMOVE_ROLE_BEGIN,
+  USER_REMOVE_ROLE_SUCCESS,
+  USER_REMOVE_ROLE_ERROR
 } from '../config/constants';
 
 // Import JSON API models.
@@ -89,6 +92,24 @@ export const userSetRole = (roleId, newRoleName) => async (dispatch, getState) =
 
   } catch (err) {
     dispatch({ type: USER_SET_ROLE_ERROR });
+    console.log(err);
+  }
+};
+
+export const userRemoveRole = (roleId) => async (dispatch, getState) => {
+  dispatch({ type: USER_REMOVE_ROLE_BEGIN });
+
+  try {
+    const role = (await Role.find(roleId)).data;
+    await role.destroy();
+    dispatch({ type: USER_REMOVE_ROLE_SUCCESS });
+
+    const { partners: {activePartner: {id} } } = getState();
+    dispatch(getActiveInnovationUsers(id));
+    dispatch(displayMessage('Team member removed'));
+
+  } catch (err) {
+    dispatch({ type: USER_REMOVE_ROLE_ERROR });
     console.log(err);
   }
 };

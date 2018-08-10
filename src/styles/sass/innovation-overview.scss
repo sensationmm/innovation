@@ -6,7 +6,6 @@
     display: flex;
     align-items: center;
     padding: 15px 20px;
-    width: 0;
     flex-grow: 1;
     background: $background-grey-light;
     text-decoration: none;
@@ -23,6 +22,37 @@
     &:hover .add-concept-icon {
       color: $teal;
     }
+  }
+
+  &-edit-team-title {
+    width: 50%;
+  }
+
+  &-edit-team-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px 20px;
+    background: $background-grey-light;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+
+    &:hover {
+      background: $background-grey-lighter;
+    }
+  }
+
+  &-edit-team-label {
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  &-edit-team-icon {
+    color: $ocean;
+    font-size: 12px;
+    padding-left: 8px;
   }
 
   &-add-mandate-link {

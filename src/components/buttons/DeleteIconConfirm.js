@@ -9,7 +9,6 @@ import '../../styles/css/buttons-and-links.css';
  * @param {string} iconClass - icon class (optional)
  * @param {function} onConfirm - action to fire when confirm is clicked
  * @param {string} iconColor - color of the icon
- * @param {string} confirmIconColor - color of the confirm icon
  * @param {string} confirmText - color of the confirm icon
  */
 

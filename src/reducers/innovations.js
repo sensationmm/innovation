@@ -38,7 +38,15 @@ export default (state = initialState, action) => {
       const { partner } = action;
       const keyDates = partner.innovation.keyDates.map(keyDate => keyDate.attributes);
       const partnerId = partner.id;
-      const activeInnovation = { ...partner.innovation.attributes, keyDates, partnerId };
+
+      const formattedInnovation = {};
+
+      Object.keys(partner.innovation.attributes).forEach(key => {
+        const attr = partner.innovation.attributes[key];
+        formattedInnovation[key] = attr === null ? '' : attr;
+      })
+
+      const activeInnovation = { ...formattedInnovation, keyDates, partnerId };
       return { ...state, activeInnovation };
     }
 
@@ -62,8 +70,8 @@ export default (state = initialState, action) => {
         keyDates: activeInnovation.keyDates
       };
 
-      return { 
-        ...state, 
+      return {
+        ...state,
         activeInnovation,
         allInnovationsList
       }

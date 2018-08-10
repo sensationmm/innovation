@@ -6,7 +6,8 @@ import moment from 'moment';
 
 import InnovationAddDates from './keydates/InnovationAddDates';
 import InnovationAddTeam from './InnovationAddTeam';
-import CorporatePartnerSummary from './CorporatePartnerSummary';
+import InnovationDetailsEditable from './InnovationDetailsEditable';
+import PartnerDetailsEditable from './PartnerDetailsEditable';
 import InnovationTeam from './InnovationTeam';
 import ProgressBar from '../ProgressBar';
 import ConceptList from '../concept/ConceptList';
@@ -21,8 +22,6 @@ import '../../styles/css/innovation-overview.css';
 
 import { makeArrayFromIndexedObject, getByKey } from '../../utils/functions';
 import { editInnovation, getActiveInnovationData } from '../../actions/innovations';
-
-import { innovationTypeLabels } from '../../config/innovationOptions';
 
 class InnovationOverview extends Component {
   state = {
@@ -81,39 +80,7 @@ class InnovationOverview extends Component {
           <Link to="/dashboard">&lt; Back to Dashboard</Link>
         </ContentBox>
         <ContentBox>
-          <h1>{activeInnovation.sprintName}</h1>
-          <div>Innovation Type: {innovationTypeLabels[activeInnovation.sprintType]}</div>
-          <div>Duration: {activeInnovation.duration} weeks</div>
-          <div className="innovation-overview-mandate-input">
-            {
-              (activeInnovation.mandate || openAddMandate)
-                ? (
-                  <div>
-                    <FormTextArea
-                      id='mandate'
-                      placeholder='Innovation Mandate'
-                      onChange={this.handleUpdateMandate}
-                      value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
-                      labelLeftAlign={true}
-                    />
-                    {
-                      mandateUpdated &&
-                        <ButtonSubmit
-                          label="Save"
-                          onClick={() => this.mandateUpdateToDB()}
-                        />
-                    }
-                  </div>
-                )
-                : <div onClick={() => this.setState({ openAddMandate: true })} className="innovation-overview-add-mandate-link">
-                    <div>
-                      <i className="fas fa-plus fa-2x add-concept-icon"></i>
-                    </div>
-                    <div>Please add innovation mandate</div>
-                  </div>
-            }
-
-          </div>
+          <InnovationDetailsEditable />
         </ContentBox>
 
         {(activeInnovation.keyDates && activeInnovation.keyDates.length >= 4 && keyDatesSetup)
@@ -213,7 +180,7 @@ class InnovationOverview extends Component {
           <ContentBox>
             <h3 className="innovation-overview-edit-team-title">Team Members</h3>
             <div className="innovation-overview-edit-team-link" onClick={() => this.setState({ openEditTeam: !openEditTeam })}>
-              <div className="innovation-overview-edit-team-label">Edit Team</div>
+              <div className="innovation-overview-edit-team-label">Add/Remove</div>
               <div>
                 <i className="far fa-edit innovation-overview-edit-team-icon"></i>
               </div>
@@ -223,12 +190,7 @@ class InnovationOverview extends Component {
             />
           </ContentBox>
           <ContentBox>
-            <CorporatePartnerSummary
-              name={activePartner.name}
-              industry={activePartner.industryName}
-              city={activePartner.hqCity}
-              businessDescription={activePartner.description}
-            />
+            <PartnerDetailsEditable />
           </ContentBox>
 
         </FlexRow>

@@ -7,8 +7,8 @@ import Loader from '../Loader';
 
 class PrivateRoute extends Component {
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0)
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      // window.scrollTo(0, 0); // Only scroll to top if the user has changes urls / pages.
     }
   }
 

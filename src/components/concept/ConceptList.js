@@ -27,7 +27,6 @@ const ConceptList = props => {
 
   return (
     <div className="concept-list">
-      <div className="concept-list-header">{props.title}</div>
       <div className="concept-list-items">
       {
         concepts && concepts.map(concept => {
@@ -119,7 +118,6 @@ const ConceptList = props => {
 
 ConceptList.propTypes = {
   concepts: PropTypes.array,
-  title: PropTypes.string,
   postIS2: PropTypes.bool,
   userType: PropTypes.string,
   editConcept: PropTypes.func

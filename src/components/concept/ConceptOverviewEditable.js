@@ -74,6 +74,11 @@ class ConceptOverviewEditable extends Component {
     editConcept(activeConcept.id, { [arrayName]: updatedArray })
   }
 
+  saveStatusToDb = (newStatus) => {
+    const { editConcept, activeConcept } = this.props;
+    editConcept(activeConcept.id, { status: newStatus }, true);
+  }
+
   saveChangesToDb = () => {
     const { editConcept, activeConcept } = this.props;
     const attrsToUpdate = {};
@@ -101,6 +106,7 @@ class ConceptOverviewEditable extends Component {
     deleteConcept(activeConcept.id, `/innovation-overview/${activePartnerId}`);
   }
 
+  // TODO: If not needed then remove.
   // Once complete 'Mark as Ready button is activated.
   // allFieldsAreCompleted = () => {
   //   const { activeConcept } = this.props;
@@ -118,9 +124,10 @@ class ConceptOverviewEditable extends Component {
     }
     // const allFieldsAreCompleted = this.allFieldsAreCompleted(); TODO: If not needed then remove.
     const statusColor = {
-      killed: 'tomato',
-      draft: 'navyblue',
-      ready: 'gold'
+      'killed': 'tomato',
+      'draft': 'snow',
+      'ready': 'seagreen',
+      'analysed': 'gold'
     }
     return (
       <div className="create-concept-container">
@@ -134,22 +141,21 @@ class ConceptOverviewEditable extends Component {
               activeConcept.status !== 'killed' &&
                 <KillButton
                   label="Archive"
-                  onClick={() => this.selectOption('status', 'killed')}
+                  onClick={() => this.saveStatusToDb('killed')}
                 />
             }
             {
               activeConcept.status !== 'draft' &&
                 <ButtonSubmit
                   label="Mark as Active"
-                  onClick={() => this.selectOption('status', 'draft')}
+                  onClick={() => this.saveStatusToDb('draft')}
                 />
             }
             {
               activeConcept.status !== 'ready' &&
                 <CompleteButton
                   label="Mark as Ready"
-                  onClick={() => this.selectOption('status', 'ready')}
-                  // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
+                  onClick={() => this.saveStatusToDb('ready')}
                 />
             }
           </div>

@@ -6,10 +6,10 @@
 
   &-track, &-progress {
     position: absolute;
-    height: 10px;
+    height: 7px;
     top: 3px;
     left: 0;
-    border-radius: 10px;
+    border-radius: 2px;
   }
 
   &-track {
@@ -19,7 +19,7 @@
   }
 
   &-progress {
-    background: $green-offset;
+    background: $turquoise;
     z-index: 2;
   }
 
@@ -31,17 +31,17 @@
 
   &-pip {
     position: absolute;
-    width: 15px;
-    height: 15px;
+    width: 13px;
+    height: 13px;
     transform: translateX(-50%);
-    border-radius: 15px;
+    border-radius: 2px;
     z-index: 3;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
-    font-size: 12px;
+    font-size: 10px;
 
     &.killmark {
       background: $red;

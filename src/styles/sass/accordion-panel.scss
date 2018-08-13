@@ -1,0 +1,32 @@
+@import './modules/colors.scss';
+
+.accordion-panel-header {
+  text-transform: uppercase;
+  padding: 5px 0 5px 5px;
+  border-bottom: 1px solid $text-off-white;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  &-toggle {
+    font-size: 12px;
+    text-transform: none;
+  }
+}
+
+.accordion-panel-content {
+  transition: max-height 0.3s, opacity 0.2s;
+
+  &.open {
+    max-height: 100%;
+    opacity: 1;
+  }
+
+  &.closed {
+    max-height: 0; /* height property cannot be transitioned */
+    overflow: hidden;
+    opacity: 0;
+  }
+}

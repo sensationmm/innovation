@@ -13,6 +13,7 @@ import ProgressBar from '../ProgressBar';
 import ConceptList from '../concept/ConceptList';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
+import AccordionPanel from '../layout/AccordionPanel';
 import FlexRow from '../layout/FlexRow';
 import Modal from '../layout/Modal';
 
@@ -35,6 +36,8 @@ class InnovationOverview extends Component {
     if(partnerId !== activeInnovation.partnerId) {
       getActiveInnovationData(partnerId);
     }
+
+    window.scroll(0,0);
   }
 
   // For a more general version of this see ConceptOverviewEditable
@@ -152,30 +155,38 @@ class InnovationOverview extends Component {
         }
 
         {(activeIncomplete && activeIncomplete.length > 0) &&
-          <ContentBox background={false}>
-            <ConceptList concepts={activeIncomplete} title='Active' userType={userType} postIS2={isPostIS2} />
-          </ContentBox>
+          <AccordionPanel title='Active Concepts' initIsOpen={false}>
+            <ContentBox background={false}>
+              <ConceptList concepts={activeIncomplete} userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+          </AccordionPanel>
         }
 
         {
           (activeComplete && activeComplete.length > 0) &&
+          <AccordionPanel title='Ready for Analysis' initIsOpen={false}>
             <ContentBox background={false}>
-              <ConceptList concepts={activeComplete} title='Ready for Analysis' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeComplete} userType={userType} postIS2={isPostIS2} />
             </ContentBox>
+          </AccordionPanel>
         }
 
         {
           (activeReviewed && activeReviewed.length > 0) &&
+          <AccordionPanel title='Analysed by VFT' initIsOpen={false}>
             <ContentBox background={false}>
-              <ConceptList concepts={activeReviewed} title='Analysed by VFT' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeReviewed}  userType={userType} postIS2={isPostIS2} />
             </ContentBox>
+          </AccordionPanel>
         }
 
         {
           (killedConcepts && killedConcepts.length > 0) &&
+          <AccordionPanel title='Archived' initIsOpen={false}>
             <ContentBox background={false}>
-              <ConceptList concepts={killedConcepts} title='Killed' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={killedConcepts}  userType={userType} postIS2={isPostIS2} />
             </ContentBox>
+          </AccordionPanel>
         }
 
         <FlexRow>

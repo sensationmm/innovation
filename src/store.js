@@ -14,7 +14,7 @@ const middleware = [thunk, routerMiddleware(history)];
 
 const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 
-if (process.env.NODE_ENV !== 'production') {
+if (!process.env.NODE_ENV === 'production') {
   if (typeof devToolsExtension === 'function') {
       enhancers.push(devToolsExtension());
   }

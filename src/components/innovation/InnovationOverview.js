@@ -14,8 +14,6 @@ import ConceptList from '../concept/ConceptList';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
 import FlexRow from '../layout/FlexRow';
-import ButtonSubmit from '../buttons/ButtonSubmit';
-import FormTextArea from '../formInputs/FormTextArea';
 import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
@@ -54,7 +52,7 @@ class InnovationOverview extends Component {
 
   render() {
     const { activeInnovation, activePartner, conceptsById, teamMembers, authedUser } = this.props;
-    const { openEditDates, openEditTeam, mandateUpdated, openAddMandate } = this.state;
+    const { openEditDates, openEditTeam } = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
     const activeComplete = activeConcepts.filter(concept => concept.status === 'ready');
@@ -89,10 +87,14 @@ class InnovationOverview extends Component {
               dates={dates}
               labels={labels}
             />
+
             <div className="innovation-overview-edit-icon">
-              <button className="form-submit-button" onClick={() => this.setState({ openEditDates: !openEditDates })}>
-                Edit Key Dates
-              </button>
+              <div className="innovation-overview-edit-dates-link" onClick={() => this.setState({ openEditDates: !openEditDates })}>
+                <div className="innovation-overview-edit-team-label">Edit Key Dates</div>
+                <div>
+                  <i className="far fa-edit innovation-overview-edit-team-icon"></i>
+                </div>
+              </div>
             </div>
           </ContentBox>
 

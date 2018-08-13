@@ -44,6 +44,20 @@
     }
   }
 
+  &-edit-dates-link {
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 20px;
+    background: $background-grey-light;
+    cursor: pointer;
+
+    &:hover {
+      background: $background-grey-lighter;
+    }
+  }
+
   &-edit-team-label {
     font-size: 12px;
     cursor: pointer;
@@ -99,6 +113,8 @@
 
   &-edit-icon {
     text-align: center;
+    display: flex;
+    justify-content: center;
   }
 }
 

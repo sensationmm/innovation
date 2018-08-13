@@ -38,7 +38,7 @@ class InnovationTeam extends Component {
                           </div>
                           : (
                             <div>
-                              <div className="innovation-team-display-email">{teamMember.email}</div>
+                              <div className="innovation-team-member-display-email">{teamMember.email}</div>
                               <div className="innovation-team-user-pending-modal">Pending</div>
                             </div>
                           )
@@ -67,7 +67,7 @@ class InnovationTeam extends Component {
                           ? <div>{teamMember.name}</div>
                           : <div className="innovation-team-user-pending">REGISTRATION PENDING</div>
                       }
-                      <div>{teamMember.email}</div>
+                      <div className="innovation-team-member-display-email">{teamMember.email}</div>
                     </div>
                     {
                       (!readOnly && authedUserEmail !== teamMember.email)

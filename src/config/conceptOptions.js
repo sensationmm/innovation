@@ -110,7 +110,7 @@ export const financeScoreOptions = {
 }
 
 export const conceptStatusLabels = {
-  'killed': 'Killed',
+  'killed': 'Archived',
   'draft': 'Active',
   'ready': 'Ready for Analysis',
   'analysed': 'Analysed'

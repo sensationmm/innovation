@@ -13,6 +13,8 @@ import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
 import { createInnovation } from '../actions/innovations';
 
+import { validateEmail } from '../utils/functions';
+
 import '../styles/css/innovation-create.css';
 
 class InnovationCreate extends Component {
@@ -81,7 +83,9 @@ class InnovationCreate extends Component {
   }
 
   fieldsAreCompleted = () => {
-    return Object.values(this.state).every(value => (value !== null && value !== '' && value !== {} && value !== undefined));
+    return Object.values(this.state).every(value =>
+      (value !== null && value !== '' && value !== {} && value !== undefined)) &&
+      validateEmail(this.state.teamGMEmail)
   }
 
   render() {
@@ -148,9 +152,6 @@ class InnovationCreate extends Component {
                 <div>Please complete all required fields</div>
               )
           }
-
-
-
         </div>
       </div>
     )

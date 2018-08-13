@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { validateEmail } from '../../utils/functions';
-
 import '../../styles/css/inline-edit-text-input.css'
 
 const InlineEditTextInput = (props) => {
-  const { id, value, onChange, placeholder, hasChanged, saveToDb, textArea, inline } = props;
+  const { id, value, onChange, placeholder, hasChanged, saveToDb, textarea, inline } = props;
   return (
     <div className="inline-edit-text-input-container" style={{ display: inline ? 'inline-block' : 'auto' }}>
       <div className="inline-edit-text-input-field">
         {
-          textArea
+          textarea
             ? (
               <textarea
                 id={id}
@@ -47,7 +45,7 @@ InlineEditTextInput.propTypes = {
   value: PropTypes.string,
   hasChanged: PropTypes.bool,
   saveToDb: PropTypes.func,
-  textArea: PropTypes.bool,
+  textarea: PropTypes.bool,
   inline: PropTypes.bool
 }
 

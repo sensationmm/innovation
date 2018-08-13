@@ -57,7 +57,7 @@ class InnovationDetailsEditable extends Component {
               value={activeInnovation['mandate']}
               hasChanged={changedFields.includes('mandate')}
               saveToDb={this.saveToDb}
-              textArea={true}
+              textarea={true}
             />
           </div>
 
@@ -96,7 +96,8 @@ class InnovationDetailsEditable extends Component {
 }
 
 InnovationDetailsEditable.propTypes = {
-
+  activeInnovation: PropTypes.object,
+  editInnovation: PropTypes.func
 };
 
 const mapStateToProps = state => ({

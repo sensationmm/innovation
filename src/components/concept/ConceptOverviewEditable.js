@@ -14,6 +14,8 @@ import ConceptConviction from './createForm/ConceptConviction';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import ButtonDelete from '../buttons/ButtonDelete';
+import KillButton from '../buttons/KillButton';
+import CompleteButton from '../buttons/CompleteButton';
 
 import '../../styles/css/concept-create.css';
 
@@ -26,6 +28,10 @@ class ConceptOverviewEditable extends Component {
   state = {
     editedFields: [],
     logo: {}
+  }
+
+  componentDidMount = () => {
+    window.scroll(0,0);
   }
 
   updateEditedFields = (key) => {
@@ -121,15 +127,15 @@ class ConceptOverviewEditable extends Component {
         <div className="create-concept-user-actions">
           <div>Status: {conceptStatusLabels[activeConcept.status]}</div>
           <div>
-            <ButtonSubmit
-              label="Mark as Killed"
+            <KillButton
+              label="Archive"
               onClick={() => this.selectOption('status', 'killed')}
             />
             <ButtonSubmit
-              label="Mark as Draft"
+              label="Mark as Active"
               onClick={() => this.selectOption('status', 'draft')}
             />
-            <ButtonSubmit
+            <CompleteButton
               label="Mark as Ready"
               onClick={() => this.selectOption('status', 'ready')}
               // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?

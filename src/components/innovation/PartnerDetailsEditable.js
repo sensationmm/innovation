@@ -29,7 +29,7 @@ class PartnerDetailsEditable extends Component {
 
   render() {
     const { activePartner } = this.props;
-    if (!activePartner) { return null };
+    if (!activePartner) { return null }
     const { name, industryName, hqCity, description } = activePartner;
     const { changedFields } = this.state;
 
@@ -37,7 +37,7 @@ class PartnerDetailsEditable extends Component {
       <div>
         <h3>Corporate Partner</h3>
         <div className="partner-details-editable-field">
-          <span>Name: </span>
+          <span className="partner-details-editable-title">Name: </span>
           <span>
             <InlineEditTextInput
               id="name"
@@ -51,21 +51,13 @@ class PartnerDetailsEditable extends Component {
           </span>
         </div>
         <div className="partner-details-editable-field">
-          <span>Industry: </span>
+          <span className="partner-details-editable-title">Industry: </span>
           <span>
-            <InlineEditTextInput
-              id="industryName"
-              placeholder="Industry"
-              onChange={this.updateFormField}
-              value={industryName}
-              hasChanged={changedFields.includes('industryName')}
-              saveToDb={this.saveToDb}
-              inline={true}
-            />
+            {industryName}
           </span>
         </div>
         <div className="partner-details-editable-field">
-          <span>City: </span>
+          <span className="partner-details-editable-title">City: </span>
           <span>
             <InlineEditTextInput
               id="hqCity"
@@ -79,7 +71,7 @@ class PartnerDetailsEditable extends Component {
           </span>
         </div>
         <div className="partner-details-editable-field">
-          <span>Business Description: </span>
+          <span className="partner-details-editable-title">Business Description: </span>
           <span>
             <InlineEditTextInput
               id="description"

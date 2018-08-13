@@ -21,6 +21,7 @@ class ConceptFinanceReport extends Component {
 
   componentDidMount() {
     this.checkConceptInnovation();
+    window.scroll(0,0);
   }
 
   componentDidUpdate() {

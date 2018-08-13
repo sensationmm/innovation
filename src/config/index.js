@@ -24,6 +24,7 @@ if (url.match(/http:\/\/localhost/)) {
 }
 
 Config.app = 'innovation';
+Config.env = env;
 
 console.log(`You are in ${env}!!`);
 

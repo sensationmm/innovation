@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import InnovationOverview from '../components/innovation/InnovationOverview';
 import ConceptOverviewV2 from './ConceptOverviewV2';
@@ -26,7 +26,7 @@ const App = () => (
     <Header />
     <main>
       <Switch>
-        <Redirect exact from='/' to='/dashboard' />
+        {/* <Redirect exact from='/' to='/dashboard' /> */}
 
         <PrivateRoute exact path="/dashboard" component={InnovationDashboard} />
         <PrivateRoute exact path="/innovation-overview/:partnerId?" component={InnovationOverview} />

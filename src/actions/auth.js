@@ -13,6 +13,8 @@ import { getAllUsers } from './users';
 
 import { User } from '../models';
 
+import { push } from 'connected-react-router';
+
 export const authFromJWT = () => async (dispatch) => {
   const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
   const tokenExistsAndInDate = storedToken !== null &&
@@ -32,6 +34,8 @@ export const authFromJWT = () => async (dispatch) => {
       console.log(err);
       dispatch({ type: AUTH_FROM_JWT_ERROR });
     }
+  } else {
+    dispatch(push('/login'));
   }
 };
 

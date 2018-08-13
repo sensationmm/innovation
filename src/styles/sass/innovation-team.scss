@@ -19,11 +19,11 @@
   }
 
   &-user-pending {
-    color: #656e74;
+    color: $text-grey-white;
     line-height: 20px;
     font-size: 14px;
     &-modal {
-      color: #656e74;
+      color: $text-grey-white;
       font-size: 12px;
       padding: 2px 0;
     }
@@ -59,6 +59,10 @@
     font-size: 12px;
     height: 44px;
     margin: 2px;
+  }
+
+  &-member-display-email {
+    color: $text-grey-white;
   }
 
   &-member-display-delete {

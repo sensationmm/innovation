@@ -52,6 +52,10 @@ class ConceptCreate extends Component {
     canvasObjects: []
   }
 
+  componentDidMount = () => {
+    window.scroll(0,0);
+  }
+
   updateFormField = (e) => {
     this.setState({ [e.target.id]: e.target.value })
   }

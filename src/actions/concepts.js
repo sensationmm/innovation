@@ -65,6 +65,7 @@ export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (disp
       }
       await conceptToUpdate.save();
       dispatch({ type: EDIT_CONCEPT_SUCCESS, conceptId, newConceptAttrs: { ...conceptToUpdate.attributes } });
+      dispatch(displayMessage('Concept updated'));
     }
     catch (err) {
       console.log(err);
@@ -88,6 +89,7 @@ export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (disp
      // Using something like Concept.where(innovationId).all()
      dispatch({ type: DELETE_CONCEPT_SUCCESS, conceptId });
      dispatch(push(redirectTo))
+     dispatch(displayMessage('Concept deleted'));
    }
    catch (err) {
      dispatch({ type: DELETE_CONCEPT_ERROR });

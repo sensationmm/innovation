@@ -40,7 +40,10 @@ import {
   ADD_CONCEPT_CANVAS_ERROR,
   SAVE_CONCEPT_FINANCE_SCORE_BEGIN,
   SAVE_CONCEPT_FINANCE_SCORE_SUCCESS,
-  SAVE_CONCEPT_FINANCE_SCORE_ERROR
+  SAVE_CONCEPT_FINANCE_SCORE_ERROR,
+  EDIT_PARTNER_BEGIN,
+  EDIT_PARTNER_SUCCESS,
+  EDIT_PARTNER_ERROR
 } from '../config/constants';
 
 const initialState = {
@@ -63,6 +66,7 @@ export const loader = (state = initialState, action) => {
     case DELETE_CONCEPT_BEGIN:
     case INVITE_INNOVATION_USERS_BEGIN:
     case SAVE_CONCEPT_FINANCE_SCORE_BEGIN:
+    case EDIT_PARTNER_BEGIN:
       return {
         ...initialState,
         isLoading: true,
@@ -102,6 +106,8 @@ export const loader = (state = initialState, action) => {
     case ADD_CONCEPT_CANVAS_ERROR:
     case SAVE_CONCEPT_FINANCE_SCORE_SUCCESS:
     case SAVE_CONCEPT_FINANCE_SCORE_ERROR:
+    case EDIT_PARTNER_SUCCESS:
+    case EDIT_PARTNER_ERROR:
       return initialState;
 
     default:

@@ -149,6 +149,7 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
     const updatedInnovation = (await Innovation.includes('key_dates').find(innovationId)).data;
     const updatedInnovationKeyDates = updatedInnovation.keyDates.map(keyDate => ({ ...keyDate.attributes }));
     dispatch({ type: EDIT_INNOVATION_KEYDATES_SUCCESS, updatedInnovationKeyDates })
+    dispatch(displayMessage(`Key Dates saved`))
   }
   catch (err) {
     dispatch({ type: EDIT_INNOVATION_KEYDATES_ERROR })

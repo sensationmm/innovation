@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Loader from '../Loader';
 
-class PrivateRoute extends Component {
-  render() {
-    const { component: Component, isAuthed, isLoading, ...rest } = this.props;
-    return (
-      <Route {...rest} render={(props) => (
-        isAuthed === 'authing' || isLoading
-          ? <Loader />
-          : isAuthed === true
-            ? <Component {...props} />
-            : <Redirect to='/login' />
-      )} />
-    )
-  }
-}
+const PrivateRoute = ({ component: Component, isAuthed, isLoading, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    isAuthed === 'authing' || isLoading
+      ? <Loader />
+      : isAuthed === true
+        ? <Component {...props} />
+        : <Redirect to='/login' />
+  )} />
+)
 
 PrivateRoute.propTypes = {
   location: PropTypes.object,

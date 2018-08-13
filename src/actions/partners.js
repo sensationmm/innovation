@@ -25,5 +25,4 @@ export const editPartner = (partnerId, newPartnerAttrs, saveToDB) => async dispa
   } else {
     dispatch({ type: EDIT_PARTNER_SUCCESS, partnerId, newPartnerAttrs });
   }
-
 }

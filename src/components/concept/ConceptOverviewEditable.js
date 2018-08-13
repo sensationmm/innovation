@@ -117,25 +117,41 @@ class ConceptOverviewEditable extends Component {
       return null;
     }
     // const allFieldsAreCompleted = this.allFieldsAreCompleted(); TODO: If not needed then remove.
+    const statusColor = {
+      killed: 'tomato',
+      draft: 'navyblue',
+      ready: 'gold'
+    }
     return (
       <div className="create-concept-container">
         <div className="create-concept-page-title">Concept Overview: {activeConcept.name}</div>
         <div className="create-concept-user-actions">
-          <div>Status: {conceptStatusLabels[activeConcept.status]}</div>
+          <div className="create-concept-user-actions-status" style={{ color: statusColor[activeConcept.status] }}>
+            Status: {conceptStatusLabels[activeConcept.status]}
+          </div>
           <div>
-            <KillButton
-              label="Archive"
-              onClick={() => this.selectOption('status', 'killed')}
-            />
-            <ButtonSubmit
-              label="Mark as Active"
-              onClick={() => this.selectOption('status', 'draft')}
-            />
-            <CompleteButton
-              label="Mark as Ready"
-              onClick={() => this.selectOption('status', 'ready')}
-              // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
-            />
+            {
+              activeConcept.status !== 'killed' &&
+                <KillButton
+                  label="Archive"
+                  onClick={() => this.selectOption('status', 'killed')}
+                />
+            }
+            {
+              activeConcept.status !== 'draft' &&
+                <ButtonSubmit
+                  label="Mark as Active"
+                  onClick={() => this.selectOption('status', 'draft')}
+                />
+            }
+            {
+              activeConcept.status !== 'ready' &&
+                <CompleteButton
+                  label="Mark as Ready"
+                  onClick={() => this.selectOption('status', 'ready')}
+                  // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
+                />
+            }
           </div>
         </div>
         <div className="create-concept-section-container">

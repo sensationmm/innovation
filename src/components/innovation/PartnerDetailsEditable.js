@@ -25,6 +25,8 @@ class PartnerDetailsEditable extends Component {
   saveToDb = (id, value) => {
     const { activePartner, editPartner } = this.props;
     editPartner(activePartner.id, { [id]: value }, true)
+    const updatedChangedFields = this.state.changedFields.filter(field => field !== id);
+    this.setState({ changedFields: updatedChangedFields })
   }
 
   render() {

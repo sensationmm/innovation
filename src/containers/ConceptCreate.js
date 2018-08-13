@@ -96,7 +96,7 @@ class ConceptCreate extends Component {
       getDataUri(preview, function(dataUri) {
         attrsToCreate.logo = dataUri;
         attrsToCreate.logoName = preview;
-        createConcept(innovationIdFromUrl, attrsToCreate);
+        createConcept(innovationIdFromUrl, attrsToCreate, redirectUrl);
       });
     } else {
       createConcept(innovationIdFromUrl, attrsToCreate, redirectUrl);

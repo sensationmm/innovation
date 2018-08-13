@@ -26,7 +26,6 @@ import  { getDataUri } from '../utils/functions';
  */
 export const createConcept = (innovationId, attrsToCreate, redirectTo) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
-
   try {
     const newConcept = new Concept();
     for ( const key of Object.keys(attrsToCreate) ) {

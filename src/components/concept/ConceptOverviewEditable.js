@@ -30,10 +30,6 @@ class ConceptOverviewEditable extends Component {
     logo: {}
   }
 
-  componentDidMount = () => {
-    window.scroll(0,0);
-  }
-
   updateEditedFields = (key) => {
     const { editedFields } = this.state;
     if (!editedFields.includes(key)) {

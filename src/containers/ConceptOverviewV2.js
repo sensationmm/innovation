@@ -11,6 +11,7 @@ import { getActiveInnovationData } from '../actions/innovations';
 class ConceptOverviewV2 extends Component {
   componentDidMount() {
     this.checkConceptInnovation();
+    window.scroll(0,0);
   }
 
   componentDidUpdate() {

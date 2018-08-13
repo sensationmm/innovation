@@ -26,6 +26,8 @@ class InnovationDetailsEditable extends Component {
   saveToDb = (id, value) => {
     const { activeInnovation, editInnovation } = this.props;
     editInnovation(activeInnovation.id, { [id]: value }, true)
+    const updatedChangedFields = this.state.changedFields.filter(field => field !== id);
+    this.setState({ changedFields: updatedChangedFields })
   }
 
   render() {

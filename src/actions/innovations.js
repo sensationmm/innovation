@@ -106,6 +106,7 @@ export const editInnovation = (innovationId, newInnovationAttrs, saveToDB) => as
       }
       await innovationToUpdate.save();
       dispatch({ type: EDIT_INNOVATION_SUCCESS }) // TODO: Do we need to pass anything here? This branch of action only runs on submit, and changes have already been saved into redux by the other branch of the conditional.
+      dispatch(displayMessage('Innovation update saved'));
     }
     catch (err) {
       console.log(err);

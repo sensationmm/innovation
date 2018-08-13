@@ -7,6 +7,8 @@ import {
 // Import JSON API models.
 import { Partner } from '../models';
 
+import { displayMessage } from './ui';
+
 export const editPartner = (partnerId, newPartnerAttrs, saveToDB) => async dispatch => {
   dispatch({ type: EDIT_PARTNER_BEGIN })
   if (saveToDB) {
@@ -17,6 +19,7 @@ export const editPartner = (partnerId, newPartnerAttrs, saveToDB) => async dispa
       }
       await partnerToUpdate.save();
       dispatch({ type: EDIT_PARTNER_SUCCESS }) // TODO: Do we need to pass anything here? This branch of action only runs on submit, and changes have already been saved into redux by the other branch of the conditional.
+      dispatch(displayMessage('Partner update saved'))
     }
     catch (err) {
       console.log(err);

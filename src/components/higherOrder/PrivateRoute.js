@@ -6,12 +6,6 @@ import PropTypes from 'prop-types';
 import Loader from '../Loader';
 
 class PrivateRoute extends Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      // window.scrollTo(0, 0); // Only scroll to top if the user has changes urls / pages.
-    }
-  }
-
   render() {
     const { component: Component, isAuthed, isLoading, ...rest } = this.props;
     return (

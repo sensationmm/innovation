@@ -1,0 +1,45 @@
+@import './modules/colors';
+@import './modules/animations.scss';
+
+.innovation-details-editable {
+  &-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  &-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &-section {
+    padding: 10px;
+  }
+
+  &-name {
+    input {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 4px 10px;
+    }
+  }
+
+  &-field-title {
+    text-decoration: underline;
+  }
+
+  &-field-content {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+}
+
+.partner-details-editable {
+  &-field {
+    padding: 5px 0;
+  }
+  &-title {
+    color: $text-grey-white;
+    padding-right: 5px;
+  }
+}

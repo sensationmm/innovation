@@ -13,13 +13,15 @@ import { getAllUsers } from './users';
 
 import { User } from '../models';
 
+import { push } from 'connected-react-router';
+
 export const authFromJWT = () => async (dispatch) => {
   const storedToken = JSON.parse(localStorage.getItem('inventure-auth'));
-  const isTokenInDate = storedToken !== null &&
+  const tokenExistsAndInDate = storedToken !== null &&
                         storedToken.token !== null &&
                         (Date.now().valueOf() / 1000) <= jwtDecode(storedToken.token).exp;
 
-  if (isTokenInDate) {
+  if (tokenExistsAndInDate) {
     dispatch({ type: AUTH_FROM_JWT_BEGIN })
     try {
       const user = (await User.find('me')).data;
@@ -32,6 +34,8 @@ export const authFromJWT = () => async (dispatch) => {
       console.log(err);
       dispatch({ type: AUTH_FROM_JWT_ERROR });
     }
+  } else {
+    dispatch(push('/login'));
   }
 };
 

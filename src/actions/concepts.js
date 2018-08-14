@@ -16,6 +16,7 @@ import {
 import { Concept, Attachment } from '../models';
 import { push } from 'connected-react-router';
 
+import { displayMessage } from './ui';
 import  { getDataUri } from '../utils/functions';
 
 /**
@@ -25,7 +26,6 @@ import  { getDataUri } from '../utils/functions';
  */
 export const createConcept = (innovationId, attrsToCreate, redirectTo) => async (dispatch) => {
   dispatch({ type: CREATE_CONCEPT_BEGIN });
-
   try {
     const newConcept = new Concept();
     for ( const key of Object.keys(attrsToCreate) ) {
@@ -41,6 +41,7 @@ export const createConcept = (innovationId, attrsToCreate, redirectTo) => async 
 
     dispatch({ type: CREATE_CONCEPT_SUCCESS, newConcept: { ...newConcept.attributes } });
     dispatch(push(redirectTo));
+    dispatch(displayMessage('New Concept created'));
   }
   catch (err) {
     console.log(err);
@@ -63,6 +64,7 @@ export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (disp
       }
       await conceptToUpdate.save();
       dispatch({ type: EDIT_CONCEPT_SUCCESS, conceptId, newConceptAttrs: { ...conceptToUpdate.attributes } });
+      dispatch(displayMessage('Concept updated'));
     }
     catch (err) {
       console.log(err);
@@ -86,6 +88,7 @@ export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (disp
      // Using something like Concept.where(innovationId).all()
      dispatch({ type: DELETE_CONCEPT_SUCCESS, conceptId });
      dispatch(push(redirectTo))
+     dispatch(displayMessage('Concept deleted'));
    }
    catch (err) {
      dispatch({ type: DELETE_CONCEPT_ERROR });

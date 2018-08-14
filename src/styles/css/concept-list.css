@@ -1,10 +1,5 @@
 .concept-list {
   font-size: 14px; }
-  .concept-list-header {
-    text-transform: uppercase;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #fff;
-    margin-bottom: 20px; }
   .concept-list-items {
     display: flex;
     flex-wrap: wrap;
@@ -16,10 +11,11 @@
     justify-content: space-between;
     margin-bottom: 20px;
     width: 250px;
-    height: 280px;
+    height: 300px;
     padding: 5px 5px;
     margin: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 4px; }
     .concept-list-item-link {
       height: 100%;
       width: 100%; }
@@ -30,7 +26,7 @@
     .concept-list-item:hover {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.24);
       background: #3b4348;
-      opacity: 0.85;
+      opacity: 0.95;
       cursor: pointer; }
     .concept-list-item-details {
       display: flex;
@@ -39,25 +35,31 @@
       text-align: center;
       align-items: center;
       padding-left: 10px; }
+      .concept-list-item-details-description {
+        font-size: 12px; }
     .concept-list-item-user-actions {
       display: flex;
       flex-direction: column;
-      justify-content: end;
-      text-align: center; }
+      align-items: center; }
+      .concept-list-item-user-actions button {
+        width: 100%; }
     .concept-list-item-marked-awaiting {
       color: #ffa900;
       display: flex;
       justify-content: space-around;
-      align-items: center; }
+      align-items: center;
+      width: 90%; }
     .concept-list-item-marked-complete {
       color: #00bfb7;
       display: flex;
       justify-content: space-around;
-      align-items: center; }
+      align-items: center;
+      width: 90%; }
     .concept-list-item-marked-incomplete {
       color: #e03c31;
       display: flex;
       justify-content: space-around;
-      align-items: center; }
+      align-items: center;
+      width: 90%; }
   .concept-list h3 {
     margin: 0; }

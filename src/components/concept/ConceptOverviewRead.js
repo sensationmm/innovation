@@ -6,11 +6,19 @@ import { Link } from 'react-router-dom';
 
 import ConceptAnalysis from './ConceptAnalysis';
 import ContentBox from '../layout/ContentBox';
-import ConceptMeta from './ConceptMeta.js';
+import ConceptMeta from './ConceptMeta';
 
 import { conceptFieldGroups, conceptStatusLabels } from '../../config/conceptOptions';
+import { capitaliseFirst } from '../../utils/functions';
 
 import '../../styles/css/concept-overview-read.css';
+
+const statusColor = {
+  'killed': '#e03c31',
+  'draft': 'snow',
+  'ready': '#00bfb7',
+  'analysed': '#ffa900'
+}
 
 const ConceptOverviewRead = (props) => {
   const { activeConcept, conceptAnalysis, targetIndustry, activePartnerId } = props;
@@ -18,7 +26,9 @@ const ConceptOverviewRead = (props) => {
   return (
     <div>
       <div className="concept-overview-page-header">
-        <div className="concept-overview-page-status">Status: {conceptStatusLabels[activeConcept.status]}</div>
+        <div className="concept-overview-page-status" style={{ color: statusColor[activeConcept.status]}}>
+          Status: {conceptStatusLabels[activeConcept.status]}
+        </div>
         <div className="concept-overview-page-title">Concept Overview: {activeConcept.name}</div>
         {
           (activeConcept.status === 'ready' || activeConcept.status === 'analysed') &&
@@ -39,11 +49,20 @@ const ConceptOverviewRead = (props) => {
             <ConceptMeta
               key={`concept-info-${fieldGroup.key}`}
               label={fieldGroup.displayAs}
-              stats={fieldGroup.contents.map(item => ({
-                  label: item.label,
-                  content: item.value === 'targetIndustry' ? targetIndustryName : activeConcept[item.value]
-                }
-              ))}
+              stats={fieldGroup.contents.map(item => {
+                return item.value === 'businessType' || item.value === 'salesChannel' || item.value === 'willGmLeave'
+                  ? {
+                    label: item.label,
+                    content: item.value === 'salesChannel'
+                                ? activeConcept[item.value].toUpperCase()
+                                : capitaliseFirst(activeConcept[item.value])
+                  }
+                  : {
+                    label: item.label,
+                    content: item.value === 'targetIndustry' ? targetIndustryName : activeConcept[item.value]
+                  }
+
+              })}
             />
           ))
         }

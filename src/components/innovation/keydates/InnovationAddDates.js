@@ -127,14 +127,13 @@ class InnovationAddDates extends Component {
             )
         }
         <div className="create-innovation-user-actions">
+          <ButtonCancel
+            onClick={this.props.callback}
+          />
           <ButtonSubmit
             disabled={!allEntered}
             label="Save"
             onClick={() => this.updateKeyDates()} // TODO. Conditional on which module is open.
-          />
-
-          <ButtonCancel
-            onClick={this.props.callback}
           />
         </div>
       </div>

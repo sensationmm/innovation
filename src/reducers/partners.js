@@ -1,6 +1,7 @@
 import {
   GET_INNOVATION_DATA_SUCCESS,
-  CREATE_INNOVATION_SUCCESS
+  CREATE_INNOVATION_SUCCESS,
+  EDIT_PARTNER_SUCCESS
 } from '../config/constants';
 
 const initialState = {
@@ -19,6 +20,12 @@ export default (state = initialState, action) => {
       const { newPartner } = action;
       const activePartner = { ...newPartner.attributes };
       return { ...state, activePartner  };
+    }
+
+    case EDIT_PARTNER_SUCCESS: {
+      const { newPartnerAttrs } = action;
+      const activePartner = { ...state.activePartner, ...newPartnerAttrs };
+      return { ...state, activePartner };
     }
 
     default:

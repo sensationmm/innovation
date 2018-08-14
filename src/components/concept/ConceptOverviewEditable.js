@@ -14,6 +14,8 @@ import ConceptConviction from './createForm/ConceptConviction';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import ButtonDelete from '../buttons/ButtonDelete';
+import KillButton from '../buttons/KillButton';
+import CompleteButton from '../buttons/CompleteButton';
 
 import '../../styles/css/concept-create.css';
 
@@ -72,6 +74,11 @@ class ConceptOverviewEditable extends Component {
     editConcept(activeConcept.id, { [arrayName]: updatedArray })
   }
 
+  saveStatusToDb = (newStatus) => {
+    const { editConcept, activeConcept } = this.props;
+    editConcept(activeConcept.id, { status: newStatus }, true);
+  }
+
   saveChangesToDb = () => {
     const { editConcept, activeConcept } = this.props;
     const attrsToUpdate = {};
@@ -99,6 +106,7 @@ class ConceptOverviewEditable extends Component {
     deleteConcept(activeConcept.id, `/innovation-overview/${activePartnerId}`);
   }
 
+  // TODO: If not needed then remove.
   // Once complete 'Mark as Ready button is activated.
   // allFieldsAreCompleted = () => {
   //   const { activeConcept } = this.props;
@@ -115,25 +123,41 @@ class ConceptOverviewEditable extends Component {
       return null;
     }
     // const allFieldsAreCompleted = this.allFieldsAreCompleted(); TODO: If not needed then remove.
+    const statusColor = {
+      'killed': '#e03c31',
+      'draft': 'snow',
+      'ready': '#00bfb7',
+      'analysed': '#ffa900'
+    }
     return (
       <div className="create-concept-container">
         <div className="create-concept-page-title">Concept Overview: {activeConcept.name}</div>
         <div className="create-concept-user-actions">
-          <div>Status: {conceptStatusLabels[activeConcept.status]}</div>
+          <div className="create-concept-user-actions-status" style={{ color: statusColor[activeConcept.status] }}>
+            Status: {conceptStatusLabels[activeConcept.status]}
+          </div>
           <div>
-            <ButtonSubmit
-              label="Mark as Killed"
-              onClick={() => this.selectOption('status', 'killed')}
-            />
-            <ButtonSubmit
-              label="Mark as Draft"
-              onClick={() => this.selectOption('status', 'draft')}
-            />
-            <ButtonSubmit
-              label="Mark as Ready"
-              onClick={() => this.selectOption('status', 'ready')}
-              // disabled={!allFieldsAreCompleted} TODO: What are the requirements before a concept can be marked as ready?
-            />
+            {
+              activeConcept.status !== 'killed' &&
+                <KillButton
+                  label="Archive"
+                  onClick={() => this.saveStatusToDb('killed')}
+                />
+            }
+            {
+              activeConcept.status !== 'draft' &&
+                <ButtonSubmit
+                  label="Mark as Active"
+                  onClick={() => this.saveStatusToDb('draft')}
+                />
+            }
+            {
+              activeConcept.status !== 'ready' &&
+                <CompleteButton
+                  label="Mark as Ready"
+                  onClick={() => this.saveStatusToDb('ready')}
+                />
+            }
           </div>
         </div>
         <div className="create-concept-section-container">

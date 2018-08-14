@@ -27,7 +27,6 @@ const ConceptList = props => {
 
   return (
     <div className="concept-list">
-      <div className="concept-list-header">{props.title}</div>
       <div className="concept-list-items">
       {
         concepts && concepts.map(concept => {
@@ -44,9 +43,9 @@ const ConceptList = props => {
             <div className="concept-list-item" key={`concept-${id}`}>
               <Link className="concept-list-item-link" to={`/concept/${id}`}>
                 <div className="concept-list-item-details">
-                  <ConceptAvatar conceptId={id} ident={ident || 'TD'} color={color || 'darkblue'} logo={logo} showLink={false}/>
+                  <ConceptAvatar conceptId={id} ident={ident || 'IN'} color={color || 'darkblue'} logo={logo} showLink={false}/>
                   <h3>{name}</h3>
-                  <p>{description}</p>
+                  <p className="concept-list-item-details-description">{description}</p>
                 </div>
               </Link>
               {
@@ -54,7 +53,7 @@ const ConceptList = props => {
                   <div className="concept-list-item-user-actions">
                     {
                       (status === 'draft' || status ==='ready')
-                        ? <KillButton label='Kill' onClick={() => editConcept(id, { status: 'killed' }, true)} />
+                        ? <KillButton label='Archive' onClick={() => editConcept(id, { status: 'killed' }, true)} />
                         : <CompleteButton label='Re-Activate' onClick={() => editConcept(id, { status: 'draft' }, true)} />
                     }
                   </div>
@@ -72,13 +71,13 @@ const ConceptList = props => {
                       (status === 'draft') &&
                         <div className="concept-list-item-user-actions">
                           <CompleteButton label='Mark as Ready' onClick={() => editConcept(id, { status: 'ready' }, true)} />
-                          <KillButton label='Kill' onClick={() => editConcept(id, { status: 'killed' }, true)} />
+                          <KillButton label='Archive' onClick={() => editConcept(id, { status: 'killed' }, true)} />
                         </div>
                     }
                     {
                       (status === 'killed') &&
                         <div className="concept-list-item-user-actions">
-                          <CompleteButton label='Re-Activate' onClick={() => editConcept(id, { status: 'draft' }, true)} />
+                          <CompleteButton label='Restore' onClick={() => editConcept(id, { status: 'draft' }, true)} />
                         </div>
                     }
                   </div>
@@ -119,7 +118,6 @@ const ConceptList = props => {
 
 ConceptList.propTypes = {
   concepts: PropTypes.array,
-  title: PropTypes.string,
   postIS2: PropTypes.bool,
   userType: PropTypes.string,
   editConcept: PropTypes.func

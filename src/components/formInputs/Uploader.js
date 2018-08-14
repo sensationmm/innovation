@@ -55,12 +55,12 @@ class Uploader extends Component {
     const logoUrl = existingLogo && logo && !logo.preview
       ? `${Config.apiDomain}${logo}`
       : (logo && logo.preview) ? logo.preview : IconUpload;
-      
+
     return (
-      <div 
-        className={classnames('logo-upload-container', { 'hover': hover }, { viewable: viewable })} 
+      <div
+        className={classnames('logo-upload-container', { 'hover': hover }, { viewable: viewable })}
         style={{backgroundImage:`url(${logoUrl})`}}
-      > 
+      >
         <Dropzone
           onDrop={this.onDrop}
           onDragEnter={this.onDragEnter}

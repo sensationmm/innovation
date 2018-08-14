@@ -26,6 +26,7 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 
 import { displayMessage } from './ui';
+import { inviteInnovationUsers } from './users';
 
 // Import JSON API models.
 import { Innovation, Partner, KeyDate, InnovationReport } from '../models';
@@ -68,7 +69,7 @@ export const getActiveInnovationData = (partnerId) => async (dispatch, getState)
   }
 }
 
-export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispatch, getState) => {
+export const createInnovation = (partnerAttrs, innovationAttrs, teamGMEmail) => async (dispatch, getState) => {
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   try {
     const newPartner = new Partner();
@@ -76,6 +77,13 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
       newPartner[key] = partnerAttrs[key];
     }
     await newPartner.save();
+
+    // Once the partner is saved you can add the new team GM.
+    // Only do this if different from the currently authed user otherwise it will error.
+    // This will create two 'admins' on the innovation - the creator and the teamGMEmail.
+    if (teamGMEmail !== getState().auth.authedUser.email) {
+      dispatch(inviteInnovationUsers(newPartner.id, [teamGMEmail], 'admin'));
+    }
 
     const newInnovation = new Innovation();
     for ( const key of Object.keys(innovationAttrs) ) {
@@ -106,6 +114,7 @@ export const editInnovation = (innovationId, newInnovationAttrs, saveToDB) => as
       }
       await innovationToUpdate.save();
       dispatch({ type: EDIT_INNOVATION_SUCCESS }) // TODO: Do we need to pass anything here? This branch of action only runs on submit, and changes have already been saved into redux by the other branch of the conditional.
+      dispatch(displayMessage('Innovation update saved'));
     }
     catch (err) {
       console.log(err);
@@ -149,6 +158,7 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
     const updatedInnovation = (await Innovation.includes('key_dates').find(innovationId)).data;
     const updatedInnovationKeyDates = updatedInnovation.keyDates.map(keyDate => ({ ...keyDate.attributes }));
     dispatch({ type: EDIT_INNOVATION_KEYDATES_SUCCESS, updatedInnovationKeyDates })
+    dispatch(displayMessage(`Key Dates saved`))
   }
   catch (err) {
     dispatch({ type: EDIT_INNOVATION_KEYDATES_ERROR })
@@ -157,7 +167,6 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
 
 export const requestInnovationReport = (name) => async dispatch => {
   dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_BEGIN });
-  console.log(name);
   try {
     const report = new InnovationReport({ name });
     await report.save();

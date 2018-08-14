@@ -6,23 +6,21 @@ import moment from 'moment';
 
 import InnovationAddDates from './keydates/InnovationAddDates';
 import InnovationAddTeam from './InnovationAddTeam';
-import CorporatePartnerSummary from './CorporatePartnerSummary';
+import InnovationDetailsEditable from './InnovationDetailsEditable';
+import PartnerDetailsEditable from './PartnerDetailsEditable';
 import InnovationTeam from './InnovationTeam';
 import ProgressBar from '../ProgressBar';
 import ConceptList from '../concept/ConceptList';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ContentBox from '../layout/ContentBox';
+import AccordionPanel from '../layout/AccordionPanel';
 import FlexRow from '../layout/FlexRow';
-import ButtonSubmit from '../buttons/ButtonSubmit';
-import FormTextArea from '../formInputs/FormTextArea';
 import Modal from '../layout/Modal';
 
 import '../../styles/css/innovation-overview.css';
 
 import { makeArrayFromIndexedObject, getByKey } from '../../utils/functions';
 import { editInnovation, getActiveInnovationData } from '../../actions/innovations';
-
-import { innovationTypeLabels } from '../../config/innovationOptions';
 
 class InnovationOverview extends Component {
   state = {
@@ -38,6 +36,8 @@ class InnovationOverview extends Component {
     if(partnerId !== activeInnovation.partnerId) {
       getActiveInnovationData(partnerId);
     }
+
+    window.scroll(0,0);
   }
 
   // For a more general version of this see ConceptOverviewEditable
@@ -55,7 +55,7 @@ class InnovationOverview extends Component {
 
   render() {
     const { activeInnovation, activePartner, conceptsById, teamMembers, authedUser } = this.props;
-    const { openEditDates, openEditTeam, mandateUpdated, openAddMandate } = this.state;
+    const { openEditDates, openEditTeam } = this.state;
     const activeConcepts = makeArrayFromIndexedObject(conceptsById).filter(concept => concept.status !== 'killed');
     const activeIncomplete = activeConcepts.filter(concept => concept.status === 'draft');
     const activeComplete = activeConcepts.filter(concept => concept.status === 'ready');
@@ -81,39 +81,7 @@ class InnovationOverview extends Component {
           <Link to="/dashboard">&lt; Back to Dashboard</Link>
         </ContentBox>
         <ContentBox>
-          <h1>{activeInnovation.sprintName}</h1>
-          <div>Innovation Type: {innovationTypeLabels[activeInnovation.sprintType]}</div>
-          <div>Duration: {activeInnovation.duration} weeks</div>
-          <div className="innovation-overview-mandate-input">
-            {
-              (activeInnovation.mandate || openAddMandate)
-                ? (
-                  <div>
-                    <FormTextArea
-                      id='mandate'
-                      placeholder='Innovation Mandate'
-                      onChange={this.handleUpdateMandate}
-                      value={activeInnovation.mandate || ''} // TODO: Format all null values in getActiveInnovationData action?
-                      labelLeftAlign={true}
-                    />
-                    {
-                      mandateUpdated &&
-                        <ButtonSubmit
-                          label="Save"
-                          onClick={() => this.mandateUpdateToDB()}
-                        />
-                    }
-                  </div>
-                )
-                : <div onClick={() => this.setState({ openAddMandate: true })} className="innovation-overview-add-mandate-link">
-                    <div>
-                      <i className="fas fa-plus fa-2x add-concept-icon"></i>
-                    </div>
-                    <div>Please add innovation mandate</div>
-                  </div>
-            }
-
-          </div>
+          <InnovationDetailsEditable />
         </ContentBox>
 
         {(activeInnovation.keyDates && activeInnovation.keyDates.length >= 4 && keyDatesSetup)
@@ -122,10 +90,14 @@ class InnovationOverview extends Component {
               dates={dates}
               labels={labels}
             />
+
             <div className="innovation-overview-edit-icon">
-              <button className="form-submit-button" onClick={() => this.setState({ openEditDates: !openEditDates })}>
-                Edit Key Dates
-              </button>
+              <div className="innovation-overview-edit-dates-link" onClick={() => this.setState({ openEditDates: !openEditDates })}>
+                <div className="innovation-overview-edit-team-label">Edit Key Dates</div>
+                <div>
+                  <i className="far fa-edit innovation-overview-edit-team-icon"></i>
+                </div>
+              </div>
             </div>
           </ContentBox>
 
@@ -149,12 +121,6 @@ class InnovationOverview extends Component {
         }
 
         <div className="innovation-overview-toplinks">
-          <div className="innovation-overview-add-concept-link" onClick={() => this.setState({ openEditTeam: !openEditTeam })}>
-            <div>
-              <i className="fas fa-plus fa-2x add-concept-icon"></i>
-            </div>
-            <div>Edit Team Members</div>
-          </div>
           {keyDatesSetup &&
             <Link className="innovation-overview-add-concept-link" to={`/create-concept/${activeInnovation.id}`}>
               <div>
@@ -165,71 +131,79 @@ class InnovationOverview extends Component {
           }
         </div>
 
-        {openEditTeam &&
-          <Modal>
-            <div className="create-innovation-section-container">
-              <FormSectionHeader
-                title='Your Current Team'
-              />
-              <InnovationTeam
-                teamMembers={teamMembers}
-              />
-            </div>
+        {
+          openEditTeam &&
+            <Modal>
+              <div className="create-innovation-section-container">
+                <InnovationTeam
+                  teamMembers={teamMembers}
+                  minimal={true}
+                />
+              </div>
 
-            <div className="create-innovation-section-container">
-              <FormSectionHeader
-                title="Add New Team Members"
-                subtitle="Invites will be sent to new team members when you save"
-              />
-              <InnovationAddTeam
-                curTeamMembers={teamMembers}
-                partnerId={activePartner.id}
-                onCancel={() => this.setState({ openEditTeam: false })} />
-            </div>
-          </Modal>
+              <div className="create-innovation-section-container">
+                <FormSectionHeader
+                  title="Add New Team Members"
+                  subtitle="Invites will be sent to all new team members when you click send"
+                />
+                <InnovationAddTeam
+                  curTeamMembers={teamMembers}
+                  partnerId={activePartner.id}
+                  onCancel={() => this.setState({ openEditTeam: false })} />
+              </div>
+            </Modal>
         }
 
         {(activeIncomplete && activeIncomplete.length > 0) &&
-          <ContentBox background={false}>
-            <ConceptList concepts={activeIncomplete} title='Active' userType={userType} postIS2={isPostIS2} />
-          </ContentBox>
+          <AccordionPanel title='Active Concepts' initIsOpen={false}>
+            <ContentBox background={false}>
+              <ConceptList concepts={activeIncomplete} userType={userType} postIS2={isPostIS2} />
+            </ContentBox>
+          </AccordionPanel>
         }
 
         {
           (activeComplete && activeComplete.length > 0) &&
+          <AccordionPanel title='Ready for Analysis' initIsOpen={false}>
             <ContentBox background={false}>
-              <ConceptList concepts={activeComplete} title='Ready for Analysis' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeComplete} userType={userType} postIS2={isPostIS2} />
             </ContentBox>
+          </AccordionPanel>
         }
 
         {
           (activeReviewed && activeReviewed.length > 0) &&
+          <AccordionPanel title='Analysed by VFT' initIsOpen={false}>
             <ContentBox background={false}>
-              <ConceptList concepts={activeReviewed} title='Analysed by VFT' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={activeReviewed}  userType={userType} postIS2={isPostIS2} />
             </ContentBox>
+          </AccordionPanel>
         }
 
         {
           (killedConcepts && killedConcepts.length > 0) &&
+          <AccordionPanel title='Archived' initIsOpen={false}>
             <ContentBox background={false}>
-              <ConceptList concepts={killedConcepts} title='Killed' userType={userType} postIS2={isPostIS2} />
+              <ConceptList concepts={killedConcepts}  userType={userType} postIS2={isPostIS2} />
             </ContentBox>
+          </AccordionPanel>
         }
 
         <FlexRow>
           <ContentBox>
-            <h3>Team Info</h3>
+            <h3 className="innovation-overview-edit-team-title">Team Members</h3>
+            <div className="innovation-overview-edit-team-link" onClick={() => this.setState({ openEditTeam: !openEditTeam })}>
+              <div className="innovation-overview-edit-team-label">Add/Remove</div>
+              <div>
+                <i className="far fa-edit innovation-overview-edit-team-icon"></i>
+              </div>
+            </div>
             <InnovationTeam
               teamMembers={teamMembers}
             />
           </ContentBox>
           <ContentBox>
-            <CorporatePartnerSummary
-              name={activePartner.name}
-              industry={activePartner.industryName}
-              city={activePartner.hqCity}
-              businessDescription={activePartner.description}
-            />
+            <PartnerDetailsEditable />
           </ContentBox>
 
         </FlexRow>

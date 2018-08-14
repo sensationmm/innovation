@@ -1,19 +1,7 @@
 @import './modules/colors.scss';
+@import './modules/animations.scss';
 
-@mixin animation-mixin($name, $from, $to) {
-  @keyframes #{$name} {
-    0% {
-      transform: translate3d(0, $from, 0);
-      opacity: 0;
-    }
-    100% {
-      transform: translate3d(0, $to, 0);
-      opacity: 1;
-    }
-  }
-}
-
-@include animation-mixin(slide-1, -50px, 0);
+@include fade-slide-mixin(slide-1, -50px, 0);
 
 .inventure-alert-temp-popup {
   position: fixed;
@@ -27,7 +15,7 @@
   width: 180px;
   padding: 20px;
   text-align: center;
-  z-index: 5;
+  z-index: 20;
 
   &-text {
     color: $text-off-white;

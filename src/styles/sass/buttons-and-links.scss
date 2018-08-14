@@ -1,23 +1,30 @@
 @import './modules/colors.scss';
+@import './modules/animations.scss';
+
+@include fade-in-mixin(fade-in);
+
+.buttons-links-fade-in {
+  animation: fade-in 0.3s;
+}
 
 .form-submit-button {
-  padding: 8px 10px;
-  min-width: 120px;
-  text-align: center;
   font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid $text-off-white;
+  font-size: 10px 15px;
+  background: $text-grey-dark;
   color: $text-off-white;
-  margin: 8px 3px 3px 3px;
-  background: $cyan-blue;
-  transition: all 0.3s;
-  box-sizing: border-box;
 
   &:hover {
-    background: $green-offset;
+    background: $background-grey-lighter;
+    cursor: pointer;
   }
 
   &.disabled {
-    background: $background-grey-lighter;
+    background: $background-grey-mid;
+    color: $background-grey-lighter;
     cursor: auto;
+    border: 1px solid $background-grey-mid;
   }
 }
 
@@ -30,6 +37,7 @@
   margin: 8px 3px 3px 3px;
   transition: all 0.3s;
   background: transparent;
+  border: 1px solid $text-off-white;
 
   &:hover {
     color: $green-offset;
@@ -50,6 +58,7 @@
   margin: 8px 3px 3px 3px;
   background: $tomato;
   transition: all 0.3s;
+  border: 1px solid $text-off-white;
 
   &:hover {
     background: $light-red;
@@ -68,8 +77,9 @@
   font-size: 14px;
   color: $text-off-white;
   margin: 8px 3px 3px 3px;
-  background: $ocean;
+  background: $cyan-blue;
   transition: all 0.3s;
+  border: 1px solid $text-off-white;
 
   &:hover {
     background: $teal;
@@ -92,14 +102,15 @@
 }
 
 .cta-button {
-  border-radius: 10px;
-  background: $green;
+  border-radius: 4px;
+  background: $text-grey-dark;
   font-size: 20px;
   color: #fff;
   transition: all 0.3s;
   padding: 10px 20px;
   margin: 10px auto;
   display: block;
+  border: 1px solid $text-off-white;
 
   &:hover {
     background: $green-offset;
@@ -112,9 +123,9 @@
   text-align: center;
   font-size: 14px;
   color: $text-off-white;
-  margin: 8px 3px 3px 3px;
   background: $tomato;
   transition: all 0.3s;
+  border: 1px solid $text-off-white;
 
   &:hover {
     background: $light-red;
@@ -127,5 +138,35 @@
   &.cancel {
     flex-grow: 1;
     margin-left: 10px;
+  }
+}
+
+.delete-icon-confirm {
+  transition: all 0.3s;
+  &-container {
+  }
+  &-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+  }
+  &-icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &-delete {
+    padding: 2px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &-cancel {
+    padding: 2px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

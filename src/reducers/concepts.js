@@ -3,7 +3,8 @@ import {
   CREATE_CONCEPT_SUCCESS,
   EDIT_CONCEPT_SUCCESS,
   DELETE_CONCEPT_SUCCESS,
-  ADD_CONCEPT_CANVAS_SUCCESS
+  ADD_CONCEPT_CANVAS_SUCCESS,
+  SAVE_CONCEPT_FINANCE_SCORE_SUCCESS
 } from '../config/constants';
 
 import { removeItemByKey } from '../utils/functions';
@@ -19,28 +20,33 @@ export default (state = initialState, action) => {
       const conceptsById = {};
       const innovationId = partner.innovation.id;
       const partnerId = partner.id;
-      
+
       partner.innovation.concepts.forEach(concept => {
-        const formattedConceptAttrs = {};
+        const formattedConcept = {};
 
         Object.keys(concept.attributes).forEach(key => {
-          formattedConceptAttrs[key] = concept.attributes[key] === null ? '' : concept.attributes[key];
+          formattedConcept[key] = concept.attributes[key] === null ? '' : concept.attributes[key]; // Setting null attributes to '' so not to have an issue passing them to text inputs.
         })
-
+        formattedConcept.targetIndustryId = concept.targetIndustry.id;
         const canvases = concept.canvasesAttachments.map(canvas => canvas.url);
-
-        formattedConceptAttrs.targetIndustryId = concept.targetIndustry.id;
-        conceptsById[concept.id] = { ...formattedConceptAttrs, partnerId, innovationId, canvases };
+        conceptsById[concept.id] = { ...formattedConcept, innovationId, partnerId, canvases };
       })
+
       return { ...state, conceptsById }
     }
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;
-
-      newConcept.canvases = [];
       
-      const conceptsById = { ...state.conceptsById, [newConcept.id]: newConcept }
+      const formattedNewConcept = {};
+      Object.keys(newConcept).forEach(key => {
+        formattedNewConcept[key] = newConcept[key] === null ? '' : newConcept[key];
+      });
+      
+      newConcept.canvases = [];
+
+      const conceptsById = { ...state.conceptsById, [newConcept.id]: formattedNewConcept }
+      
       return { ...state, conceptsById }
     }
 
@@ -64,6 +70,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         conceptsById
+      }
+    }
+
+    case SAVE_CONCEPT_FINANCE_SCORE_SUCCESS: {
+      const { conceptId } = action;
+      const updatedConcept = { ...state.conceptsById[conceptId], status: 'analysed' };
+      return {
+        ...state,
+        conceptsById: { ...state.conceptsById, [conceptId]: updatedConcept }
       }
     }
 

@@ -26,6 +26,7 @@ import { push } from 'connected-react-router';
 import moment from 'moment';
 
 import { displayMessage } from './ui';
+import { inviteInnovationUsers } from './users';
 
 // Import JSON API models.
 import { Innovation, Partner, KeyDate, InnovationReport } from '../models';
@@ -68,7 +69,7 @@ export const getActiveInnovationData = (partnerId) => async (dispatch, getState)
   }
 }
 
-export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispatch, getState) => {
+export const createInnovation = (partnerAttrs, innovationAttrs, teamGMEmail) => async (dispatch, getState) => {
   dispatch({ type: CREATE_INNOVATION_BEGIN })
   try {
     const newPartner = new Partner();
@@ -76,6 +77,13 @@ export const createInnovation = (partnerAttrs, innovationAttrs) => async (dispat
       newPartner[key] = partnerAttrs[key];
     }
     await newPartner.save();
+
+    // Once the partner is saved you can add the new team GM.
+    // Only do this if different from the currently authed user otherwise it will error.
+    // This will create two 'admins' on the innovation - the creator and the teamGMEmail.
+    if (teamGMEmail !== getState().auth.authedUser.email) {
+      dispatch(inviteInnovationUsers(newPartner.id, [teamGMEmail], 'admin'));
+    }
 
     const newInnovation = new Innovation();
     for ( const key of Object.keys(innovationAttrs) ) {

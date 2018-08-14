@@ -266,7 +266,7 @@ export const InnovationReport = ApplicationRecord.extend({
     jsonapiType: 'innovation_reports'
   },
   attrs: {
-    id: attr(),
-    name: attr()
+    name: attr(),
+    conceptId: attr()
   }
 });

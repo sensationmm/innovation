@@ -165,7 +165,7 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
   }
 }
 
-// id param is required to generate a report for a specific item rather than an overview.
+// id param is required to generate a report for a specific item rather than an overview of all of an item type.
 export const requestInnovationReport = (name, id) => async dispatch => {
   dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_BEGIN });
   try {

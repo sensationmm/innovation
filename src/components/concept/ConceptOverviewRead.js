@@ -50,7 +50,7 @@ const ConceptOverviewRead = (props) => {
               key={`concept-info-${fieldGroup.key}`}
               label={fieldGroup.displayAs}
               stats={fieldGroup.contents.map(item => {
-                return item.value === 'businessType' || item.value === 'salesChannel'
+                return item.value === 'businessType' || item.value === 'salesChannel' || item.value === 'willGmLeave'
                   ? {
                     label: item.label,
                     content: item.value === 'salesChannel'

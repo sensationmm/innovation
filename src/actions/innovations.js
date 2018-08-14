@@ -165,10 +165,11 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
   }
 }
 
-export const requestInnovationReport = (name) => async dispatch => {
+// id param is required to generate a report for a specific item rather than an overview.
+export const requestInnovationReport = (name, id) => async dispatch => {
   dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_BEGIN });
   try {
-    const report = new InnovationReport({ name });
+    const report = new InnovationReport({ name, id });
     await report.save();
     dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_SUCCESS });
     dispatch(displayMessage(`Innovation ${name} email report sent.`))

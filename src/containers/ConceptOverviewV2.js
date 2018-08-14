@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 
 import ConceptOverviewEditable from '../components/concept/ConceptOverviewEditable';
 import ConceptOverviewRead from '../components/concept/ConceptOverviewRead';
+import ButtonSubmit from '../components/buttons/ButtonSubmit';
 
-import { getActiveInnovationData } from '../actions/innovations';
+import { getActiveInnovationData, requestInnovationReport } from '../actions/innovations';
 
 class ConceptOverviewV2 extends Component {
   componentDidMount() {
@@ -32,15 +33,26 @@ class ConceptOverviewV2 extends Component {
   render() {
     const { activeConcept } = this.props;
     if (!activeConcept) { return null }
-    const { activeInnovationId, activePartnerId, conceptsById, userType } = this.props;
+    const { activeInnovationId, activePartnerId, conceptsById, userType, requestInnovationReport } = this.props;
     return (
       <div>
-        <Link to={`/innovation-overview/${activePartnerId}`}>
-          <span>
-            <i className="fas fa-chevron-left"></i>
-            <span> Back to Innovation Overview</span>
-          </span>
-        </Link>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            <Link to={`/innovation-overview/${activePartnerId}`}>
+              <span>
+                <i className="fas fa-chevron-left"></i>
+                <span> Back to Innovation Overview</span>
+              </span>
+            </Link>
+          </div>
+          <div>
+            <ButtonSubmit
+              onClick={() => requestInnovationReport('concept', activeConcept.id)}
+              label="Request Report Email"
+            />
+          </div>
+        </div>
+
         {
           userType === 'finance'
             ? (
@@ -76,7 +88,8 @@ ConceptOverviewV2.propTypes = {
   conceptsById: PropTypes.object,
   activeConcept: PropTypes.object,
   userType: PropTypes.string,
-  getActiveInnovationData: PropTypes.func
+  getActiveInnovationData: PropTypes.func,
+  requestInnovationReport: PropTypes.func
 };
 
 const mapStateToProps = (state, props) => ({
@@ -87,6 +100,6 @@ const mapStateToProps = (state, props) => ({
   userType: state.auth.authedUser.roleName
 });
 
-const actions = { getActiveInnovationData };
+const actions = { getActiveInnovationData, requestInnovationReport };
 
 export default connect(mapStateToProps, actions)(ConceptOverviewV2)

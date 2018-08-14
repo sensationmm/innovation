@@ -169,7 +169,10 @@ export const editKeyDates = (innovationId, editedKeyDates) => async (dispatch) =
 export const requestInnovationReport = (name, id) => async dispatch => {
   dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_BEGIN });
   try {
-    const report = new InnovationReport({ name, id });
+    const report = new InnovationReport({ name });
+    if (name === 'concept') {
+      report.conceptId = id;
+    }
     await report.save();
     dispatch({ type: REQUEST_INNOVATION_REPORT_EMAIL_SUCCESS });
     dispatch(displayMessage(`Innovation ${name} email report sent.`))

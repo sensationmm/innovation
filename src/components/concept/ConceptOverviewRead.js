@@ -9,6 +9,7 @@ import ContentBox from '../layout/ContentBox';
 import ConceptMeta from './ConceptMeta.js';
 
 import { conceptFieldGroups, conceptStatusLabels } from '../../config/conceptOptions';
+import { capitaliseFirst } from '../../utils/functions';
 
 import '../../styles/css/concept-overview-read.css';
 
@@ -48,11 +49,20 @@ const ConceptOverviewRead = (props) => {
             <ConceptMeta
               key={`concept-info-${fieldGroup.key}`}
               label={fieldGroup.displayAs}
-              stats={fieldGroup.contents.map(item => ({
-                  label: item.label,
-                  content: item.value === 'targetIndustry' ? targetIndustryName : activeConcept[item.value]
-                }
-              ))}
+              stats={fieldGroup.contents.map(item => {
+                return item.value === 'businessType' || item.value === 'salesChannel'
+                  ? {
+                    label: item.label,
+                    content: item.value === 'businessType'
+                                ? activeConcept[item.value].toUpperCase() 
+                                : capitaliseFirst(activeConcept[item.value])
+                  }
+                  : {
+                    label: item.label,
+                    content: item.value === 'targetIndustry' ? targetIndustryName : activeConcept[item.value]
+                  }
+
+              })}
             />
           ))
         }

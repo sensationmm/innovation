@@ -80,3 +80,7 @@ export const getDataUri = (url, callback) => {
 
   image.src = url;
 }
+
+export const capitaliseFirst = (string) => {
+  return string.charAt(0).toUpperCase() + string.substr(1);
+}

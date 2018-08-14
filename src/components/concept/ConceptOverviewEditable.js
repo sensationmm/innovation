@@ -124,10 +124,10 @@ class ConceptOverviewEditable extends Component {
     }
     // const allFieldsAreCompleted = this.allFieldsAreCompleted(); TODO: If not needed then remove.
     const statusColor = {
-      'killed': 'tomato',
+      'killed': '#e03c31',
       'draft': 'snow',
-      'ready': 'seagreen',
-      'analysed': 'gold'
+      'ready': '#00bfb7',
+      'analysed': '#ffa900'
     }
     return (
       <div className="create-concept-container">

@@ -13,10 +13,10 @@ import { conceptFieldGroups, conceptStatusLabels } from '../../config/conceptOpt
 import '../../styles/css/concept-overview-read.css';
 
 const statusColor = {
-  'killed': 'tomato',
+  'killed': '#e03c31',
   'draft': 'snow',
-  'ready': 'seagreen',
-  'analysed': 'gold'
+  'ready': '#00bfb7',
+  'analysed': '#ffa900'
 }
 
 const ConceptOverviewRead = (props) => {

@@ -75,11 +75,10 @@ class InnovationCreate extends Component {
       dvPartner2: dvPartner2,
       openDate: moment(innovationOpenDate).format('YYYY-MM-DD'),
       dvOfficeId: dvOffice,
-      teamGMEmail: teamGMEmail,
       duration: innovationDuration
     }
 
-    createInnovation(partnerData, innovationData);
+    createInnovation(partnerData, innovationData, teamGMEmail);
   }
 
   fieldsAreCompleted = () => {

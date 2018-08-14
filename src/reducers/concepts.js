@@ -37,6 +37,9 @@ export default (state = initialState, action) => {
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;
+
+      newConcept.canvases = [];
+      
       const conceptsById = { ...state.conceptsById, [newConcept.id]: newConcept }
       return { ...state, conceptsById }
     }

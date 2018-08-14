@@ -53,8 +53,8 @@ const ConceptOverviewRead = (props) => {
                 return item.value === 'businessType' || item.value === 'salesChannel'
                   ? {
                     label: item.label,
-                    content: item.value === 'businessType'
-                                ? activeConcept[item.value].toUpperCase() 
+                    content: item.value === 'salesChannel'
+                                ? activeConcept[item.value].toUpperCase()
                                 : capitaliseFirst(activeConcept[item.value])
                   }
                   : {

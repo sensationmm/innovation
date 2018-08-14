@@ -12,13 +12,22 @@ import { conceptFieldGroups, conceptStatusLabels } from '../../config/conceptOpt
 
 import '../../styles/css/concept-overview-read.css';
 
+const statusColor = {
+  'killed': 'tomato',
+  'draft': 'snow',
+  'ready': 'seagreen',
+  'analysed': 'gold'
+}
+
 const ConceptOverviewRead = (props) => {
   const { activeConcept, conceptAnalysis, targetIndustry, activePartnerId } = props;
   const targetIndustryName = targetIndustry && targetIndustry.name;
   return (
     <div>
       <div className="concept-overview-page-header">
-        <div className="concept-overview-page-status">Status: {conceptStatusLabels[activeConcept.status]}</div>
+        <div className="concept-overview-page-status" style={{ color: statusColor[activeConcept.status]}}>
+          Status: {conceptStatusLabels[activeConcept.status]}
+        </div>
         <div className="concept-overview-page-title">Concept Overview: {activeConcept.name}</div>
         {
           (activeConcept.status === 'ready' || activeConcept.status === 'analysed') &&

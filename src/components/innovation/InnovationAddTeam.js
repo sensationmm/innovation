@@ -108,13 +108,13 @@ class InnovationAddTeam extends Component {
             </div>
         }
         <div className="create-innovation-user-actions">
+          <ButtonCancel
+            onClick={onCancel}
+          />
           <ButtonSubmit
             label="Send Invites"
             onClick={onSave ? () => onSave() : () => this.saveNewTeamMembers()}
             disabled={!this.state.newTeamMembers.length > 0}
-          />
-          <ButtonCancel
-            onClick={onCancel}
           />
         </div>
       </div>

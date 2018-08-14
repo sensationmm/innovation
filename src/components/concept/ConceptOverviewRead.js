@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import ConceptAnalysis from './ConceptAnalysis';
 import ContentBox from '../layout/ContentBox';
-import ConceptMeta from './ConceptMeta.js';
+import ConceptMeta from './ConceptMeta';
 
 import { conceptFieldGroups, conceptStatusLabels } from '../../config/conceptOptions';
 import { capitaliseFirst } from '../../utils/functions';

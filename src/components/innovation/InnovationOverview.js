@@ -155,7 +155,7 @@ class InnovationOverview extends Component {
         }
 
         {(activeIncomplete && activeIncomplete.length > 0) &&
-          <AccordionPanel title='Active Concepts' initIsOpen={false}>
+          <AccordionPanel title='Active Concepts' initIsOpen={true}>
             <ContentBox background={false}>
               <ConceptList concepts={activeIncomplete} userType={userType} postIS2={isPostIS2} />
             </ContentBox>
@@ -164,7 +164,7 @@ class InnovationOverview extends Component {
 
         {
           (activeComplete && activeComplete.length > 0) &&
-          <AccordionPanel title='Ready for Analysis' initIsOpen={false}>
+          <AccordionPanel title='Ready for Analysis' initIsOpen={true}>
             <ContentBox background={false}>
               <ConceptList concepts={activeComplete} userType={userType} postIS2={isPostIS2} />
             </ContentBox>
@@ -173,7 +173,7 @@ class InnovationOverview extends Component {
 
         {
           (activeReviewed && activeReviewed.length > 0) &&
-          <AccordionPanel title='Analysed by VFT' initIsOpen={false}>
+          <AccordionPanel title='Analysed by VFT' initIsOpen={true}>
             <ContentBox background={false}>
               <ConceptList concepts={activeReviewed}  userType={userType} postIS2={isPostIS2} />
             </ContentBox>
@@ -182,7 +182,7 @@ class InnovationOverview extends Component {
 
         {
           (killedConcepts && killedConcepts.length > 0) &&
-          <AccordionPanel title='Archived' initIsOpen={false}>
+          <AccordionPanel title='Archived' initIsOpen={true}>
             <ContentBox background={false}>
               <ConceptList concepts={killedConcepts}  userType={userType} postIS2={isPostIS2} />
             </ContentBox>

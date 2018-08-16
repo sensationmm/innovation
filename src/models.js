@@ -168,6 +168,7 @@ export const ConceptChange = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
+    event: attr(),
     name: attr(),
     status: attr(), // killed, draft, ready, analysed
     description: attr(),

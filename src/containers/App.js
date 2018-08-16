@@ -13,6 +13,7 @@ import Canvas from './Canvas';
 import CanvasV2 from './CanvasV2';
 import InnovationCalendar from './InnovationCalendar';
 import AlertPopup from '../components/layout/AlertPopup';
+import CommentConfirmUpdate from '../components/layout/CommentConfirmUpdate';
 import Header from '../components/Header';
 import NotMobile from '../components/NotMobile';
 import NotFound from '../components/NotFound';

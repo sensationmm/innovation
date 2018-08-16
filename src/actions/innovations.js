@@ -50,11 +50,11 @@ export const getActiveInnovationData = (partnerId) => async (dispatch, getState)
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const partner = (await Partner.includes([
-      { innovation: [ 'key_dates', { concepts: [ 'canvases_attachments', 'finance_scores', 'target_industry' ] } ] },
+      { innovation: [ 'key_dates', { concepts: [ 'concept_changes', 'canvases_attachments', 'finance_scores', 'target_industry' ] } ] },
       { roles: 'user' },
       'industry'
     ]).find(partnerId)).data;
-
+    console.log('init', partner)
     dispatch({ type: GET_INNOVATION_DATA_SUCCESS, partner });
 
     // TODO: You may need to clear this attribute on the token (and the activeInnovationData) when the user returns to the dashboard?

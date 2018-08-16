@@ -29,16 +29,21 @@ class ConceptList extends Component {
    updateData: null
   }
 
-  openUpdateComment = (id, name, newStatus) => {
+  openUpdateComment = (id, name, status) => {
     this.setState({
       openCommentConfirm: true,
-      updateData: { id, name, newStatus}
+      updateData: { id, name, status }
     })
   }
 
-  submitConceptUpdate = () => {
-    const { updateData: id, name, newStatus} = this.state;
-    editConcept(id, { status: 'killed' }, true)
+  submitConceptUpdate = (comment) => {
+    const { updateData: { id, status } } = this.state;
+    const { editConcept } = this.props;
+    editConcept(id, { status, comment }, true)
+    this.setState({
+      openCommentConfirm: false,
+      updateData: null
+    })
   }
 
   cancelConceptUpdate = () => {
@@ -49,7 +54,7 @@ class ConceptList extends Component {
   }
 
   render() {
-   const { postIS2, userType, concepts, editConcept } = this.props;
+   const { postIS2, userType, concepts } = this.props;
 
    return (
      <div className="concept-list">
@@ -79,8 +84,8 @@ class ConceptList extends Component {
                    <div className="concept-list-item-user-actions">
                      {
                        (status === 'draft' || status ==='ready')
-                         ? <KillButton label='Archive' onClick={() => editConcept(id, { status: 'killed' }, true)} />
-                         : <CompleteButton label='Re-Activate' onClick={() => editConcept(id, { status: 'draft' }, true)} />
+                         ? <KillButton label='Archive' onClick={() => this.openUpdateComment(id, name, 'killed')} />
+                         : <CompleteButton label='Restore' onClick={() => this.openUpdateComment(id, name, 'draft')} />
                      }
                    </div>
                }
@@ -90,20 +95,20 @@ class ConceptList extends Component {
                      {
                        (status === 'ready') &&
                          <div className="concept-list-item-user-actions">
-                           <div className="concept-list-item-marked-awaiting"><i className="far fa-clock"></i>Awaiting VFT Analysis</div>
+                           <div className="concept-list-item-marked-awaiting"><i className="far fa-clock"></i>Awaiting Lead Analysis</div>
                          </div>
                      }
                      {
                        (status === 'draft') &&
                          <div className="concept-list-item-user-actions">
-                           <CompleteButton label='Mark as Ready' onClick={() => editConcept(id, { status: 'ready' }, true)} />
-                           <KillButton label='Archive' onClick={() => editConcept(id, { status: 'killed' }, true)} />
+                           <CompleteButton label='Mark as Ready' onClick={() => this.openUpdateComment(id, name, 'ready')} />
+                           <KillButton label='Archive' onClick={() => this.openUpdateComment(id, name, 'killed')} />
                          </div>
                      }
                      {
                        (status === 'killed') &&
                          <div className="concept-list-item-user-actions">
-                           <CompleteButton label='Restore' onClick={() => editConcept(id, { status: 'draft' }, true)} />
+                           <CompleteButton label='Restore' onClick={() => this.openUpdateComment(id, name, 'draft')} />
                          </div>
                      }
                    </div>
@@ -130,7 +135,7 @@ class ConceptList extends Component {
                {
                  status === 'analysed' &&
                    <div className="concept-list-item-user-actions">
-                     <div className="concept-list-item-marked-complete"><i className="fa fa-check-circle"></i>Finance Analysis Complete</div>
+                     <div className="concept-list-item-marked-complete"><i className="fa fa-check-circle"></i>Leadership Analysis</div>
                    </div>
                }
 
@@ -139,16 +144,20 @@ class ConceptList extends Component {
          })
        }
        </div>
-       <CommentConfirmUpdate
-          id={this.state.updateData.id}
-          name={this.state.updateData.name}
-          changes={{ status: this.state.updateData.newState}}
-          onCancel={this.cancelConceptUpdate}
-          onSubmit={this.submitConceptUpdate}
-       />
+       {
+         this.state.openCommentConfirm &&
+           <CommentConfirmUpdate
+              id={this.state.updateData.id}
+              name={this.state.updateData.name}
+              changes={{ status: this.state.updateData.status}}
+              type="Concept"
+              onCancel={this.cancelConceptUpdate}
+              onSubmit={this.submitConceptUpdate}
+           />
+       }
      </div>
    )
-  };
+  }
 }
 
 ConceptList.propTypes = {

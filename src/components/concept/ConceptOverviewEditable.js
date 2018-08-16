@@ -11,6 +11,7 @@ import ConceptCorpAdvantage from './createForm/ConceptCorpAdvantage';
 import ConceptCosts from './createForm/ConceptCosts';
 import ConceptConviction from './createForm/ConceptConviction';
 
+import CommentConfirmUpdate from '../layout/CommentConfirmUpdate';
 import FormSectionHeader from '../formInputs/FormSectionHeader';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import ButtonDelete from '../buttons/ButtonDelete';
@@ -27,8 +28,36 @@ import { conceptStatusLabels } from '../../config/conceptOptions';
 class ConceptOverviewEditable extends Component {
   state = {
     editedFields: [],
-    logo: {}
+    logo: {},
+    openCommentConfirm: false,
+    updateData: null // To be passed to CommentConfirmUpdate if confirmation and / or comment are required.
   }
+
+  // For concept status updates
+  openUpdateComment = (id, name, status) => {
+    this.setState({
+      openCommentConfirm: true,
+      updateData: { id, name, status }
+    })
+  }
+
+  submitConceptStatusUpdate = (comment) => {
+    const { updateData: { id, status } } = this.state;
+    const { editConcept } = this.props;
+    editConcept(id, { status, comment }, true)
+    this.setState({
+      openCommentConfirm: false,
+      updateData: null
+    })
+  }
+
+  cancelConceptStatusUpdate = () => {
+    this.setState({
+      openCommentConfirm: false,
+      updateData: null
+    })
+  }
+  // End: for concept status updates
 
   updateEditedFields = (key) => {
     const { editedFields } = this.state;
@@ -141,21 +170,21 @@ class ConceptOverviewEditable extends Component {
               activeConcept.status !== 'killed' &&
                 <KillButton
                   label="Archive"
-                  onClick={() => this.saveStatusToDb('killed')}
+                  onClick={() => this.openUpdateComment(activeConcept.id, activeConcept.name, 'killed')}
                 />
             }
             {
               activeConcept.status !== 'draft' &&
                 <ButtonSubmit
                   label="Mark as Active"
-                  onClick={() => this.saveStatusToDb('draft')}
+                  onClick={() => this.openUpdateComment(activeConcept.id, activeConcept.name, 'draft')}
                 />
             }
             {
               activeConcept.status !== 'ready' &&
                 <CompleteButton
                   label="Mark as Ready"
-                  onClick={() => this.saveStatusToDb('ready')}
+                  onClick={() => this.openUpdateComment(activeConcept.id, activeConcept.name, 'ready')}
                 />
             }
           </div>
@@ -268,6 +297,17 @@ class ConceptOverviewEditable extends Component {
             />
           </div>
         </div>
+        {
+          this.state.openCommentConfirm &&
+            <CommentConfirmUpdate
+               id={this.state.updateData.id}
+               name={this.state.updateData.name}
+               changes={{ status: this.state.updateData.status}}
+               type="Concept"
+               onCancel={this.cancelConceptStatusUpdate}
+               onSubmit={this.submitConceptStatusUpdate}
+            />
+        }
       </div>
     )
   }

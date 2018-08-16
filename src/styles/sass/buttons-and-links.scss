@@ -9,11 +9,12 @@
 
 .form-submit-button {
   font-size: 14px;
+  min-width: 120px;
   padding: 8px 10px;
   border: 1px solid $text-off-white;
-  font-size: 10px 15px;
   background: $text-grey-dark;
   color: $text-off-white;
+  margin: 8px 3px 3px 3px;
 
   &:hover {
     background: $background-grey-lighter;

@@ -1,7 +1,68 @@
 @import './modules/colors.scss';
-@import './modules/animations.scss';
 
-@include fade-slide-mixin(slide-1, -50px, 0);
+.comment-complete-update {
+  &-modal {
+    padding: 5px;
+  }
+  &-name {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  &-header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  &-changed {
+    padding: 5px 0;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid $background-grey-lightest;
+  }
+  &-changed-to {
+    margin-right: 15px;
+  }
+  &-attributes {
+    display: flex;
+  }
+  &-attribute {
+    padding: 5px;
+    border: 1px solid $background-grey-white;
+  }
+  &-input {
+    textarea {
+      box-sizing: border-box;
+      height: 100px;
+      padding-top: 30px;
+      width: 100%;
+      border: 0;
+      padding: 25px 10px 15px 10px;
+      background: none;
+      font-size: 14px;
+      color: $text;
+      outline: 0;
+      text-align: center;
+      box-shadow: 0 0 0 0 $cyan-offset;
+      transition: all 0.3s;
+      box-shadow: 0 0 4px 0 $cyan-offset;
+      margin: 14px 0;
+
+      &::placeholder {
+        color: $text-offset;
+        opacity: 0.5;
+      }
+    }
+  }
+  &-input-title {
+    margin: 5px 0;
+  }
+  &-user-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 
 .inventure-alert-temp-popup {
   position: fixed;

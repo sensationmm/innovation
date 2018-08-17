@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import '../../styles/css/alert-popup.css';
 
@@ -16,6 +17,10 @@ const AlertPopup = (props) => {
       </div>
     )
   }
+}
+
+AlertPopup.propTypes = {
+  message: PropTypes.string
 }
 
 const mapStateToProps = state => ({

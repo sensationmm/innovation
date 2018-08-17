@@ -1,0 +1,65 @@
+@import './modules/colors.scss';
+
+.comment-complete-update {
+  &-modal {
+    padding: 5px;
+  }
+  &-name {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  &-header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  &-changed {
+    padding: 5px 0;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid $background-grey-lightest;
+  }
+  &-changed-to {
+    margin-right: 15px;
+    color: $yellow;
+  }
+  &-attributes {
+    display: flex;
+    color: $blue;
+  }
+  &-attribute {
+    padding: 5px;
+    border: 1px solid $background-grey-white;
+  }
+  &-input {
+    textarea {
+      box-sizing: border-box;
+      height: 100px;
+      width: 100%;
+      border: 0;
+      padding: 25px 10px 15px 10px;
+      background: none;
+      font-size: 14px;
+      color: $text;
+      outline: 0;
+      text-align: center;
+      transition: all 0.3s;
+      box-shadow: 0 0 4px 0 $background-grey-white;
+      margin: 5px 0;
+
+      &::placeholder {
+        color: $text-offset;
+        opacity: 0.5;
+      }
+    }
+  }
+  &-input-title {
+    margin: 5px 0;
+  }
+  &-user-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+}

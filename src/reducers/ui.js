@@ -30,7 +30,12 @@ const defaultValues = checkBreakPoint();
 const defaultState = {
   width: defaultValues.width,
   height: defaultValues.height,
-  breakpoint: defaultValues.breakpoint
+  breakpoint: defaultValues.breakpoint,
+  message: null,
+  updateComment: {
+    commentModalOpen: false,
+    config: null
+  }
 };
 
 export const ui = (state = defaultState, action) => {

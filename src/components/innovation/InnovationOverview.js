@@ -40,19 +40,6 @@ class InnovationOverview extends Component {
     window.scroll(0,0);
   }
 
-  // For a more general version of this see ConceptOverviewEditable
-  handleUpdateMandate = (e) => {
-    const { activeInnovation, editInnovation } = this.props;
-    editInnovation(activeInnovation.id, { [e.target.id]: e.target.value }, false);
-    this.setState({ mandateUpdated: true });
-  }
-
-  mandateUpdateToDB = () => {
-    const { editInnovation, activeInnovation: { id, mandate } } = this.props;
-    editInnovation(id, { mandate }, true);
-    this.setState({ mandateUpdated: false });
-  }
-
   render() {
     const { activeInnovation, activePartner, conceptsById, teamMembers, authedUser } = this.props;
     const { openEditDates, openEditTeam } = this.state;

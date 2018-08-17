@@ -50,7 +50,7 @@ export const getActiveInnovationData = (partnerId) => async (dispatch, getState)
   dispatch({ type: GET_INNOVATION_DATA_BEGIN })
   try {
     const partner = (await Partner.includes([
-      { innovation: [ 'key_dates', { concepts: [ 'canvases_attachments', 'finance_scores', 'target_industry' ] } ] },
+      { innovation: [ 'key_dates', { concepts: [ 'concept_changes', 'canvases_attachments', 'finance_scores', 'target_industry' ] } ] },
       { roles: 'user' },
       'industry'
     ]).find(partnerId)).data;

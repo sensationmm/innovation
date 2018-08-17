@@ -112,6 +112,7 @@ export const Concept = ApplicationRecord.extend({
     name: attr(),
     status: attr(), // killed, draft, ready, analysed
     description: attr(),
+    comment: attr(),
     logo: attr(),
     logoName: attr(),
     marketFriction: attr(),
@@ -168,9 +169,11 @@ export const ConceptChange = ApplicationRecord.extend({
   attrs: {
     id: attr(),
     createdAt: attr(),
+    event: attr(),
     name: attr(),
     status: attr(), // killed, draft, ready, analysed
     description: attr(),
+    comment: attr(),
     logo: attr(),
     logoName: attr(),
     marketFriction: attr(),
@@ -198,7 +201,10 @@ export const ConceptChange = ApplicationRecord.extend({
     innovationId: attr(),
     targetIndustryId: attr(),
     conceptId: attr(),
-    concept: belongsTo()
+
+    concept: belongsTo(),
+    createdBy: belongsTo('user'),
+    assignedTo: belongsTo('user')
   }
 });
 

@@ -63,22 +63,3 @@
     justify-content: space-between;
   }
 }
-
-.inventure-alert-temp-popup {
-  position: fixed;
-  top: 80px;
-  left: 20px;
-  animation: slide-1 0.5s;
-  transition: all 3s;
-  background: $background-grey-light;
-  border: 1px solid $text-off-white;
-  border-radius: 2px;
-  width: 180px;
-  padding: 20px;
-  text-align: center;
-  z-index: 20;
-
-  &-text {
-    color: $text-off-white;
-  }
-}

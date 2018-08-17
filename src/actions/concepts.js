@@ -55,7 +55,6 @@ export const createConcept = (innovationId, attrsToCreate, redirectTo) => async 
  * @param {bool} saveToDB - if true then write to DB via API, otherwise write to redux store only.
  */
 export const editConcept = (conceptId, newConceptAttrs, saveToDB) => async (dispatch) => {
-  console.log('newConceptAttrs', newConceptAttrs);
   dispatch({ type: EDIT_CONCEPT_BEGIN });
   if (saveToDB) {
     try {

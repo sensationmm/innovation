@@ -9,7 +9,8 @@ import {
 
 import { removeItemByKey } from '../utils/functions';
 
-import { conceptStatusLabels } from '../config/conceptOptions';
+// TODO: Use this below then remove from view components that currently use it.
+// import { conceptStatusLabels } from '../config/conceptOptions';
 
 const initialState = {
   conceptsById: {}
@@ -33,27 +34,7 @@ export default (state = initialState, action) => {
 
         const canvases = concept.canvasesAttachments.map(canvas => canvas.url);
 
-        const statusUpdates = concept.conceptChanges.filter(change => change.status !== null || change.event === 'create')
-                                                    .reduce((accum, curChange, index, origArray) => {
-                                                      if (index === 0 && curChange.event === 'create') {
-                                                        accum.push({
-                                                          id: curChange.id,
-                                                          date: curChange.createdAt,
-                                                          createEvent: true
-                                                        })
-                                                      } else {
-                                                        accum.push({
-                                                          id: curChange.id,
-                                                          date: curChange.createdAt,
-                                                          prev: index === 1 ? 'Created' : conceptStatusLabels[accum[index-1].current],
-                                                          current: conceptStatusLabels[curChange.status],
-                                                          comment: curChange.comment
-                                                        })
-                                                      }
-                                                      return accum;
-                                                    }, [])
-
-        conceptsById[concept.id] = { ...formattedConcept, innovationId, partnerId, canvases, statusUpdates };
+        conceptsById[concept.id] = { ...formattedConcept, innovationId, partnerId, canvases };
 
 
       })

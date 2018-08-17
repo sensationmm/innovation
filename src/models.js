@@ -112,6 +112,7 @@ export const Concept = ApplicationRecord.extend({
     name: attr(),
     status: attr(), // killed, draft, ready, analysed
     description: attr(),
+    comment: attr(),
     logo: attr(),
     logoName: attr(),
     marketFriction: attr(),

@@ -23,9 +23,11 @@
   }
   &-changed-to {
     margin-right: 15px;
+    color: $yellow;
   }
   &-attributes {
     display: flex;
+    color: $blue;
   }
   &-attribute {
     padding: 5px;
@@ -35,7 +37,6 @@
     textarea {
       box-sizing: border-box;
       height: 100px;
-      padding-top: 30px;
       width: 100%;
       border: 0;
       padding: 25px 10px 15px 10px;
@@ -44,10 +45,9 @@
       color: $text;
       outline: 0;
       text-align: center;
-      box-shadow: 0 0 0 0 $cyan-offset;
       transition: all 0.3s;
-      box-shadow: 0 0 4px 0 $cyan-offset;
-      margin: 14px 0;
+      box-shadow: 0 0 4px 0 $background-grey-white;
+      margin: 5px 0;
 
       &::placeholder {
         color: $text-offset;

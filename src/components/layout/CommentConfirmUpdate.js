@@ -9,6 +9,8 @@ import { capitaliseFirst } from '../../utils/functions';
 
 import '../../styles/css/comment-confirm-update.css';
 
+import { conceptStatusLabels } from '../../config/conceptOptions';
+
 class CommentConfirmUpdate extends Component {
   state = {
     comment: ''
@@ -33,14 +35,14 @@ class CommentConfirmUpdate extends Component {
               {
                 Object.keys(changes).map(key => (
                   <div key={`comment-complete-update-${key}`} className="comment-complete-update-attribute">
-                    {capitaliseFirst(key)}: {capitaliseFirst(changes[key])}
+                    {capitaliseFirst(key)}: {key === 'status' ? conceptStatusLabels[changes[key]] : capitaliseFirst(changes[key])}
                   </div>
                 ))
               }
             </div>
           </div>
           <div className="comment-complete-update-input">
-            <div className="comment-complete-update-input-title">Add additional information:</div>
+            <div className="comment-complete-update-input-title">Add additional information (optional):</div>
             <textarea
               id="comment"
               placeholder="Any additional information to explain this update"

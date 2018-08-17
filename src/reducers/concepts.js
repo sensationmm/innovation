@@ -9,6 +9,8 @@ import {
 
 import { removeItemByKey } from '../utils/functions';
 
+import { conceptStatusLabels } from '../config/conceptOptions';
+
 const initialState = {
   conceptsById: {}
 }
@@ -28,8 +30,32 @@ export default (state = initialState, action) => {
           formattedConcept[key] = concept.attributes[key] === null ? '' : concept.attributes[key]; // Setting null attributes to '' so not to have an issue passing them to text inputs.
         })
         formattedConcept.targetIndustryId = concept.targetIndustry.id;
+
         const canvases = concept.canvasesAttachments.map(canvas => canvas.url);
-        conceptsById[concept.id] = { ...formattedConcept, innovationId, partnerId, canvases };
+
+        const statusUpdates = concept.conceptChanges.filter(change => change.status !== null || change.event === 'create')
+                                                    .reduce((accum, curChange, index, origArray) => {
+                                                      if (index === 0 && curChange.event === 'create') {
+                                                        accum.push({
+                                                          id: curChange.id,
+                                                          date: curChange.createdAt,
+                                                          createEvent: true
+                                                        })
+                                                      } else {
+                                                        accum.push({
+                                                          id: curChange.id,
+                                                          date: curChange.createdAt,
+                                                          prev: index === 1 ? 'Created' : conceptStatusLabels[accum[index-1].current],
+                                                          current: conceptStatusLabels[curChange.status],
+                                                          comment: curChange.comment
+                                                        })
+                                                      }
+                                                      return accum;
+                                                    }, [])
+
+        conceptsById[concept.id] = { ...formattedConcept, innovationId, partnerId, canvases, statusUpdates };
+
+
       })
 
       return { ...state, conceptsById }
@@ -37,16 +63,16 @@ export default (state = initialState, action) => {
 
     case CREATE_CONCEPT_SUCCESS: {
       const { newConcept } = action;
-      
+
       const formattedNewConcept = {};
       Object.keys(newConcept).forEach(key => {
         formattedNewConcept[key] = newConcept[key] === null ? '' : newConcept[key];
       });
-      
+
       newConcept.canvases = [];
 
       const conceptsById = { ...state.conceptsById, [newConcept.id]: formattedNewConcept }
-      
+
       return { ...state, conceptsById }
     }
 
